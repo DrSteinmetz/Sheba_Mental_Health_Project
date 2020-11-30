@@ -1,8 +1,10 @@
-package com.example.sheba_mental_health_project;
+package com.example.sheba_mental_health_project.view;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
+
+import com.example.sheba_mental_health_project.R;
 
 public class MainActivity extends AppCompatActivity {
 
