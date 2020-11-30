@@ -14,7 +14,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.sheba_mental_health_project.R;
-import com.example.sheba_mental_health_project.model.ViewModelEnum;
+import com.example.sheba_mental_health_project.model.Enum.ViewModelEnum;
 import com.example.sheba_mental_health_project.model.ViewModelFactory;
 import com.example.sheba_mental_health_project.viewmodel.WelcomeViewModel;
 import com.google.android.material.button.MaterialButton;

@@ -6,6 +6,9 @@ import androidx.annotation.NonNull;
 import androidx.lifecycle.ViewModel;
 import androidx.lifecycle.ViewModelProvider;
 
+import com.example.sheba_mental_health_project.model.Enum.ViewModelEnum;
+import com.example.sheba_mental_health_project.viewmodel.CharacterViewModel;
+import com.example.sheba_mental_health_project.viewmodel.MainPatientViewModel;
 import com.example.sheba_mental_health_project.viewmodel.PatientLoginViewModel;
 import com.example.sheba_mental_health_project.viewmodel.WelcomeViewModel;
 
@@ -34,6 +37,16 @@ public class ViewModelFactory implements ViewModelProvider.Factory {
             case PatientLogin:
                 if (modelClass.isAssignableFrom(PatientLoginViewModel.class)) {
                     objectToReturn = (T) new PatientLoginViewModel(mContext);
+                }
+                break;
+            case MainPatient:
+                if (modelClass.isAssignableFrom(MainPatientViewModel.class)) {
+                    objectToReturn = (T) new MainPatientViewModel(mContext);
+                }
+                break;
+            case Character:
+                if (modelClass.isAssignableFrom(CharacterViewModel.class)) {
+                    objectToReturn = (T) new CharacterViewModel(mContext);
                 }
                 break;
         }

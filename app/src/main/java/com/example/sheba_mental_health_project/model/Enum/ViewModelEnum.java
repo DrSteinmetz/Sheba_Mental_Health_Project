@@ -1,4 +1,4 @@
-package com.example.sheba_mental_health_project.model;
+package com.example.sheba_mental_health_project.model.Enum;
 
 public enum ViewModelEnum {
     MainActivity,
@@ -6,4 +6,6 @@ public enum ViewModelEnum {
     Welcome,
     PatientLogin,
     TherapistLogin,
+    MainPatient,
+    Character,
 }
