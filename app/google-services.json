@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "610461902440",
+    "firebase_url": "https://sheba-mental-health-project.firebaseio.com",
+    "project_id": "sheba-mental-health-project",
+    "storage_bucket": "sheba-mental-health-project.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:610461902440:android:03a9e7b143efb65daafddd",
+        "android_client_info": {
+          "package_name": "com.example.sheba_mental_health_project"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "610461902440-vii0n5teljhnm90pu3n11tmd1qdfhgq0.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCl6IVyzhD0KUPqXkiNFbhdz6gAx0lmNLQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "610461902440-vii0n5teljhnm90pu3n11tmd1qdfhgq0.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
