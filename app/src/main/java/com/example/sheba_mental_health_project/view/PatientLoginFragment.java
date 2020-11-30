@@ -12,7 +12,7 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.example.sheba_mental_health_project.R;
-import com.example.sheba_mental_health_project.model.Enum.ViewModelEnum;
+import com.example.sheba_mental_health_project.model.enums.ViewModelEnum;
 import com.example.sheba_mental_health_project.model.ViewModelFactory;
 import com.example.sheba_mental_health_project.viewmodel.PatientLoginViewModel;
 import com.google.android.material.button.MaterialButton;

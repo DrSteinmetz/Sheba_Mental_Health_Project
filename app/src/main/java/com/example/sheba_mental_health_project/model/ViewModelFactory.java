@@ -6,7 +6,7 @@ import androidx.annotation.NonNull;
 import androidx.lifecycle.ViewModel;
 import androidx.lifecycle.ViewModelProvider;
 
-import com.example.sheba_mental_health_project.model.Enum.ViewModelEnum;
+import com.example.sheba_mental_health_project.model.enums.ViewModelEnum;
 import com.example.sheba_mental_health_project.viewmodel.CharacterViewModel;
 import com.example.sheba_mental_health_project.viewmodel.MainPatientViewModel;
 import com.example.sheba_mental_health_project.viewmodel.PatientLoginViewModel;
