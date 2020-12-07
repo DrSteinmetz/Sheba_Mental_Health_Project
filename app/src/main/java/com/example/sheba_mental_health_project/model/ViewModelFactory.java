@@ -8,6 +8,8 @@ import androidx.lifecycle.ViewModelProvider;
 
 import com.example.sheba_mental_health_project.model.enums.ViewModelEnum;
 import com.example.sheba_mental_health_project.viewmodel.CharacterViewModel;
+import com.example.sheba_mental_health_project.viewmodel.HeadViewModel;
+import com.example.sheba_mental_health_project.viewmodel.LeftArmViewModel;
 import com.example.sheba_mental_health_project.viewmodel.MainPatientViewModel;
 import com.example.sheba_mental_health_project.viewmodel.PatientLoginViewModel;
 import com.example.sheba_mental_health_project.viewmodel.WelcomeViewModel;
@@ -47,6 +49,16 @@ public class ViewModelFactory implements ViewModelProvider.Factory {
             case Character:
                 if (modelClass.isAssignableFrom(CharacterViewModel.class)) {
                     objectToReturn = (T) new CharacterViewModel(mContext);
+                }
+                break;
+            case Head:
+                if (modelClass.isAssignableFrom(HeadViewModel.class)) {
+                    objectToReturn = (T) new HeadViewModel(mContext);
+                }
+                break;
+            case LeftArm:
+                if (modelClass.isAssignableFrom(LeftArmViewModel.class)) {
+                    objectToReturn = (T) new LeftArmViewModel(mContext);
                 }
                 break;
         }
