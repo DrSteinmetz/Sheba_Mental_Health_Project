@@ -20,7 +20,7 @@ import java.util.Map;
 public class AuthRepository {
     private final String TAG ="AuthRepository";
     private static AuthRepository authRepository;
-    private AuthRepoLoginPatientInterface mAuthRepoLoginPatientInterface;
+    private AuthRepoLoginPatientInterface mAuthRepoLoginPatientListener;
     private FirebaseAuth mAuth;
     private FirebaseFunctions mFunctions;
 
@@ -40,10 +40,6 @@ public class AuthRepository {
         this.mFunctions = FirebaseFunctions.getInstance();
     }
 
-    public interface AuthRepoLoginPatientInterface{
-        void onPatientLoginSucceed();
-        void onPatientLoginFailed();
-    }
     public Task<HashMap<String, Object>> addMessage(String text) {
         // Create the arguments to the callable function.
         //Map<String, Object> data = new HashMap<>();
@@ -74,7 +70,10 @@ public class AuthRepository {
                 });
 
     }
-    public void loginUser(String email,String password){
+
+    public void loginUser(final String email,final String password,final String role){
+        final String THERAPIST = "therapist";
+        final String PATIENT = "patient";
         mAuth.signInWithEmailAndPassword(email, password)
                 .addOnCompleteListener((Activity) mContext, new OnCompleteListener<AuthResult>() {
                     @Override
@@ -83,10 +82,15 @@ public class AuthRepository {
                             // Sign in success, update UI with the signed-in user's information
                             Log.d(TAG, "signInWithEmail:success");
                             FirebaseUser user = mAuth.getCurrentUser();
+                            checkRoleForLogin(email,role);
 
                         } else {
-                            // If sign in fails, display a message to the user.
-                            Log.w(TAG, "signInWithEmail:failure", task.getException());
+                            if(role.equals(THERAPIST)){
+
+                            }
+                            else if(role.equals(PATIENT)){
+                                mAuthRepoLoginPatientListener.onPatientLoginFailed(task.getException().getMessage());
+                            }
 
                         }
 
@@ -94,12 +98,56 @@ public class AuthRepository {
                     }
                 });
     }
+
+    public void checkRoleForLogin(final String email, final String role) {
+        Map<String,Object> data = new HashMap<>();
+        data.put("email", email);
+        final String THERAPIST = "therapist";
+        final String PATIENT = "patient";
+
+         mFunctions
+                .getHttpsCallable("checkRole")
+                .call(data)
+                .continueWith(task -> {
+                    HashMap<String,Boolean> rolesMap = (HashMap<String, Boolean>) task.getResult().getData();
+                    if(rolesMap.containsKey(role)&&rolesMap.get(role)){
+                       if(role.equals(THERAPIST)){
+
+                       }
+                       else if(role.equals(PATIENT)){
+                            mAuthRepoLoginPatientListener.onPatientLoginSucceed();
+                       }
+                    }
+                    else{
+                        if(role.equals(THERAPIST)){
+
+                        }
+                        else if(role.equals(PATIENT)){
+                            mAuthRepoLoginPatientListener.onPatientLoginFailed("Wrong role");
+                        }
+                        logOut();
+
+                    }
+                    return task.getResult().getData();
+                }).addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Log.d(TAG,"ERR "+e.getMessage());
+                    }
+                });
+
+    }
+
     public void logOut(){
-
-        Log.d(TAG, "before logOut:"+mAuth.getCurrentUser().getEmail());
         mAuth.signOut();
-
         Log.d(TAG, "logOut:"+mAuth.getCurrentUser());
     }
 
+    public interface AuthRepoLoginPatientInterface{
+        void onPatientLoginSucceed();
+        void onPatientLoginFailed(String message);
+    }
+    public void setLoginPatientListener(AuthRepoLoginPatientInterface mAuthRepoLoginPatientListener){
+        this.mAuthRepoLoginPatientListener = mAuthRepoLoginPatientListener;
+    }
 }

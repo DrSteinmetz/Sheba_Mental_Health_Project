@@ -9,11 +9,13 @@ import android.widget.FrameLayout;
 import com.example.sheba_mental_health_project.R;
 
 public class WelcomeActivity extends AppCompatActivity
-        implements WelcomeFragment.WelcomeFragmentInterface {
+        implements WelcomeFragment.WelcomeFragmentInterface,PatientLoginFragment.PatientLoginFragmentInterface {
 
     private final String WELCOME_FRAG = "WelcomeFragment";
 
     private final String TAG = "WelcomeActivity";
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,5 +39,14 @@ public class WelcomeActivity extends AppCompatActivity
 
     @Override
     public void onPatientBtnClicked() {
+        getSupportFragmentManager().beginTransaction()
+                .replace(R.id.container, PatientLoginFragment.newInstance(), "Character_Fragment")
+                .addToBackStack(null)
+                .commit();
+    }
+
+    @Override
+    public void onPatientLoginBtnClicked() {
+
     }
 }

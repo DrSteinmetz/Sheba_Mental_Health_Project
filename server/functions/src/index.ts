@@ -78,3 +78,19 @@ exports.createAdmin = functions.https.onCall(async (data, context) => {
     return handleError(err);
   }
 });
+
+exports.checkRole = functions.https.onCall(async (data, context) => {
+  const { email } = data;
+  try {
+    const user = await admin.auth().getUserByEmail(email);
+    const roles = user.customClaims;
+
+    if (!roles) {
+      throw new functions.https.HttpsError('permission-denied', 'No roles');
+    }
+
+    return roles;
+  } catch (err) {
+    return handleError(err);
+  }
+});
