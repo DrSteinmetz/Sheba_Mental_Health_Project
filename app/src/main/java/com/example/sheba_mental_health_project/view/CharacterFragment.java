@@ -38,6 +38,29 @@ public class CharacterFragment extends Fragment {
                              @Nullable Bundle savedInstanceState) {
         final View rootView = inflater.inflate(R.layout.character_fragment, container, false);
 
+        final View headView = rootView.findViewById(R.id.head_v);
+        final View leftArmView = rootView.findViewById(R.id.arm_left_v);
+
+        headView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                getParentFragmentManager().beginTransaction()
+                        .replace(android.R.id.content, HeadFragment.newInstance(), "Head_Fragment")
+                        .addToBackStack(null)
+                        .commit();
+            }
+        });
+
+        leftArmView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                getParentFragmentManager().beginTransaction()
+                        .replace(android.R.id.content, LeftArmFragment.newInstance(), "Left_Arm_Fragment")
+                        .addToBackStack(null)
+                        .commit();
+            }
+        });
+
         return rootView;
     }
 }

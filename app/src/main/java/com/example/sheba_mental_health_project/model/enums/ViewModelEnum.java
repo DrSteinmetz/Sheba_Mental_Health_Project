@@ -8,4 +8,12 @@ public enum ViewModelEnum {
     TherapistLogin,
     MainPatient,
     Character,
+    Head,
+    CenterOfMass,
+    Back,
+    Genitals,
+    LeftArm,
+    RightArm,
+    LeftLeg,
+    RightLeg,
 }
