@@ -7,6 +7,10 @@ import androidx.lifecycle.ViewModel;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.example.sheba_mental_health_project.model.enums.ViewModelEnum;
+import com.example.sheba_mental_health_project.viewmodel.CenterOfMassViewModel;
+import com.example.sheba_mental_health_project.viewmodel.GenitalsViewModel;
+import com.example.sheba_mental_health_project.viewmodel.LegsViewModel;
+import com.example.sheba_mental_health_project.viewmodel.RightArmViewModel;
 import com.example.sheba_mental_health_project.viewmodel.CharacterViewModel;
 import com.example.sheba_mental_health_project.viewmodel.HeadViewModel;
 import com.example.sheba_mental_health_project.viewmodel.LeftArmViewModel;
@@ -56,9 +60,29 @@ public class ViewModelFactory implements ViewModelProvider.Factory {
                     objectToReturn = (T) new HeadViewModel(mContext);
                 }
                 break;
+            case CenterOfMass:
+                if (modelClass.isAssignableFrom(CenterOfMassViewModel.class)) {
+                    objectToReturn = (T) new CenterOfMassViewModel(mContext);
+                }
+                break;
+            case RightArm:
+                if (modelClass.isAssignableFrom(RightArmViewModel.class)) {
+                    objectToReturn = (T) new RightArmViewModel(mContext);
+                }
+                break;
             case LeftArm:
                 if (modelClass.isAssignableFrom(LeftArmViewModel.class)) {
                     objectToReturn = (T) new LeftArmViewModel(mContext);
+                }
+                break;
+            case Genitals:
+                if (modelClass.isAssignableFrom(GenitalsViewModel.class)) {
+                    objectToReturn = (T) new GenitalsViewModel(mContext);
+                }
+                break;
+            case Legs:
+                if (modelClass.isAssignableFrom(LegsViewModel.class)) {
+                    objectToReturn = (T) new LegsViewModel(mContext);
                 }
                 break;
         }

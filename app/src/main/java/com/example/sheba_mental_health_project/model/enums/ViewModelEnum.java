@@ -11,9 +11,8 @@ public enum ViewModelEnum {
     Head,
     CenterOfMass,
     Back,
-    Genitals,
-    LeftArm,
     RightArm,
-    LeftLeg,
-    RightLeg,
+    LeftArm,
+    Genitals,
+    Legs,
 }

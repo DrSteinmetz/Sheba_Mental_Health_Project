@@ -21,9 +21,32 @@ public class CharacterFragment extends Fragment {
 
     private CharacterViewModel mViewModel;
 
+
+    /*public interface CharacterFragmentInterface {
+        void onHeadClicked();
+        void onCenterOfMassClicked();
+        void onRightArmClicked();
+        void onLeftArmClicked();
+        void onGenitalsClicked();
+        void onLegsClicked();
+    }
+
+    private CharacterFragmentInterface listener;*/
+
     public static CharacterFragment newInstance() {
         return new CharacterFragment();
     }
+
+    /*@Override
+    public void onAttach(@NonNull Context context) {
+        super.onAttach(context);
+
+        try {
+            listener = (CharacterFragmentInterface) context;
+        } catch (Exception ex) {
+            throw new ClassCastException("The Activity Must Implements CharacterFragmentInterface listener!");
+        }
+    }*/
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -40,6 +63,10 @@ public class CharacterFragment extends Fragment {
 
         final View headView = rootView.findViewById(R.id.head_v);
         final View leftArmView = rootView.findViewById(R.id.arm_left_v);
+        final View rightArmView = rootView.findViewById(R.id.arm_right_v);
+        final View centerOfMassView = rootView.findViewById(R.id.center_of_mass_v);
+        final View genitalsView = rootView.findViewById(R.id.genitals_v);
+        final View legsView = rootView.findViewById(R.id.legs_v);
 
         headView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -51,11 +78,51 @@ public class CharacterFragment extends Fragment {
             }
         });
 
+        centerOfMassView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                getParentFragmentManager().beginTransaction()
+                        .replace(android.R.id.content, CenterOfMassFragment.newInstance(), "Center_Of_Mass_Fragment")
+                        .addToBackStack(null)
+                        .commit();
+            }
+        });
+
         leftArmView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 getParentFragmentManager().beginTransaction()
                         .replace(android.R.id.content, LeftArmFragment.newInstance(), "Left_Arm_Fragment")
+                        .addToBackStack(null)
+                        .commit();
+            }
+        });
+
+        rightArmView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                getParentFragmentManager().beginTransaction()
+                        .replace(android.R.id.content, RightArmFragment.newInstance(), "Right_Arm_Fragment")
+                        .addToBackStack(null)
+                        .commit();
+            }
+        });
+
+        genitalsView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                getParentFragmentManager().beginTransaction()
+                        .replace(android.R.id.content, GenitalsFragment.newInstance(), "Genitals_Fragment")
+                        .addToBackStack(null)
+                        .commit();
+            }
+        });
+
+        legsView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                getParentFragmentManager().beginTransaction()
+                        .replace(android.R.id.content, LegsFragment.newInstance(), "Legs_Fragment")
                         .addToBackStack(null)
                         .commit();
             }

@@ -12,5 +12,11 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        /*getSupportFragmentManager().beginTransaction()
+                //TODO: add enter and exit animations
+                .add(R.id.container, WelcomeFragment.newInstance(), WELCOME_FRAG)
+                .addToBackStack(null)
+                .commit();*/
     }
 }

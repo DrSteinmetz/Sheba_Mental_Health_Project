@@ -9,12 +9,12 @@ import android.widget.FrameLayout;
 import com.example.sheba_mental_health_project.R;
 
 public class WelcomeActivity extends AppCompatActivity
-        implements WelcomeFragment.WelcomeFragmentInterface,PatientLoginFragment.PatientLoginFragmentInterface {
+        implements WelcomeFragment.WelcomeFragmentInterface,
+        PatientLoginFragment.PatientLoginFragmentInterface {
 
     private final String WELCOME_FRAG = "WelcomeFragment";
 
     private final String TAG = "WelcomeActivity";
-
 
 
     @Override
@@ -25,7 +25,6 @@ public class WelcomeActivity extends AppCompatActivity
         getSupportFragmentManager().beginTransaction()
                 //TODO: add enter and exit animations
                 .add(R.id.container, WelcomeFragment.newInstance(), WELCOME_FRAG)
-                .addToBackStack(null)
                 .commit();
     }
 
@@ -40,13 +39,12 @@ public class WelcomeActivity extends AppCompatActivity
     @Override
     public void onPatientBtnClicked() {
         getSupportFragmentManager().beginTransaction()
-                .replace(R.id.container, PatientLoginFragment.newInstance(), "Character_Fragment")
+                .replace(R.id.container, PatientLoginFragment.newInstance(), "Patient_Login_Fragment")
                 .addToBackStack(null)
                 .commit();
     }
 
     @Override
     public void onPatientLoginBtnClicked() {
-
     }
 }
