@@ -1,12 +1,17 @@
 package com.example.sheba_mental_health_project.model;
 
+import com.example.sheba_mental_health_project.model.enums.UserRoleEnum;
+
 import java.util.List;
 
 public class Therapist extends User {
 
-//    private List<Patient> mPatients;
+    public Therapist() {
+        super();
+    }
 
-    public Therapist(String mId, String mFirstName, String mLastName, String mEmail, String mToken, int mRole) {
+    public Therapist(String mId, String mFirstName, String mLastName,
+                     String mEmail, String mToken, UserRoleEnum mRole) {
         super(mId, mFirstName, mLastName, mEmail, mToken, mRole);
     }
 }

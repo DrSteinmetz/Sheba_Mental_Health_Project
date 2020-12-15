@@ -1,5 +1,7 @@
 package com.example.sheba_mental_health_project.model;
 
+import com.example.sheba_mental_health_project.model.enums.UserRoleEnum;
+
 import java.io.Serializable;
 
 public abstract class User implements Serializable {
@@ -9,9 +11,12 @@ public abstract class User implements Serializable {
     private String mLastName;
     private String mEmail;
     private String mToken;
-    private int mRole; // Enum
+    private UserRoleEnum mRole;
 
-    public User(String mId, String mFirstName, String mLastName, String mEmail, String mToken, int mRole) {
+    public User() {}
+
+    public User(String mId, String mFirstName, String mLastName,
+                String mEmail, String mToken, UserRoleEnum mRole) {
         this.mId = mId;
         this.mFirstName = mFirstName;
         this.mLastName = mLastName;
@@ -28,43 +33,55 @@ public abstract class User implements Serializable {
         this.mId = mId;
     }
 
-    public String getmFirstName() {
+    public String getFirstName() {
         return mFirstName;
     }
 
-    public void setmFirstName(String mFirstName) {
+    public void setFirstName(String mFirstName) {
         this.mFirstName = mFirstName;
     }
 
-    public String getmLastName() {
+    public String getLastName() {
         return mLastName;
     }
 
-    public void setmLastName(String mLastName) {
+    public void setLastName(String mLastName) {
         this.mLastName = mLastName;
     }
 
-    public String getmEmail() {
+    public String getEmail() {
         return mEmail;
     }
 
-    public void setmEmail(String mEmail) {
+    public void setEmail(String mEmail) {
         this.mEmail = mEmail;
     }
 
-    public String getmToken() {
+    public String getToken() {
         return mToken;
     }
 
-    public void setmToken(String mToken) {
+    public void setToken(String mToken) {
         this.mToken = mToken;
     }
 
-    public int getmRole() {
+    public UserRoleEnum getRole() {
         return mRole;
     }
 
-    public void setmRole(int mRole) {
+    public void setRole(UserRoleEnum mRole) {
         this.mRole = mRole;
+    }
+
+    @Override
+    public String toString() {
+        return "User: {" +
+                "mId='" + mId + '\'' +
+                ", mFirstName='" + mFirstName + '\'' +
+                ", mLastName='" + mLastName + '\'' +
+                ", mEmail='" + mEmail + '\'' +
+                ", mToken='" + mToken + '\'' +
+                ", mRole=" + mRole +
+                '}';
     }
 }

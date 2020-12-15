@@ -8,18 +8,22 @@ import androidx.lifecycle.ViewModel;
 import com.example.sheba_mental_health_project.repository.AuthRepository;
 
 public class PatientLoginViewModel extends ViewModel {
+
     private AuthRepository mAuthRepository;
-    private MutableLiveData<Void> mPatientLoginSucceed;
-    private  MutableLiveData<String> mPatientLoginFailed;
     private String mEmail;
     private String mPassword;
+
+    private MutableLiveData<Void> mPatientLoginSucceed;
+    private MutableLiveData<String> mPatientLoginFailed;
+
+    private final String TAG = "PatientLoginViewModel";
 
     public PatientLoginViewModel(final Context context) {
         mAuthRepository = AuthRepository.getInstance(context);
     }
 
     public MutableLiveData<Void> getPatientLoginSucceed() {
-        if(mPatientLoginSucceed==null){
+        if (mPatientLoginSucceed == null) {
             mPatientLoginSucceed = new MutableLiveData<>();
             attachSetOnPatientLoginListener();
         }
@@ -27,7 +31,7 @@ public class PatientLoginViewModel extends ViewModel {
     }
 
     public MutableLiveData<String> getPatientLoginFailed() {
-        if(mPatientLoginFailed==null){
+        if (mPatientLoginFailed == null) {
             mPatientLoginFailed = new MutableLiveData<>();
             attachSetOnPatientLoginListener();
         }
@@ -48,21 +52,23 @@ public class PatientLoginViewModel extends ViewModel {
         });
     }
 
-    public void setEmail(String email) {
-        if(!email.equals(""))
+
+    public void setEmail(final String email) {
+        if (!email.equals("")) {
             this.mEmail = email;
-        else
-            this.mEmail=" ";
+        } else {
+            this.mEmail = " ";
+        }
     }
 
-    public void setPassword(String password) {
-        if(!password.equals(""))
+    public void setPassword(final String password) {
+        if (!password.equals(""))
             this.mPassword = password;
         else
-            this.mPassword=" ";
+            this.mPassword = " ";
     }
 
     public void login() {
-        mAuthRepository.loginUser(mEmail,mPassword,"patient");
+        mAuthRepository.loginPatient(mEmail, mPassword);
     }
 }

@@ -6,25 +6,63 @@ import android.util.Log;
 
 import androidx.annotation.NonNull;
 
+import com.example.sheba_mental_health_project.model.Patient;
+import com.example.sheba_mental_health_project.model.Therapist;
+import com.example.sheba_mental_health_project.model.User;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.functions.FirebaseFunctions;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
 
 public class AuthRepository {
-    private final String TAG ="AuthRepository";
-    private static AuthRepository authRepository;
-    private AuthRepoLoginPatientInterface mAuthRepoLoginPatientListener;
-    private FirebaseAuth mAuth;
-    private FirebaseFunctions mFunctions;
 
-    final Context mContext;
+    private static AuthRepository authRepository;
+
+    private final Context mContext;
+
+    private FirebaseAuth mAuth;
+//    private FirebaseFunctions mFunctions;
+
+    private User mUser;
+
+    private final String TAG ="AuthRepository";
+
+    /**
+     * <------ Interfaces ------>
+     */
+    public interface AuthRepoLoginPatientInterface {
+        void onPatientLoginSucceed();
+
+        void onPatientLoginFailed(String message);
+    }
+
+    private AuthRepoLoginPatientInterface mAuthRepoLoginPatientListener;
+
+    public void setLoginPatientListener(AuthRepoLoginPatientInterface authRepoLoginPatientListener){
+        this.mAuthRepoLoginPatientListener = authRepoLoginPatientListener;
+    }
+
+    public interface AuthRepoLoginTherapistInterface {
+        void onTherapistLoginSucceed();
+
+        void onTherapistLoginFailed(String message);
+    }
+
+    private AuthRepoLoginTherapistInterface mAuthRepoLoginTherapistListener;
+
+    public void setLoginTherapistListener(AuthRepoLoginTherapistInterface authRepoLoginTherapistListener){
+        this.mAuthRepoLoginTherapistListener = authRepoLoginTherapistListener;
+    }
 
     /**<------ Singleton ------>*/
     public static AuthRepository getInstance(final Context context) {
@@ -37,117 +75,126 @@ public class AuthRepository {
     private AuthRepository(Context mContext) {
         this.mContext = mContext;
         this.mAuth = FirebaseAuth.getInstance();
-        this.mFunctions = FirebaseFunctions.getInstance();
     }
 
-    public Task<HashMap<String, Object>> addMessage(String text) {
-        // Create the arguments to the callable function.
-        //Map<String, Object> data = new HashMap<>();
-
-        Map<String,Object> data = new HashMap<>();
-
-
-
-            data.put("email", "patient@gmail.com");
-            data.put("password","matan123");
-
-
-        return mFunctions
-                .getHttpsCallable("createPatient")
-                .call(data)
-                .continueWith(task -> {
-                    // This continuation runs on either success or failure, but if the task
-                    // has failed then getResult() will throw an Exception which will be
-                    // propagated down.
-                    HashMap<String,Object> result = (HashMap<String, Object>) task.getResult().getData();
-                  //  Log.d(TAG,result.get("error")+"");
-                    return result;
-                }).addOnFailureListener(new OnFailureListener() {
-                    @Override
-                    public void onFailure(@NonNull Exception e) {
-                        Log.d(TAG,e.getMessage());
-                    }
-                });
-
-    }
-
-    public void loginUser(final String email,final String password,final String role){
-        final String THERAPIST = "therapist";
-        final String PATIENT = "patient";
+    public void loginPatient(final String email, final String password){
         mAuth.signInWithEmailAndPassword(email, password)
                 .addOnCompleteListener((Activity) mContext, new OnCompleteListener<AuthResult>() {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()) {
-                            // Sign in success, update UI with the signed-in user's information
-                            Log.d(TAG, "signInWithEmail:success");
+                            Log.d(TAG, "signInWithEmail succeed");
                             FirebaseUser user = mAuth.getCurrentUser();
-                            checkRoleForLogin(email,role);
-
+                            if (user != null) {
+                                getPatientForLogin(user.getUid());
+                            }
                         } else {
-                            if(role.equals(THERAPIST)){
+                            final String error = Objects.requireNonNull(task.getException())
+                                    .getMessage();
 
+                            Log.d(TAG, "onComplete: " + error);
+                            if (mAuthRepoLoginPatientListener != null) {
+                                mAuthRepoLoginPatientListener.onPatientLoginFailed(error);
                             }
-                            else if(role.equals(PATIENT)){
-                                mAuthRepoLoginPatientListener.onPatientLoginFailed(task.getException().getMessage());
-                            }
-
                         }
-
-                        // ...
                     }
                 });
     }
 
-    public void checkRoleForLogin(final String email, final String role) {
-        Map<String,Object> data = new HashMap<>();
-        data.put("email", email);
-        final String THERAPIST = "therapist";
-        final String PATIENT = "patient";
-
-         mFunctions
-                .getHttpsCallable("checkRole")
-                .call(data)
-                .continueWith(task -> {
-                    HashMap<String,Boolean> rolesMap = (HashMap<String, Boolean>) task.getResult().getData();
-                    if(rolesMap.containsKey(role)&&rolesMap.get(role)){
-                       if(role.equals(THERAPIST)){
-
-                       }
-                       else if(role.equals(PATIENT)){
-                            mAuthRepoLoginPatientListener.onPatientLoginSucceed();
-                       }
-                    }
-                    else{
-                        if(role.equals(THERAPIST)){
-
-                        }
-                        else if(role.equals(PATIENT)){
-                            mAuthRepoLoginPatientListener.onPatientLoginFailed("Wrong role");
-                        }
-                        logOut();
-
-                    }
-                    return task.getResult().getData();
-                }).addOnFailureListener(new OnFailureListener() {
+    public void loginTherapist(final String email, final String password){
+        mAuth.signInWithEmailAndPassword(email, password)
+                .addOnCompleteListener((Activity) mContext, new OnCompleteListener<AuthResult>() {
                     @Override
-                    public void onFailure(@NonNull Exception e) {
-                        Log.d(TAG,"ERR "+e.getMessage());
+                    public void onComplete(@NonNull Task<AuthResult> task) {
+                        if (task.isSuccessful()) {
+                            Log.d(TAG, "signInWithEmail succeed");
+                            FirebaseUser user = mAuth.getCurrentUser();
+                            if (user != null) {
+                                getTherapistForLogin(user.getUid());
+                            }
+                        } else {
+                            final String error = Objects.requireNonNull(task.getException())
+                                    .getMessage();
+
+                            Log.d(TAG, "onComplete: " + error);
+                            if (mAuthRepoLoginTherapistListener != null) {
+                                mAuthRepoLoginTherapistListener.onTherapistLoginFailed(error);
+                            }
+                        }
                     }
                 });
+    }
 
+    public void getPatientForLogin(final String uId) {
+        final FirebaseFirestore cloudDB = FirebaseFirestore.getInstance();
+        cloudDB.collection("patients")
+                .document(uId)
+                .get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+            @Override
+            public void onSuccess(DocumentSnapshot documentSnapshot) {
+                if (documentSnapshot.exists()) {
+                    mUser = documentSnapshot.toObject(Patient.class);
+                    Log.d(TAG, "onSuccess: " + mUser);
+
+                    if (mAuthRepoLoginPatientListener != null) {
+                        mAuthRepoLoginPatientListener.onPatientLoginSucceed();
+                    }
+                } else {
+                    final String error = "Patient Doesn't exists";
+
+                    Log.d(TAG, "onSuccess: " + error);
+                    if (mAuthRepoLoginPatientListener != null) {
+                        mAuthRepoLoginPatientListener.onPatientLoginFailed(error);
+                    }
+                    logOut();
+                }
+            }
+        }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+                Log.d(TAG, "onFailure: " + e.getMessage());
+                logOut();
+            }
+        });
+    }
+
+    public void getTherapistForLogin(final String uId) {
+        final FirebaseFirestore cloudDB = FirebaseFirestore.getInstance();
+        cloudDB.collection("therapists")
+                .document(uId)
+                .get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+            @Override
+            public void onSuccess(DocumentSnapshot documentSnapshot) {
+                if (documentSnapshot.exists()) {
+                    mUser = documentSnapshot.toObject(Therapist.class);
+                    Log.d(TAG, "onSuccess: " + mUser);
+                    if (mAuthRepoLoginTherapistListener != null) {
+                        mAuthRepoLoginTherapistListener.onTherapistLoginSucceed();
+                    }
+                } else {
+                    final String error = "Therapist Doesn't exists";
+
+                    Log.d(TAG, "onSuccess: " + error);
+                    if (mAuthRepoLoginTherapistListener != null) {
+                        mAuthRepoLoginTherapistListener.onTherapistLoginFailed(error);
+                    }
+                    logOut();
+                }
+            }
+        }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+                Log.d(TAG, "onFailure: " + e.getMessage());
+                if (mAuthRepoLoginTherapistListener != null) {
+                    mAuthRepoLoginTherapistListener.onTherapistLoginFailed(e.getMessage());
+                }
+                logOut();
+            }
+        });
     }
 
     public void logOut(){
         mAuth.signOut();
-        Log.d(TAG, "logOut:"+mAuth.getCurrentUser());
-    }
-
-    public interface AuthRepoLoginPatientInterface{
-        void onPatientLoginSucceed();
-        void onPatientLoginFailed(String message);
-    }
-    public void setLoginPatientListener(AuthRepoLoginPatientInterface mAuthRepoLoginPatientListener){
-        this.mAuthRepoLoginPatientListener = mAuthRepoLoginPatientListener;
+        Log.d(TAG, "logOut:" + mAuth.getCurrentUser());
     }
 }

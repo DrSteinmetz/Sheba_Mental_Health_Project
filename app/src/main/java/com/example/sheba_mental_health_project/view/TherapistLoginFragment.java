@@ -1,41 +1,42 @@
 package com.example.sheba_mental_health_project.view;
 
+import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProvider;
+
 import android.content.Context;
 import android.os.Bundle;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.fragment.app.Fragment;
+
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.fragment.app.Fragment;
-import androidx.lifecycle.Observer;
-import androidx.lifecycle.ViewModelProvider;
-
 import com.example.sheba_mental_health_project.R;
-import com.example.sheba_mental_health_project.model.enums.ViewModelEnum;
 import com.example.sheba_mental_health_project.model.ViewModelFactory;
-import com.example.sheba_mental_health_project.repository.AuthRepository;
-import com.example.sheba_mental_health_project.viewmodel.PatientLoginViewModel;
+import com.example.sheba_mental_health_project.model.enums.ViewModelEnum;
+import com.example.sheba_mental_health_project.viewmodel.TherapistLoginViewModel;
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.textfield.TextInputEditText;
 
-public class PatientLoginFragment extends Fragment {
+public class TherapistLoginFragment extends Fragment {
 
-    private PatientLoginViewModel mViewModel;
+    private TherapistLoginViewModel mViewModel;
 
-    private final String TAG = "PatientLoginFragment";
+    private final String TAG = "TherapistLoginFragment";
 
 
-    public interface PatientLoginFragmentInterface {
-        void onPatientLoginBtnClicked();
+    public interface TherapistLoginFragmentInterface {
+        void onTherapistLoginBtnClicked();
     }
 
-    private PatientLoginFragmentInterface listener;
+    private TherapistLoginFragmentInterface listener;
 
-    public static PatientLoginFragment newInstance() {
-        return new PatientLoginFragment();
+    public static TherapistLoginFragment newInstance() {
+        return new TherapistLoginFragment();
     }
 
     @Override
@@ -43,9 +44,9 @@ public class PatientLoginFragment extends Fragment {
         super.onAttach(context);
 
         try {
-            listener = (PatientLoginFragmentInterface) context;
+            listener = (TherapistLoginFragmentInterface) context;
         } catch (Exception ex) {
-            throw new ClassCastException("The Activity Must Implements PatientLoginFragmentInterface listener!");
+            throw new ClassCastException("The Activity Must Implements TherapistLoginFragmentInterface listener!");
         }
     }
 
@@ -54,14 +55,14 @@ public class PatientLoginFragment extends Fragment {
         super.onCreate(savedInstanceState);
 
         mViewModel = new ViewModelProvider(this, new ViewModelFactory(getContext(),
-                ViewModelEnum.PatientLogin)).get(PatientLoginViewModel.class);
+                ViewModelEnum.TherapistLogin)).get(TherapistLoginViewModel.class);
 
         final Observer<Void> loginObserverSuccess = new Observer<Void>() {
             @Override
             public void onChanged(Void aVoid) {
+                Log.d(TAG, "onChanged: login success");
                 if (listener != null) {
-                    Log.d(TAG, "onChanged: login success");
-                    listener.onPatientLoginBtnClicked();
+                    listener.onTherapistLoginBtnClicked();
                 }
             }
         };
@@ -69,19 +70,19 @@ public class PatientLoginFragment extends Fragment {
         final Observer<String> loginObserverFailed = new Observer<String>() {
             @Override
             public void onChanged(@Nullable final String error) {
-              //  mErrorTv.setVisibility(View.VISIBLE);
+                //  mErrorTv.setVisibility(View.VISIBLE);
                 Log.d(TAG, "onChanged: " + error);
             }
         };
 
-        mViewModel.getPatientLoginSucceed().observe(this, loginObserverSuccess);
-        mViewModel.getPatientLoginFailed().observe(this, loginObserverFailed);
+        mViewModel.getTherapistLoginSucceed().observe(this, loginObserverSuccess);
+        mViewModel.getTherapistLoginFailed().observe(this, loginObserverFailed);
     }
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
-        final View rootView = inflater.inflate(R.layout.patient_login_fragment, container, false);
+        final View rootView = inflater.inflate(R.layout.therapist_login_fragment, container, false);
 
         final TextInputEditText emailEt = rootView.findViewById(R.id.email_et);
         final TextInputEditText passwordEt = rootView.findViewById(R.id.password_et);

@@ -1,50 +1,55 @@
 package com.example.sheba_mental_health_project.model;
 
+import com.example.sheba_mental_health_project.model.enums.PainFrequencyEnum;
+import com.example.sheba_mental_health_project.model.enums.PainLocationEnum;
+import com.example.sheba_mental_health_project.model.enums.PainTypeEnum;
+
 import java.io.Serializable;
 
 public class PainPoint implements Serializable {
 
     private float mPainStrength;
-    private int mPainLocation; // Enum
-    private int[] mPainType; // Enum
-    private int mFrequency; // Enum
+    private PainLocationEnum mPainLocation;
+    private PainTypeEnum[] mPainType;
+    private PainFrequencyEnum mFrequency;
 
-    public PainPoint(float mPainStrength, int mLocation, int[] mPainType, int mFrequency) {
-        this.mPainStrength = mPainStrength;
-        this.mPainLocation = mLocation;
-        this.mPainType = mPainType;
-        this.mFrequency = mFrequency;
+    public PainPoint(float painStrength, PainLocationEnum location,
+                     PainTypeEnum[] painType, PainFrequencyEnum frequency) {
+        this.mPainStrength = painStrength;
+        this.mPainLocation = location;
+        this.mPainType = painType;
+        this.mFrequency = frequency;
     }
 
     public float getPainStrength() {
         return mPainStrength;
     }
 
-    public void setPainStrength(float painStrength) {
-        this.mPainStrength = painStrength;
+    public void setPainStrength(float mPainStrength) {
+        this.mPainStrength = mPainStrength;
     }
 
-    public int getPainLocation() {
+    public PainLocationEnum getPainLocation() {
         return mPainLocation;
     }
 
-    public void setPainLocation(int painLocation) {
-        this.mPainLocation = painLocation;
+    public void setPainLocation(PainLocationEnum mPainLocation) {
+        this.mPainLocation = mPainLocation;
     }
 
-    public int[] getPainType() {
+    public PainTypeEnum[] getPainType() {
         return mPainType;
     }
 
-    public void setPainType(int[] painType) {
-        this.mPainType = painType;
+    public void setPainType(PainTypeEnum[] mPainType) {
+        this.mPainType = mPainType;
     }
 
-    public int getFrequency() {
+    public PainFrequencyEnum getFrequency() {
         return mFrequency;
     }
 
-    public void setFrequency(int frequency) {
-        this.mFrequency = frequency;
+    public void setFrequency(PainFrequencyEnum mFrequency) {
+        this.mFrequency = mFrequency;
     }
 }
