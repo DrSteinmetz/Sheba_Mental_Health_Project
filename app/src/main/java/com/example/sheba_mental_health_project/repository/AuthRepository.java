@@ -16,6 +16,7 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.functions.FirebaseFunctions;
@@ -37,9 +38,8 @@ public class AuthRepository {
 
     private final String TAG ="AuthRepository";
 
-    /**
-     * <------ Interfaces ------>
-     */
+    /**<------ Interfaces ------>*/
+    /*<------ Patient Login Interface ------>*/
     public interface AuthRepoLoginPatientInterface {
         void onPatientLoginSucceed();
 
@@ -52,6 +52,7 @@ public class AuthRepository {
         this.mAuthRepoLoginPatientListener = authRepoLoginPatientListener;
     }
 
+    /*<------ Therapist Login Interface ------>*/
     public interface AuthRepoLoginTherapistInterface {
         void onTherapistLoginSucceed();
 
@@ -60,8 +61,21 @@ public class AuthRepository {
 
     private AuthRepoLoginTherapistInterface mAuthRepoLoginTherapistListener;
 
-    public void setLoginTherapistListener(AuthRepoLoginTherapistInterface authRepoLoginTherapistListener){
+    public void setLoginTherapistListener(AuthRepoLoginTherapistInterface authRepoLoginTherapistListener) {
         this.mAuthRepoLoginTherapistListener = authRepoLoginTherapistListener;
+    }
+
+    /*<------ Add New Patient Interface ------>*/
+    public interface AuthRepoAddNewPatientInterface {
+        void onAddNewPatientSucceed();
+
+        void onAddNewPatientFailed(String error);
+    }
+
+    private AuthRepoAddNewPatientInterface mAuthRepoAddNewPatientListener;
+
+    public void setAddNewPatientListener(AuthRepoAddNewPatientInterface authRepoAddNewPatientInterface) {
+        this.mAuthRepoAddNewPatientListener = authRepoAddNewPatientInterface;
     }
 
     /**<------ Singleton ------>*/
@@ -77,7 +91,7 @@ public class AuthRepository {
         this.mAuth = FirebaseAuth.getInstance();
     }
 
-    public void loginPatient(final String email, final String password){
+    public void loginPatient(final String email, final String password) {
         mAuth.signInWithEmailAndPassword(email, password)
                 .addOnCompleteListener((Activity) mContext, new OnCompleteListener<AuthResult>() {
                     @Override
@@ -101,7 +115,7 @@ public class AuthRepository {
                 });
     }
 
-    public void loginTherapist(final String email, final String password){
+    public void loginTherapist(final String email, final String password) {
         mAuth.signInWithEmailAndPassword(email, password)
                 .addOnCompleteListener((Activity) mContext, new OnCompleteListener<AuthResult>() {
                     @Override
@@ -193,8 +207,55 @@ public class AuthRepository {
         });
     }
 
+    public void addNewPatient(final String email, final String password,
+                              final String firstName, final String lastName) {
+        mAuth.createUserWithEmailAndPassword(email, password)
+                .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+                    @Override
+                    public void onComplete(@NonNull Task<AuthResult> task) {
+                        if (task.isSuccessful()) {
+                            final String uId = task.getResult().getUser().getUid();
+                            final Patient newPatient = new Patient(uId, email, firstName, lastName);
+                            addNewPatientToCloudDB(newPatient);
+                        } else {
+                            final String error = task.getException().getMessage();
+                            Log.d(TAG, "onComplete: " + error);
+
+                            if (mAuthRepoAddNewPatientListener != null) {
+                                mAuthRepoAddNewPatientListener.onAddNewPatientFailed(error);
+                            }
+                        }
+                    }
+                });
+    }
+
+    private void addNewPatientToCloudDB(final Patient patient) {
+        final FirebaseFirestore cloudDB = FirebaseFirestore.getInstance();
+        cloudDB.collection("patients")
+                .document(patient.getId())
+                .set(patient)
+                .addOnCompleteListener(new OnCompleteListener<Void>() {
+                    @Override
+                    public void onComplete(@NonNull Task<Void> task) {
+                        if (task.isSuccessful()) {
+                            if (mAuthRepoAddNewPatientListener != null) {
+                                mAuthRepoAddNewPatientListener.onAddNewPatientSucceed();
+                            }
+                        } else {
+                            final String error = task.getException().getMessage();
+                            Log.d(TAG, "onComplete: " + error);
+
+                            if (mAuthRepoAddNewPatientListener != null) {
+                                mAuthRepoAddNewPatientListener.onAddNewPatientFailed(error);
+                            }
+                        }
+                    }
+                });
+    }
+
     public void logOut(){
         mAuth.signOut();
+        mUser = null;
         Log.d(TAG, "logOut:" + mAuth.getCurrentUser());
     }
 }

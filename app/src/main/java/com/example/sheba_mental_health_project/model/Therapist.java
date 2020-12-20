@@ -10,8 +10,7 @@ public class Therapist extends User {
         super();
     }
 
-    public Therapist(String mId, String mFirstName, String mLastName,
-                     String mEmail, String mToken, UserRoleEnum mRole) {
-        super(mId, mFirstName, mLastName, mEmail, mToken, mRole);
+    public Therapist(String mId, String mEmail, String mFirstName, String mLastName) {
+        super(mId, mEmail, mFirstName, mLastName);
     }
 }

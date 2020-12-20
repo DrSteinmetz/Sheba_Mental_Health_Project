@@ -28,7 +28,7 @@
             android:layout_height="wrap_content"
             android:layout_below="@id/title_tv"
             android:layout_marginTop="20dp"
-            android:hint="@string/prompt_email">
+            android:hint="@string/email">
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/email_et"
                 android:layout_width="match_parent"
@@ -48,7 +48,7 @@
             android:layout_height="wrap_content"
             android:layout_below="@id/email_et_layout"
             android:layout_marginTop="20dp"
-            android:hint="@string/prompt_password">
+            android:hint="@string/password">
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/password_et"
                 android:layout_width="match_parent"

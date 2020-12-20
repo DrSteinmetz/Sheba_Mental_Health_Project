@@ -7,6 +7,10 @@ import androidx.lifecycle.ViewModel;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.example.sheba_mental_health_project.model.enums.ViewModelEnum;
+import com.example.sheba_mental_health_project.viewmodel.AddAppointmentViewModel;
+import com.example.sheba_mental_health_project.viewmodel.AddPatientViewModel;
+import com.example.sheba_mental_health_project.viewmodel.MainActivityViewModel;
+import com.example.sheba_mental_health_project.viewmodel.MainTherapistViewModel;
 import com.example.sheba_mental_health_project.viewmodel.TherapistLoginViewModel;
 import com.example.sheba_mental_health_project.viewmodel.CenterOfMassViewModel;
 import com.example.sheba_mental_health_project.viewmodel.GenitalsViewModel;
@@ -36,6 +40,11 @@ public class ViewModelFactory implements ViewModelProvider.Factory {
         T objectToReturn = null;
 
         switch (mViewModelEnum) {
+            case MainActivity:
+                if (modelClass.isAssignableFrom(MainActivityViewModel.class)) {
+                    objectToReturn = (T) new MainActivityViewModel(mContext);
+                }
+                break;
             case Welcome:
                 if (modelClass.isAssignableFrom(WelcomeViewModel.class)) {
                     objectToReturn = (T) new WelcomeViewModel(mContext);
@@ -54,6 +63,21 @@ public class ViewModelFactory implements ViewModelProvider.Factory {
             case MainPatient:
                 if (modelClass.isAssignableFrom(MainPatientViewModel.class)) {
                     objectToReturn = (T) new MainPatientViewModel(mContext);
+                }
+                break;
+            case MainTherapist:
+                if (modelClass.isAssignableFrom(MainTherapistViewModel.class)) {
+                    objectToReturn = (T) new MainTherapistViewModel(mContext);
+                }
+                break;
+            case AddPatient:
+                if (modelClass.isAssignableFrom(AddPatientViewModel.class)) {
+                    objectToReturn = (T) new AddPatientViewModel(mContext);
+                }
+                break;
+            case AddAppointment:
+                if (modelClass.isAssignableFrom(AddAppointmentViewModel.class)) {
+                    objectToReturn = (T) new AddAppointmentViewModel(mContext);
                 }
                 break;
             case Character:

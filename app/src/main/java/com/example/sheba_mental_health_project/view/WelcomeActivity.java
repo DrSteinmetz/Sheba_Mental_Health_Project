@@ -2,6 +2,7 @@ package com.example.sheba_mental_health_project.view;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.widget.FrameLayout;
@@ -14,9 +15,10 @@ public class WelcomeActivity extends AppCompatActivity
         PatientLoginFragment.PatientLoginFragmentInterface {
 
     private final String WELCOME_FRAG = "WelcomeFragment";
-
     private final String THERAPIST_LOGIN_FRAG = "Therapist_Login_Fragment";
     private final String PATIENT_LOGIN_FRAG = "Patient_Login_Fragment";
+
+    private final String IS_THERAPIST = "is_therapist";
 
     private final String TAG = "WelcomeActivity";
 
@@ -55,9 +57,18 @@ public class WelcomeActivity extends AppCompatActivity
 
     @Override
     public void onTherapistLoginBtnClicked() {
+        startMainActivity(true);
     }
 
     @Override
     public void onPatientLoginBtnClicked() {
+        startMainActivity(false);
+    }
+
+    private void startMainActivity(final boolean isTherapist) {
+        final Intent intent = new Intent(WelcomeActivity.this, MainActivity.class);
+        intent.putExtra(IS_THERAPIST, isTherapist);
+        startActivity(intent);
+        finish();
     }
 }

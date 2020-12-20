@@ -1,5 +1,6 @@
 package com.example.sheba_mental_health_project.model;
 
+import com.example.sheba_mental_health_project.model.enums.AppointmentState;
 import com.example.sheba_mental_health_project.model.enums.BodyPart;
 
 import java.io.Serializable;
@@ -11,21 +12,79 @@ import java.util.Map;
 public class Appointment implements Serializable {
 
     private Date mAppointmentDate;
-    private String mTherapistId;
-    private String mPatientId;
+    private Therapist mTherapist;
+    private Patient mPatient;
     private MentalState mPatientMentalState;
-    private PhysicalState mPatientPhysicalState;
+//    private PhysicalState mPatientPhysicalState;
     private Map<BodyPart, List<PainPoint>> mPainPointsOfBodyPartMap;
 //    private EnumMap<BodyPart, List<PainPoint>> painPointsOfBodyPartMap;
+    private AppointmentState mState;
 
-    public Appointment(Date appointmentDate, String therapistId, String patientId,
-                       MentalState patientMentalState, PhysicalState patientPhysicalState,
-                       Map<BodyPart, List<PainPoint>> painPointsOfBodyPartMap) {
+    public Appointment() {
+    }
+
+    public Appointment(Date appointmentDate, Therapist therapist, Patient patient) {
         this.mAppointmentDate = appointmentDate;
-        this.mTherapistId = therapistId;
-        this.mPatientId = patientId;
-        this.mPatientMentalState = patientMentalState;
-        this.mPatientPhysicalState = patientPhysicalState;
-        this.mPainPointsOfBodyPartMap = painPointsOfBodyPartMap;
+        this.mTherapist = therapist;
+        this.mPatient = patient;
+    }
+
+    public Date getAppointmentDate() {
+        return mAppointmentDate;
+    }
+
+    public void setAppointmentDate(Date mAppointmentDate) {
+        this.mAppointmentDate = mAppointmentDate;
+    }
+
+    public Therapist getTherapist() {
+        return mTherapist;
+    }
+
+    public void setTherapist(Therapist mTherapist) {
+        this.mTherapist = mTherapist;
+    }
+
+    public Patient getPatient() {
+        return mPatient;
+    }
+
+    public void setPatient(Patient mPatient) {
+        this.mPatient = mPatient;
+    }
+
+    public MentalState getPatientMentalState() {
+        return mPatientMentalState;
+    }
+
+    public void setPatientMentalState(MentalState mPatientMentalState) {
+        this.mPatientMentalState = mPatientMentalState;
+    }
+
+    public Map<BodyPart, List<PainPoint>> getPainPointsOfBodyPartMap() {
+        return mPainPointsOfBodyPartMap;
+    }
+
+    public void setPainPointsOfBodyPartMap(Map<BodyPart, List<PainPoint>> mPainPointsOfBodyPartMap) {
+        this.mPainPointsOfBodyPartMap = mPainPointsOfBodyPartMap;
+    }
+
+    public AppointmentState getStateEnum() {
+        return mState;
+    }
+
+    public String getState() {
+        if (mState == null) {
+            return "";
+        }
+        return mState.name();
+    }
+
+    public void setStateEnum(AppointmentState mState) {
+        this.mState = mState;
+    }
+
+    public void setState(String state) {
+        this.mState = AppointmentState.valueOf(state);
     }
 }

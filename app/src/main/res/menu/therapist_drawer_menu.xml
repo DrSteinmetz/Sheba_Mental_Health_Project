@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <item android:id="@+id/add_patient_action"
+        android:title="@string/add_patient_action"
+        android:orderInCategory="0"
+        app:showAsAction="never" />
+
+    <item android:id="@+id/settings_action"
+        android:title="Settings"
+        android:icon="@drawable/ic_round_settings_black_24"
+        android:orderInCategory="8"
+        app:showAsAction="never" />
+
+    <item android:id="@+id/logout_action"
+        android:title="@string/logout"
+        android:orderInCategory="9"
+        app:showAsAction="never" />
+
+</menu>
