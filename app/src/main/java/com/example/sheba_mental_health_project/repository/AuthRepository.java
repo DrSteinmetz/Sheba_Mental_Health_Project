@@ -78,6 +78,7 @@ public class AuthRepository {
         this.mAuthRepoAddNewPatientListener = authRepoAddNewPatientInterface;
     }
 
+
     /**<------ Singleton ------>*/
     public static AuthRepository getInstance(final Context context) {
         if (authRepository == null) {
@@ -251,6 +252,10 @@ public class AuthRepository {
                         }
                     }
                 });
+    }
+
+    public User getUser() {
+        return mUser;
     }
 
     public void logOut(){

@@ -4,7 +4,6 @@ import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
 import android.app.TimePickerDialog;
-import android.content.Context;
 import android.graphics.Color;
 import android.os.Bundle;
 
@@ -12,6 +11,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -32,10 +32,8 @@ import com.google.android.material.datepicker.MaterialPickerOnPositiveButtonClic
 import com.google.android.material.textfield.MaterialAutoCompleteTextView;
 
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
-import java.util.GregorianCalendar;
 import java.util.List;
 import java.util.Locale;
 
@@ -44,6 +42,9 @@ public class AddAppointmentFragment extends Fragment {
     private AddAppointmentViewModel mViewModel;
 
     private ArrayAdapter<String> mPatientsEmailsAdapter;
+    private MaterialAutoCompleteTextView mPatientEmailAutoTV;
+    private TextView mDateTv;
+    private TextView mTimeTv;
 
     private final String DATE_PICKER = "date_picker";
 
@@ -66,17 +67,41 @@ public class AddAppointmentFragment extends Fragment {
             public void onChanged(List<Patient> patients) {
                 mPatientsEmailsAdapter = new ArrayAdapter<>(requireContext(),
                         android.R.layout.select_dialog_singlechoice, mViewModel.getPatientsEmails());
+                mPatientEmailAutoTV.setAdapter(mPatientsEmailsAdapter);
+                Log.d(TAG, "onChanged: "+mViewModel.getPatientsEmails().size());
             }
         };
 
         final Observer<String> onGetAllPatientsFailed = new Observer<String>() {
             @Override
             public void onChanged(String error) {
+                Log.d(TAG, "onChanged: "+error); //TODO
+            }
+        };
+
+        final Observer<String> onAddAppointmentSucceed = new Observer<String>() {
+            @Override
+            public void onChanged(String appointmentId) {
+                mPatientEmailAutoTV.setText("");
+                mDateTv.setText("Appointment Date");
+                mTimeTv.setText("Appointment Time");
+                mViewModel.resetDateFields();
+                //TODO notify that appointment added
+            }
+        };
+
+        final Observer<String> onAddAppointmentFailed = new Observer<String>() {
+            @Override
+            public void onChanged(String error) {
+                Log.d(TAG, "onChanged: "+error); //TODO
             }
         };
 
         mViewModel.getGetAllPatientsSucceed().observe(this, onGetAllPatientsSucceed);
         mViewModel.getGetAllPatientsFailed().observe(this, onGetAllPatientsFailed);
+
+        mViewModel.getAddAppointmentSucceed().observe(this,onAddAppointmentSucceed);
+        mViewModel.getAddAppointmentFailed().observe(this,onAddAppointmentFailed);
     }
 
     @Override
@@ -84,19 +109,21 @@ public class AddAppointmentFragment extends Fragment {
                              @Nullable Bundle savedInstanceState) {
         final View rootView = inflater.inflate(R.layout.add_appointment_fragment, container, false);
 
-        final MaterialAutoCompleteTextView patientNameAutoTV = rootView.findViewById(R.id.patient_name_auto_tv);
+        mPatientEmailAutoTV = rootView.findViewById(R.id.patient_email_auto_tv);
         final MaterialButton dateBtn = rootView.findViewById(R.id.date_dialog_btn);
-        final TextView dateTv = rootView.findViewById(R.id.date_tv);
+        mDateTv = rootView.findViewById(R.id.date_tv);
         final MaterialButton timeBtn = rootView.findViewById(R.id.time_dialog_btn);
-        final TextView timeTv = rootView.findViewById(R.id.time_tv);
+        mTimeTv = rootView.findViewById(R.id.time_tv);
+        final MaterialButton createAppointmentBtn = rootView.findViewById(R.id.create_btn);
 
-        patientNameAutoTV.setThreshold(1);
-        patientNameAutoTV.setAdapter(mPatientsEmailsAdapter);
-        patientNameAutoTV.setTextColor(Color.BLACK);
+        mPatientEmailAutoTV.setThreshold(1);
+        mPatientEmailAutoTV.setTextColor(Color.BLACK);
 
         final SimpleDateFormat ddMMyyyy = new SimpleDateFormat("dd/MM/yyyy", Locale.getDefault());
         final Calendar calendar = Calendar.getInstance();
         final Date today = new Date();
+
+        mViewModel.getAllPatients();
 
         dateBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -115,7 +142,7 @@ public class AddAppointmentFragment extends Fragment {
                         final Long selectedTime = (Long) selection;
                         mViewModel.setChosenDate(selectedTime);
                         calendar.setTimeInMillis(selectedTime);
-                        dateTv.setText(ddMMyyyy.format(calendar));
+                     //   mDateTv.setText(ddMMyyyy.format(calendar));
                     }
                 });
             }
@@ -138,6 +165,40 @@ public class AddAppointmentFragment extends Fragment {
             }
         });
 
+        createAppointmentBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                final String patientEmail = mPatientEmailAutoTV.getText().toString();
+
+                 if(validateFields(patientEmail)){
+                     mViewModel.addAppointment(patientEmail);
+                 }else{
+                     Log.d(TAG, "onClick: "+generateErrorMessage(patientEmail));   //TODO
+                 }
+            }
+        });
+
         return rootView;
     }
+
+    public boolean validateFields(final String patientEmail) {
+        return !patientEmail.isEmpty() && mViewModel.getChosenDate() != -1 &&
+                mViewModel.getHourOfDay() != -1 && mViewModel.getMinutes() != -1 &&
+                mViewModel.getPatientsEmails().contains(patientEmail) ;
+    }
+
+    public String generateErrorMessage(final String patientEmail) {
+        String errorMessage;
+        if(patientEmail.isEmpty()){
+            errorMessage = "Please enter Patient email";
+        } else if(mViewModel.getChosenDate() == -1){
+            errorMessage = "Please Pick a date";
+        } else if(mViewModel.getHourOfDay()  == -1 || mViewModel.getMinutes() == -1){
+            errorMessage = "Please Pick a time";
+        } else {
+            errorMessage = "Patient Doesn't Exist";
+        }
+        return errorMessage;
+    }
+
 }

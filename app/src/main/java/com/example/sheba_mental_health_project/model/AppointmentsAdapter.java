@@ -51,6 +51,10 @@ public class AppointmentsAdapter extends RecyclerView.Adapter<AppointmentsAdapte
 
         public AppointmentViewHolder(@NonNull View itemView) {
             super(itemView);
+            cardLayout = itemView.findViewById(R.id.card_layout);
+            nameTv = itemView.findViewById(R.id.patient_name_tv);
+            dateTv = itemView.findViewById(R.id.date_tv);
+            timeTv = itemView.findViewById(R.id.time_tv);
 
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override

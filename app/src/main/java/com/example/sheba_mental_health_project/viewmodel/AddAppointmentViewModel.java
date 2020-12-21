@@ -5,13 +5,16 @@ import android.content.Context;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
+import com.example.sheba_mental_health_project.model.Appointment;
 import com.example.sheba_mental_health_project.model.Patient;
+import com.example.sheba_mental_health_project.model.enums.AppointmentState;
 import com.example.sheba_mental_health_project.repository.Repository;
 
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
+import java.util.Objects;
 
 public class AddAppointmentViewModel extends ViewModel {
 
@@ -20,11 +23,15 @@ public class AddAppointmentViewModel extends ViewModel {
     private MutableLiveData<List<Patient>> mGetAllPatientsSucceed;
     private MutableLiveData<String> mGetAllPatientsFailed;
 
-    private final List<String> patientsEmails = new ArrayList<>();
+    private  MutableLiveData<String> mAddAppointmentSucceed;
+    private  MutableLiveData<String> mAddAppointmentFailed;
 
-    private long mChosenDate;
-    private int mHourOfDay;
-    private int mMinutes;
+
+    private final List<String> mPatientsEmails = new ArrayList<>();
+
+    private long mChosenDate=-1;
+    private int mHourOfDay=-1;
+    private int mMinutes=-1;
 
     private final String TAG = "AddAppointmentViewModel";
 
@@ -52,11 +59,11 @@ public class AddAppointmentViewModel extends ViewModel {
         mRepository.setGetAllPatientsInterface(new Repository.RepositoryGetAllPatientsInterface() {
             @Override
             public void onGetAllPatientsSucceed(List<Patient> patients) {
-                if (!patientsEmails.isEmpty()) {
-                    patientsEmails.clear();
+                if (!mPatientsEmails.isEmpty()) {
+                    mPatientsEmails.clear();
                 }
                 for (Patient patient : patients) {
-                    patientsEmails.add(patient.getEmail());
+                    mPatientsEmails.add(patient.getEmail());
                 }
                 mGetAllPatientsSucceed.setValue(patients);
             }
@@ -68,9 +75,37 @@ public class AddAppointmentViewModel extends ViewModel {
         });
     }
 
+    public MutableLiveData<String> getAddAppointmentSucceed() {
+        if(mAddAppointmentSucceed==null){
+            mAddAppointmentSucceed = new MutableLiveData<>();
+            attachAddAppointmentListener();
+        }
+        return mAddAppointmentSucceed;
+    }
+    public MutableLiveData<String> getAddAppointmentFailed() {
+        if(mAddAppointmentFailed==null){
+            mAddAppointmentFailed = new MutableLiveData<>();
+            attachAddAppointmentListener();
+        }
+        return mAddAppointmentFailed;
+    }
+
+    private void attachAddAppointmentListener() {
+        mRepository.setAddAppointmentInterface(new Repository.RepositoryAddAppointmentInterface() {
+            @Override
+            public void onAddAppointmentSucceed(String appointmentId) {
+                mAddAppointmentSucceed.setValue(appointmentId);
+            }
+
+            @Override
+            public void onAddAppointmentFailed(String error) {
+                mAddAppointmentFailed.setValue(error);
+            }
+        });
+    }
 
     public List<String> getPatientsEmails() {
-        return patientsEmails;
+        return mPatientsEmails;
     }
 
     public long getChosenDate() {
@@ -97,16 +132,34 @@ public class AddAppointmentViewModel extends ViewModel {
         this.mMinutes = minutes;
     }
 
-    private void calculateDate() {
+
+
+    public void getAllPatients() {
+        mRepository.getAllPatients();
+    }
+
+
+    public void addAppointment(final String patientEmail) {
+        Appointment appointmentToAdd = new Appointment(getCalculatedDate(),getPatientByEmail(patientEmail), AppointmentState.PreMeeting);
+        mRepository.addAppointment(appointmentToAdd);
+    }
+
+    private Patient getPatientByEmail(final String patientEmail){
+        int patientIndex = mPatientsEmails.indexOf(patientEmail);
+        return Objects.requireNonNull(mGetAllPatientsSucceed.getValue()).get(patientIndex);
+    }
+
+    private Date getCalculatedDate() {
         final Date chosenDate = new Date(mChosenDate);
         final Calendar calendar = Calendar.getInstance();
         calendar.setTime(chosenDate);
         calendar.set(Calendar.HOUR_OF_DAY, mHourOfDay);
         calendar.set(Calendar.MINUTE, mMinutes);
         chosenDate.setTime(calendar.getTimeInMillis());
+        return chosenDate;
     }
 
-    public void getAllPatients() {
-        mRepository.getAllPatients();
+    public void resetDateFields() {
+        mChosenDate = mHourOfDay = mMinutes = -1;
     }
 }

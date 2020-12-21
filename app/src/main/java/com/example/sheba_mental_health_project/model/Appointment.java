@@ -29,6 +29,12 @@ public class Appointment implements Serializable {
         this.mPatient = patient;
     }
 
+    public Appointment(Date appointmentDate, Patient patient ,AppointmentState appointmentState) {
+        this.mAppointmentDate = appointmentDate;
+        this.mPatient = patient;
+        this.mState = appointmentState;
+    }
+
     public Date getAppointmentDate() {
         return mAppointmentDate;
     }
@@ -85,6 +91,23 @@ public class Appointment implements Serializable {
     }
 
     public void setState(String state) {
-        this.mState = AppointmentState.valueOf(state);
+        if (mState == null) {
+            this.mState=null;
+        }else {
+            this.mState = AppointmentState.valueOf(state);
+        }
+
+    }
+
+    @Override
+    public String toString() {
+        return "Appointment{" +
+                "mAppointmentDate=" + mAppointmentDate +
+                ", mTherapist=" + mTherapist +
+                ", mPatient=" + mPatient +
+                ", mPatientMentalState=" + mPatientMentalState +
+                ", mPainPointsOfBodyPartMap=" + mPainPointsOfBodyPartMap +
+                ", mState=" + mState +
+                '}';
     }
 }
