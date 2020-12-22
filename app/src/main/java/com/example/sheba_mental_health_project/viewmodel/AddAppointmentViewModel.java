@@ -132,20 +132,18 @@ public class AddAppointmentViewModel extends ViewModel {
         this.mMinutes = minutes;
     }
 
-
-
     public void getAllPatients() {
         mRepository.getAllPatients();
     }
 
-
     public void addAppointment(final String patientEmail) {
-        Appointment appointmentToAdd = new Appointment(getCalculatedDate(),getPatientByEmail(patientEmail), AppointmentState.PreMeeting);
+        final Appointment appointmentToAdd = new Appointment(getCalculatedDate(),
+                getPatientByEmail(patientEmail), AppointmentState.PreMeeting);
         mRepository.addAppointment(appointmentToAdd);
     }
 
     private Patient getPatientByEmail(final String patientEmail){
-        int patientIndex = mPatientsEmails.indexOf(patientEmail);
+        final int patientIndex = mPatientsEmails.indexOf(patientEmail);
         return Objects.requireNonNull(mGetAllPatientsSucceed.getValue()).get(patientIndex);
     }
 

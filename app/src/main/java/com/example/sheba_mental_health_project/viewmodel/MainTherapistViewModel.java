@@ -8,16 +8,19 @@ import androidx.lifecycle.ViewModel;
 import com.example.sheba_mental_health_project.model.Appointment;
 import com.example.sheba_mental_health_project.repository.Repository;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class MainTherapistViewModel extends ViewModel {
 
     private Repository mRepository;
 
-    private final String TAG = "MainTherapistViewModel";
+    private final List<Appointment> mAppointments = new ArrayList<>();
 
     private MutableLiveData<List<Appointment>> mGetMyAppointmentsSucceed;
     private MutableLiveData<String> mGetMyAppointmentsFailed;
+
+    private final String TAG = "MainTherapistViewModel";
 
     public MainTherapistViewModel(final Context context) {
         mRepository = Repository.getInstance(context);
@@ -43,6 +46,8 @@ public class MainTherapistViewModel extends ViewModel {
         mRepository.setGetAppointmentOfSpecificTherapist(new Repository.RepositoryGetAppointmentOfSpecificTherapistInterface() {
             @Override
             public void onGetAppointmentOfSpecificTherapistSucceed(List<Appointment> appointments) {
+                mAppointments.clear();
+                mAppointments.addAll(appointments);
                 mGetMyAppointmentsSucceed.setValue(appointments);
             }
 
@@ -53,7 +58,11 @@ public class MainTherapistViewModel extends ViewModel {
         });
     }
 
-    public void downloadMyAppointments() {
+    public void getMyAppointments() {
         mRepository.getAppointmentsOfSpecificTherapist();
+    }
+
+    public final List<Appointment> getAppointments() {
+        return mAppointments;
     }
 }

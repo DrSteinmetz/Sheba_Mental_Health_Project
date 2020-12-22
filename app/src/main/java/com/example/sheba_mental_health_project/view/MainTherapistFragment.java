@@ -16,12 +16,10 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
 
 import com.example.sheba_mental_health_project.R;
 import com.example.sheba_mental_health_project.model.Appointment;
-import com.example.sheba_mental_health_project.model.AppointmentsAdapter;
-import com.example.sheba_mental_health_project.model.Patient;
+import com.example.sheba_mental_health_project.model.TherapistAppointmentsAdapter;
 import com.example.sheba_mental_health_project.model.ViewModelFactory;
 import com.example.sheba_mental_health_project.model.enums.ViewModelEnum;
 import com.example.sheba_mental_health_project.viewmodel.MainTherapistViewModel;
@@ -35,7 +33,7 @@ public class MainTherapistFragment extends Fragment {
 
     private MainTherapistViewModel mViewModel;
 
-    private AppointmentsAdapter mAppointmentAdapter;
+    private TherapistAppointmentsAdapter mAppointmentAdapter;
 
     private RecyclerView mRecyclerView;
 
@@ -70,22 +68,25 @@ public class MainTherapistFragment extends Fragment {
         final Observer<List<Appointment>> onGetMyAppointmentsSucceed = new Observer<List<Appointment>>() {
             @Override
             public void onChanged(List<Appointment> appointments) {
-                mAppointmentAdapter = new AppointmentsAdapter(requireContext(),appointments);
-                mRecyclerView.setAdapter(mAppointmentAdapter);
+                if (mAppointmentAdapter == null) {
+                    mAppointmentAdapter = new TherapistAppointmentsAdapter(requireContext(), mViewModel.getAppointments());
+                    mRecyclerView.setAdapter(mAppointmentAdapter);
+                } else {
+                    mAppointmentAdapter.notifyDataSetChanged();
+                }
+                Log.d(TAG, "onChanged: " + appointments);
             }
         };
 
         final Observer<String> onGetMyAppointmentsFailed = new Observer<String>() {
             @Override
             public void onChanged(String error) {
-                Log.d(TAG, "onChanged: "+error);
+                Log.d(TAG, "onChanged: " + error);
             }
         };
 
         mViewModel.getMyAppointmentsSucceed().observe(this,onGetMyAppointmentsSucceed);
         mViewModel.getMyAppointmentsFailed().observe(this,onGetMyAppointmentsFailed);
-
-
     }
 
     @Override
@@ -96,10 +97,11 @@ public class MainTherapistFragment extends Fragment {
         final FloatingActionButton addAppointFab = rootView.findViewById(R.id.add_appointment_fab);
         mRecyclerView = rootView.findViewById(R.id.recycler_view);
 
+        //TODO: Show some text if the appointments list is empty.
 
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         mRecyclerView.setHasFixedSize(true);
-        mRecyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
+        /*mRecyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
             @Override
             public void onScrolled(@NonNull RecyclerView recyclerView, int dx, int dy) {
                 super.onScrolled(recyclerView, dx, dy);
@@ -110,7 +112,7 @@ public class MainTherapistFragment extends Fragment {
                     addAppointFab.show();
                 }
             }
-        });
+        });*/
 
         addAppointFab.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -121,7 +123,7 @@ public class MainTherapistFragment extends Fragment {
             }
         });
 
-        mViewModel.downloadMyAppointments();
+        mViewModel.getMyAppointments();
 
         return rootView;
     }

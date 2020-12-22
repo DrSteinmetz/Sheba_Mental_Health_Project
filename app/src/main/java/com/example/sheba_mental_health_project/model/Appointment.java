@@ -75,29 +75,28 @@ public class Appointment implements Serializable {
         this.mPainPointsOfBodyPartMap = mPainPointsOfBodyPartMap;
     }
 
-    public AppointmentState getStateEnum() {
+    public AppointmentState getState() {
         return mState;
     }
 
-    public String getState() {
+    /*public String getState() {
         if (mState == null) {
             return "";
         }
         return mState.name();
-    }
+    }*/
 
-    public void setStateEnum(AppointmentState mState) {
+    public void setState(AppointmentState mState) {
         this.mState = mState;
     }
 
-    public void setState(String state) {
+    /*public void setState(String state) {
         if (mState == null) {
-            this.mState=null;
-        }else {
+            this.mState = null;
+        } else {
             this.mState = AppointmentState.valueOf(state);
         }
-
-    }
+    }*/
 
     @Override
     public String toString() {
@@ -107,7 +106,7 @@ public class Appointment implements Serializable {
                 ", mPatient=" + mPatient +
                 ", mPatientMentalState=" + mPatientMentalState +
                 ", mPainPointsOfBodyPartMap=" + mPainPointsOfBodyPartMap +
-                ", mState=" + mState +
+                ", mState=" + mState.name() +
                 '}';
     }
 }

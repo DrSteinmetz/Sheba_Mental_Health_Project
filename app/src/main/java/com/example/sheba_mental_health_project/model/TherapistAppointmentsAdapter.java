@@ -16,7 +16,7 @@ import java.text.SimpleDateFormat;
 import java.util.List;
 import java.util.Locale;
 
-public class AppointmentsAdapter extends RecyclerView.Adapter<AppointmentsAdapter.AppointmentViewHolder> {
+public class TherapistAppointmentsAdapter extends RecyclerView.Adapter<TherapistAppointmentsAdapter.AppointmentViewHolder> {
 
     private Context mContext;
 
@@ -27,7 +27,7 @@ public class AppointmentsAdapter extends RecyclerView.Adapter<AppointmentsAdapte
 
     private final String TAG = "AppointmentsAdapter";
 
-    public AppointmentsAdapter(Context mContext, List<Appointment> mAppointments) {
+    public TherapistAppointmentsAdapter(Context mContext, List<Appointment> mAppointments) {
         this.mContext = mContext;
         this.mAppointments = mAppointments;
     }
@@ -71,7 +71,7 @@ public class AppointmentsAdapter extends RecyclerView.Adapter<AppointmentsAdapte
     @Override
     public AppointmentViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         final View view = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.appointment_cell_layout, null);
+                .inflate(R.layout.therapist_appointment_cell_layout, null);
         return new AppointmentViewHolder(view);
     }
 

@@ -1,28 +1,58 @@
 package com.example.sheba_mental_health_project.view;
 
-import androidx.lifecycle.ViewModelProvider;
-
+import android.content.Context;
 import android.os.Bundle;
-
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.fragment.app.Fragment;
-
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.fragment.app.Fragment;
+import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProvider;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
 import com.example.sheba_mental_health_project.R;
-import com.example.sheba_mental_health_project.model.enums.ViewModelEnum;
+import com.example.sheba_mental_health_project.model.Appointment;
+import com.example.sheba_mental_health_project.model.PatientAppointmentsAdapter;
 import com.example.sheba_mental_health_project.model.ViewModelFactory;
+import com.example.sheba_mental_health_project.model.enums.ViewModelEnum;
 import com.example.sheba_mental_health_project.viewmodel.MainPatientViewModel;
+
+import java.util.List;
 
 public class MainPatientFragment extends Fragment {
 
     private MainPatientViewModel mViewModel;
 
+    private PatientAppointmentsAdapter mAppointmentAdapter;
+
+    private RecyclerView mRecyclerView;
+
+    private final String TAG = "MainPatientFragment";
+
+
+    public interface MainPatientInterface {
+    }
+
+    private MainPatientInterface listener;
+
     public static MainPatientFragment newInstance() {
         return new MainPatientFragment();
+    }
+
+    @Override
+    public void onAttach(@NonNull Context context) {
+        super.onAttach(context);
+
+        try {
+            listener = (MainPatientInterface) context;
+        } catch (Exception ex) {
+            throw new ClassCastException("The Activity Must Implements MainPatientInterface listener!");
+        }
     }
 
     @Override
@@ -31,11 +61,45 @@ public class MainPatientFragment extends Fragment {
 
         mViewModel = new ViewModelProvider(this, new ViewModelFactory(getContext(),
                 ViewModelEnum.MainPatient)).get(MainPatientViewModel.class);
+
+        final Observer<List<Appointment>> onGetMyAppointmentsSucceed = new Observer<List<Appointment>>() {
+            @Override
+            public void onChanged(List<Appointment> appointments) {
+                if (mAppointmentAdapter == null) {
+                    mAppointmentAdapter = new PatientAppointmentsAdapter(requireContext(), mViewModel.getAppointments());
+                    mRecyclerView.setAdapter(mAppointmentAdapter);
+                } else {
+                    mAppointmentAdapter.notifyDataSetChanged();
+                }
+                Log.d(TAG, "onChanged: " + appointments);
+            }
+        };
+
+        final Observer<String> onGetMyAppointmentsFailed = new Observer<String>() {
+            @Override
+            public void onChanged(String error) {
+                Log.d(TAG, "onChanged: " + error);
+            }
+        };
+
+        mViewModel.getMyAppointmentsSucceed().observe(this,onGetMyAppointmentsSucceed);
+        mViewModel.getMyAppointmentsFailed().observe(this,onGetMyAppointmentsFailed);
     }
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.main_patient_fragment, container, false);
+        final View rootView = inflater.inflate(R.layout.main_patient_fragment, container, false);
+
+        mRecyclerView = rootView.findViewById(R.id.recycler_view);
+
+        // TODO: Show some text if the appointments list is empty.
+
+        mRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+        mRecyclerView.setHasFixedSize(true);
+
+        mViewModel.getMyAppointments();
+
+        return rootView;
     }
 }

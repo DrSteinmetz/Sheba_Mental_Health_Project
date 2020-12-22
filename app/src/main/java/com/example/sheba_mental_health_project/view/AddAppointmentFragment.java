@@ -1,9 +1,11 @@
 package com.example.sheba_mental_health_project.view;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
 import android.app.TimePickerDialog;
+import android.content.DialogInterface;
 import android.graphics.Color;
 import android.os.Bundle;
 
@@ -21,6 +23,7 @@ import android.widget.TimePicker;
 
 import com.example.sheba_mental_health_project.R;
 import com.example.sheba_mental_health_project.model.Patient;
+import com.example.sheba_mental_health_project.model.RangeTimePickerDialog;
 import com.example.sheba_mental_health_project.model.ViewModelFactory;
 import com.example.sheba_mental_health_project.model.enums.ViewModelEnum;
 import com.example.sheba_mental_health_project.viewmodel.AddAppointmentViewModel;
@@ -36,6 +39,7 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
+import java.util.Objects;
 
 public class AddAppointmentFragment extends Fragment {
 
@@ -66,16 +70,16 @@ public class AddAppointmentFragment extends Fragment {
             @Override
             public void onChanged(List<Patient> patients) {
                 mPatientsEmailsAdapter = new ArrayAdapter<>(requireContext(),
-                        android.R.layout.select_dialog_singlechoice, mViewModel.getPatientsEmails());
+                        android.R.layout.select_dialog_item, mViewModel.getPatientsEmails());
                 mPatientEmailAutoTV.setAdapter(mPatientsEmailsAdapter);
-                Log.d(TAG, "onChanged: "+mViewModel.getPatientsEmails().size());
+                Log.d(TAG, "onChanged: " + mViewModel.getPatientsEmails().size());
             }
         };
 
         final Observer<String> onGetAllPatientsFailed = new Observer<String>() {
             @Override
             public void onChanged(String error) {
-                Log.d(TAG, "onChanged: "+error); //TODO
+                Log.w(TAG, "onChanged: " + error);
             }
         };
 
@@ -86,22 +90,22 @@ public class AddAppointmentFragment extends Fragment {
                 mDateTv.setText("Appointment Date");
                 mTimeTv.setText("Appointment Time");
                 mViewModel.resetDateFields();
-                //TODO notify that appointment added
+                // TODO: notify that appointment added
             }
         };
 
         final Observer<String> onAddAppointmentFailed = new Observer<String>() {
             @Override
             public void onChanged(String error) {
-                Log.d(TAG, "onChanged: "+error); //TODO
+                Log.w(TAG, "onChanged: " + error);
             }
         };
 
         mViewModel.getGetAllPatientsSucceed().observe(this, onGetAllPatientsSucceed);
         mViewModel.getGetAllPatientsFailed().observe(this, onGetAllPatientsFailed);
 
-        mViewModel.getAddAppointmentSucceed().observe(this,onAddAppointmentSucceed);
-        mViewModel.getAddAppointmentFailed().observe(this,onAddAppointmentFailed);
+        mViewModel.getAddAppointmentSucceed().observe(this, onAddAppointmentSucceed);
+        mViewModel.getAddAppointmentFailed().observe(this, onAddAppointmentFailed);
     }
 
     @Override
@@ -119,19 +123,23 @@ public class AddAppointmentFragment extends Fragment {
         mPatientEmailAutoTV.setThreshold(1);
         mPatientEmailAutoTV.setTextColor(Color.BLACK);
 
+        //TODO: Make the dateTv and timeTv GONE before choosing date and time.
+        // TODO: Add loading animation.
+        mViewModel.getAllPatients();
+
         final SimpleDateFormat ddMMyyyy = new SimpleDateFormat("dd/MM/yyyy", Locale.getDefault());
         final Calendar calendar = Calendar.getInstance();
         final Date today = new Date();
-
-        mViewModel.getAllPatients();
+        calendar.setTime(today);
 
         dateBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 final CalendarConstraints.Builder constraintBuilder = new CalendarConstraints.Builder();
                 constraintBuilder.setOpenAt(calendar.getTimeInMillis());
-                constraintBuilder.setValidator(DateValidatorPointForward.from(calendar.getTimeInMillis()));
+                constraintBuilder.setValidator(DateValidatorPointForward.from(today.getTime()));
                 final MaterialDatePicker.Builder builder = MaterialDatePicker.Builder.datePicker();
+                builder.setCalendarConstraints(constraintBuilder.build());
                 builder.setTitleText("Appointment's date");
                 builder.setSelection(calendar.getTimeInMillis());
                 final MaterialDatePicker datePicker = builder.build();
@@ -142,16 +150,40 @@ public class AddAppointmentFragment extends Fragment {
                         final Long selectedTime = (Long) selection;
                         mViewModel.setChosenDate(selectedTime);
                         calendar.setTimeInMillis(selectedTime);
-                     //   mDateTv.setText(ddMMyyyy.format(calendar));
+                        mDateTv.setText(ddMMyyyy.format(calendar.getTime()));
                     }
                 });
             }
         });
 
+        // TODO: Fix the TimePicker
         timeBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                final TimePickerDialog timePickerDialog = new TimePickerDialog(requireContext(),
+
+                final RangeTimePickerDialog timePickerDlg = new RangeTimePickerDialog(requireContext(),
+                        new TimePickerDialog.OnTimeSetListener() {
+                            @Override
+                            public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
+                                String hour = hourOfDay >= 10 ?
+                                        "" + hourOfDay : "0" + hourOfDay;
+                                String minutes = minute >= 10 ?
+                                        "" + minute : "0" + minute;
+                                mViewModel.setHourOfDay(hourOfDay);
+                                mViewModel.setMinutes(minute);
+                                calendar.set(Calendar.HOUR_OF_DAY, hourOfDay);
+                                calendar.set(Calendar.MINUTE, minute);
+                                mTimeTv.setText(hour + ":" + minutes);
+                            }
+                        }, calendar.get(Calendar.HOUR_OF_DAY), calendar.get(Calendar.MINUTE),
+                        true);
+                if (mViewModel.getChosenDate() <= today.getTime()) {
+                    timePickerDlg.setMin(calendar.get(Calendar.HOUR_OF_DAY),
+                            calendar.get(Calendar.MINUTE));
+                }
+                timePickerDlg.show();
+
+                /*final TimePickerDialog timePickerDialog = new TimePickerDialog(requireContext(),
                         android.R.style.Theme_Holo_Dialog, new TimePickerDialog.OnTimeSetListener() {
                     @Override
                     public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
@@ -161,7 +193,7 @@ public class AddAppointmentFragment extends Fragment {
                         calendar.set(Calendar.MINUTE, minute);
                     }
                 }, calendar.get(Calendar.HOUR_OF_DAY), calendar.get(Calendar.MINUTE), true);
-                timePickerDialog.show();
+                timePickerDialog.show();*/
             }
         });
 
@@ -170,35 +202,35 @@ public class AddAppointmentFragment extends Fragment {
             public void onClick(View v) {
                 final String patientEmail = mPatientEmailAutoTV.getText().toString();
 
-                 if(validateFields(patientEmail)){
-                     mViewModel.addAppointment(patientEmail);
-                 }else{
-                     Log.d(TAG, "onClick: "+generateErrorMessage(patientEmail));   //TODO
-                 }
+                if (validateFields(patientEmail)) {
+                    mViewModel.addAppointment(patientEmail);
+                } else {
+                    //TODO: show error messages
+                    Log.d(TAG, "onClick: " + generateErrorMessage(patientEmail));
+                }
             }
         });
 
         return rootView;
     }
 
-    public boolean validateFields(final String patientEmail) {
+    private boolean validateFields(final String patientEmail) {
         return !patientEmail.isEmpty() && mViewModel.getChosenDate() != -1 &&
                 mViewModel.getHourOfDay() != -1 && mViewModel.getMinutes() != -1 &&
-                mViewModel.getPatientsEmails().contains(patientEmail) ;
+                mViewModel.getPatientsEmails().contains(patientEmail);
     }
 
-    public String generateErrorMessage(final String patientEmail) {
+    private String generateErrorMessage(final String patientEmail) {
         String errorMessage;
-        if(patientEmail.isEmpty()){
+        if (patientEmail.isEmpty()) {
             errorMessage = "Please enter Patient email";
-        } else if(mViewModel.getChosenDate() == -1){
+        } else if (mViewModel.getChosenDate() == -1) {
             errorMessage = "Please Pick a date";
-        } else if(mViewModel.getHourOfDay()  == -1 || mViewModel.getMinutes() == -1){
+        } else if (mViewModel.getHourOfDay() == -1 || mViewModel.getMinutes() == -1) {
             errorMessage = "Please Pick a time";
         } else {
             errorMessage = "Patient Doesn't Exist";
         }
         return errorMessage;
     }
-
 }

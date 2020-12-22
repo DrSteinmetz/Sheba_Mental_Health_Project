@@ -4,16 +4,21 @@ import android.content.Context;
 import android.util.Log;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 
 import com.example.sheba_mental_health_project.model.Appointment;
 import com.example.sheba_mental_health_project.model.Patient;
 import com.example.sheba_mental_health_project.model.Therapist;
+import com.example.sheba_mental_health_project.model.enums.AppointmentState;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FieldPath;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
@@ -35,19 +40,6 @@ public class Repository {
     private final String TAG = "Repository";
 
     /**<------ Interfaces ------>*/
-    /*<------ Get Appointment Of Specific Therapist ------>*/
-    public interface RepositoryGetAppointmentOfSpecificTherapistInterface {
-        void onGetAppointmentOfSpecificTherapistSucceed(List<Appointment> appointments);
-
-        void onGetAppointmentOfSpecificTherapistFailed(String error);
-    }
-
-    private RepositoryGetAppointmentOfSpecificTherapistInterface mRepositoryGetAppointmentOfSpecificTherapistListener;
-
-    public void setGetAppointmentOfSpecificTherapist(RepositoryGetAppointmentOfSpecificTherapistInterface mRepositoryGetAppointmentOfSpecificTherapistListener){
-        this.mRepositoryGetAppointmentOfSpecificTherapistListener = mRepositoryGetAppointmentOfSpecificTherapistListener;
-    }
-
     /*<------ Get All Patients ------>*/
     public interface RepositoryGetAllPatientsInterface {
         void onGetAllPatientsSucceed(List<Patient> patients);
@@ -59,6 +51,32 @@ public class Repository {
 
     public void setGetAllPatientsInterface(RepositoryGetAllPatientsInterface repositoryGetAllPatientsListener){
         this.mRepositoryGetAllPatientsListener = repositoryGetAllPatientsListener;
+    }
+
+    /*<------ Get Appointment Of Specific Therapist ------>*/
+    public interface RepositoryGetAppointmentOfSpecificTherapistInterface {
+        void onGetAppointmentOfSpecificTherapistSucceed(List<Appointment> appointments);
+
+        void onGetAppointmentOfSpecificTherapistFailed(String error);
+    }
+
+    private RepositoryGetAppointmentOfSpecificTherapistInterface mRepositoryGetAppointmentOfSpecificTherapistListener;
+
+    public void setGetAppointmentOfSpecificTherapist(RepositoryGetAppointmentOfSpecificTherapistInterface repositoryGetAppointmentOfSpecificTherapistListener){
+        this.mRepositoryGetAppointmentOfSpecificTherapistListener = repositoryGetAppointmentOfSpecificTherapistListener;
+    }
+
+    /*<------ Get Appointment Of Specific Patient ------>*/
+    public interface RepositoryGetAppointmentOfSpecificPatientInterface {
+        void onGetAppointmentOfSpecificPatientSucceed(List<Appointment> appointments);
+
+        void onGetAppointmentOfSpecificPatientFailed(String error);
+    }
+
+    private RepositoryGetAppointmentOfSpecificPatientInterface mRepositoryGetAppointmentOfSpecificPatientListener;
+
+    public void setGetAppointmentOfSpecificPatient(RepositoryGetAppointmentOfSpecificPatientInterface repositoryGetAppointmentOfSpecificPatientListener){
+        this.mRepositoryGetAppointmentOfSpecificPatientListener = repositoryGetAppointmentOfSpecificPatientListener;
     }
 
     /*<------ Add Appointment ------>*/
@@ -136,25 +154,64 @@ public class Repository {
     }
 
     public void getAppointmentsOfSpecificTherapist() {
-        final List<Appointment>appointments = new ArrayList<>();
         final String id = FirebaseAuth.getInstance().getCurrentUser().getUid();
+
+        final List<AppointmentState> stateQuery = new ArrayList<>();
+        stateQuery.add(AppointmentState.PreMeeting);
+        stateQuery.add(AppointmentState.Ongoing);
+
         mCloudDB.collection(APPOINTMENTS)
-                .whereEqualTo(FieldPath.of("therapist","id"), id)
-                .get()
-                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                .whereEqualTo(FieldPath.of("therapist", "id"), id)
+                .whereIn("state", stateQuery)
+                .addSnapshotListener(new EventListener<QuerySnapshot>() {
                     @Override
-                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                        if (task.isSuccessful()) {
-                            for (QueryDocumentSnapshot document : task.getResult()) {
-                                final Appointment appointment = document.toObject(Appointment.class);
-                                appointments.add(appointment);
-                                Log.d(TAG, "onComplete: " + appointment.toString());
+                    public void onEvent(@Nullable QuerySnapshot value, @Nullable FirebaseFirestoreException error) {
+                        if (error == null) {
+                            final List<Appointment> appointments = new ArrayList<>();
+                            for (DocumentSnapshot document : value.getDocuments()) {
+                                appointments.add(document.toObject(Appointment.class));
                             }
-                            mRepositoryGetAppointmentOfSpecificTherapistListener.onGetAppointmentOfSpecificTherapistSucceed(appointments);
+                            Log.d(TAG, "onEvent: " + appointments.size());
+                            if (mRepositoryGetAppointmentOfSpecificTherapistListener != null) {
+                                mRepositoryGetAppointmentOfSpecificTherapistListener.onGetAppointmentOfSpecificTherapistSucceed(appointments);
+                            }
                         } else {
-                            final String error = task.getException().getMessage();
-                            Log.w(TAG, "onComplete: ", task.getException());
-                            mRepositoryGetAppointmentOfSpecificTherapistListener.onGetAppointmentOfSpecificTherapistFailed(error);
+                            Log.w(TAG, "onEvent: ", error);
+                            if (mRepositoryGetAppointmentOfSpecificTherapistListener != null) {
+                                mRepositoryGetAppointmentOfSpecificTherapistListener.onGetAppointmentOfSpecificTherapistFailed(error.getMessage());
+                            }
+                        }
+                    }
+                });
+    }
+
+    public void getAppointmentsOfSpecificPatient() {
+        final String id = FirebaseAuth.getInstance().getCurrentUser().getUid();
+
+        final List<AppointmentState> stateQuery = new ArrayList<>();
+        stateQuery.add(AppointmentState.PreMeeting);
+        stateQuery.add(AppointmentState.Ongoing);
+
+        mCloudDB.collection(APPOINTMENTS)
+                .whereEqualTo(FieldPath.of("patient", "id"), id)
+                .whereIn("state", stateQuery)
+                .addSnapshotListener(new EventListener<QuerySnapshot>() {
+                    @Override
+                    public void onEvent(@Nullable QuerySnapshot value, @Nullable FirebaseFirestoreException error) {
+                        if (error == null) {
+                            final List<Appointment> appointments = new ArrayList<>();
+                            for (DocumentSnapshot document : value.getDocuments()) {
+                                appointments.add(document.toObject(Appointment.class));
+                            }
+                            Log.d(TAG, "onEvent: appointments size: " + appointments.size());
+                            if (mRepositoryGetAppointmentOfSpecificPatientListener != null) {
+                                mRepositoryGetAppointmentOfSpecificPatientListener.onGetAppointmentOfSpecificPatientSucceed(appointments);
+                            }
+                        } else {
+                            Log.w(TAG, "onEvent: ", error);
+                            if (mRepositoryGetAppointmentOfSpecificPatientListener != null) {
+                                mRepositoryGetAppointmentOfSpecificPatientListener.onGetAppointmentOfSpecificPatientFailed(error.getMessage());
+                            }
                         }
                     }
                 });

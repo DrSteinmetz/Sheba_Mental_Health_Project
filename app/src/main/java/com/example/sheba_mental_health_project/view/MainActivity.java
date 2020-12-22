@@ -23,7 +23,8 @@ import com.google.android.material.navigation.NavigationView;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener,
-        MainTherapistFragment.MainTherapistInterface {
+        MainTherapistFragment.MainTherapistInterface,
+        MainPatientFragment.MainPatientInterface {
 
     private MainActivityViewModel mViewModel;
 
@@ -124,7 +125,7 @@ public class MainActivity extends AppCompatActivity
     @Override
     public void onAddAppointClicked() {
         getSupportFragmentManager().beginTransaction()
-                .replace(R.id.container, AddAppointmentFragment.newInstance(), ADD_APPOINTMENT_FRAG)
+                .add(R.id.container, AddAppointmentFragment.newInstance(), ADD_APPOINTMENT_FRAG)
                 .addToBackStack(null)
                 .commit();
     }
