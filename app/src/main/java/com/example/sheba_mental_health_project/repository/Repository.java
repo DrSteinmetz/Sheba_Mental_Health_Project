@@ -26,6 +26,7 @@ import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 public class Repository {
 
@@ -138,20 +139,24 @@ public class Repository {
     }
 
     public void addAppointment(final Appointment appointment) {
+        final String id = mCloudDB.collection(APPOINTMENTS).document().getId();
+        appointment.setId(id);
         appointment.setTherapist((Therapist) AuthRepository.getInstance(mContext).getUser());
+
         mCloudDB.collection(APPOINTMENTS)
-                .add(appointment)
-                .addOnCompleteListener(new OnCompleteListener<DocumentReference>() {
+                .document(id)
+                .set(appointment)
+                .addOnCompleteListener(new OnCompleteListener<Void>() {
                     @Override
-                    public void onComplete(@NonNull Task<DocumentReference> task) {
+                    public void onComplete(@NonNull Task<Void> task) {
                         if (task.isSuccessful()) {
-                            final String id = task.getResult().getId();
                             Log.d(TAG, "onComplete: " + id);
                             if (mRepositoryAddAppointmentListener != null) {
                                 mRepositoryAddAppointmentListener.onAddAppointmentSucceed(id);
                             }
                         } else {
-                            final String error = task.getException().getMessage();
+                            final String error = Objects
+                                    .requireNonNull(task.getException()).getMessage();
                             Log.w(TAG, "onComplete: ", task.getException());
                             if (mRepositoryAddAppointmentListener != null) {
                                 mRepositoryAddAppointmentListener.onAddAppointmentFailed(error);
@@ -162,7 +167,7 @@ public class Repository {
     }
 
     public void getAppointmentsOfSpecificTherapist() {
-        final String id = FirebaseAuth.getInstance().getCurrentUser().getUid();
+        final String id = Objects.requireNonNull(FirebaseAuth.getInstance().getCurrentUser()).getUid();
 
         final List<AppointmentState> stateQuery = new ArrayList<>();
         stateQuery.add(AppointmentState.PreMeeting);
@@ -174,19 +179,27 @@ public class Repository {
                 .addSnapshotListener(new EventListener<QuerySnapshot>() {
                     @Override
                     public void onEvent(@Nullable QuerySnapshot value, @Nullable FirebaseFirestoreException error) {
-                        if (error == null) {
+                        if (error == null && value != null) {
                             final List<Appointment> appointments = new ArrayList<>();
                             for (DocumentSnapshot document : value.getDocuments()) {
                                 appointments.add(document.toObject(Appointment.class));
                             }
                             Log.d(TAG, "onEvent: " + appointments.size());
                             if (mRepositoryGetAppointmentOfSpecificTherapistListener != null) {
-                                mRepositoryGetAppointmentOfSpecificTherapistListener.onGetAppointmentOfSpecificTherapistSucceed(appointments);
+                                mRepositoryGetAppointmentOfSpecificTherapistListener
+                                        .onGetAppointmentOfSpecificTherapistSucceed(appointments);
                             }
                         } else {
+                            String errorMessage;
+                            if (error != null) {
+                                errorMessage = error.getMessage();
+                            } else {
+                                errorMessage = "FIREBASE ERROR IS NULL";
+                            }
                             Log.w(TAG, "onEvent: ", error);
                             if (mRepositoryGetAppointmentOfSpecificTherapistListener != null) {
-                                mRepositoryGetAppointmentOfSpecificTherapistListener.onGetAppointmentOfSpecificTherapistFailed(error.getMessage());
+                                mRepositoryGetAppointmentOfSpecificTherapistListener
+                                        .onGetAppointmentOfSpecificTherapistFailed(errorMessage);
                             }
                         }
                     }
@@ -194,7 +207,7 @@ public class Repository {
     }
 
     public void getAppointmentsOfSpecificPatient() {
-        final String id = FirebaseAuth.getInstance().getCurrentUser().getUid();
+        final String id = Objects.requireNonNull(FirebaseAuth.getInstance().getCurrentUser()).getUid();
 
         final List<AppointmentState> stateQuery = new ArrayList<>();
         stateQuery.add(AppointmentState.PreMeeting);
@@ -206,19 +219,27 @@ public class Repository {
                 .addSnapshotListener(new EventListener<QuerySnapshot>() {
                     @Override
                     public void onEvent(@Nullable QuerySnapshot value, @Nullable FirebaseFirestoreException error) {
-                        if (error == null) {
+                        if (error == null && value != null) {
                             final List<Appointment> appointments = new ArrayList<>();
                             for (DocumentSnapshot document : value.getDocuments()) {
                                 appointments.add(document.toObject(Appointment.class));
                             }
                             Log.d(TAG, "onEvent: appointments size: " + appointments.size());
                             if (mRepositoryGetAppointmentOfSpecificPatientListener != null) {
-                                mRepositoryGetAppointmentOfSpecificPatientListener.onGetAppointmentOfSpecificPatientSucceed(appointments);
+                                mRepositoryGetAppointmentOfSpecificPatientListener
+                                        .onGetAppointmentOfSpecificPatientSucceed(appointments);
                             }
                         } else {
+                            String errorMessage;
+                            if (error != null) {
+                                errorMessage = error.getMessage();
+                            } else {
+                                errorMessage = "FIREBASE ERROR IS NULL";
+                            }
                             Log.w(TAG, "onEvent: ", error);
                             if (mRepositoryGetAppointmentOfSpecificPatientListener != null) {
-                                mRepositoryGetAppointmentOfSpecificPatientListener.onGetAppointmentOfSpecificPatientFailed(error.getMessage());
+                                mRepositoryGetAppointmentOfSpecificPatientListener
+                                        .onGetAppointmentOfSpecificPatientFailed(errorMessage);
                             }
                         }
                     }

@@ -11,13 +11,13 @@ import java.util.Map;
 
 public class Appointment implements Serializable {
 
+    private String mId;
     private Date mAppointmentDate;
     private Therapist mTherapist;
     private Patient mPatient;
     private MentalState mPatientMentalState;
 //    private PhysicalState mPatientPhysicalState;
     private Map<BodyPart, List<PainPoint>> mPainPointsOfBodyPartMap;
-//    private EnumMap<BodyPart, List<PainPoint>> painPointsOfBodyPartMap;
     private AppointmentState mState;
 
     public Appointment() {
@@ -33,6 +33,15 @@ public class Appointment implements Serializable {
         this.mAppointmentDate = appointmentDate;
         this.mPatient = patient;
         this.mState = appointmentState;
+    }
+
+
+    public String getId() {
+        return mId;
+    }
+
+    public void setId(String id) {
+        this.mId = id;
     }
 
     public Date getAppointmentDate() {

@@ -1,18 +1,8 @@
 package com.example.sheba_mental_health_project.view;
 
-import androidx.appcompat.app.AlertDialog;
-import androidx.lifecycle.Observer;
-import androidx.lifecycle.ViewModelProvider;
-
 import android.app.TimePickerDialog;
-import android.content.DialogInterface;
 import android.graphics.Color;
 import android.os.Bundle;
-
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.fragment.app.Fragment;
-
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -20,6 +10,12 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
 import android.widget.TimePicker;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.fragment.app.Fragment;
+import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProvider;
 
 import com.example.sheba_mental_health_project.R;
 import com.example.sheba_mental_health_project.model.Patient;
@@ -39,13 +35,13 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
-import java.util.Objects;
 
 public class AddAppointmentFragment extends Fragment {
 
     private AddAppointmentViewModel mViewModel;
 
     private ArrayAdapter<String> mPatientsEmailsAdapter;
+
     private MaterialAutoCompleteTextView mPatientEmailAutoTV;
     private TextView mDateTv;
     private TextView mTimeTv;
@@ -87,10 +83,9 @@ public class AddAppointmentFragment extends Fragment {
             @Override
             public void onChanged(String appointmentId) {
                 mPatientEmailAutoTV.setText("");
-                mDateTv.setText("Appointment Date");
-                mTimeTv.setText("Appointment Time");
+                mDateTv.setVisibility(View.GONE);
+                mTimeTv.setVisibility(View.GONE);
                 mViewModel.resetDateFields();
-                // TODO: notify that appointment added
             }
         };
 
@@ -123,13 +118,23 @@ public class AddAppointmentFragment extends Fragment {
         mPatientEmailAutoTV.setThreshold(1);
         mPatientEmailAutoTV.setTextColor(Color.BLACK);
 
-        //TODO: Make the dateTv and timeTv GONE before choosing date and time.
+        mDateTv.setVisibility(View.GONE);
+        mTimeTv.setVisibility(View.GONE);
+
         // TODO: Add loading animation.
         mViewModel.getAllPatients();
 
         final SimpleDateFormat ddMMyyyy = new SimpleDateFormat("dd/MM/yyyy", Locale.getDefault());
+        final SimpleDateFormat HHmm = new SimpleDateFormat("HH:mm", Locale.getDefault());
         final Calendar calendar = Calendar.getInstance();
+        calendar.set(Calendar.HOUR_OF_DAY, 0);
+        calendar.set(Calendar.MINUTE, 0);
+        calendar.set(Calendar.SECOND, 0);
+        calendar.set(Calendar.MILLISECOND, 0);
         final Date today = new Date();
+        final Date today00 = new Date(calendar.getTimeInMillis());
+//        final Date today00 = new Date(today.getTime() - 86_400_000L);
+        Log.d(TAG, "zxc onCreateView: " + today00);
         calendar.setTime(today);
 
         dateBtn.setOnClickListener(new View.OnClickListener() {
@@ -137,7 +142,7 @@ public class AddAppointmentFragment extends Fragment {
             public void onClick(View v) {
                 final CalendarConstraints.Builder constraintBuilder = new CalendarConstraints.Builder();
                 constraintBuilder.setOpenAt(calendar.getTimeInMillis());
-                constraintBuilder.setValidator(DateValidatorPointForward.from(today.getTime()));
+                constraintBuilder.setValidator(DateValidatorPointForward.from(today00.getTime()));
                 final MaterialDatePicker.Builder builder = MaterialDatePicker.Builder.datePicker();
                 builder.setCalendarConstraints(constraintBuilder.build());
                 builder.setTitleText("Appointment's date");
@@ -149,7 +154,12 @@ public class AddAppointmentFragment extends Fragment {
                     public void onPositiveButtonClick(Object selection) {
                         final Long selectedTime = (Long) selection;
                         mViewModel.setChosenDate(selectedTime);
+                        final int hourOfDay = calendar.get(Calendar.HOUR_OF_DAY);
+                        final int minute = calendar.get(Calendar.MINUTE);
                         calendar.setTimeInMillis(selectedTime);
+                        calendar.set(Calendar.HOUR_OF_DAY, hourOfDay);
+                        calendar.set(Calendar.MINUTE, minute);
+                        mDateTv.setVisibility(View.VISIBLE);
                         mDateTv.setText(ddMMyyyy.format(calendar.getTime()));
                     }
                 });
@@ -165,15 +175,12 @@ public class AddAppointmentFragment extends Fragment {
                         new TimePickerDialog.OnTimeSetListener() {
                             @Override
                             public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
-                                String hour = hourOfDay >= 10 ?
-                                        "" + hourOfDay : "0" + hourOfDay;
-                                String minutes = minute >= 10 ?
-                                        "" + minute : "0" + minute;
                                 mViewModel.setHourOfDay(hourOfDay);
                                 mViewModel.setMinutes(minute);
                                 calendar.set(Calendar.HOUR_OF_DAY, hourOfDay);
                                 calendar.set(Calendar.MINUTE, minute);
-                                mTimeTv.setText(hour + ":" + minutes);
+                                mTimeTv.setVisibility(View.VISIBLE);
+                                mTimeTv.setText(HHmm.format(calendar.getTime()));
                             }
                         }, calendar.get(Calendar.HOUR_OF_DAY), calendar.get(Calendar.MINUTE),
                         true);
