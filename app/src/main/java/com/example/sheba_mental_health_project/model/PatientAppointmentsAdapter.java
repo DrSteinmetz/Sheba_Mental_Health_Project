@@ -1,6 +1,7 @@
 package com.example.sheba_mental_health_project.model;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -71,7 +72,7 @@ public class PatientAppointmentsAdapter extends RecyclerView.Adapter<PatientAppo
     @Override
     public AppointmentViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         final View view = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.therapist_appointment_cell_layout, null);
+                .inflate(R.layout.patient_appointment_cell_layout, null);
         return new AppointmentViewHolder(view);
     }
 

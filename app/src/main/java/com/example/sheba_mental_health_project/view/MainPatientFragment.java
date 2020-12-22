@@ -36,6 +36,7 @@ public class MainPatientFragment extends Fragment {
 
 
     public interface MainPatientInterface {
+        void onPatientAppointmentClicked();
     }
 
     private MainPatientInterface listener;
@@ -67,6 +68,15 @@ public class MainPatientFragment extends Fragment {
             public void onChanged(List<Appointment> appointments) {
                 if (mAppointmentAdapter == null) {
                     mAppointmentAdapter = new PatientAppointmentsAdapter(requireContext(), mViewModel.getAppointments());
+                    mAppointmentAdapter.setAppointmentListener(new PatientAppointmentsAdapter.AppointmentListener() {
+                        @Override
+                        public void onAppointmentClicked(int position, View view) {
+                            if (listener != null) {
+                                mViewModel.setCurrentAppointment(appointments.get(position));
+                                listener.onPatientAppointmentClicked();
+                            }
+                        }
+                    });
                     mRecyclerView.setAdapter(mAppointmentAdapter);
                 } else {
                     mAppointmentAdapter.notifyDataSetChanged();
@@ -101,5 +111,12 @@ public class MainPatientFragment extends Fragment {
         mViewModel.getMyAppointments();
 
         return rootView;
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+
+        mViewModel.removePatientAppointmentsListener();
     }
 }

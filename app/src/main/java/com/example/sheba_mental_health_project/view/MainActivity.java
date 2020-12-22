@@ -37,6 +37,7 @@ public class MainActivity extends AppCompatActivity
     private final String MAIN_PATIENT_FRAG = "Main_Patient_Fragment";
     private final String ADD_PATIENT_FRAG = "Add_Patient_Fragment";
     private final String ADD_APPOINTMENT_FRAG = "Add_Appointment_Fragment";
+    private final String CHARACTER_FRAG = "Character_Fragment";
 
     private final String IS_THERAPIST = "is_therapist";
 
@@ -123,9 +124,21 @@ public class MainActivity extends AppCompatActivity
     }
 
     @Override
+    public void onTherapistAppointmentClicked() {
+    }
+
+    @Override
     public void onAddAppointClicked() {
         getSupportFragmentManager().beginTransaction()
                 .add(R.id.container, AddAppointmentFragment.newInstance(), ADD_APPOINTMENT_FRAG)
+                .addToBackStack(null)
+                .commit();
+    }
+
+    @Override
+    public void onPatientAppointmentClicked() {
+        getSupportFragmentManager().beginTransaction()
+                .add(R.id.container, CharacterFragment.newInstance(), CHARACTER_FRAG)
                 .addToBackStack(null)
                 .commit();
     }

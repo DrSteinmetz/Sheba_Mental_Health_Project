@@ -58,11 +58,16 @@ public class MainTherapistViewModel extends ViewModel {
         });
     }
 
+
     public void getMyAppointments() {
         mRepository.getAppointmentsOfSpecificTherapist();
     }
 
     public final List<Appointment> getAppointments() {
         return mAppointments;
+    }
+
+    public void removeTherapistAppointmentsListener() {
+        mRepository.removeTherapistAppointmentsListener();
     }
 }

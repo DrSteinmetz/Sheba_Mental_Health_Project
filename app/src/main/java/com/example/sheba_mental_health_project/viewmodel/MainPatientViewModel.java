@@ -67,4 +67,12 @@ public class MainPatientViewModel extends ViewModel {
     public void getMyAppointments() {
         mRepository.getAppointmentsOfSpecificPatient();
     }
+
+    public void setCurrentAppointment(final Appointment appointment) {
+        mRepository.setCurrentAppointment(appointment);
+    }
+
+    public void removePatientAppointmentsListener() {
+        mRepository.removePatientAppointmentsListener();
+    }
 }

@@ -38,6 +38,7 @@ public class MainTherapistFragment extends Fragment {
     private RecyclerView mRecyclerView;
 
     public interface MainTherapistInterface {
+        void onTherapistAppointmentClicked();
         void onAddAppointClicked();
     }
 
@@ -126,5 +127,12 @@ public class MainTherapistFragment extends Fragment {
         mViewModel.getMyAppointments();
 
         return rootView;
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+
+        mViewModel.removeTherapistAppointmentsListener();
     }
 }
