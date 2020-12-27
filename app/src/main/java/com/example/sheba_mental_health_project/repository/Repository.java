@@ -8,13 +8,15 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
 import com.example.sheba_mental_health_project.model.Appointment;
+import com.example.sheba_mental_health_project.model.PainPoint;
 import com.example.sheba_mental_health_project.model.Patient;
 import com.example.sheba_mental_health_project.model.Therapist;
-import com.example.sheba_mental_health_project.model.enums.AppointmentState;
+import com.example.sheba_mental_health_project.model.enums.AppointmentStateEnum;
+import com.example.sheba_mental_health_project.model.enums.BodyPartEnum;
+import com.example.sheba_mental_health_project.model.enums.PainLocationEnum;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FieldPath;
@@ -26,6 +28,7 @@ import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.Objects;
 
 public class Repository {
@@ -101,6 +104,19 @@ public class Repository {
         this.mRepositoryAddAppointmentListener = repositoryAddAppointmentListener;
     }
 
+    /*<------ Set Pain Points ------>*/
+    public interface RepositorySetPainPointsInterface {
+        void onSetPainPointsSucceed(PainPoint painPoint);
+
+        void onSetPainPointsFailed(String error);
+    }
+
+    private RepositorySetPainPointsInterface mRepositorySetPainPointsListener;
+
+    public void setSetPainPointsInterface(RepositorySetPainPointsInterface repositorySetPainPointsInterface){
+        this.mRepositorySetPainPointsListener = repositorySetPainPointsInterface;
+    }
+
     /**<------ Singleton ------>*/
     public static Repository getInstance(final Context context) {
         if (repository == null) {
@@ -169,9 +185,9 @@ public class Repository {
     public void getAppointmentsOfSpecificTherapist() {
         final String id = Objects.requireNonNull(FirebaseAuth.getInstance().getCurrentUser()).getUid();
 
-        final List<AppointmentState> stateQuery = new ArrayList<>();
-        stateQuery.add(AppointmentState.PreMeeting);
-        stateQuery.add(AppointmentState.Ongoing);
+        final List<AppointmentStateEnum> stateQuery = new ArrayList<>();
+        stateQuery.add(AppointmentStateEnum.PreMeeting);
+        stateQuery.add(AppointmentStateEnum.Ongoing);
 
         mTherapistAppointmentsListener = mCloudDB.collection(APPOINTMENTS)
                 .whereEqualTo(FieldPath.of("therapist", "id"), id)
@@ -209,9 +225,9 @@ public class Repository {
     public void getAppointmentsOfSpecificPatient() {
         final String id = Objects.requireNonNull(FirebaseAuth.getInstance().getCurrentUser()).getUid();
 
-        final List<AppointmentState> stateQuery = new ArrayList<>();
-        stateQuery.add(AppointmentState.PreMeeting);
-        stateQuery.add(AppointmentState.Ongoing);
+        final List<AppointmentStateEnum> stateQuery = new ArrayList<>();
+        stateQuery.add(AppointmentStateEnum.PreMeeting);
+        stateQuery.add(AppointmentStateEnum.Ongoing);
 
         mPatientAppointmentsListener = mCloudDB.collection(APPOINTMENTS)
                 .whereEqualTo(FieldPath.of("patient", "id"), id)
@@ -246,12 +262,58 @@ public class Repository {
                 });
     }
 
+    public void setPainPoints(final BodyPartEnum bodyPart, final PainPoint painPoint) {
+        final Map<String, List<PainPoint>> map =  mCurrentAppointment.getPainPointsOfBodyPartMap();
+        List<PainPoint> painPoints = mCurrentAppointment.getPainPointsOfBodyPartMap().get(bodyPart.name());
+        if (painPoints == null) {
+            painPoints = new ArrayList<>();
+            painPoints.add(painPoint);
+            map.put(bodyPart.name(), painPoints);
+        } else {
+            final int index = painPoints.indexOf(painPoint);
+            if (index != -1) {
+                painPoints.set(index, painPoint);
+            } else {
+                painPoints.add(painPoint);
+            }
+        }
+
+        mCloudDB.collection(APPOINTMENTS)
+                .document(mCurrentAppointment.getId())
+                .update("painPointsOfBodyPartMap", map)
+                .addOnCompleteListener(new OnCompleteListener<Void>() {
+                    @Override
+                    public void onComplete(@NonNull Task<Void> task) {
+                        if (task.isSuccessful()) {
+                            if (mRepositorySetPainPointsListener != null) {
+                                mRepositorySetPainPointsListener.onSetPainPointsSucceed(painPoint);
+                            }
+                        } else {
+                            final String error = Objects.requireNonNull(task.getException())
+                                    .getMessage();
+                            Log.w(TAG, "onComplete: ", task.getException());
+                            if (mRepositorySetPainPointsListener != null) {
+                                mRepositorySetPainPointsListener.onSetPainPointsFailed(error);
+                            }
+                        }
+                    }
+                });
+    }
+
     public Appointment getCurrentAppointment() {
         return mCurrentAppointment;
     }
 
     public void setCurrentAppointment(Appointment mCurrentAppointment) {
         this.mCurrentAppointment = mCurrentAppointment;
+    }
+
+    public List<PainPoint> getSpecificPainPointsList(final BodyPartEnum bodyPartEnum) {
+        List<PainPoint> painPoints = mCurrentAppointment.getPainPointsOfBodyPartMap().get(bodyPartEnum.name());
+        if (painPoints == null) {
+            painPoints = new ArrayList<>();
+        }
+        return painPoints;
     }
 
     public void removeTherapistAppointmentsListener() {

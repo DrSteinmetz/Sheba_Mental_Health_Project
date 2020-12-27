@@ -3,19 +3,87 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     android:background="@color/white"
     android:focusable="true"
     android:clickable="true"
     tools:context=".view.LeftArmFragment">
 
-    <ImageView
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="1"
-        android:padding="20dp"
-        android:src="@drawable/ic_left_arm"
-        android:scaleType="fitCenter" />
+        android:layout_weight="1">
+
+        <ImageView
+            android:id="@+id/body_part_iv"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_centerInParent="true"
+            android:padding="20dp"
+            android:src="@drawable/ic_left_arm"
+            android:scaleType="fitCenter" />
+
+        <ImageView
+            android:id="@+id/shoulder_iv"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_alignTop="@id/body_part_iv"
+            android:layout_marginTop="30dp"
+            android:layout_alignEnd="@id/body_part_iv"
+            android:layout_marginEnd="20dp"
+            android:src="@drawable/ic_red_pain_point"
+            android:visibility="gone"
+            android:scaleType="fitCenter" />
+        <View
+            android:id="@+id/shoulder_v"
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:layout_alignTop="@id/body_part_iv"
+            android:layout_alignEnd="@id/body_part_iv"
+            android:layout_marginTop="10dp" />
+
+        <ImageView
+            android:id="@+id/elbow_iv"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_alignTop="@id/body_part_iv"
+            android:layout_alignEnd="@id/body_part_iv"
+            android:layout_marginTop="130dp"
+            android:layout_marginEnd="25dp"
+            android:src="@drawable/ic_red_pain_point"
+            android:visibility="gone"
+            android:scaleType="fitCenter" />
+        <View
+            android:id="@+id/elbow_v"
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:layout_alignTop="@id/body_part_iv"
+            android:layout_alignEnd="@id/body_part_iv"
+            android:layout_marginTop="110dp"
+            android:layout_marginEnd="5dp" />
+
+        <ImageView
+            android:id="@+id/hand_iv"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_alignBottom="@id/body_part_iv"
+            android:layout_alignStart="@id/body_part_iv"
+            android:layout_marginBottom="45dp"
+            android:layout_marginStart="35dp"
+            android:src="@drawable/ic_red_pain_point"
+            android:visibility="gone"
+            android:scaleType="fitCenter" />
+        <View
+            android:id="@+id/hand_v"
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:layout_alignBottom="@id/body_part_iv"
+            android:layout_alignStart="@id/body_part_iv"
+            android:layout_marginBottom="25dp"
+            android:layout_marginStart="20dp" />
+
+    </RelativeLayout>
 
     <ScrollView
         android:layout_width="match_parent"
@@ -27,19 +95,254 @@
             android:layout_height="wrap_content"
             android:padding="20dp">
 
-            <ImageView
-                android:id="@+id/one"
+            <TextView
+                android:id="@+id/pain_strength_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:gravity="center"
+                android:text="Pain Strength"
+                android:textSize="20sp"
+                android:textStyle="bold"
+                android:textColor="@color/black"
+                android:textAllCaps="false" />
+            <com.rtugeek.android.colorseekbar.ColorSeekBar
+                android:id="@+id/pain_strength_sb"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:src="@drawable/ic_left_arm"
-                android:scaleType="fitCenter" />
+                android:layout_height="wrap_content"
+                android:layout_below="@id/pain_strength_tv"
+                app:barHeight="7dp"
+                app:maxPosition="10"
+                app:colorSeeds="@array/color_seek_bar" />
 
-            <ImageView
+            <TextView
+                android:id="@+id/pain_type_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/pain_strength_sb"
+                android:layout_marginTop="30dp"
+                android:layout_centerHorizontal="true"
+                android:gravity="center"
+                android:text="Pain Type"
+                android:textSize="20sp"
+                android:textStyle="bold"
+                android:textColor="@color/black"
+                android:textAllCaps="false" />
+            <RadioGroup
+                android:id="@+id/pain_type_rg"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_below="@id/one"
-                android:src="@drawable/ic_left_arm"
-                android:scaleType="fitCenter" />
+                android:layout_height="wrap_content"
+                android:layout_below="@id/pain_type_tv"
+                android:orientation="vertical">
+
+                <com.google.android.material.radiobutton.MaterialRadioButton
+                    android:id="@+id/sharp_pain_rb"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="10dp"
+                    android:padding="10dp"
+                    android:text="Sharp"
+                    android:textSize="18sp"
+                    android:textColor="@color/black" />
+
+                <com.google.android.material.radiobutton.MaterialRadioButton
+                    android:id="@+id/dim_pain_rb"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="10dp"
+                    android:padding="10dp"
+                    android:text="Dim"
+                    android:textSize="18sp"
+                    android:textColor="@color/black" />
+
+                <com.google.android.material.radiobutton.MaterialRadioButton
+                    android:id="@+id/pressing_pain_rb"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="10dp"
+                    android:padding="10dp"
+                    android:text="Pressing"
+                    android:textSize="18sp"
+                    android:textColor="@color/black" />
+
+                <com.google.android.material.radiobutton.MaterialRadioButton
+                    android:id="@+id/burn_pain_rb"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="10dp"
+                    android:padding="10dp"
+                    android:text="burning"
+                    android:textSize="18sp"
+                    android:textColor="@color/black" />
+
+                <com.google.android.material.radiobutton.MaterialRadioButton
+                    android:id="@+id/no_pain_rb"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="10dp"
+                    android:padding="10dp"
+                    android:text="No Pain"
+                    android:textSize="18sp"
+                    android:textColor="@color/black" />
+
+            </RadioGroup>
+
+            <TextView
+                android:id="@+id/other_feeling_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/pain_type_rg"
+                android:layout_marginTop="30dp"
+                android:layout_centerHorizontal="true"
+                android:gravity="center"
+                android:text="Other Feelings"
+                android:textSize="20sp"
+                android:textStyle="bold"
+                android:textColor="@color/black"
+                android:textAllCaps="false" />
+            <RadioGroup
+                android:id="@+id/other_feeling_rg"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/other_feeling_tv"
+                android:orientation="vertical">
+
+                <com.google.android.material.radiobutton.MaterialRadioButton
+                    android:id="@+id/bleeding_rb"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="10dp"
+                    android:padding="10dp"
+                    android:text="Bleeding"
+                    android:textSize="18sp"
+                    android:textColor="@color/black" />
+
+                <com.google.android.material.radiobutton.MaterialRadioButton
+                    android:id="@+id/itch_rb"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="10dp"
+                    android:padding="10dp"
+                    android:text="Itching"
+                    android:textSize="18sp"
+                    android:textColor="@color/black" />
+
+                <com.google.android.material.radiobutton.MaterialRadioButton
+                    android:id="@+id/sting_rb"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="10dp"
+                    android:padding="10dp"
+                    android:text="Stinging"
+                    android:textSize="18sp"
+                    android:textColor="@color/black" />
+
+                <com.google.android.material.radiobutton.MaterialRadioButton
+                    android:id="@+id/strange_rb"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="10dp"
+                    android:padding="10dp"
+                    android:text="Strange Feeling"
+                    android:textSize="18sp"
+                    android:textColor="@color/black" />
+
+                <com.google.android.material.radiobutton.MaterialRadioButton
+                    android:id="@+id/numb_rb"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="10dp"
+                    android:padding="10dp"
+                    android:text="Numb"
+                    android:textSize="18sp"
+                    android:textColor="@color/black" />
+
+                <com.google.android.material.radiobutton.MaterialRadioButton
+                    android:id="@+id/other_rb"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="10dp"
+                    android:padding="10dp"
+                    android:text="Other Feeling"
+                    android:textSize="18sp"
+                    android:textColor="@color/black" />
+
+            </RadioGroup>
+
+            <TextView
+                android:id="@+id/pain_frequency_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/other_feeling_rg"
+                android:layout_marginTop="30dp"
+                android:layout_centerHorizontal="true"
+                android:gravity="center"
+                android:text="Pain Frequency"
+                android:textSize="20sp"
+                android:textStyle="bold"
+                android:textColor="@color/black"
+                android:textAllCaps="false" />
+            <RadioGroup
+                android:id="@+id/pain_frequency_rg"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/pain_frequency_tv"
+                android:orientation="vertical">
+
+                <com.google.android.material.radiobutton.MaterialRadioButton
+                    android:id="@+id/wavy_rb"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="10dp"
+                    android:padding="10dp"
+                    android:text="Wavy"
+                    android:textSize="18sp"
+                    android:textColor="@color/black" />
+
+                <com.google.android.material.radiobutton.MaterialRadioButton
+                    android:id="@+id/static_rb"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="10dp"
+                    android:padding="10dp"
+                    android:text="Static"
+                    android:textSize="18sp"
+                    android:textColor="@color/black" />
+
+                <com.google.android.material.radiobutton.MaterialRadioButton
+                    android:id="@+id/worse_rb"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="10dp"
+                    android:padding="10dp"
+                    android:text="Getting Worse"
+                    android:textSize="18sp"
+                    android:textColor="@color/black" />
+
+                <com.google.android.material.radiobutton.MaterialRadioButton
+                    android:id="@+id/better_rb"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginEnd="10dp"
+                    android:padding="10dp"
+                    android:text="Getting Better"
+                    android:textSize="18sp"
+                    android:textColor="@color/black" />
+
+            </RadioGroup>
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/add_btn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="30dp"
+                android:layout_below="@id/pain_frequency_rg"
+                android:text="Add"
+                android:textSize="30sp"
+                android:textStyle="bold"
+                android:textColor="@color/white"
+                android:textAllCaps="false" />
 
         </RelativeLayout>
     </ScrollView>

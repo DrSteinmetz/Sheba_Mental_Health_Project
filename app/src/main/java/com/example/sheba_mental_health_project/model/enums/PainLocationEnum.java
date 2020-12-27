@@ -6,4 +6,7 @@ public enum PainLocationEnum {
     Mouth,
     Nose,
     Ears,
+    Shoulder,
+    Elbow,
+    Hand
 }

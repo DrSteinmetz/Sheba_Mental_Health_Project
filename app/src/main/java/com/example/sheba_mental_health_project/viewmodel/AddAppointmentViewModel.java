@@ -7,7 +7,7 @@ import androidx.lifecycle.ViewModel;
 
 import com.example.sheba_mental_health_project.model.Appointment;
 import com.example.sheba_mental_health_project.model.Patient;
-import com.example.sheba_mental_health_project.model.enums.AppointmentState;
+import com.example.sheba_mental_health_project.model.enums.AppointmentStateEnum;
 import com.example.sheba_mental_health_project.repository.Repository;
 
 import java.util.ArrayList;
@@ -138,7 +138,7 @@ public class AddAppointmentViewModel extends ViewModel {
 
     public void addAppointment(final String patientEmail) {
         final Appointment appointmentToAdd = new Appointment(getCalculatedDate(),
-                getPatientByEmail(patientEmail), AppointmentState.PreMeeting);
+                getPatientByEmail(patientEmail), AppointmentStateEnum.PreMeeting);
         mRepository.addAppointment(appointmentToAdd);
     }
 

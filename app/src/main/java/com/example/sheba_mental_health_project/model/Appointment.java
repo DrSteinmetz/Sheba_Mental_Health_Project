@@ -1,11 +1,13 @@
 package com.example.sheba_mental_health_project.model;
 
-import com.example.sheba_mental_health_project.model.enums.AppointmentState;
-import com.example.sheba_mental_health_project.model.enums.BodyPart;
+import androidx.annotation.Nullable;
+
+import com.example.sheba_mental_health_project.model.enums.AppointmentStateEnum;
+import com.example.sheba_mental_health_project.model.enums.BodyPartEnum;
 
 import java.io.Serializable;
 import java.util.Date;
-import java.util.EnumMap;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -17,8 +19,8 @@ public class Appointment implements Serializable {
     private Patient mPatient;
     private MentalState mPatientMentalState;
 //    private PhysicalState mPatientPhysicalState;
-    private Map<BodyPart, List<PainPoint>> mPainPointsOfBodyPartMap;
-    private AppointmentState mState;
+    private Map<String, List<PainPoint>> mPainPointsOfBodyPartMap = new HashMap<>();
+    private AppointmentStateEnum mState;
 
     public Appointment() {
     }
@@ -29,7 +31,7 @@ public class Appointment implements Serializable {
         this.mPatient = patient;
     }
 
-    public Appointment(Date appointmentDate, Patient patient ,AppointmentState appointmentState) {
+    public Appointment(Date appointmentDate, Patient patient , AppointmentStateEnum appointmentState) {
         this.mAppointmentDate = appointmentDate;
         this.mPatient = patient;
         this.mState = appointmentState;
@@ -76,15 +78,15 @@ public class Appointment implements Serializable {
         this.mPatientMentalState = mPatientMentalState;
     }
 
-    public Map<BodyPart, List<PainPoint>> getPainPointsOfBodyPartMap() {
+    public Map<String, List<PainPoint>> getPainPointsOfBodyPartMap() {
         return mPainPointsOfBodyPartMap;
     }
 
-    public void setPainPointsOfBodyPartMap(Map<BodyPart, List<PainPoint>> mPainPointsOfBodyPartMap) {
+    public void setPainPointsOfBodyPartMap(Map<String, List<PainPoint>> mPainPointsOfBodyPartMap) {
         this.mPainPointsOfBodyPartMap = mPainPointsOfBodyPartMap;
     }
 
-    public AppointmentState getState() {
+    public AppointmentStateEnum getState() {
         return mState;
     }
 
@@ -95,7 +97,7 @@ public class Appointment implements Serializable {
         return mState.name();
     }*/
 
-    public void setState(AppointmentState mState) {
+    public void setState(AppointmentStateEnum mState) {
         this.mState = mState;
     }
 
