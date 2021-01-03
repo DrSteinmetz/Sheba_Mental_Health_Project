@@ -1,11 +1,12 @@
 package com.example.sheba_mental_health_project.model.enums;
 
 public enum PainLocationEnum {
-    LeftEye,
     RightEye,
+    LeftEye,
     Mouth,
     Nose,
-    Ears,
+    RightEar,
+    LeftEar,
     Shoulder,
     Elbow,
     Hand

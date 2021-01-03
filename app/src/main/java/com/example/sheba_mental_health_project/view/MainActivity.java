@@ -7,6 +7,8 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.coordinatorlayout.widget.CoordinatorLayout;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
 import androidx.lifecycle.ViewModelProvider;
 
 import android.annotation.SuppressLint;
@@ -24,7 +26,8 @@ import com.google.android.material.navigation.NavigationView;
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener,
         MainTherapistFragment.MainTherapistInterface,
-        MainPatientFragment.MainPatientInterface {
+        MainPatientFragment.MainPatientInterface,
+        CharacterFragment.CharacterFragmentInterface {
 
     private MainActivityViewModel mViewModel;
 
@@ -37,7 +40,14 @@ public class MainActivity extends AppCompatActivity
     private final String MAIN_PATIENT_FRAG = "Main_Patient_Fragment";
     private final String ADD_PATIENT_FRAG = "Add_Patient_Fragment";
     private final String ADD_APPOINTMENT_FRAG = "Add_Appointment_Fragment";
+
     private final String CHARACTER_FRAG = "Character_Fragment";
+    private final String HEAD_FRAG = "Head_Fragment";
+    private final String CENTER_OF_MASS_FRAG = "Center_Of_Mass_Fragment";
+    private final String LEFT_ARM_FRAG = "Left_Arm_Fragment";
+    private final String RIGHT_ARM_FRAG = "Right_Arm_Fragment";
+    private final String GENITALS_FRAG = "Genitals_Fragment";
+    private final String LEGS_FRAG = "Legs_Fragment";
 
     private final String IS_THERAPIST = "is_therapist";
 
@@ -123,6 +133,7 @@ public class MainActivity extends AppCompatActivity
         return true;
     }
 
+    /**<------ Appointments ------>*/
     @Override
     public void onTherapistAppointmentClicked() {
     }
@@ -141,5 +152,65 @@ public class MainActivity extends AppCompatActivity
                 .add(R.id.container, CharacterFragment.newInstance(), CHARACTER_FRAG)
                 .addToBackStack(null)
                 .commit();
+    }
+
+    /**<------ Character ------>*/
+    @Override
+    public void onHeadClicked() {
+        getSupportFragmentManager().beginTransaction()
+                .add(R.id.container, HeadFragment.newInstance(), HEAD_FRAG)
+                .addToBackStack(null)
+                .commit();
+    }
+
+    @Override
+    public void onCenterOfMassClicked() {
+        getSupportFragmentManager().beginTransaction()
+                .add(R.id.container, CenterOfMassFragment.newInstance(), CENTER_OF_MASS_FRAG)
+                .addToBackStack(null)
+                .commit();
+    }
+
+    @Override
+    public void onRightArmClicked() {
+        getSupportFragmentManager().beginTransaction()
+                .add(R.id.container, RightArmFragment.newInstance(), RIGHT_ARM_FRAG)
+                .addToBackStack(null)
+                .commit();
+    }
+
+    @Override
+    public void onLeftArmClicked() {
+        getSupportFragmentManager().beginTransaction()
+                .add(R.id.container, LeftArmFragment.newInstance(), LEFT_ARM_FRAG)
+                .addToBackStack(null)
+                .commit();
+    }
+
+    @Override
+    public void onGenitalsClicked() {
+        getSupportFragmentManager().beginTransaction()
+                .add(R.id.container, GenitalsFragment.newInstance(), GENITALS_FRAG)
+                .addToBackStack(null)
+                .commit();
+    }
+
+    @Override
+    public void onLegsClicked() {
+        getSupportFragmentManager().beginTransaction()
+                .add(R.id.container, LegsFragment.newInstance(), LEGS_FRAG)
+                .addToBackStack(null)
+                .commit();
+    }
+
+    @Override
+    public void onBackPressed() {
+        final Fragment leftArmFragment;
+        leftArmFragment = getSupportFragmentManager().findFragmentByTag(LEFT_ARM_FRAG);
+        if (leftArmFragment != null && leftArmFragment.getChildFragmentManager().getBackStackEntryCount() > 1) {
+            leftArmFragment.getChildFragmentManager().popBackStackImmediate();
+        } else {
+            super.onBackPressed();
+        }
     }
 }

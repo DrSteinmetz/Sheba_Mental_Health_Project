@@ -44,6 +44,7 @@ public class Repository {
 
     private ListenerRegistration mPatientAppointmentsListener;
     private ListenerRegistration mTherapistAppointmentsListener;
+    private ListenerRegistration mGetAllPainPointsListener;
 
     private final String PATIENTS = "patients";
     private final String THERAPISTS = "therapists";
@@ -89,6 +90,19 @@ public class Repository {
 
     public void setGetAppointmentOfSpecificPatient(RepositoryGetAppointmentOfSpecificPatientInterface repositoryGetAppointmentOfSpecificPatientListener){
         this.mRepositoryGetAppointmentOfSpecificPatientListener = repositoryGetAppointmentOfSpecificPatientListener;
+    }
+
+    /*<------ Get All Pain Points ------>*/
+    public interface RepositoryGetAllPainPointsInterface {
+        void onGetAllPainPointsSucceed(Map<String, List<PainPoint>> painPointsMap);
+
+        void onGetAllPainPointsFailed(String error);
+    }
+
+    private RepositoryGetAllPainPointsInterface mRepositoryGetAllPainPointsListener;
+
+    public void setGetAllPainPointsInterface(RepositoryGetAllPainPointsInterface repositoryGetAllPainPointsListener){
+        this.mRepositoryGetAllPainPointsListener = repositoryGetAllPainPointsListener;
     }
 
     /*<------ Add Appointment ------>*/
@@ -316,11 +330,37 @@ public class Repository {
         return painPoints;
     }
 
+    public void getAllPainPoints() {
+        mGetAllPainPointsListener = mCloudDB.collection(APPOINTMENTS)
+                .document(mCurrentAppointment.getId())
+                .addSnapshotListener(new EventListener<DocumentSnapshot>() {
+                    @Override
+                    public void onEvent(@Nullable DocumentSnapshot value, @Nullable FirebaseFirestoreException error) {
+                        if (value.exists()) {
+                            final Appointment appointment = value.toObject(Appointment.class);
+                            if (mRepositoryGetAllPainPointsListener != null) {
+                                mRepositoryGetAllPainPointsListener.onGetAllPainPointsSucceed(appointment.getPainPointsOfBodyPartMap());
+                                setCurrentAppointment(appointment);
+                            }
+                        } else {
+                            Log.w(TAG, "onEvent: ", error);
+                            if (mRepositoryGetAllPainPointsListener != null) {
+                                mRepositoryGetAllPainPointsListener.onGetAllPainPointsFailed(error.getMessage());
+                            }
+                        }
+                    }
+                });
+    }
+
     public void removeTherapistAppointmentsListener() {
         mTherapistAppointmentsListener.remove();
     }
 
     public void removePatientAppointmentsListener() {
         mPatientAppointmentsListener.remove();
+    }
+
+    public void removeGetAllPainPointsListener() {
+        mGetAllPainPointsListener.remove();
     }
 }

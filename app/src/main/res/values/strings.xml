@@ -1,14 +1,35 @@
 <resources>
     <string name="app_name">Sheba Mental Health Project</string>
 
+    <string name="yes">Yes</string>
+    <string name="no">No</string>
 
+    <string name="choose">Choose…</string>
+    <!-- Pain Types -->
+    <string name="sharp">Sharp</string>
+    <string name="dim">Dim</string>
+    <string name="pressing">Pressing</string>
+    <string name="burning">Burning</string>
+    <string name="no_pain">No Pain</string>
+
+    <!-- Other Feeling -->
+    <string name="bleeding">Bleeding</string>
+    <string name="itching">Itching</string>
+    <string name="sting">Sting</string>
+    <string name="strange">Strange</string>
+    <string name="numb">Numb</string>
+    <string name="other">Other</string>
+
+    <!-- Frequency -->
+    <string name="wavy">Wavy</string>
+    <string name="static_pain">Static</string>
+    <string name="getting_worse">Getting Worse</string>
+    <string name="getting_better">Getting Better</string>
 
     <!-- Therapist Drawer Menu -->
     <string name="add_patient_action">Add Patient</string>
 
     <!-- Patient Drawer Menu -->
-
-
     <string name="logout">Logout</string>
 
     <!-- Strings related to login and registration -->
@@ -29,5 +50,7 @@
     <string name="invalid_password">Password must include at least 8 characters</string>
     <string name="empty_first_name">You must enter a First Name!</string>
     <string name="empty_last_name">You must enter a Last Name!</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 
 </resources>

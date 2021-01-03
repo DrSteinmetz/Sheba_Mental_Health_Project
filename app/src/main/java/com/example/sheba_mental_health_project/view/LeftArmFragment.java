@@ -1,9 +1,9 @@
 package com.example.sheba_mental_health_project.view;
 
+import androidx.fragment.app.FragmentManager;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
-import android.annotation.SuppressLint;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -14,22 +14,26 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.AlphaAnimation;
+import android.view.animation.Animation;
 import android.widget.ImageView;
-import android.widget.RadioGroup;
 
 import com.example.sheba_mental_health_project.R;
 import com.example.sheba_mental_health_project.model.PainPoint;
 import com.example.sheba_mental_health_project.model.ViewModelFactory;
+import com.example.sheba_mental_health_project.model.enums.BodyPartEnum;
 import com.example.sheba_mental_health_project.model.enums.PainFrequencyEnum;
 import com.example.sheba_mental_health_project.model.enums.PainLocationEnum;
 import com.example.sheba_mental_health_project.model.enums.PainOtherFeelingsEnum;
 import com.example.sheba_mental_health_project.model.enums.PainTypeEnum;
 import com.example.sheba_mental_health_project.model.enums.ViewModelEnum;
 import com.example.sheba_mental_health_project.viewmodel.LeftArmViewModel;
-import com.google.android.material.button.MaterialButton;
-import com.rtugeek.android.colorseekbar.ColorSeekBar;
 
-public class LeftArmFragment extends Fragment {
+public class LeftArmFragment extends Fragment
+        implements PainStrengthSubFragment.PainStrengthSubFragmentInterface,
+        PainTypeSubFragment.PainTypeSubFragmentInterface,
+        OtherFeelingSubFragment.OtherFeelingSubFragmentInterface,
+        PainFrequencySubFragment.PainFrequencySubFragmentInterface {
 
     private LeftArmViewModel mViewModel;
 
@@ -38,12 +42,20 @@ public class LeftArmFragment extends Fragment {
     private ImageView mHandIv;
     private ImageView mSelectedIv;
 
-    private ColorSeekBar mPainStrengthSb;
-    private RadioGroup mPainTypeRg;
-    private RadioGroup mOtherFeelingsRg;
-    private RadioGroup mPainFrequencyRg;
+    private final Animation alphaAnimation = new AlphaAnimation(1, 0);
 
-    private MaterialButton mAddBtn;
+    private final String SUB_FRAGS_STACK = "Left_Arm_Fragments_Stack";
+
+    private final String PAIN_STRENGTH_FRAG = "Pain_Strength_Fragment";
+    private final String PAIN_TYPE_FRAG = "Pain_Type_Fragment";
+    private final String OTHER_FEELING_FRAG = "Other_Feeling_Fragment";
+    private final String PAIN_FREQUENCY_FRAG = "Pain_Frequency_Fragment";
+//    private ColorSeekBar mPainStrengthSb;
+//    private RadioGroup mPainTypeRg;
+//    private RadioGroup mOtherFeelingsRg;
+//    private RadioGroup mPainFrequencyRg;
+
+//    private MaterialButton mAddBtn;
 
     private final String TAG = "LeftArmFragment";
 
@@ -62,7 +74,9 @@ public class LeftArmFragment extends Fragment {
         final Observer<PainPoint> onSetPainPointsSucceed = new Observer<PainPoint>() {
             @Override
             public void onChanged(PainPoint painPoint) {
-                requireActivity().onBackPressed();
+//                getChildFragmentManager().popBackStack(SUB_FRAGS_STACK, FragmentManager.POP_BACK_STACK_INCLUSIVE);
+                getActivity().getSupportFragmentManager().beginTransaction()
+                        .remove(LeftArmFragment.this).commit();
             }
         };
 
@@ -89,130 +103,143 @@ public class LeftArmFragment extends Fragment {
         mElbowIv = rootView.findViewById(R.id.elbow_iv);
         mHandIv = rootView.findViewById(R.id.hand_iv);
 
-        mPainStrengthSb = rootView.findViewById(R.id.pain_strength_sb);
-        mPainTypeRg = rootView.findViewById(R.id.pain_type_rg);
-        mOtherFeelingsRg = rootView.findViewById(R.id.other_feeling_rg);
-        mPainFrequencyRg = rootView.findViewById(R.id.pain_frequency_rg);
-        mAddBtn = rootView.findViewById(R.id.add_btn);
+        alphaAnimation.setRepeatCount(Animation.INFINITE);
+        alphaAnimation.setRepeatMode(Animation.REVERSE);
+        alphaAnimation.setDuration(700);
+
+//        mPainStrengthSb = rootView.findViewById(R.id.pain_strength_sb);
+//        mPainTypeRg = rootView.findViewById(R.id.pain_type_rg);
+//        mOtherFeelingsRg = rootView.findViewById(R.id.other_feeling_rg);
+//        mPainFrequencyRg = rootView.findViewById(R.id.pain_frequency_rg);
+//        mAddBtn = rootView.findViewById(R.id.add_btn);
 
         showPainPoints();
 
-        mPainStrengthSb.setOnColorChangeListener(new ColorSeekBar.OnColorChangeListener() {
-            @Override
-            public void onColorChangeListener(int colorBarPosition, int alphaBarPosition, int color) {
-                if (mSelectedIv != null) {
-                    mSelectedIv.setColorFilter(color);
-                }
-            }
-        });
+//        mPainStrengthSb.setOnColorChangeListener(new ColorSeekBar.OnColorChangeListener() {
+//            @Override
+//            public void onColorChangeListener(int colorBarPosition, int alphaBarPosition, int color) {
+//                if (mSelectedIv != null) {
+//                    mSelectedIv.setColorFilter(color);
+//                }
+//            }
+//        });
 
         shoulderV.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                if (mSelectedIv != null) {
+                    mSelectedIv.setAnimation(null);
+                }
                 mSelectedIv = mShoulderIv;
-                onPainPointClicked(mShoulderIv, PainLocationEnum.Shoulder);
+                moveToPainPointClicked(mShoulderIv, PainLocationEnum.Shoulder);
             }
         });
 
         elbowV.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                if (mSelectedIv != null) {
+                    mSelectedIv.setAnimation(null);
+                }
                 mSelectedIv = mElbowIv;
-                onPainPointClicked(mElbowIv, PainLocationEnum.Elbow);
+                moveToPainPointClicked(mElbowIv, PainLocationEnum.Elbow);
             }
         });
 
         handV.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                if (mSelectedIv != null) {
+                    mSelectedIv.setAnimation(null);
+                }
                 mSelectedIv = mHandIv;
-                onPainPointClicked(mHandIv, PainLocationEnum.Hand);
+                moveToPainPointClicked(mHandIv, PainLocationEnum.Hand);
             }
         });
 
-        mPainTypeRg.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
-            @SuppressLint("NonConstantResourceId")
-            @Override
-            public void onCheckedChanged(RadioGroup group, int checkedId) {
-                final PainPoint painPoint = mViewModel.getPainPoint();
-                switch (checkedId) {
-                    case R.id.sharp_pain_rb:
-                        painPoint.setPainType(PainTypeEnum.Sharp);
-                        break;
-                    case R.id.dim_pain_rb:
-                        painPoint.setPainType(PainTypeEnum.Dim);
-                        break;
-                    case R.id.pressing_pain_rb:
-                        painPoint.setPainType(PainTypeEnum.Pressing);
-                        break;
-                    case R.id.burn_pain_rb:
-                        painPoint.setPainType(PainTypeEnum.Burning);
-                        break;
-                    case R.id.no_pain_rb:
-                        painPoint.setPainType(PainTypeEnum.NoPain);
-                        break;
-                }
-            }
-        });
+//        mPainTypeRg.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+//            @SuppressLint("NonConstantResourceId")
+//            @Override
+//            public void onCheckedChanged(RadioGroup group, int checkedId) {
+//                final PainPoint painPoint = mViewModel.getPainPoint();
+//                switch (checkedId) {
+//                    case R.id.sharp_pain_rb:
+//                        painPoint.setPainType(PainTypeEnum.Sharp);
+//                        break;
+//                    case R.id.dim_pain_rb:
+//                        painPoint.setPainType(PainTypeEnum.Dim);
+//                        break;
+//                    case R.id.pressing_pain_rb:
+//                        painPoint.setPainType(PainTypeEnum.Pressing);
+//                        break;
+//                    case R.id.burn_pain_rb:
+//                        painPoint.setPainType(PainTypeEnum.Burning);
+//                        break;
+//                    case R.id.no_pain_rb:
+//                        painPoint.setPainType(PainTypeEnum.NoPain);
+//                        break;
+//                }
+//            }
+//        });
 
-        mOtherFeelingsRg.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
-            @SuppressLint("NonConstantResourceId")
-            @Override
-            public void onCheckedChanged(RadioGroup group, int checkedId) {
-                final PainPoint painPoint = mViewModel.getPainPoint();
-                switch (mOtherFeelingsRg.getCheckedRadioButtonId()) {
-                    case R.id.bleeding_rb:
-                        painPoint.setOtherFeeling(PainOtherFeelingsEnum.Bleeding);
-                        break;
-                    case R.id.itch_rb:
-                        painPoint.setOtherFeeling(PainOtherFeelingsEnum.Itching);
-                        break;
-                    case R.id.sting_rb:
-                        painPoint.setOtherFeeling(PainOtherFeelingsEnum.Sting);
-                        break;
-                    case R.id.strange_rb:
-                        painPoint.setOtherFeeling(PainOtherFeelingsEnum.Strange);
-                        break;
-                    case R.id.numb_rb:
-                        painPoint.setOtherFeeling(PainOtherFeelingsEnum.Numb);
-                        break;
-                    case R.id.other_rb:
-                        painPoint.setOtherFeeling(PainOtherFeelingsEnum.Other);
-                        break;
-                }
-            }
-        });
+//        mOtherFeelingsRg.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+//            @SuppressLint("NonConstantResourceId")
+//            @Override
+//            public void onCheckedChanged(RadioGroup group, int checkedId) {
+//                final PainPoint painPoint = mViewModel.getPainPoint();
+//                switch (mOtherFeelingsRg.getCheckedRadioButtonId()) {
+//                    case R.id.bleeding_rb:
+//                        painPoint.setOtherFeeling(PainOtherFeelingsEnum.Bleeding);
+//                        break;
+//                    case R.id.itch_rb:
+//                        painPoint.setOtherFeeling(PainOtherFeelingsEnum.Itching);
+//                        break;
+//                    case R.id.sting_rb:
+//                        painPoint.setOtherFeeling(PainOtherFeelingsEnum.Sting);
+//                        break;
+//                    case R.id.strange_rb:
+//                        painPoint.setOtherFeeling(PainOtherFeelingsEnum.Strange);
+//                        break;
+//                    case R.id.numb_rb:
+//                        painPoint.setOtherFeeling(PainOtherFeelingsEnum.Numb);
+//                        break;
+//                    case R.id.other_rb:
+//                        painPoint.setOtherFeeling(PainOtherFeelingsEnum.Other);
+//                        break;
+//                }
+//            }
+//        });
 
-        mPainFrequencyRg.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
-            @SuppressLint("NonConstantResourceId")
-            @Override
-            public void onCheckedChanged(RadioGroup group, int checkedId) {
-                final PainPoint painPoint = mViewModel.getPainPoint();
-                switch (mPainFrequencyRg.getCheckedRadioButtonId()) {
-                    case R.id.wavy_rb:
-                        painPoint.setFrequency(PainFrequencyEnum.Wavy);
-                        break;
-                    case R.id.static_rb:
-                        painPoint.setFrequency(PainFrequencyEnum.Static);
-                        break;
-                    case R.id.worse_rb:
-                        painPoint.setFrequency(PainFrequencyEnum.GettingWorse);
-                        break;
-                    case R.id.better_rb:
-                        painPoint.setFrequency(PainFrequencyEnum.GettingBetter);
-                        break;
-                }
-            }
-        });
+//        mPainFrequencyRg.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+//            @SuppressLint("NonConstantResourceId")
+//            @Override
+//            public void onCheckedChanged(RadioGroup group, int checkedId) {
+//                final PainPoint painPoint = mViewModel.getPainPoint();
+//                switch (mPainFrequencyRg.getCheckedRadioButtonId()) {
+//                    case R.id.wavy_rb:
+//                        painPoint.setFrequency(PainFrequencyEnum.Wavy);
+//                        break;
+//                    case R.id.static_rb:
+//                        painPoint.setFrequency(PainFrequencyEnum.Static);
+//                        break;
+//                    case R.id.worse_rb:
+//                        painPoint.setFrequency(PainFrequencyEnum.GettingWorse);
+//                        break;
+//                    case R.id.better_rb:
+//                        painPoint.setFrequency(PainFrequencyEnum.GettingBetter);
+//                        break;
+//                }
+//            }
+//        });
 
-        mAddBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                mViewModel.getPainPoint().setPainStrength(mPainStrengthSb.getColorBarPosition());
-                mViewModel.getPainPoint().setColor(mPainStrengthSb.getColor());
-                mViewModel.setPainPointsInDB();
-            }
-        });
+//        mAddBtn.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                mViewModel.getPainPoint().setPainStrength(mPainStrengthSb.getColorBarPosition());
+//                mViewModel.getPainPoint().setColor(mPainStrengthSb.getColor());
+//                mViewModel.setPainPointsInDB();
+//            }
+//        });
 
         return rootView;
     }
@@ -240,92 +267,186 @@ public class LeftArmFragment extends Fragment {
     }
 
     private void onPainPointClicked(final View view, final PainLocationEnum painLocationEnum) {
-        mViewModel.getPainPoint().setPainLocation(painLocationEnum);
+//        mViewModel.getPainPoint().setPainLocation(painLocationEnum);
         showPainPoints();
+
         if (view.getVisibility() == View.VISIBLE) {
             // Editing:
-            mAddBtn.setText("Edit");
+//            mAddBtn.setText("Edit");
             mViewModel.setPainPoint(new PainPoint(mViewModel.getPainPointsMap().get(painLocationEnum)));
             final PainPoint painPoint = mViewModel.getPainPoint();
 
-            mPainStrengthSb.setColorBarPosition(painPoint.getPainStrength());
+            openPainStrengthFragment(painPoint.getPainStrength());
 
-            if (painPoint.getPainType() != null) {
-                switch (painPoint.getPainType()) {
-                    case Sharp:
-                        mPainTypeRg.check(R.id.sharp_pain_rb);
-                        break;
-                    case Dim:
-                        mPainTypeRg.check(R.id.dim_pain_rb);
-                        break;
-                    case Pressing:
-                        mPainTypeRg.check(R.id.pressing_pain_rb);
-                        break;
-                    case Burning:
-                        mPainTypeRg.check(R.id.burn_pain_rb);
-                        break;
-                    case NoPain:
-                        mPainTypeRg.check(R.id.no_pain_rb);
-                        break;
-                    default:
-                        mPainTypeRg.clearCheck();
-                }
-            } else {
-                mPainTypeRg.clearCheck();
-            }
-
-            if (painPoint.getOtherFeeling() != null) {
-                switch (painPoint.getOtherFeeling()) {
-                    case Bleeding:
-                        mOtherFeelingsRg.check(R.id.bleeding_rb);
-                        break;
-                    case Itching:
-                        mOtherFeelingsRg.check(R.id.itch_rb);
-                        break;
-                    case Sting:
-                        mOtherFeelingsRg.check(R.id.sting_rb);
-                        break;
-                    case Strange:
-                        mOtherFeelingsRg.check(R.id.strange_rb);
-                        break;
-                    case Numb:
-                        mOtherFeelingsRg.check(R.id.numb_rb);
-                        break;
-                    case Other:
-                        mOtherFeelingsRg.check(R.id.other_rb);
-                        break;
-                    default:
-                        mOtherFeelingsRg.clearCheck();
-                }
-            } else {
-                mOtherFeelingsRg.clearCheck();
-            }
-
-            if (painPoint.getFrequency() != null) {
-                switch (painPoint.getFrequency()) {
-                    case Wavy:
-                        mPainFrequencyRg.check(R.id.wavy_rb);
-                        break;
-                    case Static:
-                        mPainFrequencyRg.check(R.id.static_rb);
-                        break;
-                    case GettingWorse:
-                        mPainFrequencyRg.check(R.id.worse_rb);
-                        break;
-                    case GettingBetter:
-                        mPainFrequencyRg.check(R.id.better_rb);
-                        break;
-                    default:
-                        mPainFrequencyRg.clearCheck();
-                }
-            } else {
-                mPainFrequencyRg.clearCheck();
-            }
+//            mPainStrengthSb.setColorBarPosition(painPoint.getPainStrength());
+//
+//            if (painPoint.getPainType() != null) {
+//                switch (painPoint.getPainType()) {
+//                    case Sharp:
+//                        mPainTypeRg.check(R.id.sharp_pain_rb);
+//                        break;
+//                    case Dim:
+//                        mPainTypeRg.check(R.id.dim_pain_rb);
+//                        break;
+//                    case Pressing:
+//                        mPainTypeRg.check(R.id.pressing_pain_rb);
+//                        break;
+//                    case Burning:
+//                        mPainTypeRg.check(R.id.burn_pain_rb);
+//                        break;
+//                    case NoPain:
+//                        mPainTypeRg.check(R.id.no_pain_rb);
+//                        break;
+//                    default:
+//                        mPainTypeRg.clearCheck();
+//                }
+//            } else {
+//                mPainTypeRg.clearCheck();
+//            }
+//
+//            if (painPoint.getOtherFeeling() != null) {
+//                switch (painPoint.getOtherFeeling()) {
+//                    case Bleeding:
+//                        mOtherFeelingsRg.check(R.id.bleeding_rb);
+//                        break;
+//                    case Itching:
+//                        mOtherFeelingsRg.check(R.id.itch_rb);
+//                        break;
+//                    case Sting:
+//                        mOtherFeelingsRg.check(R.id.sting_rb);
+//                        break;
+//                    case Strange:
+//                        mOtherFeelingsRg.check(R.id.strange_rb);
+//                        break;
+//                    case Numb:
+//                        mOtherFeelingsRg.check(R.id.numb_rb);
+//                        break;
+//                    case Other:
+//                        mOtherFeelingsRg.check(R.id.other_rb);
+//                        break;
+//                    default:
+//                        mOtherFeelingsRg.clearCheck();
+//                }
+//            } else {
+//                mOtherFeelingsRg.clearCheck();
+//            }
+//
+//            if (painPoint.getFrequency() != null) {
+//                switch (painPoint.getFrequency()) {
+//                    case Wavy:
+//                        mPainFrequencyRg.check(R.id.wavy_rb);
+//                        break;
+//                    case Static:
+//                        mPainFrequencyRg.check(R.id.static_rb);
+//                        break;
+//                    case GettingWorse:
+//                        mPainFrequencyRg.check(R.id.worse_rb);
+//                        break;
+//                    case GettingBetter:
+//                        mPainFrequencyRg.check(R.id.better_rb);
+//                        break;
+//                    default:
+//                        mPainFrequencyRg.clearCheck();
+//                }
+//            } else {
+//                mPainFrequencyRg.clearCheck();
+//            }
         } else {
             // Adding:
-            mAddBtn.setText("Add");
-            mSelectedIv.setColorFilter(mPainStrengthSb.getColor());
+//            mAddBtn.setText("Add");
+//            mSelectedIv.setColorFilter(getContext().getColor(R.color.yellow));
+            mViewModel.setPainPoint(new PainPoint(painLocationEnum));
+            openPainStrengthFragment(0);
         }
+
+        view.setVisibility(View.GONE);
         view.setVisibility(View.VISIBLE);
+        view.setAnimation(alphaAnimation);
+        alphaAnimation.start();
+    }
+
+    private void moveToPainPointClicked(final View view, final PainLocationEnum painLocationEnum) {
+        final Fragment fragment = getChildFragmentManager().findFragmentByTag(PAIN_STRENGTH_FRAG);
+        if ((fragment != null && fragment.isVisible()) ||
+                getChildFragmentManager().getBackStackEntryCount() == 0) {
+            onPainPointClicked(view, painLocationEnum);
+        } else {
+            WarningDialog warningDialog = new WarningDialog(getContext());
+            warningDialog.setPromptText("Are you sure you want to select another point?");
+            warningDialog.setOnActionListener(new WarningDialog.WarningDialogActionInterface() {
+                @Override
+                public void onYesBtnClicked() {
+                    onPainPointClicked(view, painLocationEnum);
+                }
+
+                @Override
+                public void onNoBtnClicked() {
+                }
+            });
+            warningDialog.show();
+        }
+    }
+
+    private void openPainStrengthFragment(final int position) {
+        getChildFragmentManager().popBackStack(SUB_FRAGS_STACK, FragmentManager.POP_BACK_STACK_INCLUSIVE);
+        getChildFragmentManager().beginTransaction()
+                .add(R.id.fragment_container, PainStrengthSubFragment.newInstance(position,
+                        BodyPartEnum.LeftArm), PAIN_STRENGTH_FRAG)
+                .addToBackStack(SUB_FRAGS_STACK)
+                .commit();
+    }
+
+    /**<------ Pain Strength Sub Fragment ------>*/
+    @Override
+    public void onPainStrengthChanged(int painStrength, int color) {
+        if (mSelectedIv != null) {
+            mSelectedIv.setColorFilter(color);
+        }
+    }
+
+    @Override
+    public void onContinueToPainTypeBtnClick(int painStrength, int color) {
+        mViewModel.getPainPoint().setPainStrength(painStrength);
+        mViewModel.getPainPoint().setColor(color);
+
+        getChildFragmentManager().beginTransaction()
+                .replace(R.id.fragment_container,
+                        PainTypeSubFragment.newInstance(mViewModel.getPainPoint().getPainType(),
+                                BodyPartEnum.LeftArm), PAIN_TYPE_FRAG)
+                .addToBackStack(SUB_FRAGS_STACK)
+                .commit();
+    }
+
+    /**<------ Pain Type Sub Fragment ------>*/
+    @Override
+    public void onContinueToOtherFeelingsBtnClicked(PainTypeEnum painType) {
+        mViewModel.getPainPoint().setPainType(painType);
+
+        getChildFragmentManager().beginTransaction()
+                .replace(R.id.fragment_container,
+                        OtherFeelingSubFragment.newInstance(mViewModel.getPainPoint().getOtherFeeling(),
+                                BodyPartEnum.LeftArm), OTHER_FEELING_FRAG)
+                .addToBackStack(SUB_FRAGS_STACK)
+                .commit();
+    }
+
+    /**<------ Other Feelings Sub Fragment ------>*/
+    @Override
+    public void onContinueToPainFrequencyBtnClicked(PainOtherFeelingsEnum otherFeeling) {
+        mViewModel.getPainPoint().setOtherFeeling(otherFeeling);
+
+        getChildFragmentManager().beginTransaction()
+                .replace(R.id.fragment_container,
+                        PainFrequencySubFragment.newInstance(mViewModel.getPainPoint().getFrequency(),
+                                BodyPartEnum.LeftArm), PAIN_FREQUENCY_FRAG)
+                .addToBackStack(SUB_FRAGS_STACK)
+                .commit();
+    }
+
+    /**<------ Pain Frequency Sub Fragment ------>*/
+    @Override
+    public void onFinishBtnClicked(PainFrequencyEnum painFrequency) {
+        mViewModel.getPainPoint().setFrequency(painFrequency);
+        mViewModel.setPainPointsInDB();
     }
 }

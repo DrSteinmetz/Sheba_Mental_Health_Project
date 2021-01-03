@@ -1,77 +1,98 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/white"
     android:focusable="true"
     android:clickable="true"
+    android:padding="20dp"
     tools:context=".view.CharacterFragment">
 
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:padding="20dp">
+    <ImageView
+        android:id="@+id/character_iv"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_centerInParent="true"
+        android:src="@drawable/ic_character" />
 
-        <ImageView
-            android:id="@+id/character_iv"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_centerInParent="true"
-            android:src="@drawable/ic_character" />
+    <View
+        android:id="@+id/head_v"
+        android:layout_width="90dp"
+        android:layout_height="110dp"
+        android:layout_centerHorizontal="true"
+        android:layout_alignTop="@id/character_iv"
+        android:background="@null" />
 
-        <View
-            android:id="@+id/head_v"
-            android:layout_width="90dp"
-            android:layout_height="110dp"
-            android:layout_centerHorizontal="true"
-            android:layout_marginTop="5dp"
-            android:background="@null" />
+    <View
+        android:id="@+id/arm_left_v"
+        android:layout_width="70dp"
+        android:layout_height="300dp"
+        android:layout_toStartOf="@id/genitals_v"
+        android:layout_alignTop="@id/center_of_mass_v"
+        android:layout_marginStart="38dp"
+        android:background="@null" />
 
-        <View
-            android:id="@+id/arm_left_v"
-            android:layout_width="50dp"
-            android:layout_height="340dp"
-            android:layout_alignStart="@+id/character_iv"
-            android:layout_marginTop="150dp"
-            android:layout_marginStart="20dp"
-            android:background="@null" />
+    <View
+        android:id="@+id/arm_right_v"
+        android:layout_width="70dp"
+        android:layout_height="300dp"
+        android:layout_toEndOf="@+id/genitals_v"
+        android:layout_alignTop="@id/center_of_mass_v"
+        android:background="@null" />
 
-        <View
-            android:id="@+id/arm_right_v"
-            android:layout_width="50dp"
-            android:layout_height="340dp"
-            android:layout_alignEnd="@+id/character_iv"
-            android:layout_marginTop="150dp"
-            android:layout_marginEnd="20dp"
-            android:background="@null" />
+    <View
+        android:id="@+id/center_of_mass_v"
+        android:layout_width="100dp"
+        android:layout_height="220dp"
+        android:layout_below="@id/head_v"
+        android:layout_centerHorizontal="true"
+        android:background="@null" />
 
-        <View
-            android:id="@+id/center_of_mass_v"
-            android:layout_width="100dp"
-            android:layout_height="250dp"
-            android:layout_alignTop="@+id/character_iv"
-            android:layout_centerHorizontal="true"
-            android:layout_marginTop="150dp"
-            android:background="@null" />
+    <View
+        android:id="@+id/genitals_v"
+        android:layout_width="120dp"
+        android:layout_height="80dp"
+        android:layout_below="@id/center_of_mass_v"
+        android:layout_centerHorizontal="true"
+        android:background="@null" />
 
-        <View
-            android:id="@+id/genitals_v"
-            android:layout_width="150dp"
-            android:layout_height="80dp"
-            android:layout_alignTop="@+id/character_iv"
-            android:layout_centerHorizontal="true"
-            android:layout_marginTop="400dp"
-            android:background="@null" />
+    <View
+        android:id="@+id/legs_v"
+        android:layout_width="150dp"
+        android:layout_height="280dp"
+        android:layout_alignBottom="@+id/character_iv"
+        android:layout_centerHorizontal="true"
+        android:background="@null" />
 
-        <View
-            android:id="@+id/legs_v"
-            android:layout_width="150dp"
-            android:layout_height="350dp"
-            android:layout_alignBottom="@+id/character_iv"
-            android:layout_centerHorizontal="true"
-            android:background="@null" />
+    <!-- Pain Points -->
+    <ImageView
+        android:id="@+id/left_arm_1_iv"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:layout_alignStart="@+id/arm_left_v"
+        android:layout_alignBottom="@id/arm_left_v"
+        android:layout_marginBottom="25dp"
+        android:layout_marginStart="10dp"
+        android:src="@drawable/ic_red_pain_point" />
 
-    </RelativeLayout>
+    <ImageView
+        android:id="@+id/left_arm_2_iv"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:layout_alignEnd="@+id/arm_left_v"
+        android:layout_alignTop="@id/arm_left_v"
+        android:layout_marginTop="120dp"
+        android:layout_marginEnd="5dp"
+        android:src="@drawable/ic_red_pain_point" />
 
-</ScrollView>
+    <ImageView
+        android:id="@+id/left_arm_3_iv"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:layout_alignEnd="@+id/arm_left_v"
+        android:layout_alignTop="@id/arm_left_v"
+        android:layout_marginTop="10dp"
+        android:src="@drawable/ic_red_pain_point" />
+
+</RelativeLayout>
