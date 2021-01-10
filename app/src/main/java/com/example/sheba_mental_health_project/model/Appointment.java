@@ -1,15 +1,15 @@
 package com.example.sheba_mental_health_project.model;
 
-import androidx.annotation.Nullable;
-
 import com.example.sheba_mental_health_project.model.enums.AppointmentStateEnum;
-import com.example.sheba_mental_health_project.model.enums.BodyPartEnum;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 public class Appointment implements Serializable {
 
@@ -20,10 +20,10 @@ public class Appointment implements Serializable {
     private MentalState mPatientMentalState;
 //    private PhysicalState mPatientPhysicalState;
     private Map<String, List<PainPoint>> mPainPointsOfBodyPartMap = new HashMap<>();
+    private List<String> mAnswers = new ArrayList<>();
     private AppointmentStateEnum mState;
 
-    public Appointment() {
-    }
+    public Appointment() {}
 
     public Appointment(Date appointmentDate, Therapist therapist, Patient patient) {
         this.mAppointmentDate = appointmentDate;
@@ -84,6 +84,22 @@ public class Appointment implements Serializable {
 
     public void setPainPointsOfBodyPartMap(Map<String, List<PainPoint>> mPainPointsOfBodyPartMap) {
         this.mPainPointsOfBodyPartMap = mPainPointsOfBodyPartMap;
+    }
+
+    public List<String> getAnswers() {
+        return mAnswers;
+    }
+
+    public Set<String> answersAsSetGetter() {
+        return new HashSet<>(mAnswers);
+    }
+
+    public void setAnswers(List<String> answers) {
+        this.mAnswers = answers;
+    }
+
+    public void answersAsSetSetter(Set<String> answers) {
+        this.mAnswers = new ArrayList<>(answers);
     }
 
     public AppointmentStateEnum getState() {

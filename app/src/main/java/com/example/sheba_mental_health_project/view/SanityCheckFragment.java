@@ -13,33 +13,30 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.sheba_mental_health_project.R;
-import com.example.sheba_mental_health_project.model.ViewModelFactory;
-import com.example.sheba_mental_health_project.model.enums.ViewModelEnum;
-import com.example.sheba_mental_health_project.viewmodel.LeftArmViewModel;
+import com.example.sheba_mental_health_project.viewmodel.SanityCheckViewModel;
 
-public class LeftArmFragment extends Fragment {
+public class SanityCheckFragment extends Fragment {
 
-    private LeftArmViewModel mViewModel;
+    private SanityCheckViewModel mViewModel;
 
-    private final String TAG = "LeftArmFragment";
+    private final String TAG = "SanityCheckFragment";
 
 
-    public static LeftArmFragment newInstance() {
-        return new LeftArmFragment();
+    public static SanityCheckFragment newInstance() {
+        return new SanityCheckFragment();
     }
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        mViewModel = new ViewModelProvider(this, new ViewModelFactory(getContext(),
-                ViewModelEnum.LeftArm)).get(LeftArmViewModel.class);
+        mViewModel = new ViewModelProvider(this).get(SanityCheckViewModel.class);
     }
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
-        final View rootView = inflater.inflate(R.layout.left_arm_fragment, container, false);
+        final View rootView = inflater.inflate(R.layout.sanity_check_fragment, container, false);
 
         return rootView;
     }

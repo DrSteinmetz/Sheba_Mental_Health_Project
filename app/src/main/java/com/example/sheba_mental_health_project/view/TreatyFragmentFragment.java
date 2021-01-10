@@ -15,17 +15,18 @@ import android.view.ViewGroup;
 import com.example.sheba_mental_health_project.R;
 import com.example.sheba_mental_health_project.model.ViewModelFactory;
 import com.example.sheba_mental_health_project.model.enums.ViewModelEnum;
-import com.example.sheba_mental_health_project.viewmodel.LeftArmViewModel;
+import com.example.sheba_mental_health_project.viewmodel.TreatyViewModel;
+import com.google.android.material.button.MaterialButton;
 
-public class LeftArmFragment extends Fragment {
+public class TreatyFragmentFragment extends Fragment {
 
-    private LeftArmViewModel mViewModel;
+    private TreatyViewModel mViewModel;
 
-    private final String TAG = "LeftArmFragment";
+    private final String TAG = "TreatyFragmentFragment";
 
 
-    public static LeftArmFragment newInstance() {
-        return new LeftArmFragment();
+    public static TreatyFragmentFragment newInstance() {
+        return new TreatyFragmentFragment();
     }
 
     @Override
@@ -33,13 +34,15 @@ public class LeftArmFragment extends Fragment {
         super.onCreate(savedInstanceState);
 
         mViewModel = new ViewModelProvider(this, new ViewModelFactory(getContext(),
-                ViewModelEnum.LeftArm)).get(LeftArmViewModel.class);
+                ViewModelEnum.Treaty)).get(TreatyViewModel.class);
     }
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
-        final View rootView = inflater.inflate(R.layout.left_arm_fragment, container, false);
+        final View rootView = inflater.inflate(R.layout.treaty_fragment, container, false);
+
+        final MaterialButton continueBtn = rootView.findViewById(R.id.continue_btn);
 
         return rootView;
     }

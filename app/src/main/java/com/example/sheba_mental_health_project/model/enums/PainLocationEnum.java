@@ -52,9 +52,5 @@ public enum PainLocationEnum {
     Vagina,
     Anus,
     Penis,
-    Testis,
-
-    Shoulder,
-    Elbow,
-    Hand
+    Testicles,
 }

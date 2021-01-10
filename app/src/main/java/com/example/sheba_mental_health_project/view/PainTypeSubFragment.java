@@ -85,8 +85,8 @@ public class PainTypeSubFragment extends Fragment {
 
     private void setListener(final BodyPartEnum fragmentName) {
         switch (fragmentName) {
-            case LeftArm:
-                listener = (LeftArmFragment) getParentFragment();
+            case RightArm:
+                listener = (RightArmFragment) getParentFragment();
                 break;
             default:
                 listener = null;

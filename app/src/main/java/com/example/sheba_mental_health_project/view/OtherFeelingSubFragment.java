@@ -50,7 +50,7 @@ public class OtherFeelingSubFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        final View rootView = inflater.inflate(R.layout.fragment_other_feeling, container, false);
+        final View rootView = inflater.inflate(R.layout.fragment_other_feeling_sub, container, false);
 
         final String[] feelings = requireContext().getResources().getStringArray(R.array.other_feeling_spinner);
         final ArrayAdapter<String> adapter = new ArrayAdapter<>(requireContext(),
@@ -86,8 +86,8 @@ public class OtherFeelingSubFragment extends Fragment {
 
     private void setListener(final BodyPartEnum fragmentName) {
         switch (fragmentName) {
-            case LeftArm:
-                listener = (LeftArmFragment) getParentFragment();
+            case RightArm:
+                listener = (RightArmFragment) getParentFragment();
                 break;
             default:
                 listener = null;

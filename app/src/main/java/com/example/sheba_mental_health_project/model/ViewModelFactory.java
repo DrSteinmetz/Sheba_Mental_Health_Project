@@ -7,6 +7,11 @@ import androidx.lifecycle.ViewModel;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.example.sheba_mental_health_project.model.enums.ViewModelEnum;
+import com.example.sheba_mental_health_project.viewmodel.SanityCheckViewModel;
+import com.example.sheba_mental_health_project.viewmodel.BureaucracyViewModel;
+import com.example.sheba_mental_health_project.viewmodel.PreQuestionsViewModel;
+import com.example.sheba_mental_health_project.viewmodel.StatementViewModel;
+import com.example.sheba_mental_health_project.viewmodel.TreatyViewModel;
 import com.example.sheba_mental_health_project.viewmodel.AddAppointmentViewModel;
 import com.example.sheba_mental_health_project.viewmodel.AddPatientViewModel;
 import com.example.sheba_mental_health_project.viewmodel.MainActivityViewModel;
@@ -15,10 +20,10 @@ import com.example.sheba_mental_health_project.viewmodel.TherapistLoginViewModel
 import com.example.sheba_mental_health_project.viewmodel.CenterOfMassViewModel;
 import com.example.sheba_mental_health_project.viewmodel.GenitalsViewModel;
 import com.example.sheba_mental_health_project.viewmodel.LegsViewModel;
-import com.example.sheba_mental_health_project.viewmodel.RightArmViewModel;
+import com.example.sheba_mental_health_project.viewmodel.LeftArmViewModel;
 import com.example.sheba_mental_health_project.viewmodel.CharacterViewModel;
 import com.example.sheba_mental_health_project.viewmodel.HeadViewModel;
-import com.example.sheba_mental_health_project.viewmodel.LeftArmViewModel;
+import com.example.sheba_mental_health_project.viewmodel.RightArmViewModel;
 import com.example.sheba_mental_health_project.viewmodel.MainPatientViewModel;
 import com.example.sheba_mental_health_project.viewmodel.PatientLoginViewModel;
 import com.example.sheba_mental_health_project.viewmodel.WelcomeViewModel;
@@ -65,6 +70,31 @@ public class ViewModelFactory implements ViewModelProvider.Factory {
                     objectToReturn = (T) new MainPatientViewModel(mContext);
                 }
                 break;
+            case PreQuestions:
+                if (modelClass.isAssignableFrom(PreQuestionsViewModel.class)) {
+                    objectToReturn = (T) new PreQuestionsViewModel(mContext);
+                }
+                break;
+            case Treaty:
+                if (modelClass.isAssignableFrom(TreatyViewModel.class)) {
+                    objectToReturn = (T) new TreatyViewModel(mContext);
+                }
+                break;
+            case Bureaucracy:
+                if (modelClass.isAssignableFrom(BureaucracyViewModel.class)) {
+                    objectToReturn = (T) new BureaucracyViewModel(mContext);
+                }
+                break;
+            case SanityCheck:
+                if (modelClass.isAssignableFrom(SanityCheckViewModel.class)) {
+                    objectToReturn = (T) new SanityCheckViewModel(mContext);
+                }
+                break;
+            case Statement:
+                if (modelClass.isAssignableFrom(StatementViewModel.class)) {
+                    objectToReturn = (T) new StatementViewModel(mContext);
+                }
+                break;
             case MainTherapist:
                 if (modelClass.isAssignableFrom(MainTherapistViewModel.class)) {
                     objectToReturn = (T) new MainTherapistViewModel(mContext);
@@ -95,14 +125,14 @@ public class ViewModelFactory implements ViewModelProvider.Factory {
                     objectToReturn = (T) new CenterOfMassViewModel(mContext);
                 }
                 break;
-            case RightArm:
-                if (modelClass.isAssignableFrom(RightArmViewModel.class)) {
-                    objectToReturn = (T) new RightArmViewModel(mContext);
-                }
-                break;
             case LeftArm:
                 if (modelClass.isAssignableFrom(LeftArmViewModel.class)) {
                     objectToReturn = (T) new LeftArmViewModel(mContext);
+                }
+                break;
+            case RightArm:
+                if (modelClass.isAssignableFrom(RightArmViewModel.class)) {
+                    objectToReturn = (T) new RightArmViewModel(mContext);
                 }
                 break;
             case Genitals:

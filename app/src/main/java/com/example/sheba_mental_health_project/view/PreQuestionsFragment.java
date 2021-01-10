@@ -15,17 +15,17 @@ import android.view.ViewGroup;
 import com.example.sheba_mental_health_project.R;
 import com.example.sheba_mental_health_project.model.ViewModelFactory;
 import com.example.sheba_mental_health_project.model.enums.ViewModelEnum;
-import com.example.sheba_mental_health_project.viewmodel.LeftArmViewModel;
+import com.example.sheba_mental_health_project.viewmodel.PreQuestionsViewModel;
 
-public class LeftArmFragment extends Fragment {
+public class PreQuestionsFragment extends Fragment {
 
-    private LeftArmViewModel mViewModel;
+    private PreQuestionsViewModel mViewModel;
 
-    private final String TAG = "LeftArmFragment";
+    private final String TAG = "PreQuestionsFragment";
 
 
-    public static LeftArmFragment newInstance() {
-        return new LeftArmFragment();
+    public static PreQuestionsFragment newInstance() {
+        return new PreQuestionsFragment();
     }
 
     @Override
@@ -33,13 +33,13 @@ public class LeftArmFragment extends Fragment {
         super.onCreate(savedInstanceState);
 
         mViewModel = new ViewModelProvider(this, new ViewModelFactory(getContext(),
-                ViewModelEnum.LeftArm)).get(LeftArmViewModel.class);
+                ViewModelEnum.PreQuestions)).get(PreQuestionsViewModel.class);
     }
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
-        final View rootView = inflater.inflate(R.layout.left_arm_fragment, container, false);
+        final View rootView = inflater.inflate(R.layout.pre_qeustions_fragment, container, false);
 
         return rootView;
     }

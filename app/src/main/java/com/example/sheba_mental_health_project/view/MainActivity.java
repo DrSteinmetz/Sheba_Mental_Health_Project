@@ -8,14 +8,12 @@ import androidx.coordinatorlayout.widget.CoordinatorLayout;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentManager;
 import androidx.lifecycle.ViewModelProvider;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
-import android.view.View;
 
 import com.example.sheba_mental_health_project.R;
 import com.example.sheba_mental_health_project.model.ViewModelFactory;
@@ -174,7 +172,7 @@ public class MainActivity extends AppCompatActivity
     @Override
     public void onRightArmClicked() {
         getSupportFragmentManager().beginTransaction()
-                .add(R.id.container, RightArmFragment.newInstance(), RIGHT_ARM_FRAG)
+                .add(R.id.container, LeftArmFragment.newInstance(), RIGHT_ARM_FRAG)
                 .addToBackStack(null)
                 .commit();
     }
@@ -182,7 +180,7 @@ public class MainActivity extends AppCompatActivity
     @Override
     public void onLeftArmClicked() {
         getSupportFragmentManager().beginTransaction()
-                .add(R.id.container, LeftArmFragment.newInstance(), LEFT_ARM_FRAG)
+                .add(R.id.container, RightArmFragment.newInstance(), LEFT_ARM_FRAG)
                 .addToBackStack(null)
                 .commit();
     }
@@ -207,7 +205,8 @@ public class MainActivity extends AppCompatActivity
     public void onBackPressed() {
         final Fragment leftArmFragment;
         leftArmFragment = getSupportFragmentManager().findFragmentByTag(LEFT_ARM_FRAG);
-        if (leftArmFragment != null && leftArmFragment.isVisible() && leftArmFragment.getChildFragmentManager().getBackStackEntryCount() > 1) {
+        if (leftArmFragment != null && leftArmFragment.isVisible() &&
+                leftArmFragment.getChildFragmentManager().getBackStackEntryCount() > 1) {
             leftArmFragment.getChildFragmentManager().popBackStackImmediate();
         } else {
             super.onBackPressed();

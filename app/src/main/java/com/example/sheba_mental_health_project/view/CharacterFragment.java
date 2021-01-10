@@ -23,6 +23,8 @@ import com.example.sheba_mental_health_project.model.enums.ViewModelEnum;
 import com.example.sheba_mental_health_project.model.ViewModelFactory;
 import com.example.sheba_mental_health_project.viewmodel.CharacterViewModel;
 
+import org.jetbrains.annotations.NotNull;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.EnumMap;
@@ -166,10 +168,10 @@ public class CharacterFragment extends Fragment {
         return rootView;
     }
 
-    private void initializeViewMap(final View rootView) {
-        mLocationToIvMap.put(PainLocationEnum.Hand, rootView.findViewById(R.id.left_arm_1_iv));
-        mLocationToIvMap.put(PainLocationEnum.Elbow, rootView.findViewById(R.id.left_arm_2_iv));
-        mLocationToIvMap.put(PainLocationEnum.Shoulder, rootView.findViewById(R.id.left_arm_3_iv));
+    private void initializeViewMap(@NotNull final View rootView) {
+        mLocationToIvMap.put(PainLocationEnum.RightPalm, rootView.findViewById(R.id.left_arm_1_iv));
+        mLocationToIvMap.put(PainLocationEnum.RightElbow, rootView.findViewById(R.id.left_arm_2_iv));
+        mLocationToIvMap.put(PainLocationEnum.RightShoulder, rootView.findViewById(R.id.left_arm_3_iv));
     }
 
     private void showPainPoints() {

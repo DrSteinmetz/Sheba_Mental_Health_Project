@@ -15,7 +15,6 @@ import android.widget.ArrayAdapter;
 import com.example.sheba_mental_health_project.R;
 import com.example.sheba_mental_health_project.model.enums.BodyPartEnum;
 import com.example.sheba_mental_health_project.model.enums.PainFrequencyEnum;
-import com.example.sheba_mental_health_project.model.enums.PainOtherFeelingsEnum;
 import com.google.android.material.button.MaterialButton;
 
 public class PainFrequencySubFragment extends Fragment {
@@ -51,7 +50,7 @@ public class PainFrequencySubFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        final View rootView = inflater.inflate(R.layout.fragment_pain_frequency, container, false);
+        final View rootView = inflater.inflate(R.layout.fragment_pain_frequency_sub, container, false);
 
         final String[] frequencies = requireContext().getResources().getStringArray(R.array.pain_frequency_spinner);
         final ArrayAdapter<String> adapter = new ArrayAdapter<>(requireContext(),
@@ -87,8 +86,8 @@ public class PainFrequencySubFragment extends Fragment {
 
     private void setListener(final BodyPartEnum fragmentName) {
         switch (fragmentName) {
-            case LeftArm:
-                listener = (LeftArmFragment) getParentFragment();
+            case RightArm:
+                listener = (RightArmFragment) getParentFragment();
                 break;
             default:
                 listener = null;

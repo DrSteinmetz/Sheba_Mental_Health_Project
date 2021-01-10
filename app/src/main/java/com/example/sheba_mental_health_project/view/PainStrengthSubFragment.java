@@ -50,7 +50,7 @@ public class PainStrengthSubFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
-        final View rootView = inflater.inflate(R.layout.pain_strength_sub_fragment, container, false);
+        final View rootView = inflater.inflate(R.layout.fragment_pain_strength_sub, container, false);
 
         final ColorSeekBar painStrengthSb = rootView.findViewById(R.id.pain_strength_sb);
         final MaterialButton continueBtn = rootView.findViewById(R.id.continue_btn);
@@ -60,6 +60,7 @@ public class PainStrengthSubFragment extends Fragment {
             painStrengthSb.setColorBarPosition(position);
         }
 
+        Log.d(TAG, "onCreateView: ");
         if (listener != null) {
             listener.onPainStrengthChanged(painStrengthSb.getColorBarPosition(), painStrengthSb.getColor());
         }
@@ -88,8 +89,8 @@ public class PainStrengthSubFragment extends Fragment {
 
     private void setListener(final BodyPartEnum fragmentName) {
         switch (fragmentName) {
-            case LeftArm:
-                listener = (LeftArmFragment) getParentFragment();
+            case RightArm:
+                listener = (RightArmFragment) getParentFragment();
                 break;
             default:
                 listener = null;

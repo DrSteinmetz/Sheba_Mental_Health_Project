@@ -16,6 +16,7 @@ public class PainPoint implements Serializable {
     private PainTypeEnum mPainType;
     private PainFrequencyEnum mFrequency;
     private PainOtherFeelingsEnum mOtherFeeling;
+    private String mDescription;
     private int mColor;
 
     public PainPoint() {
@@ -79,6 +80,14 @@ public class PainPoint implements Serializable {
 
     public void setOtherFeeling(PainOtherFeelingsEnum mOtherFeeling) {
         this.mOtherFeeling = mOtherFeeling;
+    }
+
+    public String getDescription() {
+        return mDescription;
+    }
+
+    public void setDescription(String description) {
+        this.mDescription = description;
     }
 
     public int getColor() {
