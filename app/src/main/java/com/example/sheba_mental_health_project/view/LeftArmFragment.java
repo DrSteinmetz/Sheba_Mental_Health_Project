@@ -74,9 +74,11 @@ public class LeftArmFragment extends Fragment
         final Observer<PainPoint> onSetPainPointsSucceed = new Observer<PainPoint>() {
             @Override
             public void onChanged(PainPoint painPoint) {
-//                getChildFragmentManager().popBackStack(SUB_FRAGS_STACK, FragmentManager.POP_BACK_STACK_INCLUSIVE);
-                getActivity().getSupportFragmentManager().beginTransaction()
-                        .remove(LeftArmFragment.this).commit();
+                getChildFragmentManager().popBackStack(SUB_FRAGS_STACK, FragmentManager.POP_BACK_STACK_INCLUSIVE);
+//                getActivity().getSupportFragmentManager().beginTransaction()
+//                        .remove(LeftArmFragment.this).commit();
+                getActivity().onBackPressed();
+                getActivity().onBackPressed();
             }
         };
 
@@ -127,33 +129,21 @@ public class LeftArmFragment extends Fragment
         shoulderV.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (mSelectedIv != null) {
-                    mSelectedIv.setAnimation(null);
-                }
-                mSelectedIv = mShoulderIv;
-                moveToPainPointClicked(mShoulderIv, PainLocationEnum.Shoulder);
+                onPainPointViewClicked(mShoulderIv,PainLocationEnum.Shoulder);
             }
         });
 
         elbowV.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (mSelectedIv != null) {
-                    mSelectedIv.setAnimation(null);
-                }
-                mSelectedIv = mElbowIv;
-                moveToPainPointClicked(mElbowIv, PainLocationEnum.Elbow);
+                onPainPointViewClicked(mElbowIv,PainLocationEnum.Elbow);
             }
         });
 
         handV.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (mSelectedIv != null) {
-                    mSelectedIv.setAnimation(null);
-                }
-                mSelectedIv = mHandIv;
-                moveToPainPointClicked(mHandIv, PainLocationEnum.Hand);
+                onPainPointViewClicked(mHandIv,PainLocationEnum.Hand);
             }
         });
 
@@ -363,6 +353,17 @@ public class LeftArmFragment extends Fragment
         view.setVisibility(View.VISIBLE);
         view.setAnimation(alphaAnimation);
         alphaAnimation.start();
+    }
+
+    private void onPainPointViewClicked(final ImageView painPointIv,final PainLocationEnum painLocation){
+        if (mSelectedIv != null) {
+            if(mSelectedIv == painPointIv) {
+                return;
+            }
+            mSelectedIv.setAnimation(null);
+        }
+        mSelectedIv = painPointIv;
+        moveToPainPointClicked(painPointIv, painLocation);
     }
 
     private void moveToPainPointClicked(final View view, final PainLocationEnum painLocationEnum) {

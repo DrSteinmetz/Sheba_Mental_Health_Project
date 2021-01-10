@@ -207,7 +207,7 @@ public class MainActivity extends AppCompatActivity
     public void onBackPressed() {
         final Fragment leftArmFragment;
         leftArmFragment = getSupportFragmentManager().findFragmentByTag(LEFT_ARM_FRAG);
-        if (leftArmFragment != null && leftArmFragment.getChildFragmentManager().getBackStackEntryCount() > 1) {
+        if (leftArmFragment != null && leftArmFragment.isVisible() && leftArmFragment.getChildFragmentManager().getBackStackEntryCount() > 1) {
             leftArmFragment.getChildFragmentManager().popBackStackImmediate();
         } else {
             super.onBackPressed();
