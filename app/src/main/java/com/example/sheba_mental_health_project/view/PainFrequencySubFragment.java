@@ -15,6 +15,7 @@ import android.widget.ArrayAdapter;
 import com.example.sheba_mental_health_project.R;
 import com.example.sheba_mental_health_project.model.enums.BodyPartEnum;
 import com.example.sheba_mental_health_project.model.enums.PainFrequencyEnum;
+import com.example.sheba_mental_health_project.model.enums.PainOtherFeelingsEnum;
 import com.google.android.material.button.MaterialButton;
 
 public class PainFrequencySubFragment extends Fragment {
@@ -60,6 +61,14 @@ public class PainFrequencySubFragment extends Fragment {
 
         adapter.setDropDownViewResource(R.layout.spinner_dropdown);
         spinner.setAdapter(adapter);
+
+        if (getArguments() != null) {
+            final PainFrequencyEnum painFrequency = (PainFrequencyEnum) getArguments()
+                    .getSerializable("pain_frequency");
+            if (painFrequency != null) {
+                spinner.setSelection(painFrequency.ordinal() + 1);
+            }
+        }
 
         finishBtn.setOnClickListener(new View.OnClickListener() {
             @Override
