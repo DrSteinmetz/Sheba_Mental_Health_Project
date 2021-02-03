@@ -32,7 +32,7 @@
     <!-- Patient Drawer Menu -->
     <string name="logout">Logout</string>
 
-    <!-- Strings related to login and registration -->
+    <!-- Login and Registration strings -->
     <string name="email">Email</string>
     <string name="password">Password</string>
     <string name="action_sign_in">Sign in or register</string>
@@ -42,6 +42,12 @@
     <string name="welcome_therapist">Welcome Therapist!</string>
     <string name="login_failed">Login Failed</string>
     <string name="title_activity_login">LoginActivity</string>
+
+    <!-- Pre Questions Fragment strings -->
+    <string name="hello">Hello</string>
+    <string name="pre_questions_tv_2">We are here for you.</string>
+    <string name="pre_questions_tv_3">Before your meeting with Dr.</string>
+    <string name="pre_questions_tv_4">we will start with a few questions</string>
 
     <!-- Errors -->
     <string name="empty_email">You must enter an Email!</string>

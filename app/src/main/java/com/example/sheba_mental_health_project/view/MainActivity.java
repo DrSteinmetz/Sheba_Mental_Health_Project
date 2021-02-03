@@ -24,6 +24,11 @@ import com.google.android.material.navigation.NavigationView;
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener,
         MainTherapistFragment.MainTherapistInterface,
+        PreQuestionsFragment.PreQuestionsFragmentInterface,
+        TreatyFragment.TreatyFragmentInterface,
+        BureaucracyFragment.BureaucracyFragmentInterface,
+        SanityCheckFragment.SanityCheckFragmentInterface,
+        StatementFragment.StatementFragmentInterface,
         MainPatientFragment.MainPatientInterface,
         CharacterFragment.CharacterFragmentInterface {
 
@@ -35,9 +40,16 @@ public class MainActivity extends AppCompatActivity
     private NavigationView mNavigationView;
 
     private final String MAIN_THERAPIST_FRAG = "Main_Therapist_Fragment";
-    private final String MAIN_PATIENT_FRAG = "Main_Patient_Fragment";
     private final String ADD_PATIENT_FRAG = "Add_Patient_Fragment";
     private final String ADD_APPOINTMENT_FRAG = "Add_Appointment_Fragment";
+
+    private final String PRE_QUESTIONS_FRAG = "Pre_Questions_Fragment";
+    private final String TREATY_FRAG = "Treaty_Fragment";
+    private final String BUREAUCRACY_FRAG = "Bureaucracy_Fragment";
+    private final String SANITY_CHECK_FRAG = "Sanity_Check_Fragment";
+    private final String STATEMENT_FRAG = "Statement_Fragment";
+    private final String CATEGORY_FRAG = "Category_Fragment";
+    private final String MAIN_PATIENT_FRAG = "Main_Patient_Fragment";
 
     private final String CHARACTER_FRAG = "Character_Fragment";
     private final String HEAD_FRAG = "Head_Fragment";
@@ -146,6 +158,51 @@ public class MainActivity extends AppCompatActivity
 
     @Override
     public void onPatientAppointmentClicked() {
+        getSupportFragmentManager().beginTransaction()
+                //TODO: add enter and exit animations
+                .add(R.id.container, PreQuestionsFragment.newInstance(), PRE_QUESTIONS_FRAG)
+                .addToBackStack(null)
+                .commit();
+    }
+
+    @Override
+    public void onContinueToTreaty() {
+        getSupportFragmentManager().beginTransaction()
+                //TODO: add enter and exit animations
+                .replace(R.id.container, TreatyFragment.newInstance(), TREATY_FRAG)
+                .addToBackStack(null)
+                .commit();
+    }
+
+    @Override
+    public void onContinueToBureaucracy() {
+        getSupportFragmentManager().beginTransaction()
+                //TODO: add enter and exit animations
+                .replace(R.id.container, BureaucracyFragment.newInstance(), BUREAUCRACY_FRAG)
+                .addToBackStack(null)
+                .commit();
+    }
+
+    @Override
+    public void onContinueToSanityCheck() {
+        getSupportFragmentManager().beginTransaction()
+                //TODO: add enter and exit animations
+                .replace(R.id.container, SanityCheckFragment.newInstance(), SANITY_CHECK_FRAG)
+                .addToBackStack(null)
+                .commit();
+    }
+
+    @Override
+    public void onContinueToStatement() {
+        getSupportFragmentManager().beginTransaction()
+                //TODO: add enter and exit animations
+                .replace(R.id.container, StatementFragment.newInstance(), STATEMENT_FRAG)
+                .addToBackStack(null)
+                .commit();
+    }
+
+    @Override
+    public void onContinueToCategoryQuestions() {
         getSupportFragmentManager().beginTransaction()
                 .add(R.id.container, CharacterFragment.newInstance(), CHARACTER_FRAG)
                 .addToBackStack(null)

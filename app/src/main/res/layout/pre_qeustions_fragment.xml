@@ -3,6 +3,9 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/white"
+    android:focusable="true"
+    android:clickable="true"
     tools:context=".view.PreQuestionsFragment">
 
     <RelativeLayout
@@ -11,9 +14,53 @@
         android:padding="20dp">
 
         <TextView
+            android:id="@+id/patient_name_tv"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:text="Hello" />
+            android:paddingTop="20dp"
+            android:paddingHorizontal="20dp"
+            android:text="@string/hello"
+            android:textSize="25sp"
+            android:textStyle="bold"
+            android:textColor="@color/black"
+            android:textAllCaps="false" />
+
+        <TextView
+            android:id="@+id/tv_2"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_below="@id/patient_name_tv"
+            android:paddingHorizontal="20dp"
+            android:text="@string/pre_questions_tv_2"
+            android:textSize="25sp"
+            android:textStyle="bold"
+            android:textColor="@color/black"
+            android:textAllCaps="false" />
+
+        <TextView
+            android:id="@+id/therapist_name_tv"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_below="@id/tv_2"
+            android:paddingHorizontal="20dp"
+            android:textSize="25sp"
+            android:textStyle="bold"
+            android:textColor="@color/black"
+            android:textAllCaps="false" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/begin_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/therapist_name_tv"
+            android:layout_centerHorizontal="true"
+            android:layout_alignParentBottom="true"
+            android:layout_marginTop="30dp"
+            android:text="Begin"
+            android:textSize="30sp"
+            android:textStyle="bold"
+            android:textColor="@color/white"
+            android:textAllCaps="false" />
 
     </RelativeLayout>
 

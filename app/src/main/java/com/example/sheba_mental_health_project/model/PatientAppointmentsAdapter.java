@@ -45,10 +45,10 @@ public class PatientAppointmentsAdapter extends RecyclerView.Adapter<PatientAppo
 
     public class AppointmentViewHolder extends RecyclerView.ViewHolder {
 
-        private CardView cardLayout;
-        private TextView nameTv;
-        private TextView dateTv;
-        private TextView timeTv;
+        private final CardView cardLayout;
+        private final TextView nameTv;
+        private final TextView dateTv;
+        private final TextView timeTv;
 
         public AppointmentViewHolder(@NonNull View itemView) {
             super(itemView);

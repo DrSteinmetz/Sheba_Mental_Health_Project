@@ -10,10 +10,11 @@ import androidx.annotation.Nullable;
 import com.example.sheba_mental_health_project.model.Appointment;
 import com.example.sheba_mental_health_project.model.PainPoint;
 import com.example.sheba_mental_health_project.model.Patient;
+import com.example.sheba_mental_health_project.model.Question;
 import com.example.sheba_mental_health_project.model.Therapist;
 import com.example.sheba_mental_health_project.model.enums.AppointmentStateEnum;
 import com.example.sheba_mental_health_project.model.enums.BodyPartEnum;
-import com.example.sheba_mental_health_project.model.enums.PainLocationEnum;
+import com.example.sheba_mental_health_project.model.enums.ViewModelEnum;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
@@ -50,6 +51,9 @@ public class Repository {
     private final String PATIENTS = "patients";
     private final String THERAPISTS = "therapists";
     private final String APPOINTMENTS = "appointments";
+    private final String QUESTIONS = "questions";
+    private final String QUESTIONS_ENGLISH = "questions_english";
+    private final String QUESTIONS_HEBREW = "questions_hebrew";
 
     private final String TAG = "Repository";
 
@@ -132,6 +136,32 @@ public class Repository {
         this.mRepositorySetPainPointsListener = repositorySetPainPointsInterface;
     }
 
+    /*<------ Get Questions of Page ------>*/
+    public interface RepositoryGetQuestionsOfPageInterface {
+        void onGetQuestionsOfPageSucceed(List<Question> questions);
+
+        void onGetQuestionsOfPageFailed(String error);
+    }
+
+    private RepositoryGetQuestionsOfPageInterface mRepositoryGetQuestionsOfPageListener;
+
+    public void setGetQuestionsOfPageInterface(RepositoryGetQuestionsOfPageInterface repositoryGetQuestionsOfPageInterface){
+        this.mRepositoryGetQuestionsOfPageListener = repositoryGetQuestionsOfPageInterface;
+    }
+
+    /*<------ Set Answers of Appointment ------>*/
+    public interface RepositoryUpdateAnswersOfAppointmentInterface {
+        void onUpdateAnswersOfAppointmentSucceed(Appointment appointment);
+
+        void onUpdateAnswersOfAppointmentFailed(String error);
+    }
+
+    private RepositoryUpdateAnswersOfAppointmentInterface mRepositoryUpdateAnswersOfAppointmentListener;
+
+    public void setUpdateAnswersOfAppointmentInterface(RepositoryUpdateAnswersOfAppointmentInterface repositoryUpdateAnswersOfAppointmentInterface){
+        this.mRepositoryUpdateAnswersOfAppointmentListener = repositoryUpdateAnswersOfAppointmentInterface;
+    }
+
     /**<------ Singleton ------>*/
     public static Repository getInstance(final Context context) {
         if (repository == null) {
@@ -141,7 +171,8 @@ public class Repository {
     }
 
     private Repository(final Context context) {
-        this.mContext=context;
+        this.mContext = context;
+//        addQuestions();
     }
 
     public void getAllPatients() {
@@ -195,6 +226,10 @@ public class Repository {
                         }
                     }
                 });
+
+        /*mCloudDB.collection(APPOINTMENTS)
+                .document(id)
+                .*/
     }
 
     public void getAppointmentsOfSpecificTherapist() {
@@ -341,7 +376,8 @@ public class Repository {
                             final Appointment appointment = value.toObject(Appointment.class);
                             if (mRepositoryGetAllPainPointsListener != null) {
                                 mRepositoryGetAllPainPointsListener.onGetAllPainPointsSucceed(appointment.getPainPointsOfBodyPartMap());
-                                setCurrentAppointment(appointment);
+//                                setCurrentAppointment(appointment);
+                                mCurrentAppointment.setPainPointsOfBodyPartMap(appointment.getPainPointsOfBodyPartMap());
                             }
                         } else {
                             Log.w(TAG, "onEvent: ", error);
@@ -365,7 +401,85 @@ public class Repository {
         mGetAllPainPointsListener.remove();
     }
 
-    /*public void getQuestions() {
-        Locale.getDefault().getLanguage(); // 'he' 'en'
-    }*/
+    public void getQuestions(final ViewModelEnum page) {
+        final String language = Locale.getDefault().getLanguage(); // 'he' 'en'
+
+        final List<Question> questions = new ArrayList<>();
+
+        mCloudDB.collection(QUESTIONS)
+                .document(language)
+                .collection("ENGLISH_QUESTIONS")
+                .whereEqualTo("page", page.name())
+                .get()
+                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                        if (task.isSuccessful()) {
+                            for (QueryDocumentSnapshot document : Objects.requireNonNull(task.getResult())) {
+                                questions.add(document.toObject(Question.class));
+                            }
+                            if (mRepositoryGetQuestionsOfPageListener != null) {
+                                mRepositoryGetQuestionsOfPageListener.onGetQuestionsOfPageSucceed(questions);
+                            }
+                        } else {
+                            Log.w(TAG, "onComplete: ", task.getException());
+                            if (mRepositoryGetQuestionsOfPageListener != null) {
+                                mRepositoryGetQuestionsOfPageListener.onGetQuestionsOfPageFailed(Objects.
+                                        requireNonNull(task.getException()).getMessage());
+                            }
+                        }
+                    }
+                });
+    }
+
+    public void updateAnswersOfAppointment() {
+        Log.d(TAG, "updateAnswersOfAppointment: " + mCurrentAppointment.getAnswers());
+        mCloudDB.collection(APPOINTMENTS)
+                .document(mCurrentAppointment.getId())
+                .update("answers", mCurrentAppointment.getAnswers())
+                .addOnCompleteListener(new OnCompleteListener<Void>() {
+                    @Override
+                    public void onComplete(@NonNull Task<Void> task) {
+                        if (task.isSuccessful()) {
+                            if (mRepositoryUpdateAnswersOfAppointmentListener != null) {
+                                mRepositoryUpdateAnswersOfAppointmentListener.onUpdateAnswersOfAppointmentSucceed(mCurrentAppointment);
+                            }
+                        } else {
+                            Log.e(TAG, "onComplete: ", task.getException());
+                            if (mRepositoryUpdateAnswersOfAppointmentListener != null) {
+                                mRepositoryUpdateAnswersOfAppointmentListener.onUpdateAnswersOfAppointmentFailed(Objects.
+                                        requireNonNull(task.getException()).getMessage());
+                            }
+                        }
+                    }
+                });
+    }
+
+    public void addQuestions() {
+        final List<Question> questions = new ArrayList<>();
+
+        questions.add(new Question("3", "I Want a Long Meeting", ViewModelEnum.Treaty));
+        questions.add(new Question("4", "I Want a Short Meeting", ViewModelEnum.Treaty));
+        questions.add(new Question("5", "I want another person to present with me during the meeting", ViewModelEnum.Treaty));
+
+        questions.add(new Question("6", "document 17", ViewModelEnum.Bureaucracy));
+        questions.add(new Question("7", "Appointment summery", ViewModelEnum.Bureaucracy));
+        questions.add(new Question("8", "Prescriptions", ViewModelEnum.Bureaucracy));
+
+        questions.add(new Question("9", "I feel suicide", ViewModelEnum.SanityCheck));
+        questions.add(new Question("10", "I feel aggressive", ViewModelEnum.SanityCheck));
+        questions.add(new Question("11", "I hear voices", ViewModelEnum.SanityCheck));
+        questions.add(new Question("12", "I feel strong physical pain", ViewModelEnum.SanityCheck));
+
+        questions.add(new Question("1", "I had an accident recently", ViewModelEnum.Statement));
+        questions.add(new Question("2", "I have been hospitalized recently", ViewModelEnum.Statement));
+
+        for (Question question : questions) {
+            mCloudDB.collection(QUESTIONS)
+                    .document("en")
+                    .collection("ENGLISH_QUESTIONS")
+                    .document(question.getId())
+                    .set(question);
+        }
+    }
 }

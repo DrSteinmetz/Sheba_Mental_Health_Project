@@ -52,6 +52,10 @@ public abstract class User implements Serializable {
         this.mLastName = mLastName;
     }
 
+    public String getFullName() {
+        return mFirstName + " " + mLastName;
+    }
+
     @Override
     public String toString() {
         return "User: {" +
