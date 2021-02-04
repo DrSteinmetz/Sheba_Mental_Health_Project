@@ -7,6 +7,7 @@ import androidx.lifecycle.ViewModel;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.example.sheba_mental_health_project.model.enums.ViewModelEnum;
+import com.example.sheba_mental_health_project.viewmodel.ChatViewModel;
 import com.example.sheba_mental_health_project.viewmodel.SanityCheckViewModel;
 import com.example.sheba_mental_health_project.viewmodel.BureaucracyViewModel;
 import com.example.sheba_mental_health_project.viewmodel.PreQuestionsViewModel;
@@ -68,6 +69,11 @@ public class ViewModelFactory implements ViewModelProvider.Factory {
             case MainPatient:
                 if (modelClass.isAssignableFrom(MainPatientViewModel.class)) {
                     objectToReturn = (T) new MainPatientViewModel(mContext);
+                }
+                break;
+            case Chat:
+                if (modelClass.isAssignableFrom(ChatViewModel.class)) {
+                    objectToReturn = (T) new ChatViewModel(mContext);
                 }
                 break;
             case PreQuestions:

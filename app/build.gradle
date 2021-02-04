@@ -43,9 +43,10 @@ dependencies {
     implementation 'androidx.annotation:annotation:1.1.0'
 
     /* Firebase */
-    implementation 'com.google.firebase:firebase-auth:20.0.1'
+    implementation 'com.google.firebase:firebase-auth:20.0.2'
     implementation 'com.google.firebase:firebase-functions:19.2.0'
-    implementation 'com.google.firebase:firebase-firestore:22.0.1'
+    implementation 'com.google.firebase:firebase-firestore:22.0.2'
+    implementation 'com.firebaseui:firebase-ui-firestore:6.3.0'
 
     /* External */
     implementation 'com.github.rtugeek:colorseekbar:1.7.7'

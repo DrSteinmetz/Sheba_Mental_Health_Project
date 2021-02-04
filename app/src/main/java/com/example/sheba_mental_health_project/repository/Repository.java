@@ -8,6 +8,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
 import com.example.sheba_mental_health_project.model.Appointment;
+import com.example.sheba_mental_health_project.model.ChatMessage;
 import com.example.sheba_mental_health_project.model.PainPoint;
 import com.example.sheba_mental_health_project.model.Patient;
 import com.example.sheba_mental_health_project.model.Question;
@@ -16,6 +17,7 @@ import com.example.sheba_mental_health_project.model.enums.AppointmentStateEnum;
 import com.example.sheba_mental_health_project.model.enums.BodyPartEnum;
 import com.example.sheba_mental_health_project.model.enums.ViewModelEnum;
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentSnapshot;
@@ -24,6 +26,7 @@ import com.google.firebase.firestore.FieldPath;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.firestore.ListenerRegistration;
+import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
@@ -52,6 +55,7 @@ public class Repository {
     private final String THERAPISTS = "therapists";
     private final String APPOINTMENTS = "appointments";
     private final String QUESTIONS = "questions";
+    private final String CHAT = "chat";
     private final String QUESTIONS_ENGLISH = "questions_english";
     private final String QUESTIONS_HEBREW = "questions_hebrew";
 
@@ -149,7 +153,7 @@ public class Repository {
         this.mRepositoryGetQuestionsOfPageListener = repositoryGetQuestionsOfPageInterface;
     }
 
-    /*<------ Set Answers of Appointment ------>*/
+    /*<------ Update Answers of Appointment ------>*/
     public interface RepositoryUpdateAnswersOfAppointmentInterface {
         void onUpdateAnswersOfAppointmentSucceed(Appointment appointment);
 
@@ -160,6 +164,17 @@ public class Repository {
 
     public void setUpdateAnswersOfAppointmentInterface(RepositoryUpdateAnswersOfAppointmentInterface repositoryUpdateAnswersOfAppointmentInterface){
         this.mRepositoryUpdateAnswersOfAppointmentListener = repositoryUpdateAnswersOfAppointmentInterface;
+    }
+
+    /*<------ Upload Chat Message ------>*/
+    public interface RepositoryUploadChatMessageInterface {
+        void onUploadChatMessageFailed(String error);
+    }
+
+    private RepositoryUploadChatMessageInterface mRepositoryUploadChatMessageListener;
+
+    public void setUploadChatMessageInterface(RepositoryUploadChatMessageInterface repositoryUploadChatMessageInterface){
+        this.mRepositoryUploadChatMessageListener = repositoryUploadChatMessageInterface;
     }
 
     /**<------ Singleton ------>*/
@@ -450,6 +465,30 @@ public class Repository {
                                 mRepositoryUpdateAnswersOfAppointmentListener.onUpdateAnswersOfAppointmentFailed(Objects.
                                         requireNonNull(task.getException()).getMessage());
                             }
+                        }
+                    }
+                });
+    }
+
+    public Query getChatQuery() {
+        return mCloudDB.collection(APPOINTMENTS)
+                .document(mCurrentAppointment.getId())
+                .collection(CHAT)
+                .orderBy("time");
+    }
+
+    public void uploadChatMessageToCloud(final ChatMessage chatMessage) {
+        mCloudDB.collection(APPOINTMENTS)
+                .document(mCurrentAppointment.getId())
+                .collection(CHAT)
+                .document(chatMessage.getTime().toString())
+                .set(chatMessage)
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Log.e(TAG, "onFailure: ", e);
+                        if (mRepositoryUploadChatMessageListener != null) {
+                            mRepositoryUploadChatMessageListener.onUploadChatMessageFailed(e.getMessage());
                         }
                     }
                 });

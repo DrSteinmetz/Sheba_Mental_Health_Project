@@ -13,7 +13,9 @@ import androidx.lifecycle.ViewModelProvider;
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.MenuItem;
+import android.view.View;
 
 import com.example.sheba_mental_health_project.R;
 import com.example.sheba_mental_health_project.model.ViewModelFactory;
@@ -23,6 +25,7 @@ import com.google.android.material.navigation.NavigationView;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener,
+        DrawerLayout.DrawerListener,
         MainTherapistFragment.MainTherapistInterface,
         PreQuestionsFragment.PreQuestionsFragmentInterface,
         TreatyFragment.TreatyFragmentInterface,
@@ -50,6 +53,8 @@ public class MainActivity extends AppCompatActivity
     private final String STATEMENT_FRAG = "Statement_Fragment";
     private final String CATEGORY_FRAG = "Category_Fragment";
     private final String MAIN_PATIENT_FRAG = "Main_Patient_Fragment";
+
+    private final String CHAT_FRAG = "Chat_Fragment";
 
     private final String CHARACTER_FRAG = "Character_Fragment";
     private final String HEAD_FRAG = "Head_Fragment";
@@ -88,7 +93,7 @@ public class MainActivity extends AppCompatActivity
         actionBar.setDisplayHomeAsUpEnabled(true);
         actionBar.setHomeAsUpIndicator(R.drawable.ic_round_menu_white_24);
 
-//        mDrawerLayout.addDrawerListener(this);
+        mDrawerLayout.addDrawerListener(this);
         final boolean isTherapist = getIntent().getBooleanExtra(IS_THERAPIST, false);
         mNavigationView.getMenu().clear();
         mNavigationView.inflateMenu(isTherapist ? R.menu.therapist_drawer_menu : R.menu.patient_drawer_menu);
@@ -97,13 +102,13 @@ public class MainActivity extends AppCompatActivity
         if (isTherapist) {
             getSupportFragmentManager().beginTransaction()
                     //TODO: add enter and exit animations
-                    .add(R.id.container, MainTherapistFragment.newInstance(), MAIN_THERAPIST_FRAG)
+                    .replace(R.id.container, MainTherapistFragment.newInstance(), MAIN_THERAPIST_FRAG)
                     .addToBackStack(null)
                     .commit();
         } else {
             getSupportFragmentManager().beginTransaction()
                     //TODO: add enter and exit animations
-                    .add(R.id.container, MainPatientFragment.newInstance(), MAIN_PATIENT_FRAG)
+                    .replace(R.id.container, MainPatientFragment.newInstance(), MAIN_PATIENT_FRAG)
                     .addToBackStack(null)
                     .commit();
         }
@@ -118,6 +123,47 @@ public class MainActivity extends AppCompatActivity
         return super.onOptionsItemSelected(item);
     }
 
+    @Override
+    public void onDrawerSlide(@NonNull View drawerView, float slideOffset) {
+    }
+
+    @Override
+    public void onDrawerOpened(@NonNull View drawerView) {
+        final boolean isInAppointment = isInAppointment();
+
+        mNavigationView.getMenu().findItem(R.id.chat_action).setVisible(isInAppointment);
+        mNavigationView.invalidate();
+    }
+
+    public boolean isInAppointment() {
+        boolean isInAppointment = true;
+        final boolean isTherapist = getIntent().getBooleanExtra(IS_THERAPIST, false);
+        final Fragment mainTherapistFrag = getSupportFragmentManager()
+                .findFragmentByTag(MAIN_THERAPIST_FRAG);
+        final Fragment mainPatientFrag = getSupportFragmentManager()
+                .findFragmentByTag(MAIN_PATIENT_FRAG);
+
+        if (isTherapist) {
+            if (mainTherapistFrag != null) {
+                isInAppointment = !mainTherapistFrag.isVisible();
+            }
+        } else {
+            if (mainPatientFrag != null) {
+                isInAppointment = !mainPatientFrag.isVisible();
+            }
+        }
+
+        return isInAppointment;
+    }
+
+    @Override
+    public void onDrawerClosed(@NonNull View drawerView) {
+    }
+
+    @Override
+    public void onDrawerStateChanged(int newState) {
+    }
+
     @SuppressLint("NonConstantResourceId")
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
@@ -126,6 +172,13 @@ public class MainActivity extends AppCompatActivity
             case R.id.add_patient_action:
                 getSupportFragmentManager().beginTransaction()
                         .replace(R.id.container, AddPatientFragment.newInstance(), ADD_PATIENT_FRAG)
+                        .addToBackStack(null)
+                        .commit();
+                mDrawerLayout.closeDrawers();
+                break;
+            case R.id.chat_action:
+                getSupportFragmentManager().beginTransaction()
+                        .add(R.id.container, ChatFragment.newInstance(), CHAT_FRAG)
                         .addToBackStack(null)
                         .commit();
                 mDrawerLayout.closeDrawers();
@@ -160,7 +213,7 @@ public class MainActivity extends AppCompatActivity
     public void onPatientAppointmentClicked() {
         getSupportFragmentManager().beginTransaction()
                 //TODO: add enter and exit animations
-                .add(R.id.container, PreQuestionsFragment.newInstance(), PRE_QUESTIONS_FRAG)
+                .replace(R.id.container, PreQuestionsFragment.newInstance(), PRE_QUESTIONS_FRAG)
                 .addToBackStack(null)
                 .commit();
     }

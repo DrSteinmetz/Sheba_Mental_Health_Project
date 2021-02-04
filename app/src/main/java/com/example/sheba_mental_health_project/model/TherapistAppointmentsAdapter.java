@@ -18,16 +18,18 @@ import java.util.Locale;
 
 public class TherapistAppointmentsAdapter extends RecyclerView.Adapter<TherapistAppointmentsAdapter.AppointmentViewHolder> {
 
-    private Context mContext;
+    private final Context mContext;
 
-    private List<Appointment> mAppointments;
+    private final List<Appointment> mAppointments;
 
     final SimpleDateFormat ddMMYYYY = new SimpleDateFormat("dd/MM/yyyy", Locale.getDefault());
     final SimpleDateFormat HHmm = new SimpleDateFormat("HH:mm", Locale.getDefault());
 
     private final String TAG = "AppointmentsAdapter";
 
-    public TherapistAppointmentsAdapter(Context mContext, List<Appointment> mAppointments) {
+
+    public TherapistAppointmentsAdapter(final Context mContext,
+                                        final List<Appointment> mAppointments) {
         this.mContext = mContext;
         this.mAppointments = mAppointments;
     }

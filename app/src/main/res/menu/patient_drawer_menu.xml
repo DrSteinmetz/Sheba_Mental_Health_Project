@@ -12,6 +12,11 @@
         android:orderInCategory="1"
         app:showAsAction="never" />
 
+    <item android:id="@+id/chat_action"
+        android:title="Chat"
+        android:orderInCategory="2"
+        app:showAsAction="never" />
+
     <item android:id="@+id/settings_action"
         android:title="Settings"
         android:icon="@drawable/ic_round_settings_black_24"

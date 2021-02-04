@@ -19,16 +19,17 @@ import java.util.Locale;
 
 public class PatientAppointmentsAdapter extends RecyclerView.Adapter<PatientAppointmentsAdapter.AppointmentViewHolder> {
 
-    private Context mContext;
+    private final Context mContext;
 
-    private List<Appointment> mAppointments;
+    private final List<Appointment> mAppointments;
 
     final SimpleDateFormat ddMMYYYY = new SimpleDateFormat("dd/MM/yyyy", Locale.getDefault());
     final SimpleDateFormat HHmm = new SimpleDateFormat("HH:mm", Locale.getDefault());
 
     private final String TAG = "AppointmentsAdapter";
 
-    public PatientAppointmentsAdapter(Context mContext, List<Appointment> mAppointments) {
+    public PatientAppointmentsAdapter(final Context mContext,
+                                      final List<Appointment> mAppointments) {
         this.mContext = mContext;
         this.mAppointments = mAppointments;
     }

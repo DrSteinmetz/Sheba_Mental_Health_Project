@@ -42,7 +42,7 @@ public class MainTherapistViewModel extends ViewModel {
         return mGetMyAppointmentsFailed;
     }
 
-    private void attachGetMyAppointmentsListener() {
+    public void attachGetMyAppointmentsListener() {
         mRepository.setGetAppointmentOfSpecificTherapist(new Repository.RepositoryGetAppointmentOfSpecificTherapistInterface() {
             @Override
             public void onGetAppointmentOfSpecificTherapistSucceed(List<Appointment> appointments) {

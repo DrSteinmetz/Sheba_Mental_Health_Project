@@ -69,12 +69,14 @@ public class MainTherapistFragment extends Fragment {
         final Observer<List<Appointment>> onGetMyAppointmentsSucceed = new Observer<List<Appointment>>() {
             @Override
             public void onChanged(List<Appointment> appointments) {
-                if (mAppointmentAdapter == null) {
+                /*if (mAppointmentAdapter == null) {
                     mAppointmentAdapter = new TherapistAppointmentsAdapter(requireContext(), mViewModel.getAppointments());
                     mRecyclerView.setAdapter(mAppointmentAdapter);
                 } else {
                     mAppointmentAdapter.notifyDataSetChanged();
-                }
+                }*/
+                mAppointmentAdapter = new TherapistAppointmentsAdapter(requireContext(), mViewModel.getAppointments());
+                mRecyclerView.setAdapter(mAppointmentAdapter);
                 Log.d(TAG, "onChanged: " + appointments);
             }
         };
@@ -102,6 +104,9 @@ public class MainTherapistFragment extends Fragment {
 
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         mRecyclerView.setHasFixedSize(true);
+
+        mViewModel.attachGetMyAppointmentsListener();
+
         /*mRecyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
             @Override
             public void onScrolled(@NonNull RecyclerView recyclerView, int dx, int dy) {

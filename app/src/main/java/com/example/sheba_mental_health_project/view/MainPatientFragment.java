@@ -66,7 +66,7 @@ public class MainPatientFragment extends Fragment {
         final Observer<List<Appointment>> onGetMyAppointmentsSucceed = new Observer<List<Appointment>>() {
             @Override
             public void onChanged(List<Appointment> appointments) {
-                if (mAppointmentAdapter == null) {
+                /*if (mAppointmentAdapter == null) {
                     mAppointmentAdapter = new PatientAppointmentsAdapter(requireContext(), mViewModel.getAppointments());
                     mAppointmentAdapter.setAppointmentListener(new PatientAppointmentsAdapter.AppointmentListener() {
                         @Override
@@ -80,8 +80,19 @@ public class MainPatientFragment extends Fragment {
                     mRecyclerView.setAdapter(mAppointmentAdapter);
                 } else {
                     mAppointmentAdapter.notifyDataSetChanged();
-                }
-                Log.d(TAG, "onChanged: " + appointments);
+                }*/
+                mAppointmentAdapter = new PatientAppointmentsAdapter(requireContext(), mViewModel.getAppointments());
+                mAppointmentAdapter.setAppointmentListener(new PatientAppointmentsAdapter.AppointmentListener() {
+                    @Override
+                    public void onAppointmentClicked(int position, View view) {
+                        if (listener != null) {
+                            mViewModel.setCurrentAppointment(appointments.get(position));
+                            listener.onPatientAppointmentClicked();
+                        }
+                    }
+                });
+                mRecyclerView.setAdapter(mAppointmentAdapter);
+                Log.d(TAG, "onChanged: " + appointments.size());
             }
         };
 
@@ -100,6 +111,8 @@ public class MainPatientFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
         final View rootView = inflater.inflate(R.layout.main_patient_fragment, container, false);
+
+        mViewModel.attachGetMyAppointmentsListener();
 
         mRecyclerView = rootView.findViewById(R.id.recycler_view);
 

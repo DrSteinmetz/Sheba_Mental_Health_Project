@@ -15,6 +15,7 @@ public enum ViewModelEnum {
     AddAppointment,
     AddPatient,
     MainPatient,
+    Chat,
     Character,
     Head,
     CenterOfMass,
