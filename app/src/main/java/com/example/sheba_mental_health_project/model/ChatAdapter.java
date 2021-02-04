@@ -48,7 +48,6 @@ public class ChatAdapter extends FirestoreRecyclerAdapter<ChatMessage, ChatAdapt
         public void bind(final ChatMessage message) {
             this.contentTv.setText(message.getContent());
             this.timeTv.setText(dateToFormatDate(message.getTime()));
-            Log.d(TAG, "bind: iop");
         }
     }
 
@@ -72,7 +71,6 @@ public class ChatAdapter extends FirestoreRecyclerAdapter<ChatMessage, ChatAdapt
     protected void onBindViewHolder(@NonNull ChatAdapter.ChatViewHolder holder,
                                     int position,@NonNull ChatMessage message) {
         holder.bind(message);
-        Log.d(TAG, "onBindViewHolder: iop");
     }
 
     @Override

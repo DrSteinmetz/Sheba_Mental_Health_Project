@@ -35,7 +35,8 @@ public class RightArmFragment extends Fragment
         implements PainStrengthSubFragment.PainStrengthSubFragmentInterface,
         PainTypeSubFragment.PainTypeSubFragmentInterface,
         OtherFeelingSubFragment.OtherFeelingSubFragmentInterface,
-        PainFrequencySubFragment.PainFrequencySubFragmentInterface {
+        PainFrequencySubFragment.PainFrequencySubFragmentInterface,
+        AddDescriptionFragment.AddDescriptionFragmentInterface {
 
     private RightArmViewModel mViewModel;
 
@@ -52,6 +53,7 @@ public class RightArmFragment extends Fragment
     private final String PAIN_TYPE_FRAG = "Pain_Type_Fragment";
     private final String OTHER_FEELING_FRAG = "Other_Feeling_Fragment";
     private final String PAIN_FREQUENCY_FRAG = "Pain_Frequency_Fragment";
+    private final String DESCRIPTION_FRAG = "Description_Dialog_Fragment";
 //    private ColorSeekBar mPainStrengthSb;
 //    private RadioGroup mPainTypeRg;
 //    private RadioGroup mOtherFeelingsRg;
@@ -447,8 +449,19 @@ public class RightArmFragment extends Fragment
 
     /**<------ Pain Frequency Sub Fragment ------>*/
     @Override
-    public void onFinishBtnClicked(PainFrequencyEnum painFrequency) {
+    public void onContinueToDescriptionBtnClicked(PainFrequencyEnum painFrequency) {
         mViewModel.getPainPoint().setFrequency(painFrequency);
+
+        Log.d(TAG, "asd onContinueToDescriptionBtnClicked: " + mViewModel.getPainPoint().getDescription());
+        AddDescriptionFragment.newInstance(mViewModel.getPainPoint().getDescription(),
+                BodyPartEnum.RightArm)
+                .show(getChildFragmentManager().beginTransaction(), DESCRIPTION_FRAG);
+        //        mViewModel.setPainPointsInDB();
+    }
+
+    @Override
+    public void onFinishBtnClicked(String description) {
+        mViewModel.getPainPoint().setDescription(description);
         mViewModel.setPainPointsInDB();
     }
 }

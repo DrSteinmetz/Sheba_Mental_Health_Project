@@ -22,6 +22,7 @@ public class PatientLoginViewModel extends ViewModel {
         mAuthRepository = AuthRepository.getInstance(context);
     }
 
+
     public MutableLiveData<Void> getPatientLoginSucceed() {
         if (mPatientLoginSucceed == null) {
             mPatientLoginSucceed = new MutableLiveData<>();

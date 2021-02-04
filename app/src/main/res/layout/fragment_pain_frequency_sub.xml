@@ -59,7 +59,7 @@
         android:layout_centerHorizontal="true"
         android:layout_marginTop="30dp"
         android:layout_below="@id/spinner_layout"
-        android:text="Finish"
+        android:text="Continue"
         android:textSize="30sp"
         android:textStyle="bold"
         android:textColor="@color/white"

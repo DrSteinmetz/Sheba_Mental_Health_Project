@@ -23,7 +23,7 @@ public class PainFrequencySubFragment extends Fragment {
 
 
     public interface PainFrequencySubFragmentInterface {
-        void onFinishBtnClicked(PainFrequencyEnum painFrequency);
+        void onContinueToDescriptionBtnClicked(PainFrequencyEnum painFrequency);
     }
 
     private PainFrequencySubFragmentInterface listener;
@@ -76,7 +76,7 @@ public class PainFrequencySubFragment extends Fragment {
                     final int position = spinner.getSelectedItemPosition() - 1;
                     final PainFrequencyEnum painFrequency = position < 0 ? null :
                             PainFrequencyEnum.values()[position];
-                    listener.onFinishBtnClicked(painFrequency);
+                    listener.onContinueToDescriptionBtnClicked(painFrequency);
                 }
             }
         });

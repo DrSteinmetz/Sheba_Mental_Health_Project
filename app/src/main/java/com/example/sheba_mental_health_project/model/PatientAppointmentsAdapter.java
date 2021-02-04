@@ -53,6 +53,7 @@ public class PatientAppointmentsAdapter extends RecyclerView.Adapter<PatientAppo
 
         public AppointmentViewHolder(@NonNull View itemView) {
             super(itemView);
+
             cardLayout = itemView.findViewById(R.id.card_layout);
             nameTv = itemView.findViewById(R.id.patient_name_tv);
             dateTv = itemView.findViewById(R.id.date_tv);

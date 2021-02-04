@@ -46,13 +46,14 @@ public class TherapistAppointmentsAdapter extends RecyclerView.Adapter<Therapist
 
     public class AppointmentViewHolder extends RecyclerView.ViewHolder {
 
-        private CardView cardLayout;
-        private TextView nameTv;
-        private TextView dateTv;
-        private TextView timeTv;
+        final private CardView cardLayout;
+        final private TextView nameTv;
+        final private TextView dateTv;
+        final private TextView timeTv;
 
         public AppointmentViewHolder(@NonNull View itemView) {
             super(itemView);
+
             cardLayout = itemView.findViewById(R.id.card_layout);
             nameTv = itemView.findViewById(R.id.patient_name_tv);
             dateTv = itemView.findViewById(R.id.date_tv);

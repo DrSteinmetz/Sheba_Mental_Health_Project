@@ -40,6 +40,8 @@ public class PainPoint implements Serializable {
         this.mPainType = originalPainPoint.getPainType();
         this.mFrequency = originalPainPoint.getFrequency();
         this.mOtherFeeling = originalPainPoint.getOtherFeeling();
+        this.mDescription = originalPainPoint.getDescription();
+        this.mColor = originalPainPoint.getColor();
     }
 
     public int getPainStrength() {

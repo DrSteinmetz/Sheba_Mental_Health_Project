@@ -2,7 +2,7 @@
 <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="wrap_content"
     app:cardUseCompatPadding="true"
     app:cardElevation="10dp"
     app:cardCornerRadius="0dp"
@@ -26,12 +26,12 @@
             android:textAllCaps="false" />
         <TextView
             android:id="@+id/patient_name_tv"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_toEndOf="@id/patient_name_title_tv"
             android:layout_marginStart="20dp"
             android:gravity="center"
-            android:text="Omer Adam"
+            android:text="Kobi Swissa"
             android:textSize="25sp"
             android:textColor="@color/white"
             android:textAllCaps="false" />
@@ -48,7 +48,7 @@
             android:textAllCaps="false" />
         <TextView
             android:id="@+id/date_tv"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@id/patient_name_tv"
             android:layout_toEndOf="@id/date_title_tv"
@@ -71,7 +71,7 @@
             android:textAllCaps="false" />
         <TextView
             android:id="@+id/time_tv"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@id/date_tv"
             android:layout_toEndOf="@id/time_title_tv"

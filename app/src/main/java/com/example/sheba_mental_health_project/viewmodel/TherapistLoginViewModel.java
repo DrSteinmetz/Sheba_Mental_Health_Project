@@ -18,6 +18,7 @@ public class TherapistLoginViewModel extends ViewModel {
 
     private final String TAG = "TherapistLoginViewModel";
 
+
     public TherapistLoginViewModel(final Context context) {
         mAuthRepository = AuthRepository.getInstance(context);
     }

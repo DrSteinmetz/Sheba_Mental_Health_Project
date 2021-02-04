@@ -11,8 +11,11 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 
 import android.annotation.SuppressLint;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
@@ -94,22 +97,24 @@ public class MainActivity extends AppCompatActivity
         actionBar.setHomeAsUpIndicator(R.drawable.ic_round_menu_white_24);
 
         mDrawerLayout.addDrawerListener(this);
-        final boolean isTherapist = getIntent().getBooleanExtra(IS_THERAPIST, false);
+        final SharedPreferences sharedPreferences = PreferenceManager
+                .getDefaultSharedPreferences(this);
+        mViewModel.setIsTherapist(sharedPreferences.getBoolean(IS_THERAPIST, false));
+//        final boolean isTherapist = getIntent().getBooleanExtra(IS_THERAPIST, false);
         mNavigationView.getMenu().clear();
-        mNavigationView.inflateMenu(isTherapist ? R.menu.therapist_drawer_menu : R.menu.patient_drawer_menu);
+        mNavigationView.inflateMenu(mViewModel.isTherapist() ?
+                R.menu.therapist_drawer_menu : R.menu.patient_drawer_menu);
         mNavigationView.setNavigationItemSelectedListener(this);
 
-        if (isTherapist) {
+        if (mViewModel.isTherapist()) {
             getSupportFragmentManager().beginTransaction()
                     //TODO: add enter and exit animations
                     .replace(R.id.container, MainTherapistFragment.newInstance(), MAIN_THERAPIST_FRAG)
-                    .addToBackStack(null)
                     .commit();
         } else {
             getSupportFragmentManager().beginTransaction()
                     //TODO: add enter and exit animations
                     .replace(R.id.container, MainPatientFragment.newInstance(), MAIN_PATIENT_FRAG)
-                    .addToBackStack(null)
                     .commit();
         }
     }
@@ -137,13 +142,12 @@ public class MainActivity extends AppCompatActivity
 
     public boolean isInAppointment() {
         boolean isInAppointment = true;
-        final boolean isTherapist = getIntent().getBooleanExtra(IS_THERAPIST, false);
         final Fragment mainTherapistFrag = getSupportFragmentManager()
                 .findFragmentByTag(MAIN_THERAPIST_FRAG);
         final Fragment mainPatientFrag = getSupportFragmentManager()
                 .findFragmentByTag(MAIN_PATIENT_FRAG);
 
-        if (isTherapist) {
+        if (mViewModel.isTherapist()) {
             if (mainTherapistFrag != null) {
                 isInAppointment = !mainTherapistFrag.isVisible();
             }

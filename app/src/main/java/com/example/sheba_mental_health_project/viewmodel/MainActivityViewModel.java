@@ -12,10 +12,21 @@ public class MainActivityViewModel extends ViewModel {
 
 //    TODO: add MutableLiveData
 
+    private boolean mIsTherapist;
+
     private final String TAG = "MainActivityViewModel";
 
     public MainActivityViewModel(final Context context) {
         mAuthRepository = AuthRepository.getInstance(context);
+    }
+
+
+    public boolean isTherapist() {
+        return mIsTherapist;
+    }
+
+    public void setIsTherapist(boolean isTherapist) {
+        this.mIsTherapist = isTherapist;
     }
 
     public void logout() {

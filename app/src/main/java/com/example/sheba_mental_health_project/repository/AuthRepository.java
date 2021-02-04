@@ -99,7 +99,7 @@ public class AuthRepository {
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()) {
                             Log.d(TAG, "signInWithEmail succeed");
-                            FirebaseUser user = mAuth.getCurrentUser();
+                            final FirebaseUser user = mAuth.getCurrentUser();
                             if (user != null) {
                                 getPatientForLogin(user.getUid());
                             }
@@ -123,7 +123,7 @@ public class AuthRepository {
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()) {
                             Log.d(TAG, "signInWithEmail succeed");
-                            FirebaseUser user = mAuth.getCurrentUser();
+                            final FirebaseUser user = mAuth.getCurrentUser();
                             if (user != null) {
                                 getTherapistForLogin(user.getUid());
                             }
@@ -208,6 +208,16 @@ public class AuthRepository {
         });
     }
 
+    public String getFirebaseUserId() {
+        String uId = null;
+
+        if (mAuth.getCurrentUser() != null) {
+            uId = mAuth.getCurrentUser().getUid();
+        }
+
+        return uId;
+    }
+
     public void addNewPatient(final String email, final String password,
                               final String firstName, final String lastName) {
         mAuth.createUserWithEmailAndPassword(email, password)
@@ -252,6 +262,10 @@ public class AuthRepository {
                         }
                     }
                 });
+    }
+
+    public boolean isAuthenticated() {
+        return (mAuth.getCurrentUser() != null);
     }
 
     public User getUser() {
