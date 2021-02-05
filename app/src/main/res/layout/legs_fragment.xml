@@ -1,18 +1,59 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/white"
+    android:orientation="vertical"
     android:focusable="true"
     android:clickable="true"
     tools:context=".view.LegsFragment">
 
-    <ImageView
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:padding="20dp"
-        android:src="@drawable/ic_legs"
-        android:scaleType="fitCenter" />
+        android:layout_height="0dp"
+        android:layout_weight="2">
 
-</FrameLayout>
+
+        <ImageView
+            android:id="@+id/legs_iv"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:padding="20dp"
+            android:src="@drawable/ic_legs"
+            android:scaleType="fitCenter" />
+
+        <ImageView
+            android:id="@+id/left_knee_iv"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_alignTop="@id/legs_iv"
+            android:layout_marginTop="30dp"
+            android:layout_alignEnd="@id/legs_iv"
+            android:layout_marginEnd="20dp"
+            android:src="@drawable/ic_red_pain_point"
+            android:visibility="gone"
+            android:scaleType="fitCenter" />
+        <View
+            android:id="@+id/left_knee_v"
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:layout_alignTop="@id/legs_iv"
+            android:layout_alignEnd="@id/legs_iv"
+            android:layout_marginTop="10dp" />
+
+
+    </RelativeLayout>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1">
+
+        <androidx.fragment.app.FragmentContainerView
+            android:id="@+id/fragment_container"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+    </ScrollView>
+
+</LinearLayout>
