@@ -172,6 +172,9 @@ public class CharacterFragment extends Fragment {
         mLocationToIvMap.put(PainLocationEnum.RightPalm, rootView.findViewById(R.id.left_arm_1_iv));
         mLocationToIvMap.put(PainLocationEnum.RightElbow, rootView.findViewById(R.id.left_arm_2_iv));
         mLocationToIvMap.put(PainLocationEnum.RightShoulder, rootView.findViewById(R.id.left_arm_3_iv));
+        mLocationToIvMap.put(PainLocationEnum.LeftPalm,rootView.findViewById(R.id.right_arm_1_iv));
+        mLocationToIvMap.put(PainLocationEnum.LeftElbow,rootView.findViewById(R.id.right_arm_2_iv));
+        mLocationToIvMap.put(PainLocationEnum.LeftShoulder,rootView.findViewById(R.id.right_arm_3_iv));
     }
 
     private void showPainPoints() {

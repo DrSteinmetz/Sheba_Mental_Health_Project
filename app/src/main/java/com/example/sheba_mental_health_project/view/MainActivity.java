@@ -318,12 +318,23 @@ public class MainActivity extends AppCompatActivity
     @Override
     public void onBackPressed() {
         final Fragment leftArmFragment;
+        final Fragment rightArmFragment;
         leftArmFragment = getSupportFragmentManager().findFragmentByTag(LEFT_ARM_FRAG);
+        rightArmFragment = getSupportFragmentManager().findFragmentByTag(RIGHT_ARM_FRAG);
+
         if (leftArmFragment != null && leftArmFragment.isVisible() &&
                 leftArmFragment.getChildFragmentManager().getBackStackEntryCount() > 1) {
             leftArmFragment.getChildFragmentManager().popBackStackImmediate();
-        } else {
+        }
+        else if (rightArmFragment != null && rightArmFragment.isVisible() &&
+                rightArmFragment.getChildFragmentManager().getBackStackEntryCount() > 1) {
+            rightArmFragment.getChildFragmentManager().popBackStackImmediate();
+        }
+        else {
             super.onBackPressed();
         }
+
+
+
     }
 }
