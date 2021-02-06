@@ -36,7 +36,7 @@ public class MainActivity extends AppCompatActivity
         SanityCheckFragment.SanityCheckFragmentInterface,
         StatementFragment.StatementFragmentInterface,
         MainPatientFragment.MainPatientInterface,
-        CharacterFragment.CharacterFragmentInterface {
+        CharacterFragment.CharacterFragmentInterface{
 
     private MainActivityViewModel mViewModel;
 
