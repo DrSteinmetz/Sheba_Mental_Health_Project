@@ -43,14 +43,105 @@
                 android:layout_height="0dp"
                 android:layout_weight="2">
 
-                <View
-                    android:id="@+id/arm_left_v"
+                <!-- Pain Points -->
+                <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:background="@null" />
+                    android:orientation="vertical">
 
-                <!-- Pain Points -->
-                <ImageView
+                    <Space
+                        android:layout_width="match_parent"
+                        android:layout_height="0dp"
+                        android:layout_weight="0.4" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="0dp"
+                        android:layout_weight="1.2"
+                        android:orientation="horizontal">
+                        <Space
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1.5" />
+                        <ImageView
+                            android:id="@+id/left_arm_3_iv"
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1"
+                            android:padding="3dp"
+                            android:src="@drawable/ic_red_pain_point"
+                            android:visibility="visible"
+                            android:scaleType="fitCenter" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="0dp"
+                        android:layout_weight="1.5">
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="0dp"
+                        android:layout_weight="1"
+                        android:orientation="horizontal">
+                        <Space
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1" />
+                        <ImageView
+                            android:id="@+id/left_arm_2_iv"
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1"
+                            android:padding="3dp"
+                            android:src="@drawable/ic_red_pain_point"
+                            android:visibility="visible"
+                            android:scaleType="fitCenter" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="0dp"
+                        android:layout_weight="2">
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="0dp"
+                        android:layout_weight="0.5">
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="0dp"
+                        android:layout_weight="0.5"
+                        android:orientation="horizontal">
+                        <Space
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1.2" />
+                        <ImageView
+                            android:id="@+id/left_arm_1_iv"
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1"
+                            android:src="@drawable/ic_red_pain_point"
+                            android:visibility="visible"
+                            android:scaleType="fitCenter" />
+                        <Space
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="0dp"
+                        android:layout_weight="1">
+                    </LinearLayout>
+                </LinearLayout>
+                <!--<ImageView
                     android:id="@+id/left_arm_1_iv"
                     android:layout_width="30dp"
                     android:layout_height="30dp"
@@ -77,7 +168,13 @@
                     android:layout_alignEnd="@+id/arm_left_v"
                     android:layout_alignTop="@id/arm_left_v"
                     android:layout_marginTop="20dp"
-                    android:src="@drawable/ic_red_pain_point" />
+                    android:src="@drawable/ic_red_pain_point" />-->
+
+                <View
+                    android:id="@+id/arm_left_v"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="@null" />
 
             </RelativeLayout>
 
@@ -177,7 +274,7 @@
                     android:layout_marginTop="20dp"
                     android:src="@drawable/ic_red_pain_point" />
 
-                
+
 
             </RelativeLayout>
 

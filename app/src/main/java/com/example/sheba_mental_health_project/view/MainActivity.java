@@ -286,7 +286,7 @@ public class MainActivity extends AppCompatActivity
     @Override
     public void onRightArmClicked() {
         getSupportFragmentManager().beginTransaction()
-                .add(R.id.container, LeftArmFragment.newInstance(), RIGHT_ARM_FRAG)
+                .add(R.id.container, LeftArmFragment.newInstance(), LEFT_ARM_FRAG)
                 .addToBackStack(null)
                 .commit();
     }
@@ -294,7 +294,7 @@ public class MainActivity extends AppCompatActivity
     @Override
     public void onLeftArmClicked() {
         getSupportFragmentManager().beginTransaction()
-                .add(R.id.container, RightArmFragment.newInstance(), LEFT_ARM_FRAG)
+                .add(R.id.container, RightArmFragment.newInstance(), RIGHT_ARM_FRAG)
                 .addToBackStack(null)
                 .commit();
     }
@@ -317,24 +317,34 @@ public class MainActivity extends AppCompatActivity
 
     @Override
     public void onBackPressed() {
-        final Fragment leftArmFragment;
-        final Fragment rightArmFragment;
-        leftArmFragment = getSupportFragmentManager().findFragmentByTag(LEFT_ARM_FRAG);
-        rightArmFragment = getSupportFragmentManager().findFragmentByTag(RIGHT_ARM_FRAG);
+        final Fragment headFragment = getSupportFragmentManager().findFragmentByTag(HEAD_FRAG);
+        final Fragment centerOfMassFragment = getSupportFragmentManager().findFragmentByTag(CENTER_OF_MASS_FRAG);
+        final Fragment leftArmFragment = getSupportFragmentManager().findFragmentByTag(LEFT_ARM_FRAG);
+        final Fragment rightArmFragment = getSupportFragmentManager().findFragmentByTag(RIGHT_ARM_FRAG);
+        final Fragment genitalsFragment = getSupportFragmentManager().findFragmentByTag(GENITALS_FRAG);
+        final Fragment legsFragment = getSupportFragmentManager().findFragmentByTag(LEGS_FRAG);
 
-        if (leftArmFragment != null && leftArmFragment.isVisible() &&
+        if (headFragment != null && headFragment.isVisible() &&
+                headFragment.getChildFragmentManager().getBackStackEntryCount() > 1) {
+            headFragment.getChildFragmentManager().popBackStackImmediate();
+        } else if (centerOfMassFragment != null && centerOfMassFragment.isVisible() &&
+                centerOfMassFragment.getChildFragmentManager().getBackStackEntryCount() > 1) {
+            centerOfMassFragment.getChildFragmentManager().popBackStackImmediate();
+        } else if (leftArmFragment != null && leftArmFragment.isVisible() &&
                 leftArmFragment.getChildFragmentManager().getBackStackEntryCount() > 1) {
             leftArmFragment.getChildFragmentManager().popBackStackImmediate();
-        }
-        else if (rightArmFragment != null && rightArmFragment.isVisible() &&
+        } else if (rightArmFragment != null && rightArmFragment.isVisible() &&
                 rightArmFragment.getChildFragmentManager().getBackStackEntryCount() > 1) {
             rightArmFragment.getChildFragmentManager().popBackStackImmediate();
+        } else if (genitalsFragment != null && genitalsFragment.isVisible() &&
+                genitalsFragment.getChildFragmentManager().getBackStackEntryCount() > 1) {
+            genitalsFragment.getChildFragmentManager().popBackStackImmediate();
+        } else if (legsFragment != null && legsFragment.isVisible() &&
+                legsFragment.getChildFragmentManager().getBackStackEntryCount() > 1) {
+            legsFragment.getChildFragmentManager().popBackStackImmediate();
         }
         else {
             super.onBackPressed();
         }
-
-
-
     }
 }
