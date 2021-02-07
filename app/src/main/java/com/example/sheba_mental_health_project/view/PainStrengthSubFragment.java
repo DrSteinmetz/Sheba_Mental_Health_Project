@@ -92,6 +92,9 @@ public class PainStrengthSubFragment extends Fragment {
             case RightArm:
                 listener = (RightArmFragment) getParentFragment();
                 break;
+            case Legs:
+                listener = (LegsFragment) getParentFragment();
+                break;
             case LeftArm:
                 listener = (LeftArmFragment) getParentFragment();
                 break;
