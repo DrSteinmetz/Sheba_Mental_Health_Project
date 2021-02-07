@@ -64,8 +64,8 @@
                     android:id="@+id/left_arm_2_iv"
                     android:layout_width="30dp"
                     android:layout_height="30dp"
-                    android:layout_alignEnd="@+id/arm_left_v"
                     android:layout_alignTop="@id/arm_left_v"
+                    android:layout_alignEnd="@+id/arm_left_v"
                     android:layout_marginTop="110dp"
                     android:layout_marginEnd="6dp"
                     android:src="@drawable/ic_red_pain_point" />
@@ -135,12 +135,51 @@
                 android:layout_height="0dp"
                 android:layout_weight="0.7" />
 
-            <View
-                android:id="@+id/arm_right_v"
+            <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
-                android:layout_weight="2"
-                android:background="@null" />
+                android:layout_weight="2">
+
+                <View
+                    android:id="@+id/arm_right_v"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="@null" />
+
+                <!-- Left Arm Pain Points -->
+
+                <ImageView
+                    android:id="@+id/right_arm_1_iv"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:layout_alignEnd="@+id/arm_right_v"
+                    android:layout_alignBottom="@id/arm_right_v"
+                    android:layout_marginBottom="40dp"
+                    android:layout_marginEnd="40dp"
+                    android:src="@drawable/ic_red_pain_point" />
+
+                <ImageView
+                    android:id="@+id/right_arm_2_iv"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:layout_alignStart="@+id/arm_right_v"
+                    android:layout_alignTop="@id/arm_right_v"
+                    android:layout_marginTop="110dp"
+                    android:layout_marginStart="6dp"
+                    android:src="@drawable/ic_red_pain_point" />
+
+                <ImageView
+                    android:id="@+id/right_arm_3_iv"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:layout_alignStart="@+id/arm_right_v"
+                    android:layout_alignTop="@id/arm_right_v"
+                    android:layout_marginTop="20dp"
+                    android:src="@drawable/ic_red_pain_point" />
+
+                
+
+            </RelativeLayout>
 
             <Space
                 android:layout_width="match_parent"

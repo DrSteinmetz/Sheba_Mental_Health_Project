@@ -95,6 +95,9 @@ public class PainStrengthSubFragment extends Fragment {
             case Legs:
                 listener = (LegsFragment) getParentFragment();
                 break;
+            case LeftArm:
+                listener = (LeftArmFragment) getParentFragment();
+                break;
             default:
                 listener = null;
                 throw new ClassCastException("The fragment must implement PainStrengthSubFragmentInterface Listener!");
