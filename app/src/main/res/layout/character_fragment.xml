@@ -1,0 +1,193 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    android:focusable="true"
+    android:clickable="true"
+    android:padding="20dp"
+    android:layoutDirection="ltr"
+    tools:context=".view.CharacterFragment">
+
+    <ImageView
+        android:id="@+id/character_iv"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_centerInParent="true"
+        android:src="@drawable/ic_character" />
+
+    <LinearLayout
+        android:id="@+id/linear_layout_4_views"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignTop="@id/character_iv"
+        android:layout_alignStart="@id/character_iv"
+        android:layout_alignBottom="@id/character_iv"
+        android:layout_alignEnd="@id/character_iv"
+        android:orientation="horizontal">
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:orientation="vertical">
+
+            <Space
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="0.7" />
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="2">
+
+                <View
+                    android:id="@+id/arm_left_v"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="@null" />
+
+                <!-- Pain Points -->
+                <ImageView
+                    android:id="@+id/left_arm_1_iv"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:layout_alignStart="@+id/arm_left_v"
+                    android:layout_alignBottom="@id/arm_left_v"
+                    android:layout_marginBottom="40dp"
+                    android:layout_marginStart="40dp"
+                    android:src="@drawable/ic_red_pain_point" />
+
+                <ImageView
+                    android:id="@+id/left_arm_2_iv"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:layout_alignTop="@id/arm_left_v"
+                    android:layout_alignEnd="@+id/arm_left_v"
+                    android:layout_marginTop="110dp"
+                    android:layout_marginEnd="6dp"
+                    android:src="@drawable/ic_red_pain_point" />
+
+                <ImageView
+                    android:id="@+id/left_arm_3_iv"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:layout_alignEnd="@+id/arm_left_v"
+                    android:layout_alignTop="@id/arm_left_v"
+                    android:layout_marginTop="20dp"
+                    android:src="@drawable/ic_red_pain_point" />
+
+            </RelativeLayout>
+
+            <Space
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1.8" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1.05"
+            android:orientation="vertical">
+
+            <View
+                android:id="@+id/head_v"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1.35"
+                android:background="@null" />
+
+            <View
+                android:id="@+id/center_of_mass_v"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="3"
+                android:background="@null" />
+
+            <View
+                android:id="@+id/genitals_v"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:background="@null" />
+
+            <View
+                android:id="@+id/legs_v"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="4"
+                android:background="@null" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:orientation="vertical">
+
+            <Space
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="0.7" />
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="2">
+
+                <View
+                    android:id="@+id/arm_right_v"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="@null" />
+
+                <!-- Left Arm Pain Points -->
+
+                <ImageView
+                    android:id="@+id/right_arm_1_iv"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:layout_alignEnd="@+id/arm_right_v"
+                    android:layout_alignBottom="@id/arm_right_v"
+                    android:layout_marginBottom="40dp"
+                    android:layout_marginEnd="40dp"
+                    android:src="@drawable/ic_red_pain_point" />
+
+                <ImageView
+                    android:id="@+id/right_arm_2_iv"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:layout_alignStart="@+id/arm_right_v"
+                    android:layout_alignTop="@id/arm_right_v"
+                    android:layout_marginTop="110dp"
+                    android:layout_marginStart="6dp"
+                    android:src="@drawable/ic_red_pain_point" />
+
+                <ImageView
+                    android:id="@+id/right_arm_3_iv"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:layout_alignStart="@+id/arm_right_v"
+                    android:layout_alignTop="@id/arm_right_v"
+                    android:layout_marginTop="20dp"
+                    android:src="@drawable/ic_red_pain_point" />
+
+                
+
+            </RelativeLayout>
+
+            <Space
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1.8" />
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+</RelativeLayout>

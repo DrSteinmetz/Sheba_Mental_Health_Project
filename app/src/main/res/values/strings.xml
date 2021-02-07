@@ -1,14 +1,62 @@
 <resources>
     <string name="app_name">Sheba Mental Health Project</string>
 
-    <!-- Strings related to login -->
-    <string name="prompt_email">Email</string>
-    <string name="prompt_password">Password</string>
+    <string name="yes">Yes</string>
+    <string name="no">No</string>
+
+    <string name="choose">Choose…</string>
+    <!-- Pain Types -->
+    <string name="sharp">Sharp</string>
+    <string name="dim">Dim</string>
+    <string name="pressing">Pressing</string>
+    <string name="burning">Burning</string>
+    <string name="no_pain">No Pain</string>
+
+    <!-- Other Feeling -->
+    <string name="bleeding">Bleeding</string>
+    <string name="itching">Itching</string>
+    <string name="sting">Sting</string>
+    <string name="strange">Strange</string>
+    <string name="numb">Numb</string>
+    <string name="other">Other</string>
+
+    <!-- Frequency -->
+    <string name="wavy">Wavy</string>
+    <string name="static_pain">Static</string>
+    <string name="getting_worse">Getting Worse</string>
+    <string name="getting_better">Getting Better</string>
+
+    <!-- Therapist Drawer Menu -->
+    <string name="add_patient_action">Add Patient</string>
+
+    <!-- Patient Drawer Menu -->
+    <string name="logout">Logout</string>
+
+    <!-- Login and Registration strings -->
+    <string name="email">Email</string>
+    <string name="password">Password</string>
     <string name="action_sign_in">Sign in or register</string>
     <string name="action_sign_in_short">Sign in</string>
     <string name="welcome">Welcome!</string>
-    <string name="invalid_username">Not a valid username</string>
-    <string name="invalid_password">Password must be >5 characters</string>
-    <string name="login_failed">Login failed</string>
+    <string name="welcome_patient">Welcome Patient!</string>
+    <string name="welcome_therapist">Welcome Therapist!</string>
+    <string name="login_failed">Login Failed</string>
     <string name="title_activity_login">LoginActivity</string>
+
+    <!-- Pre Questions Fragment strings -->
+    <string name="hello">Hello</string>
+    <string name="pre_questions_tv_2">We are here for you.</string>
+    <string name="pre_questions_tv_3">Before your meeting with Dr.</string>
+    <string name="pre_questions_tv_4">we will start with a few questions</string>
+
+    <!-- Errors -->
+    <string name="empty_email">You must enter an Email!</string>
+    <string name="invalid_email">Invalid email</string>
+    <string name="empty_password">You must enter a Password!</string>
+    <string name="invalid_password">Password must include at least 8 characters</string>
+    <string name="empty_first_name">You must enter a First Name!</string>
+    <string name="empty_last_name">You must enter a Last Name!</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+
 </resources>

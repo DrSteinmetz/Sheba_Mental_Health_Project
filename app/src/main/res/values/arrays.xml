@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="color_seek_bar">
+        <item>@color/yellow</item>
+        <item>@color/red</item>
+    </string-array>
+
+    <string-array name="pain_type_spinner">
+        <item>@string/choose</item>
+        <item>@string/sharp</item>
+        <item>@string/dim</item>
+        <item>@string/pressing</item>
+        <item>@string/burning</item>
+        <item>@string/no_pain</item>
+    </string-array>
+
+    <string-array name="other_feeling_spinner">
+        <item>@string/choose</item>
+        <item>@string/bleeding</item>
+        <item>@string/itching</item>
+        <item>@string/sting</item>
+        <item>@string/strange</item>
+        <item>@string/numb</item>
+        <item>@string/other</item>
+    </string-array>
+
+    <string-array name="pain_frequency_spinner">
+        <item>@string/choose</item>
+        <item>@string/wavy</item>
+        <item>@string/static_pain</item>
+        <item>@string/getting_worse</item>
+        <item>@string/getting_better</item>
+    </string-array>
+</resources>
