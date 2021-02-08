@@ -31,7 +31,7 @@
             android:layout_height="wrap_content"
             android:layout_toEndOf="@id/patient_name_title_tv"
             android:layout_marginStart="20dp"
-            android:gravity="center"
+            android:gravity="start"
             android:text="Omer Adam"
             android:textSize="25sp"
             android:textColor="@color/white"
@@ -54,7 +54,7 @@
             android:layout_below="@id/patient_name_tv"
             android:layout_toEndOf="@id/date_title_tv"
             android:layout_marginStart="20dp"
-            android:gravity="center"
+            android:gravity="start"
             android:text="20/12/2020"
             android:textSize="25sp"
             android:textColor="@color/white"
@@ -77,12 +77,11 @@
             android:layout_below="@id/date_tv"
             android:layout_toEndOf="@id/time_title_tv"
             android:layout_marginStart="20dp"
-            android:gravity="center"
+            android:gravity="start"
             android:text="16:43"
             android:textSize="25sp"
             android:textColor="@color/white"
             android:textAllCaps="false" />
-
 
     </RelativeLayout>
 

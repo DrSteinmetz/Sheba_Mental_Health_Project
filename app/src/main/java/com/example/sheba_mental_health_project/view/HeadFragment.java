@@ -41,6 +41,7 @@ public class HeadFragment extends Fragment
 
     private HeadViewModel mViewModel;
 
+    private ImageView mScalpIv;
     private ImageView mForeheadIv;
     private ImageView mRightEyeIv;
     private ImageView mLeftEyeIv;
@@ -130,12 +131,14 @@ public class HeadFragment extends Fragment
                              @Nullable Bundle savedInstanceState) {
         final View rootView = inflater.inflate(R.layout.head_fragment, container, false);
 
+        final View scalpV = rootView.findViewById(R.id.scalp_v);
         final View foreheadV = rootView.findViewById(R.id.forehead_v);
         final View rightEyeV = rootView.findViewById(R.id.right_eye_v);
         final View leftEyeV = rootView.findViewById(R.id.left_eye_v);
         final View noseV = rootView.findViewById(R.id.nose_v);
         final View mouthV = rootView.findViewById(R.id.mouth_v);
         final View neckV = rootView.findViewById(R.id.neck_v);
+        mSelectedIv = rootView.findViewById(R.id.scalp_iv);
         mForeheadIv = rootView.findViewById(R.id.forehead_iv);
         mRightEyeIv = rootView.findViewById(R.id.right_eye_iv);
         mLeftEyeIv = rootView.findViewById(R.id.left_eye_iv);
@@ -148,6 +151,13 @@ public class HeadFragment extends Fragment
         alphaAnimation.setDuration(700);
 
         showPainPoints();
+
+        scalpV.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onPainPointViewClicked(mScalpIv, PainLocationEnum.Scalp);
+            }
+        });
 
         foreheadV.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -201,38 +211,44 @@ public class HeadFragment extends Fragment
     private void showPainPoints() {
         PainPoint painPoint;
 
+        painPoint = mViewModel.getPainPointsMap().get(PainLocationEnum.Scalp);
+        mScalpIv.setVisibility(painPoint != null ? View.VISIBLE : View.INVISIBLE);
+        if (painPoint != null) {
+            mScalpIv.setColorFilter(painPoint.getColor());
+        }
+
         painPoint = mViewModel.getPainPointsMap().get(PainLocationEnum.Forehead);
-        mForeheadIv.setVisibility(painPoint != null ? View.VISIBLE : View.GONE);
+        mForeheadIv.setVisibility(painPoint != null ? View.VISIBLE : View.INVISIBLE);
         if (painPoint != null) {
             mForeheadIv.setColorFilter(painPoint.getColor());
         }
 
         painPoint = mViewModel.getPainPointsMap().get(PainLocationEnum.RightEye);
-        mRightEyeIv.setVisibility(painPoint != null ? View.VISIBLE : View.GONE);
+        mRightEyeIv.setVisibility(painPoint != null ? View.VISIBLE : View.INVISIBLE);
         if (painPoint != null) {
             mRightEyeIv.setColorFilter(painPoint.getColor());
         }
 
         painPoint = mViewModel.getPainPointsMap().get(PainLocationEnum.LeftEye);
-        mLeftEyeIv.setVisibility(painPoint != null ? View.VISIBLE : View.GONE);
+        mLeftEyeIv.setVisibility(painPoint != null ? View.VISIBLE : View.INVISIBLE);
         if (painPoint != null) {
             mLeftEyeIv.setColorFilter(painPoint.getColor());
         }
 
         painPoint = mViewModel.getPainPointsMap().get(PainLocationEnum.Nose);
-        mNoseIv.setVisibility(painPoint != null ? View.VISIBLE : View.GONE);
+        mNoseIv.setVisibility(painPoint != null ? View.VISIBLE : View.INVISIBLE);
         if (painPoint != null) {
             mNoseIv.setColorFilter(painPoint.getColor());
         }
 
         painPoint = mViewModel.getPainPointsMap().get(PainLocationEnum.Mouth);
-        mMouthIv.setVisibility(painPoint != null ? View.VISIBLE : View.GONE);
+        mMouthIv.setVisibility(painPoint != null ? View.VISIBLE : View.INVISIBLE);
         if (painPoint != null) {
             mMouthIv.setColorFilter(painPoint.getColor());
         }
 
         painPoint = mViewModel.getPainPointsMap().get(PainLocationEnum.Neck);
-        mNeckIv.setVisibility(painPoint != null ? View.VISIBLE : View.GONE);
+        mNeckIv.setVisibility(painPoint != null ? View.VISIBLE : View.INVISIBLE);
         if (painPoint != null) {
             mNeckIv.setColorFilter(painPoint.getColor());
         }

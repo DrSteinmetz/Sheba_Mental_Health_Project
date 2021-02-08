@@ -19,6 +19,7 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 
 import com.example.sheba_mental_health_project.R;
+import com.example.sheba_mental_health_project.model.Appointment;
 import com.example.sheba_mental_health_project.model.PainPoint;
 import com.example.sheba_mental_health_project.model.enums.PainLocationEnum;
 import com.example.sheba_mental_health_project.model.enums.ViewModelEnum;
@@ -39,6 +40,8 @@ public class CharacterFragment extends Fragment {
 
     private ImageView mCharacterIv;
 
+    private boolean mIsClickable;
+
     private final String TAG = "CharacterFragment";
 
 
@@ -53,8 +56,14 @@ public class CharacterFragment extends Fragment {
 
     private CharacterFragmentInterface listener;
 
-    public static CharacterFragment newInstance() {
-        return new CharacterFragment();
+    public static CharacterFragment newInstance(final Appointment appointment,
+                                                final boolean isClickable) {
+        CharacterFragment fragment = new CharacterFragment();
+        Bundle args = new Bundle();
+        args.putSerializable("appointment", appointment);
+        args.putBoolean("is_clickable", isClickable);
+        fragment.setArguments(args);
+        return fragment;
     }
 
     @Override
@@ -74,6 +83,11 @@ public class CharacterFragment extends Fragment {
 
         mViewModel = new ViewModelProvider(this, new ViewModelFactory(getContext(),
                 ViewModelEnum.Character)).get(CharacterViewModel.class);
+
+        if (getArguments() != null) {
+            mIsClickable = getArguments().getBoolean("is_clickable", true);
+            mViewModel.setAppointment((Appointment) getArguments().getSerializable("appointment"));
+        }
 
         final Observer<Map<String, List<PainPoint>>> onGetAllPainPointsSucceed = new Observer<Map<String, List<PainPoint>>>() {
             @Override
@@ -125,59 +139,61 @@ public class CharacterFragment extends Fragment {
 
         initializeViewMap(rootView);
 
-        headView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (listener != null) {
-                    listener.onHeadClicked();
+        if (mIsClickable) {
+            headView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if (listener != null) {
+                        listener.onHeadClicked();
+                    }
                 }
-            }
-        });
+            });
 
-        centerOfMassView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (listener != null) {
-                    listener.onCenterOfMassClicked();
+            centerOfMassView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if (listener != null) {
+                        listener.onCenterOfMassClicked();
+                    }
                 }
-            }
-        });
+            });
 
-        leftArmView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (listener != null) {
-                    listener.onLeftArmClicked();
+            leftArmView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if (listener != null) {
+                        listener.onLeftArmClicked();
+                    }
                 }
-            }
-        });
+            });
 
-        rightArmView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (listener != null) {
-                    listener.onRightArmClicked();
+            rightArmView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if (listener != null) {
+                        listener.onRightArmClicked();
+                    }
                 }
-            }
-        });
+            });
 
-        genitalsView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (listener != null) {
-                    listener.onGenitalsClicked();
+            genitalsView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if (listener != null) {
+                        listener.onGenitalsClicked();
+                    }
                 }
-            }
-        });
+            });
 
-        legsView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (listener != null) {
-                    listener.onLegsClicked();
+            legsView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if (listener != null) {
+                        listener.onLegsClicked();
+                    }
                 }
-            }
-        });
+            });
+        }
 
         mViewModel.getAllPainPoints();
 
@@ -190,8 +206,8 @@ public class CharacterFragment extends Fragment {
         mLocationToIvMap.put(PainLocationEnum.Forehead, rootView.findViewById(R.id.forehead_iv));
         mLocationToIvMap.put(PainLocationEnum.RightEar, rootView.findViewById(R.id.left_ear_iv));
         mLocationToIvMap.put(PainLocationEnum.RightEye, rootView.findViewById(R.id.left_eye_iv));
-        mLocationToIvMap.put(PainLocationEnum.LeftEar, rootView.findViewById(R.id.right_eye_iv));
-        mLocationToIvMap.put(PainLocationEnum.LeftEye, rootView.findViewById(R.id.right_ear_iv));
+        mLocationToIvMap.put(PainLocationEnum.LeftEar, rootView.findViewById(R.id.right_ear_iv));
+        mLocationToIvMap.put(PainLocationEnum.LeftEye, rootView.findViewById(R.id.right_eye_iv));
         mLocationToIvMap.put(PainLocationEnum.Nose, rootView.findViewById(R.id.nose_iv));
         mLocationToIvMap.put(PainLocationEnum.Mouth, rootView.findViewById(R.id.mouth_iv));
         mLocationToIvMap.put(PainLocationEnum.Neck, rootView.findViewById(R.id.neck_iv));
@@ -245,7 +261,7 @@ public class CharacterFragment extends Fragment {
                 entry.getValue().setColorFilter(painPoint.getColor());
                 entry.getValue().setVisibility(View.VISIBLE);
             } else {
-                entry.getValue().setVisibility(View.GONE);
+                entry.getValue().setVisibility(View.INVISIBLE);
             }
         }
     }

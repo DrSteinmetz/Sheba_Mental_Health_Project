@@ -15,6 +15,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -35,11 +36,11 @@ public class StartMeetingFragment extends Fragment {
 
     private StartMeetingViewModel mViewModel;
 
-    TextView mDateTv;
-    TextView mTherapistNameTv;
-    TextView mPatientNameTv;
-    TextView mNoMeetingTv;
-    RelativeLayout mMainLayout;
+    private TextView mDateTv;
+    private TextView mTherapistNameTv;
+    private TextView mPatientNameTv;
+    private TextView mNoMeetingTv;
+    private RelativeLayout mMainLayout;
 
     public interface StartMeetingTherapistInterface {
         void onTherapistStartMeetingClicked();
@@ -72,7 +73,7 @@ public class StartMeetingFragment extends Fragment {
         Observer<Appointment> appointmentSucceedObserver = new Observer<Appointment>() {
             @Override
             public void onChanged(Appointment appointment) {
-                SimpleDateFormat simpleDateFormat = new SimpleDateFormat("HH:mm | dd/MM");
+                final SimpleDateFormat simpleDateFormat = new SimpleDateFormat("HH:mm | dd/MM");
 
                 mPatientNameTv.setText(appointment.getPatient().getFullName());
                 mTherapistNameTv.setText(appointment.getTherapist().getFullName());
@@ -80,6 +81,9 @@ public class StartMeetingFragment extends Fragment {
                 mMainLayout.setVisibility(View.VISIBLE);
                 mNoMeetingTv.setVisibility(View.GONE);
 
+                getChildFragmentManager().beginTransaction()
+                        .add(R.id.character_container, CharacterFragment.newInstance(appointment, false))
+                        .commit();
             }
         };
 
@@ -124,16 +128,6 @@ public class StartMeetingFragment extends Fragment {
         mMainLayout = rootView.findViewById(R.id.start_meeting_relative);
         final MaterialButton startMeetingBtn = rootView.findViewById(R.id.start_meeting_btn);
 
-        final FragmentContainerView fragmentContainerView = rootView.findViewById(R.id.character_container);
-        fragmentContainerView.setEnabled(false);
-        fragmentContainerView.setClickable(false);
-        fragmentContainerView.setFocusable(false);
-        fragmentContainerView.setOnClickListener(null);
-        getChildFragmentManager().beginTransaction()
-                .add(R.id.character_container, CharacterFragment.newInstance())
-                .commit();
-
-
         startMeetingBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -144,7 +138,4 @@ public class StartMeetingFragment extends Fragment {
         mViewModel.getLastMeeting();
         return  rootView;
     }
-
-
-
 }
