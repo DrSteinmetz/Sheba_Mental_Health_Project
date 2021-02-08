@@ -11,6 +11,7 @@ import com.example.sheba_mental_health_project.viewmodel.ChatViewModel;
 import com.example.sheba_mental_health_project.viewmodel.SanityCheckViewModel;
 import com.example.sheba_mental_health_project.viewmodel.BureaucracyViewModel;
 import com.example.sheba_mental_health_project.viewmodel.PreQuestionsViewModel;
+import com.example.sheba_mental_health_project.viewmodel.StartMeetingViewModel;
 import com.example.sheba_mental_health_project.viewmodel.StatementViewModel;
 import com.example.sheba_mental_health_project.viewmodel.TreatyViewModel;
 import com.example.sheba_mental_health_project.viewmodel.AddAppointmentViewModel;
@@ -104,6 +105,11 @@ public class ViewModelFactory implements ViewModelProvider.Factory {
             case MainTherapist:
                 if (modelClass.isAssignableFrom(MainTherapistViewModel.class)) {
                     objectToReturn = (T) new MainTherapistViewModel(mContext);
+                }
+                break;
+            case StartMeeting:
+                if (modelClass.isAssignableFrom(StartMeetingViewModel.class)) {
+                    objectToReturn = (T) new StartMeetingViewModel(mContext);
                 }
                 break;
             case AddPatient:

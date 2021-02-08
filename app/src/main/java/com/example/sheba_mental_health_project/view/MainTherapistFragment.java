@@ -77,7 +77,13 @@ public class MainTherapistFragment extends Fragment {
                 }*/
                 mAppointmentAdapter = new TherapistAppointmentsAdapter(requireContext(), mViewModel.getAppointments());
                 mRecyclerView.setAdapter(mAppointmentAdapter);
-                Log.d(TAG, "onChanged: " + appointments);
+                mAppointmentAdapter.setAppointmentListener(new TherapistAppointmentsAdapter.AppointmentListener() {
+                    @Override
+                    public void onAppointmentClicked(int position, View view) {
+                        mViewModel.setCurrentAppointment(appointments.get(position));
+                        listener.onTherapistAppointmentClicked();
+                    }
+                });
             }
         };
 

@@ -12,6 +12,7 @@ public enum ViewModelEnum {
     SanityCheck,
     Statement,
     MainTherapist,
+    StartMeeting,
     AddAppointment,
     AddPatient,
     MainPatient,
@@ -23,5 +24,5 @@ public enum ViewModelEnum {
     RightArm,
     LeftArm,
     Genitals,
-    Legs,
+    Legs
 }

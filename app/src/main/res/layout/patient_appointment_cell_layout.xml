@@ -26,11 +26,10 @@
             android:textAllCaps="false" />
         <TextView
             android:id="@+id/patient_name_tv"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_toEndOf="@id/patient_name_title_tv"
             android:layout_marginStart="20dp"
-            android:gravity="center"
             android:text="Kobi Swissa"
             android:textSize="25sp"
             android:textColor="@color/white"
@@ -48,12 +47,11 @@
             android:textAllCaps="false" />
         <TextView
             android:id="@+id/date_tv"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@id/patient_name_tv"
             android:layout_toEndOf="@id/date_title_tv"
             android:layout_marginStart="20dp"
-            android:gravity="center"
             android:text="20/12/2020"
             android:textSize="25sp"
             android:textColor="@color/white"
@@ -71,7 +69,7 @@
             android:textAllCaps="false" />
         <TextView
             android:id="@+id/time_tv"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@id/date_tv"
             android:layout_toEndOf="@id/time_title_tv"
@@ -81,6 +79,15 @@
             android:textSize="25sp"
             android:textColor="@color/white"
             android:textAllCaps="false" />
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/getin_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_centerVertical="true"
+            android:visibility="gone"
+            android:layout_margin="5dp"
+            android:text="Get in"/>
 
     </RelativeLayout>
 
