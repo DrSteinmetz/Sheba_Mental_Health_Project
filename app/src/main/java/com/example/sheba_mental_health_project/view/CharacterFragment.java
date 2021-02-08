@@ -14,7 +14,9 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.ViewTreeObserver;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 
 import com.example.sheba_mental_health_project.R;
 import com.example.sheba_mental_health_project.model.PainPoint;
@@ -25,8 +27,6 @@ import com.example.sheba_mental_health_project.viewmodel.CharacterViewModel;
 
 import org.jetbrains.annotations.NotNull;
 
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.EnumMap;
 import java.util.List;
 import java.util.Map;
@@ -36,6 +36,8 @@ public class CharacterFragment extends Fragment {
     private CharacterViewModel mViewModel;
 
     private final EnumMap<PainLocationEnum, ImageView> mLocationToIvMap = new EnumMap<>(PainLocationEnum.class);
+
+    private ImageView mCharacterIv;
 
     private final String TAG = "CharacterFragment";
 
@@ -102,16 +104,30 @@ public class CharacterFragment extends Fragment {
         final View centerOfMassView = rootView.findViewById(R.id.center_of_mass_v);
         final View genitalsView = rootView.findViewById(R.id.genitals_v);
         final View legsView = rootView.findViewById(R.id.legs_v);
+        mCharacterIv = rootView.findViewById(R.id.character_iv);
+
+        rootView.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
+            @Override
+            public void onGlobalLayout() {
+                rootView.getViewTreeObserver().removeOnGlobalLayoutListener(this);
+
+                final int characterHeight = mCharacterIv.getHeight();
+                final int characterWidth = ((characterHeight * 450) / 1000);
+
+                RelativeLayout.LayoutParams layoutParams = new RelativeLayout
+                        .LayoutParams(characterWidth, RelativeLayout.LayoutParams.MATCH_PARENT);
+
+                layoutParams.addRule(RelativeLayout.CENTER_IN_PARENT, RelativeLayout.TRUE);
+
+                mCharacterIv.setLayoutParams(layoutParams);
+            }
+        });
 
         initializeViewMap(rootView);
 
         headView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                /*getParentFragmentManager().beginTransaction()
-                        .replace(android.R.id.content, HeadFragment.newInstance(), "Head_Fragment")
-                        .addToBackStack(null)
-                        .commit();*/
                 if (listener != null) {
                     listener.onHeadClicked();
                 }
@@ -169,13 +185,57 @@ public class CharacterFragment extends Fragment {
     }
 
     private void initializeViewMap(@NotNull final View rootView) {
-        mLocationToIvMap.put(PainLocationEnum.RightPalm, rootView.findViewById(R.id.left_arm_1_iv));
-        mLocationToIvMap.put(PainLocationEnum.RightElbow, rootView.findViewById(R.id.left_arm_2_iv));
-        mLocationToIvMap.put(PainLocationEnum.RightShoulder, rootView.findViewById(R.id.left_arm_3_iv));
+        /** Head */
+        mLocationToIvMap.put(PainLocationEnum.Scalp, rootView.findViewById(R.id.scalp_iv));
+        mLocationToIvMap.put(PainLocationEnum.Forehead, rootView.findViewById(R.id.forehead_iv));
+        mLocationToIvMap.put(PainLocationEnum.RightEar, rootView.findViewById(R.id.left_ear_iv));
+        mLocationToIvMap.put(PainLocationEnum.RightEye, rootView.findViewById(R.id.left_eye_iv));
+        mLocationToIvMap.put(PainLocationEnum.LeftEar, rootView.findViewById(R.id.right_eye_iv));
+        mLocationToIvMap.put(PainLocationEnum.LeftEye, rootView.findViewById(R.id.right_ear_iv));
+        mLocationToIvMap.put(PainLocationEnum.Nose, rootView.findViewById(R.id.nose_iv));
+        mLocationToIvMap.put(PainLocationEnum.Mouth, rootView.findViewById(R.id.mouth_iv));
+        mLocationToIvMap.put(PainLocationEnum.Neck, rootView.findViewById(R.id.neck_iv));
 
-        mLocationToIvMap.put(PainLocationEnum.LeftPalm, rootView.findViewById(R.id.right_arm_1_iv));
-        mLocationToIvMap.put(PainLocationEnum.LeftElbow, rootView.findViewById(R.id.right_arm_2_iv));
-        mLocationToIvMap.put(PainLocationEnum.LeftShoulder, rootView.findViewById(R.id.right_arm_3_iv));
+        /** Center of Mass */
+        mLocationToIvMap.put(PainLocationEnum.Chest, rootView.findViewById(R.id.chest_iv));
+        mLocationToIvMap.put(PainLocationEnum.UpperRightAbdomen, rootView.findViewById(R.id.upper_left_abdomen_iv));
+        mLocationToIvMap.put(PainLocationEnum.UpperLeftAbdomen, rootView.findViewById(R.id.upper_right_abdomen_iv));
+        mLocationToIvMap.put(PainLocationEnum.Navel, rootView.findViewById(R.id.navel_iv));
+        mLocationToIvMap.put(PainLocationEnum.LowerRightAbdomen, rootView.findViewById(R.id.lower_left_abdomen_iv));
+        mLocationToIvMap.put(PainLocationEnum.LowerLeftAbdomen, rootView.findViewById(R.id.lower_right_abdomen_iv));
+
+        /** Right Arm */
+        mLocationToIvMap.put(PainLocationEnum.RightShoulder, rootView.findViewById(R.id.left_shoulder_iv));
+        mLocationToIvMap.put(PainLocationEnum.RightArm, rootView.findViewById(R.id.left_arm_iv));
+        mLocationToIvMap.put(PainLocationEnum.RightElbow, rootView.findViewById(R.id.left_elbow_iv));
+        mLocationToIvMap.put(PainLocationEnum.RightForearm, rootView.findViewById(R.id.left_forearm_iv));
+        mLocationToIvMap.put(PainLocationEnum.RightWrist, rootView.findViewById(R.id.left_wrist_iv));
+        mLocationToIvMap.put(PainLocationEnum.RightPalm, rootView.findViewById(R.id.left_palm_iv));
+        mLocationToIvMap.put(PainLocationEnum.RightFingers, rootView.findViewById(R.id.left_fingers_iv));
+
+        /** Left Arm */
+        mLocationToIvMap.put(PainLocationEnum.LeftShoulder, rootView.findViewById(R.id.right_shoulder_iv));
+        mLocationToIvMap.put(PainLocationEnum.LeftArm, rootView.findViewById(R.id.right_arm_iv));
+        mLocationToIvMap.put(PainLocationEnum.LeftElbow, rootView.findViewById(R.id.right_elbow_iv));
+        mLocationToIvMap.put(PainLocationEnum.LeftForearm, rootView.findViewById(R.id.right_forearm_iv));
+        mLocationToIvMap.put(PainLocationEnum.LeftWrist, rootView.findViewById(R.id.right_wrist_iv));
+        mLocationToIvMap.put(PainLocationEnum.LeftPalm, rootView.findViewById(R.id.right_palm_iv));
+        mLocationToIvMap.put(PainLocationEnum.LeftFingers, rootView.findViewById(R.id.right_fingers_iv));
+
+        /** Genitals */
+        mLocationToIvMap.put(PainLocationEnum.Anus, rootView.findViewById(R.id.anus_iv));
+
+        /** Legs */
+        mLocationToIvMap.put(PainLocationEnum.RightThigh, rootView.findViewById(R.id.left_thigh_iv));
+        mLocationToIvMap.put(PainLocationEnum.LeftThigh, rootView.findViewById(R.id.right_thigh_iv));
+        mLocationToIvMap.put(PainLocationEnum.RightKnee, rootView.findViewById(R.id.left_knee_iv));
+        mLocationToIvMap.put(PainLocationEnum.LeftKnee, rootView.findViewById(R.id.right_knee_iv));
+        mLocationToIvMap.put(PainLocationEnum.RightShin, rootView.findViewById(R.id.left_shin_iv));
+        mLocationToIvMap.put(PainLocationEnum.LeftShin, rootView.findViewById(R.id.right_shin_iv));
+        mLocationToIvMap.put(PainLocationEnum.RightFoot, rootView.findViewById(R.id.left_foot_iv));
+        mLocationToIvMap.put(PainLocationEnum.LeftFoot, rootView.findViewById(R.id.right_foot_iv));
+        mLocationToIvMap.put(PainLocationEnum.RightToes, rootView.findViewById(R.id.left_toes_iv));
+        mLocationToIvMap.put(PainLocationEnum.LeftToes, rootView.findViewById(R.id.right_toes_iv));
     }
 
     private void showPainPoints() {

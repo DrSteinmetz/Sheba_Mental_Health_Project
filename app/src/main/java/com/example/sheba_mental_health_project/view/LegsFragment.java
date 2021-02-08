@@ -39,7 +39,17 @@ public class LegsFragment extends Fragment implements PainStrengthSubFragment.Pa
 
     private LegsViewModel mViewModel;
 
+    private ImageView mRightThighIv;
+    private ImageView mLeftThighIv;
+    private ImageView mRightKneeIv;
     private ImageView mLeftKneeIv;
+    private ImageView mRightShinIv;
+    private ImageView mLeftShinIv;
+    private ImageView mRightFootIv;
+    private ImageView mLeftFootIv;
+    private ImageView mRightToesIv;
+    private ImageView mLeftToesIv;
+
     private ImageView mSelectedIv;
 
     private final Animation alphaAnimation = new AlphaAnimation(1, 0);
@@ -93,7 +103,16 @@ public class LegsFragment extends Fragment implements PainStrengthSubFragment.Pa
         final View rootView = inflater.inflate(R.layout.legs_fragment, container, false);
 
         final View LeftKneeV = rootView.findViewById(R.id.left_knee_v);
+        mRightThighIv = rootView.findViewById(R.id.left_knee_iv);
+        mLeftThighIv = rootView.findViewById(R.id.left_knee_iv);
+        mRightKneeIv = rootView.findViewById(R.id.left_knee_iv);
         mLeftKneeIv = rootView.findViewById(R.id.left_knee_iv);
+        mRightShinIv = rootView.findViewById(R.id.left_knee_iv);
+        mLeftShinIv = rootView.findViewById(R.id.left_knee_iv);
+        mRightFootIv = rootView.findViewById(R.id.left_knee_iv);
+        mLeftFootIv = rootView.findViewById(R.id.left_knee_iv);
+        mRightToesIv = rootView.findViewById(R.id.left_knee_iv);
+        mLeftToesIv = rootView.findViewById(R.id.left_knee_iv);
 
         alphaAnimation.setRepeatCount(Animation.INFINITE);
         alphaAnimation.setRepeatMode(Animation.REVERSE);

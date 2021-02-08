@@ -12,18 +12,30 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="2">
-
+        android:layout_weight="2"
+        android:padding="20dp">
 
         <ImageView
-            android:id="@+id/legs_iv"
+            android:id="@+id/body_part_iv"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:padding="20dp"
             android:src="@drawable/ic_legs"
             android:scaleType="fitCenter" />
 
-        <ImageView
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <Space
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1" />
+
+        </LinearLayout>
+
+
+        <!--<ImageView
             android:id="@+id/left_knee_iv"
             android:layout_width="40dp"
             android:layout_height="40dp"
@@ -40,8 +52,7 @@
             android:layout_height="80dp"
             android:layout_alignTop="@id/legs_iv"
             android:layout_alignEnd="@id/legs_iv"
-            android:layout_marginTop="10dp" />
-
+            android:layout_marginTop="10dp" />-->
 
     </RelativeLayout>
 

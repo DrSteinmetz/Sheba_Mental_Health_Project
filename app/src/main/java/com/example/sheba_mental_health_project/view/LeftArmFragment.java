@@ -41,9 +41,15 @@ public class LeftArmFragment extends Fragment implements
     private final String TAG = "LeftArmFragment";
 
     private LeftArmViewModel mViewModel;
+
     private ImageView mShoulderIv;
+    private ImageView mArmIv;
     private ImageView mElbowIv;
+    private ImageView mForearmIv;
+    private ImageView mWristIv;
     private ImageView mPalmIv;
+    private ImageView mFingersIv;
+
     private ImageView mSelectedIv;
 
     private final Animation alphaAnimation = new AlphaAnimation(1, 0);
@@ -93,11 +99,19 @@ public class LeftArmFragment extends Fragment implements
         final View rootView = inflater.inflate(R.layout.left_arm_fragment, container, false);
 
         final View shoulderV = rootView.findViewById(R.id.shoulder_v);
+        final View armV = rootView.findViewById(R.id.arm_v);
         final View elbowV = rootView.findViewById(R.id.elbow_v);
+        final View forearmV = rootView.findViewById(R.id.forearm_v);
+        final View wristV = rootView.findViewById(R.id.wrist_v);
         final View palmV = rootView.findViewById(R.id.palm_v);
+        final View fingersV = rootView.findViewById(R.id.fingers_v);
         mShoulderIv = rootView.findViewById(R.id.shoulder_iv);
+        mArmIv = rootView.findViewById(R.id.arm_iv);
         mElbowIv = rootView.findViewById(R.id.elbow_iv);
+        mForearmIv = rootView.findViewById(R.id.forearm_iv);
+        mWristIv = rootView.findViewById(R.id.wrist_iv);
         mPalmIv = rootView.findViewById(R.id.palm_iv);
+        mFingersIv = rootView.findViewById(R.id.fingers_iv);
 
         alphaAnimation.setRepeatCount(Animation.INFINITE);
         alphaAnimation.setRepeatMode(Animation.REVERSE);
@@ -112,6 +126,13 @@ public class LeftArmFragment extends Fragment implements
             }
         });
 
+        armV.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onPainPointViewClicked(mArmIv, PainLocationEnum.LeftArm);
+            }
+        });
+
         elbowV.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -119,10 +140,31 @@ public class LeftArmFragment extends Fragment implements
             }
         });
 
+        forearmV.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onPainPointViewClicked(mForearmIv, PainLocationEnum.LeftForearm);
+            }
+        });
+
+        wristV.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onPainPointViewClicked(mWristIv, PainLocationEnum.LeftWrist);
+            }
+        });
+
         palmV.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 onPainPointViewClicked(mPalmIv,PainLocationEnum.LeftPalm);
+            }
+        });
+
+        fingersV.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onPainPointViewClicked(mFingersIv, PainLocationEnum.LeftFingers);
             }
         });
 
@@ -136,16 +178,40 @@ public class LeftArmFragment extends Fragment implements
             mShoulderIv.setColorFilter(painPoint.getColor());
         }
 
+        painPoint = mViewModel.getPainPointsMap().get(PainLocationEnum.LeftArm);
+        mArmIv.setVisibility(painPoint != null ? View.VISIBLE : View.GONE);
+        if (painPoint != null) {
+            mArmIv.setColorFilter(painPoint.getColor());
+        }
+
         painPoint = mViewModel.getPainPointsMap().get(PainLocationEnum.LeftElbow);
         mElbowIv.setVisibility(painPoint != null ? View.VISIBLE : View.GONE);
         if (painPoint != null) {
             mElbowIv.setColorFilter(painPoint.getColor());
         }
 
+        painPoint = mViewModel.getPainPointsMap().get(PainLocationEnum.LeftForearm);
+        mForearmIv.setVisibility(painPoint != null ? View.VISIBLE : View.GONE);
+        if (painPoint != null) {
+            mForearmIv.setColorFilter(painPoint.getColor());
+        }
+
+        painPoint = mViewModel.getPainPointsMap().get(PainLocationEnum.LeftWrist);
+        mWristIv.setVisibility(painPoint != null ? View.VISIBLE : View.GONE);
+        if (painPoint != null) {
+            mWristIv.setColorFilter(painPoint.getColor());
+        }
+
         painPoint = mViewModel.getPainPointsMap().get(PainLocationEnum.LeftPalm);
         mPalmIv.setVisibility(painPoint != null ? View.VISIBLE : View.GONE);
         if (painPoint != null) {
             mPalmIv.setColorFilter(painPoint.getColor());
+        }
+
+        painPoint = mViewModel.getPainPointsMap().get(PainLocationEnum.LeftFingers);
+        mFingersIv.setVisibility(painPoint != null ? View.VISIBLE : View.GONE);
+        if (painPoint != null) {
+            mFingersIv.setColorFilter(painPoint.getColor());
         }
     }
 
