@@ -268,14 +268,13 @@ public class MainActivity extends AppCompatActivity
     @Override
     public void onContinueToCategoryQuestions() {
         getSupportFragmentManager().beginTransaction()
-                .add(R.id.container, CharacterFragment.newInstance(), CHARACTER_FRAG)
+                .add(R.id.container, CharacterFragment.newInstance(mViewModel.getCurrentAppointment(), true), CHARACTER_FRAG)
                 .addToBackStack(null)
                 .commit();
     }
 
     @Override
     public void onTherapistStartMeetingClicked() {
-
     }
 
     /**<------ Character ------>*/

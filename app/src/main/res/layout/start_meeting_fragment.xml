@@ -1,18 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".view.StartMeetingFragment">
+
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:padding="5dp">
+        android:layout_height="match_parent"
+        android:padding="20dp">
 
         <RelativeLayout
             android:id="@+id/start_meeting_relative"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_above="@id/start_meeting_btn"
             android:clickable="false"
             android:focusable="false">
 
@@ -59,7 +61,7 @@
                     android:layout_height="wrap_content"
                     android:layout_margin="5dp"
                     android:textSize="20sp"
-                    android:text="last meeting therapist name:"/>
+                    android:text="last meeting therapist name:" />
                 <TextView
                     android:id="@+id/last_therapist_name_tv"
                     android:layout_width="wrap_content"
@@ -67,47 +69,37 @@
                     android:layout_margin="5dp"
                     android:textSize="20sp"
                     android:textStyle="bold"
-                    android:text="Avi Neelavi"/>
+                    android:text="Avi Neelavi" />
             </LinearLayout>
 
             <androidx.fragment.app.FragmentContainerView
                 android:id="@+id/character_container"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:clickable="false"
-                android:focusable="false"
-                android:layout_below="@id/therapist_linear">
-
-            </androidx.fragment.app.FragmentContainerView>
-
-            <View
-                android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:clickable="false"
-                android:focusable="false" />
+                android:layout_below="@id/therapist_linear" />
 
         </RelativeLayout>
 
         <TextView
             android:id="@+id/no_meeting_tv"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textSize="20sp"
-            android:textStyle="bold"
-            android:visibility="gone"
-            android:layout_below="@id/start_meeting_btn"
+            android:layout_centerInParent="true"
+            android:gravity="center"
             android:text="No Previous Meetings"
-            />
+            android:textSize="50sp"
+            android:textStyle="bold"
+            android:visibility="gone" />
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/start_meeting_btn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="start meeting"
-            android:layout_below="@+id/start_meeting_relative"
-            android:layout_centerHorizontal="true"/>
-
+            android:layout_centerHorizontal="true"
+            android:layout_alignParentBottom="true"
+            android:text="Start Meeting"
+            android:textAllCaps="false" />
 
     </RelativeLayout>
 
-</ScrollView>
+</RelativeLayout>

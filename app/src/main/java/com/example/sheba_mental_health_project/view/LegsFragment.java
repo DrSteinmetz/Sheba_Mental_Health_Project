@@ -102,17 +102,26 @@ public class LegsFragment extends Fragment implements PainStrengthSubFragment.Pa
                              @Nullable Bundle savedInstanceState) {
         final View rootView = inflater.inflate(R.layout.legs_fragment, container, false);
 
-        final View LeftKneeV = rootView.findViewById(R.id.left_knee_v);
-        mRightThighIv = rootView.findViewById(R.id.left_knee_iv);
-        mLeftThighIv = rootView.findViewById(R.id.left_knee_iv);
-        mRightKneeIv = rootView.findViewById(R.id.left_knee_iv);
+        final View rightThighV = rootView.findViewById(R.id.right_thigh_v);
+        final View leftThighV = rootView.findViewById(R.id.left_thigh_v);
+        final View rightKneeV = rootView.findViewById(R.id.right_knee_v);
+        final View leftKneeV = rootView.findViewById(R.id.left_knee_v);
+        final View rightShinV = rootView.findViewById(R.id.right_shin_v);
+        final View leftShinV = rootView.findViewById(R.id.left_shin_v);
+        final View rightFootV = rootView.findViewById(R.id.right_foot_v);
+        final View leftFootV = rootView.findViewById(R.id.left_foot_v);
+        final View rightToesV = rootView.findViewById(R.id.right_toes_v);
+        final View leftToesV = rootView.findViewById(R.id.left_toes_v);
+        mRightThighIv = rootView.findViewById(R.id.right_thigh_iv);
+        mLeftThighIv = rootView.findViewById(R.id.left_thigh_iv);
+        mRightKneeIv = rootView.findViewById(R.id.right_knee_iv);
         mLeftKneeIv = rootView.findViewById(R.id.left_knee_iv);
-        mRightShinIv = rootView.findViewById(R.id.left_knee_iv);
-        mLeftShinIv = rootView.findViewById(R.id.left_knee_iv);
-        mRightFootIv = rootView.findViewById(R.id.left_knee_iv);
-        mLeftFootIv = rootView.findViewById(R.id.left_knee_iv);
-        mRightToesIv = rootView.findViewById(R.id.left_knee_iv);
-        mLeftToesIv = rootView.findViewById(R.id.left_knee_iv);
+        mRightShinIv = rootView.findViewById(R.id.right_shin_iv);
+        mLeftShinIv = rootView.findViewById(R.id.left_shin_iv);
+        mRightFootIv = rootView.findViewById(R.id.right_foot_iv);
+        mLeftFootIv = rootView.findViewById(R.id.left_foot_iv);
+        mRightToesIv = rootView.findViewById(R.id.right_toes_iv);
+        mLeftToesIv = rootView.findViewById(R.id.left_toes_iv);
 
         alphaAnimation.setRepeatCount(Animation.INFINITE);
         alphaAnimation.setRepeatMode(Animation.REVERSE);
@@ -120,10 +129,73 @@ public class LegsFragment extends Fragment implements PainStrengthSubFragment.Pa
 
         showPainPoints();
 
-        LeftKneeV.setOnClickListener(new View.OnClickListener() {
+        rightThighV.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                onPainPointViewClicked(mLeftKneeIv,PainLocationEnum.LeftKnee);
+                onPainPointViewClicked(mRightThighIv, PainLocationEnum.RightThigh);
+            }
+        });
+
+        leftThighV.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onPainPointViewClicked(mLeftThighIv, PainLocationEnum.LeftThigh);
+            }
+        });
+
+        rightKneeV.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onPainPointViewClicked(mRightKneeIv, PainLocationEnum.RightKnee);
+            }
+        });
+
+        leftKneeV.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onPainPointViewClicked(mLeftKneeIv, PainLocationEnum.LeftKnee);
+            }
+        });
+
+        rightShinV.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onPainPointViewClicked(mRightShinIv, PainLocationEnum.RightShin);
+            }
+        });
+
+        leftShinV.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onPainPointViewClicked(mLeftShinIv, PainLocationEnum.LeftShin);
+            }
+        });
+
+        rightFootV.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onPainPointViewClicked(mRightFootIv, PainLocationEnum.RightFoot);
+            }
+        });
+
+        leftFootV.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onPainPointViewClicked(mLeftFootIv, PainLocationEnum.LeftFoot);
+            }
+        });
+
+        rightToesV.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onPainPointViewClicked(mRightToesIv, PainLocationEnum.RightToes);
+            }
+        });
+
+        leftToesV.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onPainPointViewClicked(mLeftToesIv, PainLocationEnum.LeftToes);
             }
         });
 
@@ -131,10 +203,66 @@ public class LegsFragment extends Fragment implements PainStrengthSubFragment.Pa
     }
 
     private void showPainPoints() {
-        PainPoint painPoint = mViewModel.getPainPointsMap().get(PainLocationEnum.LeftKnee);
+        PainPoint painPoint;
+
+        painPoint = mViewModel.getPainPointsMap().get(PainLocationEnum.RightThigh);
+        mRightThighIv.setVisibility(painPoint != null ? View.VISIBLE : View.GONE);
+        if (painPoint != null) {
+            mRightThighIv.setColorFilter(painPoint.getColor());
+        }
+
+        painPoint = mViewModel.getPainPointsMap().get(PainLocationEnum.LeftThigh);
+        mLeftThighIv.setVisibility(painPoint != null ? View.VISIBLE : View.GONE);
+        if (painPoint != null) {
+            mLeftThighIv.setColorFilter(painPoint.getColor());
+        }
+
+        painPoint = mViewModel.getPainPointsMap().get(PainLocationEnum.RightKnee);
+        mRightKneeIv.setVisibility(painPoint != null ? View.VISIBLE : View.GONE);
+        if (painPoint != null) {
+            mRightKneeIv.setColorFilter(painPoint.getColor());
+        }
+
+        painPoint = mViewModel.getPainPointsMap().get(PainLocationEnum.LeftKnee);
         mLeftKneeIv.setVisibility(painPoint != null ? View.VISIBLE : View.GONE);
         if (painPoint != null) {
             mLeftKneeIv.setColorFilter(painPoint.getColor());
+        }
+
+        painPoint = mViewModel.getPainPointsMap().get(PainLocationEnum.RightShin);
+        mRightShinIv.setVisibility(painPoint != null ? View.VISIBLE : View.GONE);
+        if (painPoint != null) {
+            mRightShinIv.setColorFilter(painPoint.getColor());
+        }
+
+        painPoint = mViewModel.getPainPointsMap().get(PainLocationEnum.LeftShin);
+        mLeftShinIv.setVisibility(painPoint != null ? View.VISIBLE : View.GONE);
+        if (painPoint != null) {
+            mLeftShinIv.setColorFilter(painPoint.getColor());
+        }
+
+        painPoint = mViewModel.getPainPointsMap().get(PainLocationEnum.RightFoot);
+        mRightFootIv.setVisibility(painPoint != null ? View.VISIBLE : View.GONE);
+        if (painPoint != null) {
+            mRightFootIv.setColorFilter(painPoint.getColor());
+        }
+
+        painPoint = mViewModel.getPainPointsMap().get(PainLocationEnum.LeftFoot);
+        mLeftFootIv.setVisibility(painPoint != null ? View.VISIBLE : View.GONE);
+        if (painPoint != null) {
+            mLeftFootIv.setColorFilter(painPoint.getColor());
+        }
+
+        painPoint = mViewModel.getPainPointsMap().get(PainLocationEnum.RightToes);
+        mRightToesIv.setVisibility(painPoint != null ? View.VISIBLE : View.GONE);
+        if (painPoint != null) {
+            mRightToesIv.setColorFilter(painPoint.getColor());
+        }
+
+        painPoint = mViewModel.getPainPointsMap().get(PainLocationEnum.LeftToes);
+        mLeftToesIv.setVisibility(painPoint != null ? View.VISIBLE : View.GONE);
+        if (painPoint != null) {
+            mLeftToesIv.setColorFilter(painPoint.getColor());
         }
     }
 
@@ -143,17 +271,12 @@ public class LegsFragment extends Fragment implements PainStrengthSubFragment.Pa
         showPainPoints();
 
         if (view.getVisibility() == View.VISIBLE) {
-            // Editing:
-            //mAddBtn.setText("Edit");
             mViewModel.setPainPoint(new PainPoint(mViewModel.getPainPointsMap().get(painLocationEnum)));
             final PainPoint painPoint = mViewModel.getPainPoint();
 
             openPainStrengthFragment(painPoint.getPainStrength());
 
         } else {
-            // Adding:
-            //mAddBtn.setText("Add");
-            //mSelectedIv.setColorFilter(getContext().getColor(R.color.yellow));
             mViewModel.setPainPoint(new PainPoint(painLocationEnum));
             openPainStrengthFragment(0);
         }
@@ -169,9 +292,7 @@ public class LegsFragment extends Fragment implements PainStrengthSubFragment.Pa
             return;
         }
 
-        /*final Fragment fragment = getChildFragmentManager().findFragmentByTag(PAIN_STRENGTH_FRAG);*/
-        if (/*(fragment != null && fragment.isVisible()) ||*/
-                getChildFragmentManager().getBackStackEntryCount() <= 1) {
+        if (getChildFragmentManager().getBackStackEntryCount() <= 1) {
             if (mSelectedIv != null) {
                 mSelectedIv.setAnimation(null);
             }
