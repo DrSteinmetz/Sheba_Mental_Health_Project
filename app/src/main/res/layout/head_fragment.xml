@@ -169,7 +169,26 @@
                 android:layout_height="0dp"
                 android:layout_weight="0.7"
                 android:orientation="horizontal">
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
 
+                    <ImageView
+                        android:id="@+id/nose_iv"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_alignTop="@id/nose_v"
+                        android:layout_centerHorizontal="true"
+                        android:src="@drawable/ic_red_pain_point"
+                        android:visibility="gone"
+                        android:scaleType="fitCenter" />
+                    <View
+                        android:id="@+id/nose_v"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_centerInParent="true" />
+
+                </RelativeLayout>
             </LinearLayout>
 
             <LinearLayout
@@ -183,8 +202,8 @@
 
                     <ImageView
                         android:id="@+id/mouth_iv"
-                        android:layout_width="40dp"
-                        android:layout_height="40dp"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
                         android:layout_alignTop="@id/mouth_v"
                         android:layout_centerHorizontal="true"
                         android:src="@drawable/ic_red_pain_point"
@@ -192,8 +211,8 @@
                         android:scaleType="fitCenter" />
                     <View
                         android:id="@+id/mouth_v"
-                        android:layout_width="40dp"
-                        android:layout_height="40dp"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
                         android:layout_centerInParent="true" />
 
                 </RelativeLayout>
@@ -204,7 +223,26 @@
                 android:layout_height="0dp"
                 android:layout_weight="1"
                 android:orientation="horizontal">
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
 
+                    <ImageView
+                        android:id="@+id/neck_iv"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_alignTop="@id/neck_v"
+                        android:layout_centerHorizontal="true"
+                        android:src="@drawable/ic_red_pain_point"
+                        android:visibility="gone"
+                        android:scaleType="fitCenter" />
+                    <View
+                        android:id="@+id/neck_v"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_centerInParent="true" />
+
+                </RelativeLayout>
             </LinearLayout>
 
             <Space
