@@ -17,7 +17,7 @@ import java.util.List;
 
 public class RightArmViewModel extends ViewModel {
 
-    private Repository mRepository;
+    private final Repository mRepository;
 
     private PainPoint mPainPoint = new PainPoint();
     private EnumMap<PainLocationEnum, PainPoint> mPainPointsMap = new EnumMap<>(PainLocationEnum.class);

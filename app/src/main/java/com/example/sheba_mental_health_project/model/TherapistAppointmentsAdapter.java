@@ -11,6 +11,7 @@ import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.sheba_mental_health_project.R;
+import com.google.android.material.button.MaterialButton;
 
 import java.text.SimpleDateFormat;
 import java.util.List;
@@ -58,6 +59,7 @@ public class TherapistAppointmentsAdapter extends RecyclerView.Adapter<Therapist
             nameTv = itemView.findViewById(R.id.patient_name_tv);
             dateTv = itemView.findViewById(R.id.date_tv);
             timeTv = itemView.findViewById(R.id.time_tv);
+
 
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override

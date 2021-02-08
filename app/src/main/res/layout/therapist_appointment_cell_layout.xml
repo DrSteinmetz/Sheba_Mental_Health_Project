@@ -83,6 +83,7 @@
             android:textColor="@color/white"
             android:textAllCaps="false" />
 
+
     </RelativeLayout>
 
 </androidx.cardview.widget.CardView>

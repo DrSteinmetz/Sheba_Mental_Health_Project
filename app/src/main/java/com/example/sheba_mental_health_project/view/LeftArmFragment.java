@@ -36,7 +36,7 @@ public class LeftArmFragment extends Fragment implements
         PainTypeSubFragment.PainTypeSubFragmentInterface,
         OtherFeelingSubFragment.OtherFeelingSubFragmentInterface,
         PainFrequencySubFragment.PainFrequencySubFragmentInterface,
-        AddDescriptionFragment.AddDescriptionFragmentInterface {
+        DescriptionDialogFragment.AddDescriptionFragmentInterface {
 
     private final String TAG = "LeftArmFragment";
 
@@ -264,13 +264,12 @@ public class LeftArmFragment extends Fragment implements
     public void onContinueToDescriptionBtnClicked(PainFrequencyEnum painFrequency) {
         mViewModel.getPainPoint().setFrequency(painFrequency);
 
-        Log.d(TAG, "asd onContinueToDescriptionBtnClicked: " + mViewModel.getPainPoint().getDescription());
-        AddDescriptionFragment.newInstance(mViewModel.getPainPoint().getDescription(),
+        DescriptionDialogFragment.newInstance(mViewModel.getPainPoint().getDescription(),
                 BodyPartEnum.LeftArm)
                 .show(getChildFragmentManager().beginTransaction(), DESCRIPTION_FRAG);
     }
 
-    /**<------ Add Description Fragment ------>*/
+    /**<------ Description Sub Fragment ------>*/
     @Override
     public void onFinishBtnClicked(String description) {
         mViewModel.getPainPoint().setDescription(description);

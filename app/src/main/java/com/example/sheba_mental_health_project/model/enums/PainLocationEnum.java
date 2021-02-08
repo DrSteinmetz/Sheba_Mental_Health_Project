@@ -49,8 +49,8 @@ public enum PainLocationEnum {
     LeftFoot,
     RightToes,
     LeftToes,
-    Vagina,
     Anus,
+    Vagina,
     Penis,
     Testicles,
 }

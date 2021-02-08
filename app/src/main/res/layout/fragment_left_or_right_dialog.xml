@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="20dp"
+    android:padding="20dp"
+    tools:context=".view.LeftOrRightDialogFragment">
+
+    <TextView
+        android:id="@+id/title_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginVertical="10dp"
+        android:text="I Meant To Choose:"
+        android:textSize="25sp"
+        android:textColor="@color/black"
+        android:textAllCaps="false" />
+
+    <RadioGroup
+        android:id="@+id/left_right_rg"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/title_tv">
+
+        <com.google.android.material.radiobutton.MaterialRadioButton
+            android:id="@+id/only_one_rb"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="10dp"
+            android:padding="10dp"
+            android:checked="true"
+            android:text="Only The Chosen One"
+            android:textSize="20sp"
+            android:textColor="@color/black" />
+
+        <com.google.android.material.radiobutton.MaterialRadioButton
+            android:id="@+id/both_rb"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="10dp"
+            android:padding="10dp"
+            android:text="Both"
+            android:textSize="20sp"
+            android:textColor="@color/black" />
+
+    </RadioGroup>
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/ok_btn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/left_right_rg"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="10dp"
+        android:layout_marginHorizontal="15dp"
+        android:text="OK"
+        android:textSize="20sp"
+        android:textColor="@color/white"
+        android:textStyle="bold"
+        android:textAllCaps="false" />
+
+</RelativeLayout>

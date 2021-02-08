@@ -86,18 +86,27 @@ public class PainFrequencySubFragment extends Fragment {
 
     private void setListener(final BodyPartEnum fragmentName) {
         switch (fragmentName) {
+            case Head:
+                listener = (HeadFragment) getParentFragment();
+                break;
+            case CenterOfMass:
+                listener = (CenterOfMassFragment) getParentFragment();
+                break;
             case RightArm:
                 listener = (RightArmFragment) getParentFragment();
-                break;
-            case Legs:
-                listener = (LegsFragment) getParentFragment();
                 break;
             case LeftArm:
                 listener = (LeftArmFragment) getParentFragment();
                 break;
+            case Genitals:
+                listener = (GenitalsFragment) getParentFragment();
+                break;
+            case Legs:
+                listener = (LegsFragment) getParentFragment();
+                break;
             default:
                 listener = null;
-                throw new ClassCastException("The fragment must implement PainStrengthSubFragmentInterface Listener!");
+                throw new ClassCastException("The fragment must implement PainFrequencySubFragmentInterface Listener!");
         }
     }
 }

@@ -5,11 +5,7 @@ import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.DialogFragment;
-import androidx.fragment.app.Fragment;
 
-import android.text.Editable;
-import android.text.TextWatcher;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,11 +16,12 @@ import com.example.sheba_mental_health_project.R;
 import com.example.sheba_mental_health_project.model.enums.BodyPartEnum;
 import com.google.android.material.button.MaterialButton;
 
-public class AddDescriptionFragment extends DialogFragment {
+public class DescriptionDialogFragment extends DialogFragment {
 
     private String mDescription;
 
     private final String TAG = "AddDescriptionFragment";
+
 
     public interface AddDescriptionFragmentInterface {
         void onFinishBtnClicked(String description);
@@ -32,9 +29,9 @@ public class AddDescriptionFragment extends DialogFragment {
 
     private AddDescriptionFragmentInterface listener;
 
-    public static AddDescriptionFragment newInstance(final String description,
-                                                     final BodyPartEnum fragmentName) {
-        AddDescriptionFragment fragment = new AddDescriptionFragment();
+    public static DescriptionDialogFragment newInstance(final String description,
+                                                        final BodyPartEnum fragmentName) {
+        DescriptionDialogFragment fragment = new DescriptionDialogFragment();
         Bundle args = new Bundle();
         args.putString("description", description);
         args.putSerializable("fragment_name", fragmentName);
@@ -54,6 +51,7 @@ public class AddDescriptionFragment extends DialogFragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         if (getArguments() != null) {
             mDescription = getArguments().getString("description");
         }
@@ -85,15 +83,27 @@ public class AddDescriptionFragment extends DialogFragment {
 
     private void setListener(final BodyPartEnum fragmentName) {
         switch (fragmentName) {
+            case Head:
+                listener = (HeadFragment) getParentFragment();
+                break;
+            case CenterOfMass:
+                listener = (CenterOfMassFragment) getParentFragment();
+                break;
             case RightArm:
                 listener = (RightArmFragment) getParentFragment();
                 break;
             case LeftArm:
                 listener = (LeftArmFragment) getParentFragment();
                 break;
+            case Genitals:
+                listener = (GenitalsFragment) getParentFragment();
+                break;
+            case Legs:
+                listener = (LegsFragment) getParentFragment();
+                break;
             default:
                 listener = null;
-                throw new ClassCastException("The fragment must implement PainStrengthSubFragmentInterface Listener!");
+                throw new ClassCastException("The fragment must implement DescriptionSubFragmentInterface Listener!");
         }
     }
 

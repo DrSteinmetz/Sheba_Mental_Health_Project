@@ -36,7 +36,8 @@ public class MainActivity extends AppCompatActivity
         SanityCheckFragment.SanityCheckFragmentInterface,
         StatementFragment.StatementFragmentInterface,
         MainPatientFragment.MainPatientInterface,
-        CharacterFragment.CharacterFragmentInterface{
+        CharacterFragment.CharacterFragmentInterface,
+        StartMeetingFragment.StartMeetingTherapistInterface{
 
     private MainActivityViewModel mViewModel;
 
@@ -48,6 +49,7 @@ public class MainActivity extends AppCompatActivity
     private final String MAIN_THERAPIST_FRAG = "Main_Therapist_Fragment";
     private final String ADD_PATIENT_FRAG = "Add_Patient_Fragment";
     private final String ADD_APPOINTMENT_FRAG = "Add_Appointment_Fragment";
+    private final String START_MEETING_FRAG = "Start_Meeting_Fragment";
 
     private final String PRE_QUESTIONS_FRAG = "Pre_Questions_Fragment";
     private final String TREATY_FRAG = "Treaty_Fragment";
@@ -203,6 +205,11 @@ public class MainActivity extends AppCompatActivity
     /**<------ Appointments ------>*/
     @Override
     public void onTherapistAppointmentClicked() {
+        getSupportFragmentManager().beginTransaction()
+                //TODO: add enter and exit animations
+                .replace(R.id.container, StartMeetingFragment.newInstance(), START_MEETING_FRAG)
+                .addToBackStack(null)
+                .commit();
     }
 
     @Override
@@ -266,6 +273,11 @@ public class MainActivity extends AppCompatActivity
                 .commit();
     }
 
+    @Override
+    public void onTherapistStartMeetingClicked() {
+
+    }
+
     /**<------ Character ------>*/
     @Override
     public void onHeadClicked() {
@@ -286,7 +298,7 @@ public class MainActivity extends AppCompatActivity
     @Override
     public void onRightArmClicked() {
         getSupportFragmentManager().beginTransaction()
-                .add(R.id.container, LeftArmFragment.newInstance(), RIGHT_ARM_FRAG)
+                .add(R.id.container, LeftArmFragment.newInstance(), LEFT_ARM_FRAG)
                 .addToBackStack(null)
                 .commit();
     }
@@ -294,7 +306,7 @@ public class MainActivity extends AppCompatActivity
     @Override
     public void onLeftArmClicked() {
         getSupportFragmentManager().beginTransaction()
-                .add(R.id.container, RightArmFragment.newInstance(), LEFT_ARM_FRAG)
+                .add(R.id.container, RightArmFragment.newInstance(), RIGHT_ARM_FRAG)
                 .addToBackStack(null)
                 .commit();
     }
@@ -317,24 +329,36 @@ public class MainActivity extends AppCompatActivity
 
     @Override
     public void onBackPressed() {
-        final Fragment leftArmFragment;
-        final Fragment rightArmFragment;
-        leftArmFragment = getSupportFragmentManager().findFragmentByTag(LEFT_ARM_FRAG);
-        rightArmFragment = getSupportFragmentManager().findFragmentByTag(RIGHT_ARM_FRAG);
+        final Fragment headFragment = getSupportFragmentManager().findFragmentByTag(HEAD_FRAG);
+        final Fragment centerOfMassFragment = getSupportFragmentManager().findFragmentByTag(CENTER_OF_MASS_FRAG);
+        final Fragment leftArmFragment = getSupportFragmentManager().findFragmentByTag(LEFT_ARM_FRAG);
+        final Fragment rightArmFragment = getSupportFragmentManager().findFragmentByTag(RIGHT_ARM_FRAG);
+        final Fragment genitalsFragment = getSupportFragmentManager().findFragmentByTag(GENITALS_FRAG);
+        final Fragment legsFragment = getSupportFragmentManager().findFragmentByTag(LEGS_FRAG);
 
-        if (leftArmFragment != null && leftArmFragment.isVisible() &&
+        if (headFragment != null && headFragment.isVisible() &&
+                headFragment.getChildFragmentManager().getBackStackEntryCount() > 1) {
+            headFragment.getChildFragmentManager().popBackStackImmediate();
+        } else if (centerOfMassFragment != null && centerOfMassFragment.isVisible() &&
+                centerOfMassFragment.getChildFragmentManager().getBackStackEntryCount() > 1) {
+            centerOfMassFragment.getChildFragmentManager().popBackStackImmediate();
+        } else if (leftArmFragment != null && leftArmFragment.isVisible() &&
                 leftArmFragment.getChildFragmentManager().getBackStackEntryCount() > 1) {
             leftArmFragment.getChildFragmentManager().popBackStackImmediate();
-        }
-        else if (rightArmFragment != null && rightArmFragment.isVisible() &&
+        } else if (rightArmFragment != null && rightArmFragment.isVisible() &&
                 rightArmFragment.getChildFragmentManager().getBackStackEntryCount() > 1) {
             rightArmFragment.getChildFragmentManager().popBackStackImmediate();
+        } else if (genitalsFragment != null && genitalsFragment.isVisible() &&
+                genitalsFragment.getChildFragmentManager().getBackStackEntryCount() > 1) {
+            genitalsFragment.getChildFragmentManager().popBackStackImmediate();
+        } else if (legsFragment != null && legsFragment.isVisible() &&
+                legsFragment.getChildFragmentManager().getBackStackEntryCount() > 1) {
+            legsFragment.getChildFragmentManager().popBackStackImmediate();
         }
         else {
             super.onBackPressed();
         }
-
-
-
     }
+
+
 }

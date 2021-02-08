@@ -35,7 +35,7 @@ public class LegsFragment extends Fragment implements PainStrengthSubFragment.Pa
         PainTypeSubFragment.PainTypeSubFragmentInterface,
         OtherFeelingSubFragment.OtherFeelingSubFragmentInterface,
         PainFrequencySubFragment.PainFrequencySubFragmentInterface,
-        AddDescriptionFragment.AddDescriptionFragmentInterface {
+        DescriptionDialogFragment.AddDescriptionFragmentInterface {
 
     private LegsViewModel mViewModel;
 
@@ -207,16 +207,6 @@ public class LegsFragment extends Fragment implements PainStrengthSubFragment.Pa
     }
 
     @Override
-    public void onContinueToDescriptionBtnClicked(PainFrequencyEnum painFrequency) {
-        mViewModel.getPainPoint().setFrequency(painFrequency);
-
-        Log.d(TAG, "asd onContinueToDescriptionBtnClicked: " + mViewModel.getPainPoint().getDescription());
-        AddDescriptionFragment.newInstance(mViewModel.getPainPoint().getDescription(),
-                BodyPartEnum.Legs)
-                .show(getChildFragmentManager().beginTransaction(), DESCRIPTION_FRAG);
-    }
-
-    @Override
     public void onPainStrengthChanged(int painStrength, int color) {
         if (mSelectedIv != null) {
             mSelectedIv.setColorFilter(color);
@@ -246,5 +236,14 @@ public class LegsFragment extends Fragment implements PainStrengthSubFragment.Pa
                                 BodyPartEnum.Legs), OTHER_FEELING_FRAG)
                 .addToBackStack(SUB_FRAGS_STACK)
                 .commit();
+    }
+
+    @Override
+    public void onContinueToDescriptionBtnClicked(PainFrequencyEnum painFrequency) {
+        mViewModel.getPainPoint().setFrequency(painFrequency);
+
+        DescriptionDialogFragment.newInstance(mViewModel.getPainPoint().getDescription(),
+                BodyPartEnum.Legs)
+                .show(getChildFragmentManager().beginTransaction(), DESCRIPTION_FRAG);
     }
 }

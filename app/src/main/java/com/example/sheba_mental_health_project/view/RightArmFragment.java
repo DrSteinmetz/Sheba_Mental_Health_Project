@@ -36,13 +36,14 @@ public class RightArmFragment extends Fragment
         PainTypeSubFragment.PainTypeSubFragmentInterface,
         OtherFeelingSubFragment.OtherFeelingSubFragmentInterface,
         PainFrequencySubFragment.PainFrequencySubFragmentInterface,
-        AddDescriptionFragment.AddDescriptionFragmentInterface {
+        DescriptionDialogFragment.AddDescriptionFragmentInterface {
 
     private RightArmViewModel mViewModel;
 
     private ImageView mShoulderIv;
     private ImageView mElbowIv;
     private ImageView mHandIv;
+
     private ImageView mSelectedIv;
 
     private final Animation alphaAnimation = new AlphaAnimation(1, 0);
@@ -78,7 +79,8 @@ public class RightArmFragment extends Fragment
         final Observer<PainPoint> onSetPainPointsSucceed = new Observer<PainPoint>() {
             @Override
             public void onChanged(PainPoint painPoint) {
-                getChildFragmentManager().popBackStack(SUB_FRAGS_STACK, FragmentManager.POP_BACK_STACK_INCLUSIVE);
+                getChildFragmentManager().popBackStack(SUB_FRAGS_STACK,
+                        FragmentManager.POP_BACK_STACK_INCLUSIVE);
 //                getActivity().getSupportFragmentManager().beginTransaction()
 //                        .remove(LeftArmFragment.this).commit();
                 getActivity().onBackPressed();
@@ -133,21 +135,21 @@ public class RightArmFragment extends Fragment
         shoulderV.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                onPainPointViewClicked(mShoulderIv,PainLocationEnum.RightShoulder);
+                onPainPointViewClicked(mShoulderIv, PainLocationEnum.RightShoulder);
             }
         });
 
         elbowV.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                onPainPointViewClicked(mElbowIv,PainLocationEnum.RightElbow);
+                onPainPointViewClicked(mElbowIv, PainLocationEnum.RightElbow);
             }
         });
 
         handV.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                onPainPointViewClicked(mHandIv,PainLocationEnum.RightPalm);
+                onPainPointViewClicked(mHandIv, PainLocationEnum.RightPalm);
             }
         });
 
@@ -452,13 +454,12 @@ public class RightArmFragment extends Fragment
     public void onContinueToDescriptionBtnClicked(PainFrequencyEnum painFrequency) {
         mViewModel.getPainPoint().setFrequency(painFrequency);
 
-        Log.d(TAG, "asd onContinueToDescriptionBtnClicked: " + mViewModel.getPainPoint().getDescription());
-        AddDescriptionFragment.newInstance(mViewModel.getPainPoint().getDescription(),
+        DescriptionDialogFragment.newInstance(mViewModel.getPainPoint().getDescription(),
                 BodyPartEnum.RightArm)
                 .show(getChildFragmentManager().beginTransaction(), DESCRIPTION_FRAG);
-        //        mViewModel.setPainPointsInDB();
     }
 
+    /**<------ Description Sub Fragment ------>*/
     @Override
     public void onFinishBtnClicked(String description) {
         mViewModel.getPainPoint().setDescription(description);

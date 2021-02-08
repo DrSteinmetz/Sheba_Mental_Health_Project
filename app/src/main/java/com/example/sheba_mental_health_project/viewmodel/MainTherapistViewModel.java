@@ -70,4 +70,8 @@ public class MainTherapistViewModel extends ViewModel {
     public void removeTherapistAppointmentsListener() {
         mRepository.removeTherapistAppointmentsListener();
     }
+
+    public void setCurrentAppointment(Appointment appointment) {
+        mRepository.setCurrentAppointment(appointment);
+    }
 }

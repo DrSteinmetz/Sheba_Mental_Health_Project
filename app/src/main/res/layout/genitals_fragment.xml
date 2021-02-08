@@ -1,18 +1,54 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
     android:background="@color/white"
     android:focusable="true"
     android:clickable="true"
     tools:context=".view.GenitalsFragment">
 
-    <ImageView
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:padding="20dp"
-        android:src="@drawable/ic_genitals"
-        android:scaleType="fitCenter" />
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:padding="20dp">
 
-</FrameLayout>
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:padding="20dp"
+            android:src="@drawable/ic_genitals"
+            android:scaleType="fitCenter" />
+
+        <ImageView
+            android:id="@+id/genitals_iv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignStart="@id/genitals_v"
+            android:layout_alignEnd="@id/genitals_v"
+            android:layout_alignTop="@id/genitals_v"
+            android:layout_alignBottom="@id/genitals_v"
+            android:src="@drawable/ic_red_pain_point"
+            android:visibility="gone"
+            android:scaleType="fitCenter" />
+        <View
+            android:id="@+id/genitals_v"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:layout_centerInParent="true" />
+
+    </RelativeLayout>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1">
+        <androidx.fragment.app.FragmentContainerView
+            android:id="@+id/fragment_container"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+    </ScrollView>
+
+</LinearLayout>

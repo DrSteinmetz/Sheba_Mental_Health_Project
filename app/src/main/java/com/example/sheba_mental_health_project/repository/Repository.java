@@ -127,6 +127,18 @@ public class Repository {
         this.mRepositoryAddAppointmentListener = repositoryAddAppointmentListener;
     }
 
+    /*<------ Get Last Appointment ------>*/
+    public interface RepositoryGetLastAppointmentInterface {
+        void onGetLastAppointmentSucceed(Appointment lastAppointment);
+        void onGetLastAppointmentFailed(String error);
+    }
+
+    private RepositoryGetLastAppointmentInterface mGetLastAppointmentInterface;
+
+    public void setGetLastAppointmentInterface(RepositoryGetLastAppointmentInterface lastAppointmentInterface){
+        this.mGetLastAppointmentInterface = lastAppointmentInterface;
+    }
+
     /*<------ Set Pain Points ------>*/
     public interface RepositorySetPainPointsInterface {
         void onSetPainPointsSucceed(PainPoint painPoint);
@@ -164,6 +176,19 @@ public class Repository {
 
     public void setUpdateAnswersOfAppointmentInterface(RepositoryUpdateAnswersOfAppointmentInterface repositoryUpdateAnswersOfAppointmentInterface){
         this.mRepositoryUpdateAnswersOfAppointmentListener = repositoryUpdateAnswersOfAppointmentInterface;
+    }
+
+    /*<------ Update State of Appointment ------>*/
+    public interface RepositoryUpdateStateOfAppointmentInterface {
+        void onUpdateStateOfAppointmentSucceed(AppointmentStateEnum appointmentState);
+
+        void onUpdateAnswersOfAppointmentFailed(String error);
+    }
+
+    private RepositoryUpdateStateOfAppointmentInterface mRepositoryUpdateStateOfAppointmentListener;
+
+    public void setUpdateStateOfAppointmentInterface(RepositoryUpdateStateOfAppointmentInterface repositoryUpdateStateOfAppointmentInterface){
+        this.mRepositoryUpdateStateOfAppointmentListener = repositoryUpdateStateOfAppointmentInterface;
     }
 
     /*<------ Upload Chat Message ------>*/
@@ -492,6 +517,56 @@ public class Repository {
                         }
                     }
                 });
+    }
+
+    public void getLastAppointment(){
+        final String patientId = mCurrentAppointment.getPatient().getId();
+        final List<AppointmentStateEnum> stateQuery = new ArrayList<>();
+        stateQuery.add(AppointmentStateEnum.Ended);
+
+        mCloudDB.collection(APPOINTMENTS)
+                .whereIn("state", stateQuery)
+                .whereEqualTo(FieldPath.of("patient", "id"), patientId)
+                .orderBy("appointmentDate", Query.Direction.ASCENDING).limit(1).addSnapshotListener(new EventListener<QuerySnapshot>() {
+            @Override
+            public void onEvent(@Nullable QuerySnapshot value, @Nullable FirebaseFirestoreException error) {
+
+                if(value != null && !value.isEmpty()){
+                    Appointment appointment = value.getDocuments().get(0).toObject(Appointment.class);
+                    if (mGetLastAppointmentInterface != null) {
+                        mGetLastAppointmentInterface.onGetLastAppointmentSucceed(appointment);
+                    }
+                }
+                else {
+                    if (mGetLastAppointmentInterface != null) {
+                        if(error!=null)
+                            mGetLastAppointmentInterface.onGetLastAppointmentFailed(error.getMessage());
+                        else
+                            mGetLastAppointmentInterface.onGetLastAppointmentFailed("No Appointment found");
+                    }
+                }
+            }
+        });
+    }
+
+    public void updateAppointmentState(AppointmentStateEnum appointmentStateEnum){
+    mCloudDB.collection(APPOINTMENTS).document(mCurrentAppointment.getId())
+            .update("state",appointmentStateEnum).addOnCompleteListener(new OnCompleteListener<Void>() {
+        @Override
+        public void onComplete(@NonNull Task<Void> task) {
+            if(task.isSuccessful()){
+                mCurrentAppointment.setState(appointmentStateEnum);
+                if(mRepositoryUpdateStateOfAppointmentListener != null) {
+                    mRepositoryUpdateStateOfAppointmentListener.onUpdateStateOfAppointmentSucceed(appointmentStateEnum);
+                }
+            } else {
+                if(mRepositoryUpdateStateOfAppointmentListener != null) {
+                    mRepositoryUpdateStateOfAppointmentListener.onUpdateAnswersOfAppointmentFailed(task.getException().getMessage());
+                }
+            }
+        }
+    });
+
     }
 
     public void addQuestions() {
