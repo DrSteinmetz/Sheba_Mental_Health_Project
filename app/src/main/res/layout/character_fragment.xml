@@ -11,12 +11,12 @@
     tools:context=".view.CharacterFragment">
 
 
-    <!--<ImageView
+    <ImageView
         android:id="@+id/character_iv"
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
         android:layout_centerInParent="true"
-        android:src="@drawable/ic_character" />-->
+        android:src="@drawable/ic_character" />
     <ImageView
         android:id="@+id/character_center_iv"
         android:layout_width="111dp"
