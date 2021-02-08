@@ -36,7 +36,8 @@ public class MainActivity extends AppCompatActivity
         SanityCheckFragment.SanityCheckFragmentInterface,
         StatementFragment.StatementFragmentInterface,
         MainPatientFragment.MainPatientInterface,
-        CharacterFragment.CharacterFragmentInterface{
+        CharacterFragment.CharacterFragmentInterface,
+        StartMeetingFragment.StartMeetingTherapistInterface{
 
     private MainActivityViewModel mViewModel;
 
@@ -48,6 +49,7 @@ public class MainActivity extends AppCompatActivity
     private final String MAIN_THERAPIST_FRAG = "Main_Therapist_Fragment";
     private final String ADD_PATIENT_FRAG = "Add_Patient_Fragment";
     private final String ADD_APPOINTMENT_FRAG = "Add_Appointment_Fragment";
+    private final String START_MEETING_FRAG = "Start_Meeting_Fragment";
 
     private final String PRE_QUESTIONS_FRAG = "Pre_Questions_Fragment";
     private final String TREATY_FRAG = "Treaty_Fragment";
@@ -203,6 +205,11 @@ public class MainActivity extends AppCompatActivity
     /**<------ Appointments ------>*/
     @Override
     public void onTherapistAppointmentClicked() {
+        getSupportFragmentManager().beginTransaction()
+                //TODO: add enter and exit animations
+                .replace(R.id.container, StartMeetingFragment.newInstance(), START_MEETING_FRAG)
+                .addToBackStack(null)
+                .commit();
     }
 
     @Override
@@ -264,6 +271,11 @@ public class MainActivity extends AppCompatActivity
                 .add(R.id.container, CharacterFragment.newInstance(), CHARACTER_FRAG)
                 .addToBackStack(null)
                 .commit();
+    }
+
+    @Override
+    public void onTherapistStartMeetingClicked() {
+
     }
 
     /**<------ Character ------>*/
@@ -347,4 +359,6 @@ public class MainActivity extends AppCompatActivity
             super.onBackPressed();
         }
     }
+
+
 }

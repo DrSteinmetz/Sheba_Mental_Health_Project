@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".view.StartMeetingFragment">
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="5dp">
+
+        <RelativeLayout
+            android:id="@+id/start_meeting_relative"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:clickable="false"
+            android:focusable="false">
+
+            <TextView
+                android:id="@+id/patient_name_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:textStyle="bold"
+                android:layout_margin="5dp"
+                android:textSize="25sp"
+                android:text="patient name"/>
+
+            <LinearLayout
+                android:id="@+id/date_linear"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_below="@id/patient_name_tv">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="5dp"
+                    android:textSize="20sp"
+                    android:text="last meeting date:"/>
+                <TextView
+                    android:id="@+id/last_meeting_date_tv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="5dp"
+                    android:textSize="20sp"
+                    android:textStyle="bold"
+                    android:text="date"/>
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/therapist_linear"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_below="@id/date_linear">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="5dp"
+                    android:textSize="20sp"
+                    android:text="last meeting therapist name:"/>
+                <TextView
+                    android:id="@+id/last_therapist_name_tv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="5dp"
+                    android:textSize="20sp"
+                    android:textStyle="bold"
+                    android:text="Avi Neelavi"/>
+            </LinearLayout>
+
+            <androidx.fragment.app.FragmentContainerView
+                android:id="@+id/character_container"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:clickable="false"
+                android:focusable="false"
+                android:layout_below="@id/therapist_linear">
+
+            </androidx.fragment.app.FragmentContainerView>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:clickable="false"
+                android:focusable="false" />
+
+        </RelativeLayout>
+
+        <TextView
+            android:id="@+id/no_meeting_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            android:visibility="gone"
+            android:layout_below="@id/start_meeting_btn"
+            android:text="No Previous Meetings"
+            />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/start_meeting_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="start meeting"
+            android:layout_below="@+id/start_meeting_relative"
+            android:layout_centerHorizontal="true"/>
+
+
+    </RelativeLayout>
+
+</ScrollView>

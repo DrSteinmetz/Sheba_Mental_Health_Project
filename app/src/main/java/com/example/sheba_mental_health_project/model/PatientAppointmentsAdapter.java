@@ -12,6 +12,8 @@ import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.sheba_mental_health_project.R;
+import com.example.sheba_mental_health_project.model.enums.AppointmentStateEnum;
+import com.google.android.material.button.MaterialButton;
 
 import java.text.SimpleDateFormat;
 import java.util.List;
@@ -36,6 +38,7 @@ public class PatientAppointmentsAdapter extends RecyclerView.Adapter<PatientAppo
 
     public interface AppointmentListener {
         void onAppointmentClicked(int position, View view);
+        void onGetInAppointmentClicked(int position, View view);
     }
 
     private AppointmentListener listener;
@@ -50,6 +53,7 @@ public class PatientAppointmentsAdapter extends RecyclerView.Adapter<PatientAppo
         private final TextView nameTv;
         private final TextView dateTv;
         private final TextView timeTv;
+        private final MaterialButton getInBtn;
 
         public AppointmentViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -58,6 +62,7 @@ public class PatientAppointmentsAdapter extends RecyclerView.Adapter<PatientAppo
             nameTv = itemView.findViewById(R.id.patient_name_tv);
             dateTv = itemView.findViewById(R.id.date_tv);
             timeTv = itemView.findViewById(R.id.time_tv);
+            getInBtn = itemView.findViewById(R.id.getin_btn);
 
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -65,6 +70,13 @@ public class PatientAppointmentsAdapter extends RecyclerView.Adapter<PatientAppo
                     if (listener != null) {
                         listener.onAppointmentClicked(getAdapterPosition(), v);
                     }
+                }
+            });
+
+            getInBtn.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    listener.onGetInAppointmentClicked(getAdapterPosition(),v);
                 }
             });
         }
@@ -91,6 +103,12 @@ public class PatientAppointmentsAdapter extends RecyclerView.Adapter<PatientAppo
 
         final String time = HHmm.format(appointment.getAppointmentDate());
         holder.timeTv.setText(time);
+
+        if (appointment.getState() == AppointmentStateEnum.Ongoing) {
+            holder.getInBtn.setVisibility(View.VISIBLE);
+        } else {
+            holder.getInBtn.setVisibility(View.GONE);
+        }
     }
 
     @Override
