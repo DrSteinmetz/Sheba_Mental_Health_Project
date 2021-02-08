@@ -161,65 +161,6 @@
 
         </LinearLayout>
 
-        <!--<ImageView
-            android:id="@+id/shoulder_iv"
-            android:layout_width="40dp"
-            android:layout_height="40dp"
-            android:layout_alignTop="@id/body_part_iv"
-            android:layout_marginTop="30dp"
-            android:layout_alignEnd="@id/body_part_iv"
-            android:layout_marginEnd="20dp"
-            android:src="@drawable/ic_red_pain_point"
-            android:visibility="gone"
-            android:scaleType="fitCenter" />
-        <View
-            android:id="@+id/shoulder_v"
-            android:layout_width="80dp"
-            android:layout_height="80dp"
-            android:layout_alignTop="@id/body_part_iv"
-            android:layout_alignEnd="@id/body_part_iv"
-            android:layout_marginTop="10dp" />
-
-        <ImageView
-            android:id="@+id/elbow_iv"
-            android:layout_width="40dp"
-            android:layout_height="40dp"
-            android:layout_alignTop="@id/body_part_iv"
-            android:layout_alignEnd="@id/body_part_iv"
-            android:layout_marginTop="130dp"
-            android:layout_marginEnd="25dp"
-            android:src="@drawable/ic_red_pain_point"
-            android:visibility="gone"
-            android:scaleType="fitCenter" />
-        <View
-            android:id="@+id/elbow_v"
-            android:layout_width="80dp"
-            android:layout_height="80dp"
-            android:layout_alignTop="@id/body_part_iv"
-            android:layout_alignEnd="@id/body_part_iv"
-            android:layout_marginTop="110dp"
-            android:layout_marginEnd="5dp" />
-
-        <ImageView
-            android:id="@+id/hand_iv"
-            android:layout_width="40dp"
-            android:layout_height="40dp"
-            android:layout_alignBottom="@id/body_part_iv"
-            android:layout_alignStart="@id/body_part_iv"
-            android:layout_marginBottom="45dp"
-            android:layout_marginStart="35dp"
-            android:src="@drawable/ic_red_pain_point"
-            android:visibility="gone"
-            android:scaleType="fitCenter" />
-        <View
-            android:id="@+id/hand_v"
-            android:layout_width="80dp"
-            android:layout_height="80dp"
-            android:layout_alignBottom="@id/body_part_iv"
-            android:layout_alignStart="@id/body_part_iv"
-            android:layout_marginBottom="25dp"
-            android:layout_marginStart="20dp" />-->
-
     </RelativeLayout>
 
     <ScrollView

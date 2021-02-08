@@ -6,5 +6,15 @@ public enum PainOtherFeelingsEnum {
     Sting,
     Strange,
     Numb,
+    ColorChange,
+    Dryness,
+    TearsExcess,
+    Constipation,
+    Diarrhea,
+    Heartburn,
+    Drooling,
+    UrinaryRetention,
+    FrequentUrinary,
+    UrgentUrinary,
     Other
 }

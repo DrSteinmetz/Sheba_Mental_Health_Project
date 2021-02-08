@@ -18,6 +18,16 @@
     <string name="sting">Sting</string>
     <string name="strange">Strange</string>
     <string name="numb">Numb</string>
+    <string name="color_change">Color Change</string>
+    <string name="dryness">Dryness</string>
+    <string name="tears_excess">Tears Excess</string>
+    <string name="constipation">Constipation</string>
+    <string name="diarrhea">Diarrhea</string>
+    <string name="heartburn">Heartburn</string>
+    <string name="drooling">Drooling</string>
+    <string name="urinary_retention">Urinary Retention</string>
+    <string name="frequent_urinary">Frequent Urinary</string>
+    <string name="urgent_urinary">Urgent Urinary</string>
     <string name="other">Other</string>
 
     <!-- Frequency -->

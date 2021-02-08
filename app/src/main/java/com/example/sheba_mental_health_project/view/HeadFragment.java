@@ -301,6 +301,7 @@ public class HeadFragment extends Fragment
         getChildFragmentManager().beginTransaction()
                 .add(R.id.fragment_container,
                         OtherFeelingSubFragment.newInstance(mViewModel.getPainPoint().getOtherFeeling(),
+                                mViewModel.getPainPoint().getPainLocation(),
                                 BodyPartEnum.Head), OTHER_FEELING_FRAG)
                 .addToBackStack(SUB_FRAGS_STACK)
                 .commit();

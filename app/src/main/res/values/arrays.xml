@@ -21,6 +21,61 @@
         <item>@string/sting</item>
         <item>@string/strange</item>
         <item>@string/numb</item>
+        <item>@string/color_change</item>
+        <item>@string/other</item>
+    </string-array>
+
+    <string-array name="other_feeling_spinner_eyes">
+        <item>@string/choose</item>
+        <item>@string/bleeding</item>
+        <item>@string/itching</item>
+        <item>@string/sting</item>
+        <item>@string/strange</item>
+        <item>@string/numb</item>
+        <item>@string/color_change</item>
+        <item>@string/dryness</item>
+        <item>@string/tears_excess</item>
+        <item>@string/other</item>
+    </string-array>
+
+    <string-array name="other_feeling_spinner_mouth">
+        <item>@string/choose</item>
+        <item>@string/bleeding</item>
+        <item>@string/itching</item>
+        <item>@string/sting</item>
+        <item>@string/strange</item>
+        <item>@string/numb</item>
+        <item>@string/color_change</item>
+        <item>@string/dryness</item>
+        <item>@string/drooling</item>
+        <item>@string/other</item>
+    </string-array>
+
+    <string-array name="other_feeling_spinner_abdomen">
+        <item>@string/choose</item>
+        <item>@string/bleeding</item>
+        <item>@string/itching</item>
+        <item>@string/sting</item>
+        <item>@string/strange</item>
+        <item>@string/numb</item>
+        <item>@string/color_change</item>
+        <item>@string/constipation</item>
+        <item>@string/diarrhea</item>
+        <item>@string/heartburn</item>
+        <item>@string/other</item>
+    </string-array>
+
+    <string-array name="other_feeling_spinner_genitals">
+        <item>@string/choose</item>
+        <item>@string/bleeding</item>
+        <item>@string/itching</item>
+        <item>@string/sting</item>
+        <item>@string/strange</item>
+        <item>@string/numb</item>
+        <item>@string/color_change</item>
+        <item>@string/urinary_retention</item>
+        <item>@string/frequent_urinary</item>
+        <item>@string/urgent_urinary</item>
         <item>@string/other</item>
     </string-array>
 
