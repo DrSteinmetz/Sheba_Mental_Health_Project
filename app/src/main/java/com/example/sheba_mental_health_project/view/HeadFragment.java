@@ -44,7 +44,9 @@ public class HeadFragment extends Fragment
     private ImageView mForeheadIv;
     private ImageView mRightEyeIv;
     private ImageView mLeftEyeIv;
+    private ImageView mNoseIv;
     private ImageView mMouthIv;
+    private ImageView mNeckIv;
 
     private ImageView mSelectedIv;
 
@@ -131,11 +133,15 @@ public class HeadFragment extends Fragment
         final View foreheadV = rootView.findViewById(R.id.forehead_v);
         final View rightEyeV = rootView.findViewById(R.id.right_eye_v);
         final View leftEyeV = rootView.findViewById(R.id.left_eye_v);
+        final View noseV = rootView.findViewById(R.id.nose_v);
         final View mouthV = rootView.findViewById(R.id.mouth_v);
+        final View neckV = rootView.findViewById(R.id.neck_v);
         mForeheadIv = rootView.findViewById(R.id.forehead_iv);
         mRightEyeIv = rootView.findViewById(R.id.right_eye_iv);
         mLeftEyeIv = rootView.findViewById(R.id.left_eye_iv);
+        mNoseIv = rootView.findViewById(R.id.nose_iv);
         mMouthIv = rootView.findViewById(R.id.mouth_iv);
+        mNeckIv = rootView.findViewById(R.id.neck_iv);
 
         alphaAnimation.setRepeatCount(Animation.INFINITE);
         alphaAnimation.setRepeatMode(Animation.REVERSE);
@@ -168,10 +174,24 @@ public class HeadFragment extends Fragment
             }
         });
 
+        noseV.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onPainPointViewClicked(mNoseIv, PainLocationEnum.Nose);
+            }
+        });
+
         mouthV.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 onPainPointViewClicked(mMouthIv, PainLocationEnum.Mouth);
+            }
+        });
+
+        neckV.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onPainPointViewClicked(mNeckIv, PainLocationEnum.Neck);
             }
         });
 
@@ -199,10 +219,22 @@ public class HeadFragment extends Fragment
             mLeftEyeIv.setColorFilter(painPoint.getColor());
         }
 
+        painPoint = mViewModel.getPainPointsMap().get(PainLocationEnum.Nose);
+        mNoseIv.setVisibility(painPoint != null ? View.VISIBLE : View.GONE);
+        if (painPoint != null) {
+            mNoseIv.setColorFilter(painPoint.getColor());
+        }
+
         painPoint = mViewModel.getPainPointsMap().get(PainLocationEnum.Mouth);
         mMouthIv.setVisibility(painPoint != null ? View.VISIBLE : View.GONE);
         if (painPoint != null) {
             mMouthIv.setColorFilter(painPoint.getColor());
+        }
+
+        painPoint = mViewModel.getPainPointsMap().get(PainLocationEnum.Neck);
+        mNeckIv.setVisibility(painPoint != null ? View.VISIBLE : View.GONE);
+        if (painPoint != null) {
+            mNeckIv.setColorFilter(painPoint.getColor());
         }
     }
 
