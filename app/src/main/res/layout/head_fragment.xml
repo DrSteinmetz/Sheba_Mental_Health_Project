@@ -32,7 +32,32 @@
                 android:layout_height="0dp"
                 android:layout_weight="1"
                 android:orientation="horizontal">
-
+                <Space
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1" />
+                <RelativeLayout
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1">
+                    <ImageView
+                        android:id="@+id/scalp_iv"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_centerInParent="true"
+                        android:padding="1dp"
+                        android:src="@drawable/ic_red_pain_point"
+                        android:visibility="invisible"
+                        android:scaleType="fitCenter" />
+                    <View
+                        android:id="@+id/scalp_v"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent" />
+                </RelativeLayout>
+                <Space
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1" />
             </LinearLayout>
 
             <LinearLayout
@@ -40,29 +65,32 @@
                 android:layout_height="0dp"
                 android:layout_weight="1.7"
                 android:orientation="horizontal">
-
+                <Space
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1" />
                 <RelativeLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent">
-
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1">
                     <ImageView
                         android:id="@+id/forehead_iv"
-                        android:layout_width="40dp"
-                        android:layout_height="40dp"
-                        android:layout_alignTop="@id/forehead_v"
-                        android:layout_marginTop="5dp"
-                        android:layout_centerHorizontal="true"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_centerInParent="true"
+                        android:padding="5dp"
                         android:src="@drawable/ic_red_pain_point"
                         android:visibility="gone"
                         android:scaleType="fitCenter" />
                     <View
                         android:id="@+id/forehead_v"
-                        android:layout_width="50dp"
-                        android:layout_height="50dp"
-                        android:layout_centerInParent="true" />
-
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent" />
                 </RelativeLayout>
-
+                <Space
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1" />
             </LinearLayout>
 
             <LinearLayout
@@ -80,12 +108,9 @@
                     android:layout_weight="0.5">
                     <ImageView
                         android:id="@+id/right_ear_iv"
-                        android:layout_width="30dp"
-                        android:layout_height="30dp"
-                        android:layout_alignTop="@id/right_ear_v"
-                        android:layout_alignStart="@id/right_ear_v"
-                        android:layout_marginBottom="5dp"
-                        android:layout_marginStart="5dp"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:padding="1dp"
                         android:src="@drawable/ic_red_pain_point"
                         android:visibility="gone"
                         android:scaleType="fitCenter" />
@@ -100,12 +125,9 @@
                     android:layout_weight="0.5">
                     <ImageView
                         android:id="@+id/right_eye_iv"
-                        android:layout_width="30dp"
-                        android:layout_height="30dp"
-                        android:layout_alignTop="@id/right_eye_v"
-                        android:layout_alignStart="@id/right_eye_v"
-                        android:layout_marginBottom="5dp"
-                        android:layout_marginStart="5dp"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:padding="1dp"
                         android:src="@drawable/ic_red_pain_point"
                         android:visibility="gone"
                         android:scaleType="fitCenter" />
@@ -124,12 +146,9 @@
                     android:layout_weight="0.5">
                     <ImageView
                         android:id="@+id/left_eye_iv"
-                        android:layout_width="30dp"
-                        android:layout_height="30dp"
-                        android:layout_alignTop="@id/left_eye_v"
-                        android:layout_alignStart="@id/left_eye_v"
-                        android:layout_marginBottom="5dp"
-                        android:layout_marginStart="5dp"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:padding="1dp"
                         android:src="@drawable/ic_red_pain_point"
                         android:visibility="gone"
                         android:scaleType="fitCenter" />
@@ -144,12 +163,9 @@
                     android:layout_weight="0.5">
                     <ImageView
                         android:id="@+id/left_ear_iv"
-                        android:layout_width="30dp"
-                        android:layout_height="30dp"
-                        android:layout_alignTop="@id/left_ear_v"
-                        android:layout_alignStart="@id/left_ear_v"
-                        android:layout_marginBottom="5dp"
-                        android:layout_marginStart="5dp"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:padding="1dp"
                         android:src="@drawable/ic_red_pain_point"
                         android:visibility="gone"
                         android:scaleType="fitCenter" />
@@ -169,26 +185,33 @@
                 android:layout_height="0dp"
                 android:layout_weight="0.7"
                 android:orientation="horizontal">
+                <Space
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="3" />
                 <RelativeLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent">
-
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1">
                     <ImageView
                         android:id="@+id/nose_iv"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:layout_alignTop="@id/nose_v"
                         android:layout_centerHorizontal="true"
+                        android:padding="1dp"
                         android:src="@drawable/ic_red_pain_point"
                         android:visibility="gone"
                         android:scaleType="fitCenter" />
                     <View
                         android:id="@+id/nose_v"
                         android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:layout_centerInParent="true" />
-
+                        android:layout_height="match_parent" />
                 </RelativeLayout>
+                <Space
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="3" />
             </LinearLayout>
 
             <LinearLayout
@@ -223,10 +246,14 @@
                 android:layout_height="0dp"
                 android:layout_weight="1"
                 android:orientation="horizontal">
+                <Space
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1.5" />
                 <RelativeLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent">
-
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1">
                     <ImageView
                         android:id="@+id/neck_iv"
                         android:layout_width="match_parent"
@@ -239,10 +266,12 @@
                     <View
                         android:id="@+id/neck_v"
                         android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:layout_centerInParent="true" />
-
+                        android:layout_height="match_parent" />
                 </RelativeLayout>
+                <Space
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1.5" />
             </LinearLayout>
 
             <Space

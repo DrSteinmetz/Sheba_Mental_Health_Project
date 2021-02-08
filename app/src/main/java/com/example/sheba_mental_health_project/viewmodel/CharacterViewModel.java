@@ -5,6 +5,7 @@ import android.content.Context;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
+import com.example.sheba_mental_health_project.model.Appointment;
 import com.example.sheba_mental_health_project.model.PainPoint;
 import com.example.sheba_mental_health_project.model.enums.PainLocationEnum;
 import com.example.sheba_mental_health_project.repository.Repository;
@@ -16,6 +17,8 @@ import java.util.Map;
 public class CharacterViewModel extends ViewModel {
 
     private Repository mRepository;
+
+    private Appointment mAppointment;
 
     private MutableLiveData<Map<String, List<PainPoint>>> mGetAllPaintPointsSucceed;
     private MutableLiveData<String> mGetAllPaintPointsFailed;
@@ -63,12 +66,20 @@ public class CharacterViewModel extends ViewModel {
     }
 
 
+    public Appointment getAppointment() {
+        return mAppointment;
+    }
+
+    public void setAppointment(Appointment mAppointment) {
+        this.mAppointment = mAppointment;
+    }
+
     public EnumMap<PainLocationEnum, PainPoint> getPainPointsMap() {
         return mPainPointsMap;
     }
 
     public void getAllPainPoints() {
-        mRepository.getAllPainPoints();
+        mRepository.getAllPainPoints(mAppointment);
     }
 
     public void removeGetAllPainPointsListener() {

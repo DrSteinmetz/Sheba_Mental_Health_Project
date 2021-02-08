@@ -31,9 +31,6 @@ public class StartMeetingViewModel extends ViewModel {
         return mGetLastAppointmentSucceed;
     }
 
-
-
-
     public MutableLiveData<String> getGetLastAppointmentFailed() {
         if (mGetLastAppointmentFailed == null) {
             mGetLastAppointmentFailed = new MutableLiveData<>();

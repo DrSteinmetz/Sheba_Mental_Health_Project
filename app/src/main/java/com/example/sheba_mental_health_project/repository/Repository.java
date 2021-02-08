@@ -406,18 +406,18 @@ public class Repository {
         return painPoints;
     }
 
-    public void getAllPainPoints() {
+    public void getAllPainPoints(final Appointment appointment) {
         mGetAllPainPointsListener = mCloudDB.collection(APPOINTMENTS)
-                .document(mCurrentAppointment.getId())
+                .document(appointment.getId())
                 .addSnapshotListener(new EventListener<DocumentSnapshot>() {
                     @Override
                     public void onEvent(@Nullable DocumentSnapshot value, @Nullable FirebaseFirestoreException error) {
                         if (value.exists()) {
-                            final Appointment appointment = value.toObject(Appointment.class);
+                            final Appointment dbAppointment = value.toObject(Appointment.class);
                             if (mRepositoryGetAllPainPointsListener != null) {
-                                mRepositoryGetAllPainPointsListener.onGetAllPainPointsSucceed(appointment.getPainPointsOfBodyPartMap());
+                                mRepositoryGetAllPainPointsListener.onGetAllPainPointsSucceed(dbAppointment.getPainPointsOfBodyPartMap());
 //                                setCurrentAppointment(appointment);
-                                mCurrentAppointment.setPainPointsOfBodyPartMap(appointment.getPainPointsOfBodyPartMap());
+                                appointment.setPainPointsOfBodyPartMap(dbAppointment.getPainPointsOfBodyPartMap());
                             }
                         } else {
                             Log.w(TAG, "onEvent: ", error);

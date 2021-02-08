@@ -9,10 +9,23 @@
     android:clickable="true"
     tools:context=".view.SanityCheckFragment">
 
+    <TextView
+        android:id="@+id/title_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="10dp"
+        android:gravity="center"
+        android:text="Choose phrases which you relate to:"
+        android:textSize="20sp"
+        android:textColor="@color/black"
+        android:textAllCaps="false" />
+
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/questions_recycler"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_below="@id/title_tv"
         android:scrollbarAlwaysDrawVerticalTrack="true"
         android:layout_above="@id/continue_btn" />
 
