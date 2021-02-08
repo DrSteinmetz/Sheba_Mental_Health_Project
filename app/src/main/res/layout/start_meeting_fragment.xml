@@ -12,7 +12,9 @@
         <RelativeLayout
             android:id="@+id/start_meeting_relative"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:clickable="false"
+            android:focusable="false">
 
             <TextView
                 android:id="@+id/patient_name_tv"
@@ -67,6 +69,22 @@
                     android:textStyle="bold"
                     android:text="Avi Neelavi"/>
             </LinearLayout>
+
+            <androidx.fragment.app.FragmentContainerView
+                android:id="@+id/character_container"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:clickable="false"
+                android:focusable="false"
+                android:layout_below="@id/therapist_linear">
+
+            </androidx.fragment.app.FragmentContainerView>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:clickable="false"
+                android:focusable="false" />
 
         </RelativeLayout>
 

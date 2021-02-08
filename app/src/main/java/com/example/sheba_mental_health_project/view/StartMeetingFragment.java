@@ -1,5 +1,6 @@
 package com.example.sheba_mental_health_project.view;
 
+import androidx.fragment.app.FragmentContainerView;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
@@ -21,6 +22,7 @@ import com.example.sheba_mental_health_project.R;
 import com.example.sheba_mental_health_project.model.Appointment;
 import com.example.sheba_mental_health_project.model.ViewModelFactory;
 import com.example.sheba_mental_health_project.model.enums.AppointmentStateEnum;
+import com.example.sheba_mental_health_project.model.enums.BodyPartEnum;
 import com.example.sheba_mental_health_project.model.enums.ViewModelEnum;
 import com.example.sheba_mental_health_project.viewmodel.StartMeetingViewModel;
 import com.google.android.material.button.MaterialButton;
@@ -120,8 +122,16 @@ public class StartMeetingFragment extends Fragment {
         mPatientNameTv = rootView.findViewById(R.id.patient_name_tv);
         mNoMeetingTv = rootView.findViewById(R.id.no_meeting_tv);
         mMainLayout = rootView.findViewById(R.id.start_meeting_relative);
-
         final MaterialButton startMeetingBtn = rootView.findViewById(R.id.start_meeting_btn);
+
+        final FragmentContainerView fragmentContainerView = rootView.findViewById(R.id.character_container);
+        fragmentContainerView.setEnabled(false);
+        fragmentContainerView.setClickable(false);
+        fragmentContainerView.setFocusable(false);
+        fragmentContainerView.setOnClickListener(null);
+        getChildFragmentManager().beginTransaction()
+                .add(R.id.character_container, CharacterFragment.newInstance())
+                .commit();
 
 
         startMeetingBtn.setOnClickListener(new View.OnClickListener() {

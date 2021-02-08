@@ -90,6 +90,12 @@ public class MainPatientFragment extends Fragment {
                             listener.onPatientAppointmentClicked();
                         }
                     }
+
+                    @Override
+                    public void onGetInAppointmentClicked(int position, View view) {
+                        mViewModel.setCurrentAppointment(appointments.get(position));
+                        //TODO move to fragment screen 12
+                    }
                 });
                 mRecyclerView.setAdapter(mAppointmentAdapter);
                 Log.d(TAG, "onChanged: " + appointments.size());
