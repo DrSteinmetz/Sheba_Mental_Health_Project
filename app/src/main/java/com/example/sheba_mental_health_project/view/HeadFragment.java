@@ -138,7 +138,7 @@ public class HeadFragment extends Fragment
         final View noseV = rootView.findViewById(R.id.nose_v);
         final View mouthV = rootView.findViewById(R.id.mouth_v);
         final View neckV = rootView.findViewById(R.id.neck_v);
-        mSelectedIv = rootView.findViewById(R.id.scalp_iv);
+        mScalpIv = rootView.findViewById(R.id.scalp_iv);
         mForeheadIv = rootView.findViewById(R.id.forehead_iv);
         mRightEyeIv = rootView.findViewById(R.id.right_eye_iv);
         mLeftEyeIv = rootView.findViewById(R.id.left_eye_iv);

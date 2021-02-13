@@ -412,7 +412,7 @@ public class Repository {
                 .addSnapshotListener(new EventListener<DocumentSnapshot>() {
                     @Override
                     public void onEvent(@Nullable DocumentSnapshot value, @Nullable FirebaseFirestoreException error) {
-                        if (value.exists()) {
+                        if (value != null && value.exists()) {
                             final Appointment dbAppointment = value.toObject(Appointment.class);
                             if (mRepositoryGetAllPainPointsListener != null) {
                                 mRepositoryGetAllPainPointsListener.onGetAllPainPointsSucceed(dbAppointment.getPainPointsOfBodyPartMap());
