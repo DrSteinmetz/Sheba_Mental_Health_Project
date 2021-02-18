@@ -4,6 +4,7 @@ import android.app.Dialog;
 import android.content.Context;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -18,6 +19,7 @@ import com.google.android.material.button.MaterialButton;
 public class WarningDialog extends Dialog {
 
     private TextView mPromptTv;
+    private TextView mTitleWarningTv;
 
     public interface WarningDialogActionInterface {
         void onYesBtnClicked();
@@ -38,8 +40,10 @@ public class WarningDialog extends Dialog {
     }
 
     private void initialize() {
-        final View view = LayoutInflater.from(getContext()).inflate(R.layout.warning_dialog, null);
+        final View view = LayoutInflater.from(getContext()).inflate(R.layout.start_meeting_dialog, null);
         mPromptTv = view.findViewById(R.id.prompt_tv);
+        mTitleWarningTv = view.findViewById(R.id.title_warning_tv);
+
         final MaterialButton yesBtn = view.findViewById(R.id.yes_btn);
         final MaterialButton noBtn = view.findViewById(R.id.no_btn);
 
@@ -78,5 +82,11 @@ public class WarningDialog extends Dialog {
 
     public void setPromptText(final String prompt) {
         mPromptTv.setText(prompt);
+        Log.d("title",prompt);
+    }
+
+    public void setTitleWarningText(final String title) {
+        mTitleWarningTv.setText(title);
+        Log.d("title",title);
     }
 }

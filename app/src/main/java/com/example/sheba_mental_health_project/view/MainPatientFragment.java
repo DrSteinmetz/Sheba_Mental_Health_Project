@@ -37,6 +37,7 @@ public class MainPatientFragment extends Fragment {
 
     public interface MainPatientInterface {
         void onPatientAppointmentClicked();
+        void onPatientEnterAppointmentClicked();
     }
 
     private MainPatientInterface listener;
@@ -94,7 +95,7 @@ public class MainPatientFragment extends Fragment {
                     @Override
                     public void onGetInAppointmentClicked(int position, View view) {
                         mViewModel.setCurrentAppointment(appointments.get(position));
-                        //TODO move to fragment screen 12
+                        listener.onPatientEnterAppointmentClicked();
                     }
                 });
                 mRecyclerView.setAdapter(mAppointmentAdapter);

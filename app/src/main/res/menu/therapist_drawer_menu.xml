@@ -2,6 +2,11 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
+    <item android:id="@+id/search_patient_action"
+        android:title="search patient"
+        android:orderInCategory="0"
+        app:showAsAction="never" />
+
     <item android:id="@+id/add_patient_action"
         android:title="@string/add_patient_action"
         android:orderInCategory="0"
