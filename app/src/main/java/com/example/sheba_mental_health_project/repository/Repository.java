@@ -441,6 +441,7 @@ public class Repository {
         mGetAllPainPointsListener.remove();
     }
 
+
     public void getQuestions(final ViewModelEnum page) {
         final String language = Locale.getDefault().getLanguage(); // 'he' 'en'
 

@@ -7,12 +7,15 @@ import androidx.lifecycle.ViewModel;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.example.sheba_mental_health_project.model.enums.ViewModelEnum;
+import com.example.sheba_mental_health_project.viewmodel.AppointmentTherapistViewModel;
 import com.example.sheba_mental_health_project.viewmodel.ChatViewModel;
 import com.example.sheba_mental_health_project.viewmodel.SanityCheckViewModel;
 import com.example.sheba_mental_health_project.viewmodel.BureaucracyViewModel;
 import com.example.sheba_mental_health_project.viewmodel.PreQuestionsViewModel;
+import com.example.sheba_mental_health_project.viewmodel.SearchPatientViewModel;
 import com.example.sheba_mental_health_project.viewmodel.StartMeetingViewModel;
 import com.example.sheba_mental_health_project.viewmodel.StatementViewModel;
+import com.example.sheba_mental_health_project.viewmodel.TherapistPhysicalStateViewModel;
 import com.example.sheba_mental_health_project.viewmodel.TreatyViewModel;
 import com.example.sheba_mental_health_project.viewmodel.AddAppointmentViewModel;
 import com.example.sheba_mental_health_project.viewmodel.AddPatientViewModel;
@@ -107,9 +110,24 @@ public class ViewModelFactory implements ViewModelProvider.Factory {
                     objectToReturn = (T) new MainTherapistViewModel(mContext);
                 }
                 break;
+            case TherapistPhysicalState:
+                if (modelClass.isAssignableFrom(TherapistPhysicalStateViewModel.class)) {
+                    objectToReturn = (T) new TherapistPhysicalStateViewModel(mContext);
+                }
+                break;
             case StartMeeting:
                 if (modelClass.isAssignableFrom(StartMeetingViewModel.class)) {
                     objectToReturn = (T) new StartMeetingViewModel(mContext);
+                }
+                break;
+            case AppointmentTherapist:
+                if (modelClass.isAssignableFrom(AppointmentTherapistViewModel.class)) {
+                    objectToReturn = (T) new AppointmentTherapistViewModel(mContext);
+                }
+                break;
+            case SearchPatient:
+                if (modelClass.isAssignableFrom(SearchPatientViewModel.class)) {
+                    objectToReturn = (T) new SearchPatientViewModel(mContext);
                 }
                 break;
             case AddPatient:

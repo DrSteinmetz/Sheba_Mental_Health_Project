@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    android:focusable="true"
+    android:clickable="true"
+    tools:context=".view.MouthSubFragment"
+    android:layout_marginVertical="10dp"
+    android:layout_marginHorizontal="20dp"
+    >
+
+    <TextView
+        android:id="@+id/title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:text="Choose pain area:"
+        android:textSize="20sp"
+        android:textColor="@color/black"
+        android:textAllCaps="false"
+        android:layout_marginBottom="20dp"/>
+
+
+        <RadioGroup
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/mouth_Rg1"
+            android:orientation="horizontal"
+            android:layout_below="@id/title"
+            android:layout_centerHorizontal="true"
+            >
+
+                <RadioButton
+                    android:id="@+id/pharynx"
+                    android:layout_width="100dp"
+                    android:layout_height="75dp"
+                    android:layout_marginEnd="10dp"
+                    android:background="@drawable/mouth_card_background"
+                    android:button="@null"
+                    android:padding="10dp"
+                    android:text="pharynx"
+                    android:drawableBottom="@drawable/ic_white_point"
+                    android:textAlignment="center"
+                    android:textColor="@color/black"/>
+
+                <RadioButton
+                    android:id="@+id/lips"
+                    android:layout_width="100dp"
+                    android:layout_height="75dp"
+                    android:layout_marginEnd="10dp"
+                    android:background="@drawable/mouth_card_background"
+                    android:drawableBottom="@drawable/ic_white_point"
+                    android:button="@null"
+                    android:padding="10dp"
+                    android:text="lips"
+                    android:textAlignment="center"
+                    android:textColor="@color/black" />
+
+                <RadioButton
+                    android:id="@+id/palate"
+                    android:layout_width="100dp"
+                    android:layout_height="75dp"
+                    android:layout_marginEnd="10dp"
+                    android:background="@drawable/mouth_card_background"
+                    android:button="@null"
+                    android:drawableBottom="@drawable/ic_white_point"
+                    android:padding="10dp"
+                    android:text="palate"
+                    android:textAlignment="center"
+                    android:textColor="@color/black" />
+
+        </RadioGroup>
+
+    <RadioGroup
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/mouth_Rg2"
+        android:orientation="horizontal"
+        android:layout_below="@id/mouth_Rg1"
+        android:layout_marginTop="10dp"
+        android:layout_centerHorizontal="true"
+        >
+
+
+                <RadioButton
+                    android:background="@drawable/mouth_card_background"
+                    android:padding="10dp"
+                    android:layout_width="100dp"
+                    android:layout_height="75dp"
+                    android:text="teeth"
+                    android:drawableBottom="@drawable/ic_white_point"
+                    android:button="@null"
+                    android:textAlignment="center"
+                    android:textColor="@color/black"
+                    android:id="@+id/teeth"
+                    android:layout_marginEnd="10dp"/>
+
+                <RadioButton
+                    android:background="@drawable/mouth_card_background"
+                    android:padding="10dp"
+                    android:layout_width="100dp"
+                    android:layout_height="75dp"
+                    android:text="tongue"
+                    android:drawableBottom="@drawable/ic_white_point"
+                    android:button="@null"
+                    android:textAlignment="center"
+                    android:textColor="@color/black"
+                    android:id="@+id/tongue"
+                    android:layout_marginEnd="10dp"/>
+
+        </RadioGroup>
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/continue_btn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="30dp"
+        android:layout_below="@id/mouth_Rg2"
+        android:text="Continue"
+        android:padding="10dp"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        android:textColor="@color/white"
+        android:textAllCaps="false"
+        app:cornerRadius="0dp"/>
+
+</RelativeLayout>

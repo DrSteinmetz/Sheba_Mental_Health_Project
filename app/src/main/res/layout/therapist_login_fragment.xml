@@ -3,13 +3,15 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".view.TherapistLoginFragment">
 
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:padding="20dp">
+        android:paddingVertical="20dp"
+        android:paddingHorizontal="40dp">
 
         <TextView
             android:id="@+id/title_tv"
@@ -17,8 +19,7 @@
             android:layout_height="wrap_content"
             android:layout_centerHorizontal="true"
             android:text="@string/welcome_therapist"
-            android:textSize="30sp"
-            android:textStyle="bold"
+            android:textSize="25sp"
             android:textColor="@color/black"
             android:textAllCaps="false" />
 
@@ -27,19 +28,21 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@id/title_tv"
-            android:layout_marginTop="20dp"
-            android:hint="@string/email">
+            android:layout_marginTop="40dp"
+            android:hint="@string/email"
+            app:boxStrokeColor="@color/light_gray"
+            app:boxStrokeWidth="1.2dp"
+            app:boxCornerRadiusBottomEnd="0dp"
+            app:boxCornerRadiusBottomStart="0dp"
+            app:boxCornerRadiusTopEnd="0dp"
+            app:boxCornerRadiusTopStart="0dp"
+            app:hintTextColor="@color/light_blue"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/email_et"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:padding="20dp"
                 android:gravity="center"
                 android:inputType="textEmailAddress"
-                android:textColor="@color/design_default_color_primary_dark"
-                android:textCursorDrawable="@null"
-                android:textSize="20sp"
-                android:textAllCaps="false" />
+                style="@style/textInputEditText"/>
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
@@ -47,33 +50,30 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@id/email_et_layout"
-            android:layout_marginTop="20dp"
-            android:hint="@string/password">
+            android:layout_marginTop="10dp"
+            android:hint="@string/password"
+            app:boxStrokeColor="@color/light_gray"
+            app:boxStrokeWidth="1.2dp"
+            app:boxCornerRadiusBottomEnd="0dp"
+            app:boxCornerRadiusBottomStart="0dp"
+            app:boxCornerRadiusTopEnd="0dp"
+            app:boxCornerRadiusTopStart="0dp"
+            app:hintTextColor="@color/light_blue"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/password_et"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:padding="20dp"
                 android:gravity="center"
                 android:inputType="textPassword"
-                android:textColor="@color/design_default_color_primary_dark"
-                android:textCursorDrawable="@null"
-                android:textSize="20sp"
-                android:textAllCaps="false" />
+                style="@style/textInputEditText" />
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/login_btn"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
             android:layout_centerHorizontal="true"
-            android:layout_marginTop="30dp"
+            android:layout_marginTop="40dp"
             android:layout_below="@id/password_et_layout"
             android:text="Login"
-            android:textSize="30sp"
-            android:textStyle="bold"
-            android:textColor="@color/white"
-            android:textAllCaps="false" />
+            style="@style/blue_btn" />
 
     </RelativeLayout>
 

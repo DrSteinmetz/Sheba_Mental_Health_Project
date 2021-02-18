@@ -31,16 +31,19 @@ import com.example.sheba_mental_health_project.viewmodel.GenitalsViewModel;
 
 import org.jetbrains.annotations.NotNull;
 
+import java.util.EnumMap;
+
 public class GenitalsFragment extends Fragment
         implements PainStrengthSubFragment.PainStrengthSubFragmentInterface,
         PainTypeSubFragment.PainTypeSubFragmentInterface,
         OtherFeelingSubFragment.OtherFeelingSubFragmentInterface,
         PainFrequencySubFragment.PainFrequencySubFragmentInterface,
-        DescriptionDialogFragment.AddDescriptionFragmentInterface{
+        DescriptionDialogFragment.AddDescriptionFragmentInterface,
+        GenitalsSubFragment.GenitalsSubFragmentInterface{
 
     private GenitalsViewModel mViewModel;
 
-    private ImageView mGenitalsIv;
+    private ImageView mPrivatePartIv;
 
     private ImageView mSelectedIv;
 
@@ -53,6 +56,7 @@ public class GenitalsFragment extends Fragment
     private final String OTHER_FEELING_FRAG = "Other_Feeling_Fragment";
     private final String PAIN_FREQUENCY_FRAG = "Pain_Frequency_Fragment";
     private final String DESCRIPTION_FRAG = "Description_Dialog_Fragment";
+    private final String GENITALS_SUB_FRAG = "Genitals_Sub_Fragment";
 
     private final String TAG = "GenitalsFragment";
 
@@ -75,6 +79,13 @@ public class GenitalsFragment extends Fragment
                         FragmentManager.POP_BACK_STACK_INCLUSIVE);
                 getActivity().onBackPressed();
                 getActivity().onBackPressed();
+
+                if(painPoint.getPainLocation() == PainLocationEnum.Penis ||
+                        painPoint.getPainLocation() ==  PainLocationEnum.Testicles ||
+                        painPoint.getPainLocation() == PainLocationEnum.Vagina){
+                    mViewModel.getPainPoint().setPainLocation(PainLocationEnum.PrivatePart);
+                    mViewModel.setPainPointsInDB();
+                }
             }
         };
 
@@ -95,12 +106,12 @@ public class GenitalsFragment extends Fragment
         final View rootView = inflater.inflate(R.layout.genitals_fragment, container, false);
 
         final View genitalsV = rootView.findViewById(R.id.genitals_v);
-        mGenitalsIv = rootView.findViewById(R.id.genitals_iv);
+        mPrivatePartIv = rootView.findViewById(R.id.private_part_iv);
 
         genitalsV.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                onPainPointViewClicked(mGenitalsIv, PainLocationEnum.Anus);
+                onPainPointViewClicked(mPrivatePartIv, PainLocationEnum.PrivatePart);
             }
         });
 
@@ -116,10 +127,10 @@ public class GenitalsFragment extends Fragment
     private void showPainPoints() {
         PainPoint painPoint;
 
-        painPoint = mViewModel.getPainPointsMap().get(PainLocationEnum.Anus);
-        mGenitalsIv.setVisibility(painPoint != null ? View.VISIBLE : View.GONE);
+        painPoint = mViewModel.getPainPointsMap().get(PainLocationEnum.PrivatePart);
+        mPrivatePartIv.setVisibility(painPoint != null ? View.VISIBLE : View.GONE);
         if (painPoint != null) {
-            mGenitalsIv.setColorFilter(painPoint.getColor());
+            mPrivatePartIv.setColorFilter(painPoint.getColor());
         }
     }
 
@@ -128,12 +139,10 @@ public class GenitalsFragment extends Fragment
 
         if (view.getVisibility() == View.VISIBLE) {
             mViewModel.setPainPoint(new PainPoint(mViewModel.getPainPointsMap().get(painLocationEnum)));
-            final PainPoint painPoint = mViewModel.getPainPoint();
-
-            openPainStrengthFragment(painPoint.getPainStrength());
+            openGenitalsSubFragment(mViewModel.getPainPointsMap());
         } else {
             mViewModel.setPainPoint(new PainPoint(painLocationEnum));
-            openPainStrengthFragment(0);
+            openGenitalsSubFragment(mViewModel.getPainPointsMap());
         }
 
         view.setVisibility(View.GONE);
@@ -174,13 +183,34 @@ public class GenitalsFragment extends Fragment
         }
     }
 
-    private void openPainStrengthFragment(final int position) {
+    private void openGenitalsSubFragment(EnumMap<PainLocationEnum, PainPoint> mPainPointsGenitalsMap) {
         getChildFragmentManager().popBackStack(SUB_FRAGS_STACK, FragmentManager.POP_BACK_STACK_INCLUSIVE);
+        getChildFragmentManager().beginTransaction()
+                .add(R.id.fragment_container, GenitalsSubFragment.newInstance(mPainPointsGenitalsMap,
+                        BodyPartEnum.Genitals), GENITALS_SUB_FRAG)
+                .addToBackStack(SUB_FRAGS_STACK)
+                .commit();
+    }
+
+    private void openPainStrengthFragment(final int position) {
         getChildFragmentManager().beginTransaction()
                 .add(R.id.fragment_container, PainStrengthSubFragment.newInstance(position,
                         BodyPartEnum.Genitals), PAIN_STRENGTH_FRAG)
                 .addToBackStack(SUB_FRAGS_STACK)
                 .commit();
+
+    }
+
+    /**<------ Genitals Sub Fragment ------>*/
+    @Override
+    public void onContinueToStrengthBtnClicked(PainLocationEnum painLocationEnum, int painStrength) {
+        mViewModel.getPainPoint().setPainLocation(painLocationEnum);
+        openPainStrengthFragment(painStrength);
+    }
+
+    @Override
+    public void onSelectedPainPointColor(int color) {
+        mSelectedIv.setColorFilter(color);
     }
 
     /**<------ Pain Strength Sub Fragment ------>*/
@@ -247,4 +277,6 @@ public class GenitalsFragment extends Fragment
         mViewModel.getPainPoint().setDescription(description);
         mViewModel.setPainPointsInDB();
     }
+
+
 }

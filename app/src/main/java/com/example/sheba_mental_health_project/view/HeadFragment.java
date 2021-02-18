@@ -31,13 +31,16 @@ import com.example.sheba_mental_health_project.viewmodel.HeadViewModel;
 
 import org.jetbrains.annotations.NotNull;
 
+import java.util.EnumMap;
+
 public class HeadFragment extends Fragment
         implements PainStrengthSubFragment.PainStrengthSubFragmentInterface,
         PainTypeSubFragment.PainTypeSubFragmentInterface,
         OtherFeelingSubFragment.OtherFeelingSubFragmentInterface,
         PainFrequencySubFragment.PainFrequencySubFragmentInterface,
         DescriptionDialogFragment.AddDescriptionFragmentInterface,
-        LeftOrRightDialogFragment.LeftOrRightDialogFragmentInterface {
+        LeftOrRightDialogFragment.LeftOrRightDialogFragmentInterface,
+        MouthSubFragment.MouthSubFragmentInterface{
 
     private HeadViewModel mViewModel;
 
@@ -62,6 +65,7 @@ public class HeadFragment extends Fragment
     private final String OTHER_FEELING_FRAG = "Other_Feeling_Fragment";
     private final String PAIN_FREQUENCY_FRAG = "Pain_Frequency_Fragment";
     private final String DESCRIPTION_FRAG = "Description_Dialog_Fragment";
+    private final String MOUTH_SUB_FRAG = "Mouth_sub_fragment";
 
     private final String TAG = "HeadFragment";
 
@@ -111,6 +115,15 @@ public class HeadFragment extends Fragment
                             mIsBoth = false;
                             break;
                     }
+                }
+
+                if(painPoint.getPainLocation() == PainLocationEnum.Teeth ||
+                        painPoint.getPainLocation() ==  PainLocationEnum.Palate ||
+                        painPoint.getPainLocation() == PainLocationEnum.Lips ||
+                        painPoint.getPainLocation() == PainLocationEnum.Tongue ||
+                        painPoint.getPainLocation() == PainLocationEnum.Pharynx){
+                        mViewModel.getPainPoint().setPainLocation(PainLocationEnum.Mouth);
+                        mViewModel.setPainPointsInDB();
                 }
             }
         };
@@ -260,11 +273,22 @@ public class HeadFragment extends Fragment
         if (view.getVisibility() == View.VISIBLE) {
             mViewModel.setPainPoint(new PainPoint(mViewModel.getPainPointsMap().get(painLocationEnum)));
             final PainPoint painPoint = mViewModel.getPainPoint();
+            if(painLocationEnum == PainLocationEnum.Mouth){
+                openMouthSubFragment(mViewModel.getPainPointsMouthMap());
+            }
+            else{
+                openPainStrengthFragment(painPoint.getPainStrength());
+            }
 
-            openPainStrengthFragment(painPoint.getPainStrength());
         } else {
             mViewModel.setPainPoint(new PainPoint(painLocationEnum));
-            openPainStrengthFragment(0);
+            if(painLocationEnum == PainLocationEnum.Mouth){
+                openMouthSubFragment(mViewModel.getPainPointsMouthMap());
+            }
+            else{
+                openPainStrengthFragment(0);
+            }
+
         }
 
         view.setVisibility(View.GONE);
@@ -286,6 +310,7 @@ public class HeadFragment extends Fragment
             onPainPointClicked(view, painLocationEnum);
         } else {
             WarningDialog warningDialog = new WarningDialog(requireContext());
+            warningDialog.setTitleWarningText("Change point?");
             warningDialog.setPromptText("Are you sure you want to select another point?");
             warningDialog.setOnActionListener(new WarningDialog.WarningDialogActionInterface() {
                 @Override
@@ -310,6 +335,14 @@ public class HeadFragment extends Fragment
         getChildFragmentManager().beginTransaction()
                 .add(R.id.fragment_container, PainStrengthSubFragment.newInstance(position,
                         BodyPartEnum.Head), PAIN_STRENGTH_FRAG)
+                .addToBackStack(SUB_FRAGS_STACK)
+                .commit();
+    }
+
+    private void openMouthSubFragment(EnumMap<PainLocationEnum, PainPoint> mPainPointsMouthMap) {
+        getChildFragmentManager().popBackStack(SUB_FRAGS_STACK, FragmentManager.POP_BACK_STACK_INCLUSIVE);
+        getChildFragmentManager().beginTransaction()
+                .add(R.id.fragment_container, MouthSubFragment.newInstance(mPainPointsMouthMap,BodyPartEnum.Head), MOUTH_SUB_FRAG)
                 .addToBackStack(SUB_FRAGS_STACK)
                 .commit();
     }
@@ -383,5 +416,22 @@ public class HeadFragment extends Fragment
     public void onFinishBtnClicked(String description) {
         mViewModel.getPainPoint().setDescription(description);
         mViewModel.setPainPointsInDB();
+    }
+
+    /**<------ Mouth Sub Fragment ------>*/
+    @Override
+    public void onContinueToStrengthBtnClicked(PainLocationEnum painLocationEnum, EnumMap<PainLocationEnum, PainPoint> mPainPointsMouthMap) {
+        mViewModel.getPainPoint().setPainLocation(painLocationEnum);
+        if( mPainPointsMouthMap.containsKey(painLocationEnum)){
+            openPainStrengthFragment(mPainPointsMouthMap.get(painLocationEnum).getPainStrength());
+        }
+        else{
+            openPainStrengthFragment(0);
+        }
+    }
+
+    @Override
+    public void onSelectedPainPointColor(int color) {
+        mSelectedIv.setColorFilter(color);
     }
 }

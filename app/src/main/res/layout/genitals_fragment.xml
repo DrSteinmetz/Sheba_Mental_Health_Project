@@ -23,7 +23,7 @@
             android:scaleType="fitCenter" />
 
         <ImageView
-            android:id="@+id/genitals_iv"
+            android:id="@+id/private_part_iv"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignStart="@id/genitals_v"
