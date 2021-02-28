@@ -7,8 +7,10 @@ import android.util.Log;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
+import com.example.sheba_mental_health_project.R;
 import com.example.sheba_mental_health_project.model.Appointment;
 import com.example.sheba_mental_health_project.model.ChatMessage;
+import com.example.sheba_mental_health_project.model.Feeling;
 import com.example.sheba_mental_health_project.model.PainPoint;
 import com.example.sheba_mental_health_project.model.Patient;
 import com.example.sheba_mental_health_project.model.Question;
@@ -55,6 +57,7 @@ public class Repository {
     private final String THERAPISTS = "therapists";
     private final String APPOINTMENTS = "appointments";
     private final String QUESTIONS = "questions";
+    private final String FEELINGS = "feelings";
     private final String CHAT = "chat";
     private final String QUESTIONS_ENGLISH = "questions_english";
     private final String QUESTIONS_HEBREW = "questions_hebrew";
@@ -165,6 +168,19 @@ public class Repository {
         this.mRepositoryGetQuestionsOfPageListener = repositoryGetQuestionsOfPageInterface;
     }
 
+    /*<------ Get Patient Feelings ------>*/
+    public interface RepositoryGetPatientFeelingsInterface {
+        void onGetPatientFeelingsSucceed(List<Feeling> feelings);
+
+        void onGetPatientFeelingsFailed(String error);
+    }
+
+    private RepositoryGetPatientFeelingsInterface mRepositoryGetPatientFeelingsListener;
+
+    public void setGetPatientFeelingsInterface(RepositoryGetPatientFeelingsInterface repositoryGetPatientFeelingsInterface){
+        this.mRepositoryGetPatientFeelingsListener = repositoryGetPatientFeelingsInterface;
+    }
+
     /*<------ Update Answers of Appointment ------>*/
     public interface RepositoryUpdateAnswersOfAppointmentInterface {
         void onUpdateAnswersOfAppointmentSucceed(Appointment appointment);
@@ -176,6 +192,19 @@ public class Repository {
 
     public void setUpdateAnswersOfAppointmentInterface(RepositoryUpdateAnswersOfAppointmentInterface repositoryUpdateAnswersOfAppointmentInterface){
         this.mRepositoryUpdateAnswersOfAppointmentListener = repositoryUpdateAnswersOfAppointmentInterface;
+    }
+
+    /*<------ Update Answers of Feelings ------>*/
+    public interface RepositoryUpdateAnswersOfFeelingsInterface {
+        void onUpdateAnswersOfFeelingsSucceed(Appointment appointment);
+
+        void onUpdateAnswersOfFeelingsFailed(String error);
+    }
+
+    private RepositoryUpdateAnswersOfFeelingsInterface mRepositoryUpdateAnswersOfFeelingsListener;
+
+    public void setUpdateAnswersOfFeelingsInterface(RepositoryUpdateAnswersOfFeelingsInterface repositoryUpdateAnswersOfFeelingsInterface){
+        this.mRepositoryUpdateAnswersOfFeelingsListener = repositoryUpdateAnswersOfFeelingsInterface;
     }
 
     /*<------ Update State of Appointment ------>*/
@@ -473,6 +502,37 @@ public class Repository {
                 });
     }
 
+    public void getFeelings() {
+        final String language = Locale.getDefault().getLanguage(); // 'he' 'en'
+
+        final List<Feeling> feelings = new ArrayList<>();
+
+        mCloudDB.collection(FEELINGS)
+                .document(language)
+                .collection("ENGLISH_FEELINGS")
+                .get()
+                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                        if (task.isSuccessful()) {
+                            for (QueryDocumentSnapshot document : Objects.requireNonNull(task.getResult())) {
+                                feelings.add(document.toObject(Feeling.class));
+                            }
+                            if (mRepositoryGetPatientFeelingsListener != null) {
+                                mRepositoryGetPatientFeelingsListener.onGetPatientFeelingsSucceed(feelings);
+                            }
+                        } else {
+                            Log.w(TAG, "onComplete: ", task.getException());
+                            if (mRepositoryGetPatientFeelingsListener != null) {
+                                mRepositoryGetPatientFeelingsListener.onGetPatientFeelingsFailed(Objects.
+                                        requireNonNull(task.getException()).getMessage());
+                            }
+                        }
+                    }
+                });
+    }
+
+
     public void updateAnswersOfAppointment() {
         Log.d(TAG, "updateAnswersOfAppointment: " + mCurrentAppointment.getAnswers());
         mCloudDB.collection(APPOINTMENTS)
@@ -489,6 +549,28 @@ public class Repository {
                             Log.e(TAG, "onComplete: ", task.getException());
                             if (mRepositoryUpdateAnswersOfAppointmentListener != null) {
                                 mRepositoryUpdateAnswersOfAppointmentListener.onUpdateAnswersOfAppointmentFailed(Objects.
+                                        requireNonNull(task.getException()).getMessage());
+                            }
+                        }
+                    }
+                });
+    }
+
+    public void updateAnswersOfFeelings() {
+        mCloudDB.collection(APPOINTMENTS)
+                .document(mCurrentAppointment.getId())
+                .update("feelingsAnswersMap", mCurrentAppointment.getFeelingsAnswersMap())
+                .addOnCompleteListener(new OnCompleteListener<Void>() {
+                    @Override
+                    public void onComplete(@NonNull Task<Void> task) {
+                        if (task.isSuccessful()) {
+                            if (mRepositoryUpdateAnswersOfFeelingsListener != null) {
+                                mRepositoryUpdateAnswersOfFeelingsListener.onUpdateAnswersOfFeelingsSucceed(mCurrentAppointment);
+                            }
+                        } else {
+                            Log.e(TAG, "onComplete: ", task.getException());
+                            if (mRepositoryUpdateAnswersOfFeelingsListener != null) {
+                                mRepositoryUpdateAnswersOfFeelingsListener.onUpdateAnswersOfFeelingsFailed(Objects.
                                         requireNonNull(task.getException()).getMessage());
                             }
                         }
@@ -595,6 +677,29 @@ public class Repository {
                     .collection("ENGLISH_QUESTIONS")
                     .document(question.getId())
                     .set(question);
+        }
+    }
+
+    public void addFeelings() {
+        final List<Feeling> feelings = new ArrayList<>();
+
+        feelings.add(new Feeling("1", R.drawable.afraid, "Fear"));
+        feelings.add(new Feeling("2", R.drawable.sadness, "Sadness"));
+        feelings.add(new Feeling("3", R.drawable.anger, "Anger"));
+        feelings.add(new Feeling("4", R.drawable.anxiety, "Anxiety"));
+        feelings.add(new Feeling("5", R.drawable.depression, "Depression"));
+        feelings.add(new Feeling("6", R.drawable.disturbed, "Disturbed"));
+        feelings.add(new Feeling("7", R.drawable.embarrassment, "Embarrassment"));
+        feelings.add(new Feeling("8", R.drawable.confussion, "Confusion"));
+        feelings.add(new Feeling("9", R.drawable.aggressive, "Aggressive"));
+        feelings.add(new Feeling("10", R.drawable.tensed, "Tension"));
+
+        for (Feeling feeling : feelings) {
+            mCloudDB.collection(FEELINGS)
+                    .document("en")
+                    .collection("ENGLISH_FEELINGS")
+                    .document(feeling.getId())
+                    .set(feeling);
         }
     }
 }

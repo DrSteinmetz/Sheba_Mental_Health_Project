@@ -72,6 +72,10 @@ public class TherapistPhysicalStateViewModel extends ViewModel {
         return mPainPoints;
     }
 
+    public Appointment getCurrentAppointment() {
+        return mRepository.getCurrentAppointment();
+    }
+
 
 
 

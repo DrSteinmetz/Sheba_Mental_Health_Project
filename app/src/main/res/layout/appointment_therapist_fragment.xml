@@ -15,6 +15,7 @@
         android:paddingEnd="20dp">
 
         <RelativeLayout
+            android:layout_above="@+id/end_meeting_btn"
             android:id="@+id/start_meeting_relative"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -60,7 +61,7 @@
                     android:textSize="20sp"
                     android:text="Therapist:" />
                 <TextView
-                    android:id="@+id/last_therapist_name_tv"
+                    android:id="@+id/therapist_name_tv"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_margin="5dp"
@@ -159,7 +160,6 @@
             android:text="End Meeting"
             app:backgroundTint="#888888"
             app:cornerRadius="0dp"
-            android:layout_marginBottom="15dp"
             android:textAllCaps="false" />
 
     </RelativeLayout>

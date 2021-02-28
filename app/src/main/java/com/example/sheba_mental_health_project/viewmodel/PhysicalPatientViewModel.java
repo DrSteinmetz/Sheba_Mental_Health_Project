@@ -7,11 +7,13 @@ import androidx.lifecycle.ViewModel;
 import com.example.sheba_mental_health_project.model.Appointment;
 import com.example.sheba_mental_health_project.repository.Repository;
 
-public class AppointmentPatientViewModel extends ViewModel {
+
+
+public class PhysicalPatientViewModel extends ViewModel {
 
     private final Repository mRepository;
 
-    public AppointmentPatientViewModel(final Context context) {
+    public PhysicalPatientViewModel(Context context) {
         mRepository = Repository.getInstance(context);
     }
 

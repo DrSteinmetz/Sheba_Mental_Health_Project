@@ -82,7 +82,9 @@ public class PatientAppointmentsAdapter extends RecyclerView.Adapter<PatientAppo
             cellIv.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    listener.onGetInAppointmentClicked(getAdapterPosition(),v);
+                    if(listener!= null && mAppointments.get(getAdapterPosition()).getState() == AppointmentStateEnum.Ongoing){
+                        listener.onGetInAppointmentClicked(getAdapterPosition(),v);
+                    }
                 }
             });
         }

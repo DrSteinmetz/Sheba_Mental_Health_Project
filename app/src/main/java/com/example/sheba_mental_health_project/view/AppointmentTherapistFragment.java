@@ -12,6 +12,7 @@ import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import com.example.sheba_mental_health_project.R;
 import com.example.sheba_mental_health_project.model.ViewModelFactory;
@@ -53,6 +54,10 @@ public class AppointmentTherapistFragment extends Fragment {
 
         mViewModel = new ViewModelProvider(this,new ViewModelFactory(getContext(),
                 ViewModelEnum.AppointmentTherapist)).get(AppointmentTherapistViewModel.class);
+
+        getChildFragmentManager().beginTransaction()
+                .add(R.id.character_container, CharacterFragment.newInstance(mViewModel.getCurrentAppointment(), false))
+                .commit();
     }
 
     @Override
@@ -65,6 +70,12 @@ public class AppointmentTherapistFragment extends Fragment {
         final MaterialButton physicalBtn = rootView.findViewById(R.id.physical_btn);
         final MaterialButton inquiryBtn = rootView.findViewById(R.id.inquiry_btn);
         final MaterialButton endMeetingBtn = rootView.findViewById(R.id.end_meeting_btn);
+
+        final TextView patientNameTv = rootView.findViewById(R.id.patient_name_tv);
+        final TextView therapistNameTv = rootView.findViewById(R.id.therapist_name_tv);
+
+        patientNameTv.setText(mViewModel.getCurrentAppointment().getPatient().getFullName());
+        therapistNameTv.setText(mViewModel.getCurrentAppointment().getTherapist().getFullName());
 
         chatBtn.setOnClickListener(new View.OnClickListener() {
             @Override

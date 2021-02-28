@@ -76,7 +76,7 @@ public class TherapistAppointmentsAdapter extends RecyclerView.Adapter<Therapist
     @Override
     public AppointmentViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         final View view = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.therapist_appointment_cell_layout, null);
+                .inflate(R.layout.therapist_appointment_cell_layout, parent,false);
         return new AppointmentViewHolder(view);
     }
 

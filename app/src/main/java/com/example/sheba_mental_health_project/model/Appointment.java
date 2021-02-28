@@ -17,10 +17,11 @@ public class Appointment implements Serializable {
     private Date mAppointmentDate;
     private Therapist mTherapist;
     private Patient mPatient;
-    private MentalState mPatientMentalState;
+   // private MentalState mPatientMentalState;
 //    private PhysicalState mPatientPhysicalState;
     private Map<String, List<PainPoint>> mPainPointsOfBodyPartMap = new HashMap<>();
     private List<String> mAnswers = new ArrayList<>();
+    private Map<String, Integer> mFeelingsAnswersMap = new HashMap<>();
     private AppointmentStateEnum mState;
 
     public Appointment() {}
@@ -70,13 +71,13 @@ public class Appointment implements Serializable {
         this.mPatient = mPatient;
     }
 
-    public MentalState getPatientMentalState() {
+   /* public MentalState getPatientMentalState() {
         return mPatientMentalState;
     }
 
     public void setPatientMentalState(MentalState mPatientMentalState) {
         this.mPatientMentalState = mPatientMentalState;
-    }
+    }*/
 
     public Map<String, List<PainPoint>> getPainPointsOfBodyPartMap() {
         return mPainPointsOfBodyPartMap;
@@ -125,13 +126,21 @@ public class Appointment implements Serializable {
         }
     }*/
 
+    public Map<String, Integer> getFeelingsAnswersMap() {
+        return mFeelingsAnswersMap;
+    }
+
+    public void setFeelingsAnswersMap(Map<String, Integer> FeelingsAnswersMap) {
+        this.mFeelingsAnswersMap = FeelingsAnswersMap;
+    }
+
     @Override
     public String toString() {
         return "Appointment{" +
                 "mAppointmentDate=" + mAppointmentDate +
                 ", mTherapist=" + mTherapist +
                 ", mPatient=" + mPatient +
-                ", mPatientMentalState=" + mPatientMentalState +
+               // ", mPatientMentalState=" + mPatientMentalState +
                 ", mPainPointsOfBodyPartMap=" + mPainPointsOfBodyPartMap +
                 ", mState=" + mState.name() +
                 '}';

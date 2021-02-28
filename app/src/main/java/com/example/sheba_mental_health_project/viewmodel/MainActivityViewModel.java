@@ -23,6 +23,7 @@ public class MainActivityViewModel extends ViewModel {
     public MainActivityViewModel(final Context context) {
         mRepository = Repository.getInstance(context);
         mAuthRepository = AuthRepository.getInstance(context);
+
     }
 
 
@@ -41,4 +42,5 @@ public class MainActivityViewModel extends ViewModel {
     public void logout() {
         mAuthRepository.logOut();
     }
+
 }
