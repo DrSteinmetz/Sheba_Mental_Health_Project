@@ -38,12 +38,8 @@ public class TherapistPhysicalStateFragment extends Fragment {
     private RecyclerView mRecyclerView;
     private TherapistPhysicalStateAdapter mTherapistPhysicalStateAdapter;
 
-    public static TherapistPhysicalStateFragment newInstance(Appointment appointment) {
-        TherapistPhysicalStateFragment fragment = new TherapistPhysicalStateFragment();
-        Bundle args = new Bundle();
-        args.putSerializable("appointment", appointment);
-        fragment.setArguments(args);
-        return fragment;
+    public static TherapistPhysicalStateFragment newInstance() {
+        return new TherapistPhysicalStateFragment();
     }
 
     @Override
@@ -90,12 +86,7 @@ public class TherapistPhysicalStateFragment extends Fragment {
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         mRecyclerView.setHasFixedSize(true);
 
-        if (getArguments() != null) {
-            final Appointment appointment = (Appointment) getArguments()
-                    .getSerializable("appointment");
-            Log.d("current_get",appointment.toString());
-            mViewModel.getPainPoints(appointment);
-        }
+        mViewModel.getPainPoints(mViewModel.getCurrentAppointment());
 
 
         return rootView;

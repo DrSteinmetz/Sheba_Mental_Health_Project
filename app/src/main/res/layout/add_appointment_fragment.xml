@@ -3,6 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="@color/white"
     tools:context=".view.AddAppointmentFragment"
     android:padding="20dp"
@@ -15,43 +16,165 @@
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
         android:gravity="center"
-        android:text="Add Appointment"
-        android:textSize="30sp"
-        android:textStyle="bold"
+        android:layout_marginTop="20dp"
+        android:text="create Appointment"
+        android:textSize="25sp"
         android:textColor="@color/black"
         android:textAllCaps="false" />
 
-   <!-- <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/patient_email_et_layout"
+
+    <LinearLayout
+        android:layout_marginHorizontal="20dp"
+        android:layout_marginTop="30dp"
+        android:id="@+id/search_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/title_tv"
-        android:layout_marginTop="20dp"
-        android:hint="Email">-->
+        android:layout_below="@+id/title_tv"
+        android:orientation="horizontal">
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/patient_email_auto_layout"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="4"
+        app:boxStrokeColor="#888888"
+        app:boxStrokeWidth="1.2dp"
+        app:boxCornerRadiusBottomEnd="0dp"
+        app:boxCornerRadiusBottomStart="0dp"
+        app:boxCornerRadiusTopEnd="0dp"
+        app:boxCornerRadiusTopStart="0dp"
+        app:hintTextColor="#33cccc"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
         <com.google.android.material.textfield.MaterialAutoCompleteTextView
             android:id="@+id/patient_email_auto_tv"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:layout_below="@id/title_tv"
             android:layout_centerHorizontal="true"
-            android:hint="Email"
+            android:hint="Patient Email"
             android:textSize="20sp"
-            android:textColor="@color/black"
-            android:textAllCaps="false" />
-  <!--  </com.google.android.material.textfield.TextInputLayout>-->
+            android:textColor="@color/dark_gray"
+            android:textAllCaps="false"
+            android:padding="10dp" />
 
-    <com.google.android.material.button.MaterialButton
-        android:id="@+id/date_dialog_btn"
-        android:layout_width="wrap_content"
+    </com.google.android.material.textfield.TextInputLayout>
+
+        <Space
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="0.3"/>
+
+        <ImageButton
+            android:id="@+id/search_btn"
+            android:layout_marginTop="5dp"
+            android:layout_weight="1"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:src="@drawable/ic_baseline_search_24"
+            android:background="#33cccc"
+            />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/patient_name_layout"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_below="@+id/search_layout"
+        android:gravity="center">
+
+        <TextView
+            android:visibility="invisible"
+            android:id="@+id/patient_found_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Patient found:"
+            android:layout_marginTop="20dp"
+            android:textSize="17sp"
+            android:layout_centerHorizontal="true"/>
+
+        <TextView
+            android:visibility="invisible"
+            android:id="@+id/patient_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:textSize="20sp"
+            android:textColor="@color/black" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_marginHorizontal="20dp"
+        android:layout_marginTop="30dp"
+        android:id="@+id/date_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/patient_name_layout"
+        android:orientation="horizontal">
+
+
+            <com.google.android.material.textview.MaterialTextView
+                android:visibility="invisible"
+                android:id="@+id/date_dialog_btn"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:hint="Pick Date"
+                android:gravity="center"
+                android:layout_marginHorizontal="50dp"
+                android:textSize="20sp"
+                android:textColor="@color/dark_gray"
+                android:textAllCaps="false"
+                android:padding="10dp"
+                android:background="@drawable/text_view_border"/>
+
+
+
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_marginHorizontal="20dp"
+        android:layout_marginTop="30dp"
+        android:id="@+id/time_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/date_layout"
+        android:orientation="horizontal"
+        >
+
+
+            <com.google.android.material.textview.MaterialTextView
+                android:visibility="invisible"
+                android:id="@+id/time_dialog_btn"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginHorizontal="50dp"
+                android:hint="Pick Time"
+                android:gravity="center"
+                android:windowSoftInputMode="stateHidden|adjustResize"
+                android:textSize="20sp"
+                android:textColor="@color/dark_gray"
+                android:textAllCaps="false"
+                android:padding="10dp"
+                android:background="@drawable/text_view_border"
+                />
+
+
+
+
+    </LinearLayout>
+
+
+
+   <!-- <com.google.android.material.button.MaterialButton
+        android:id="@+id/date_dialog_btn"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="30dp"
-        android:layout_below="@id/patient_email_auto_tv"
+        android:layout_below="@id/search_layout"
         android:text="Pick Date"
-        android:textSize="30sp"
-        android:textStyle="bold"
-        android:textColor="@color/white"
-        android:textAllCaps="false" />
+        style="@style/blue_btn"
+        />
     <TextView
         android:id="@+id/date_tv"
         android:layout_width="wrap_content"
@@ -61,23 +184,18 @@
         android:layout_centerHorizontal="true"
         android:gravity="center"
         android:text="Appointment Date"
-        android:textSize="30sp"
-        android:textStyle="bold"
+        android:textSize="25sp"
         android:textColor="@color/black"
         android:textAllCaps="false" />
 
     <com.google.android.material.button.MaterialButton
         android:id="@+id/time_dialog_btn"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="30dp"
         android:layout_below="@id/date_tv"
         android:text="Pick Time"
-        android:textSize="30sp"
-        android:textStyle="bold"
-        android:textColor="@color/white"
-        android:textAllCaps="false" />
+        style="@style/blue_btn" />
+
     <TextView
         android:id="@+id/time_tv"
         android:layout_width="wrap_content"
@@ -87,22 +205,18 @@
         android:layout_centerHorizontal="true"
         android:gravity="center"
         android:text="Appointment Time"
-        android:textSize="30sp"
-        android:textStyle="bold"
+        android:textSize="25sp"
         android:textColor="@color/black"
-        android:textAllCaps="false" />
+        android:textAllCaps="false" />-->
 
     <com.google.android.material.button.MaterialButton
+        android:visibility="invisible"
         android:id="@+id/create_btn"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="30dp"
-        android:layout_below="@id/time_tv"
-        android:text="Create Appointment"
-        android:textSize="30sp"
-        android:textStyle="bold"
-        android:textColor="@color/white"
-        android:textAllCaps="false" />
+        android:layout_below="@id/time_layout"
+        android:text="Invite Patient"
+        style="@style/blue_btn" />
 
 </RelativeLayout>

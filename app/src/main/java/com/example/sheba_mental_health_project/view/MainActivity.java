@@ -8,6 +8,7 @@ import androidx.coordinatorlayout.widget.CoordinatorLayout;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
 import androidx.lifecycle.ViewModelProvider;
 
 import android.annotation.SuppressLint;
@@ -19,6 +20,8 @@ import android.preference.PreferenceManager;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
 
 import com.example.sheba_mental_health_project.R;
 import com.example.sheba_mental_health_project.model.ViewModelFactory;
@@ -38,7 +41,11 @@ public class MainActivity extends AppCompatActivity
         MainPatientFragment.MainPatientInterface,
         CharacterFragment.CharacterFragmentInterface,
         StartMeetingFragment.StartMeetingTherapistInterface,
-        AppointmentTherapistFragment.AppointmentTherapistInterface{
+        AppointmentTherapistFragment.AppointmentTherapistInterface,
+        PhysicalPatientFragment.PhysicalPatientFragmentInterface,
+        AppointmentPatientFragment.AppointmentPatientInterface,
+        MentalPatientFragment.MentalPatientFragmentInterface
+       {
 
     private MainActivityViewModel mViewModel;
 
@@ -64,6 +71,8 @@ public class MainActivity extends AppCompatActivity
     private final String PRE_MEETING_CHARACTER_FRAG = "Pre_Meeting_Character_Frag";
     private final String MAIN_PATIENT_FRAG = "Main_Patient_Fragment";
     private final String PATIENT_APPOINTMENT_FRAG = "Patient_Appointment_Fragment";
+    private final String PHYSICAL_PATIENT_FRAG = "Physical_Patient_Fragment";
+    private final String MENTAL_PATIENT_FRAG = "Mental_Patient_Fragment";
 
     private final String CHAT_FRAG = "Chat_Fragment";
 
@@ -104,7 +113,7 @@ public class MainActivity extends AppCompatActivity
 
         ActionBar actionBar = getSupportActionBar();
         actionBar.setDisplayHomeAsUpEnabled(true);
-        actionBar.setHomeAsUpIndicator(R.drawable.ic_round_menu_white_24);
+        actionBar.setHomeAsUpIndicator(R.drawable.ic_round_menu_24);
 
         mDrawerLayout.addDrawerListener(this);
         final SharedPreferences sharedPreferences = PreferenceManager
@@ -291,7 +300,7 @@ public class MainActivity extends AppCompatActivity
     @Override
     public void onContinueToCategoryQuestions() {
         getSupportFragmentManager().beginTransaction()
-                .add(R.id.container, PreMeetingCharacterFragment.newInstance(mViewModel.getCurrentAppointment()), PRE_MEETING_CHARACTER_FRAG)
+                .add(R.id.container, PreMeetingCharacterFragment.newInstance(), PRE_MEETING_CHARACTER_FRAG)
                 .addToBackStack(null)
                 .commit();
     }
@@ -366,11 +375,43 @@ public class MainActivity extends AppCompatActivity
     public void onPhysicalStateClicked() {
         Log.d("current",mViewModel.getCurrentAppointment().toString());
         getSupportFragmentManager().beginTransaction()
-                .add(R.id.container, TherapistPhysicalStateFragment.newInstance(mViewModel.getCurrentAppointment()), THERAPIST_PHYSICAL_STATE_FRAG)
+                .add(R.id.container, TherapistPhysicalStateFragment.newInstance(), THERAPIST_PHYSICAL_STATE_FRAG)
                 .addToBackStack(null)
                 .commit();
 
 
+    }
+
+    /**<------ PhysicalPatient ------>*/
+
+    @Override
+    public void onHomeBtnClicked() {
+        onBackPressed();
+    }
+
+    /**<------ MentalPatient ------>*/
+
+    @Override
+    public void onSaveFeelings() {
+        onBackPressed();
+    }
+
+    /**<------ AppointmentPatient ------>*/
+
+    @Override
+    public void onPhysicalClicked() {
+        getSupportFragmentManager().beginTransaction()
+                .add(R.id.container, PhysicalPatientFragment.newInstance(), PHYSICAL_PATIENT_FRAG)
+                .addToBackStack(null)
+                .commit();
+    }
+
+    @Override
+    public void onMentalClicked() {
+        getSupportFragmentManager().beginTransaction()
+                .add(R.id.container, MentalPatientFragment.newInstance(), MENTAL_PATIENT_FRAG)
+                .addToBackStack(null)
+                .commit();
     }
 
     @Override

@@ -2,12 +2,15 @@ package com.example.sheba_mental_health_project.view;
 
 import android.app.TimePickerDialog;
 import android.graphics.Color;
+import android.inputmethodservice.Keyboard;
 import android.os.Bundle;
+import android.text.InputType;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.TimePicker;
 
@@ -28,7 +31,10 @@ import com.google.android.material.datepicker.CalendarConstraints;
 import com.google.android.material.datepicker.DateValidatorPointForward;
 import com.google.android.material.datepicker.MaterialDatePicker;
 import com.google.android.material.datepicker.MaterialPickerOnPositiveButtonClickListener;
+import com.google.android.material.datepicker.MaterialTextInputPicker;
 import com.google.android.material.textfield.MaterialAutoCompleteTextView;
+import com.google.android.material.textfield.TextInputEditText;
+import com.google.android.material.textview.MaterialTextView;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -43,8 +49,13 @@ public class AddAppointmentFragment extends Fragment {
     private ArrayAdapter<String> mPatientsEmailsAdapter;
 
     private MaterialAutoCompleteTextView mPatientEmailAutoTV;
-    private TextView mDateTv;
-    private TextView mTimeTv;
+    private MaterialTextView mDateAutoTV;
+    private MaterialTextView mTimeAutoTV;
+    private TextView patientFoundTv;
+    private TextView patientNameTv;
+    private ImageButton searchBtn;
+   // private TextView mDateTv;
+   // private TextView mTimeTv;
 
     private final String DATE_PICKER = "date_picker";
 
@@ -83,8 +94,8 @@ public class AddAppointmentFragment extends Fragment {
             @Override
             public void onChanged(String appointmentId) {
                 mPatientEmailAutoTV.setText("");
-                mDateTv.setVisibility(View.GONE);
-                mTimeTv.setVisibility(View.GONE);
+                //mDateTv.setVisibility(View.GONE);
+                //mTimeTv.setVisibility(View.GONE);
                 mViewModel.resetDateFields();
             }
         };
@@ -109,20 +120,53 @@ public class AddAppointmentFragment extends Fragment {
         final View rootView = inflater.inflate(R.layout.add_appointment_fragment, container, false);
 
         mPatientEmailAutoTV = rootView.findViewById(R.id.patient_email_auto_tv);
-        final MaterialButton dateBtn = rootView.findViewById(R.id.date_dialog_btn);
-        mDateTv = rootView.findViewById(R.id.date_tv);
-        final MaterialButton timeBtn = rootView.findViewById(R.id.time_dialog_btn);
-        mTimeTv = rootView.findViewById(R.id.time_tv);
+       // final MaterialButton dateBtn = rootView.findViewById(R.id.date_dialog_btn);
+       // mDateTv = rootView.findViewById(R.id.date_tv);
+       // final MaterialButton timeBtn = rootView.findViewById(R.id.time_dialog_btn);
+       // mTimeTv = rootView.findViewById(R.id.time_tv);
+        mDateAutoTV = rootView.findViewById(R.id.date_dialog_btn);
+        mTimeAutoTV = rootView.findViewById(R.id.time_dialog_btn);
+        patientFoundTv = rootView.findViewById(R.id.patient_found_title);
+        patientNameTv = rootView.findViewById(R.id.patient_name);
+        searchBtn = rootView.findViewById(R.id.search_btn);
         final MaterialButton createAppointmentBtn = rootView.findViewById(R.id.create_btn);
 
         mPatientEmailAutoTV.setThreshold(1);
         mPatientEmailAutoTV.setTextColor(Color.BLACK);
 
-        mDateTv.setVisibility(View.GONE);
-        mTimeTv.setVisibility(View.GONE);
+        //mDateTv.setVisibility(View.GONE);
+       // mTimeTv.setVisibility(View.GONE);
 
         // TODO: Add loading animation.
         mViewModel.getAllPatients();
+
+        searchBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                final String patientEmail = mPatientEmailAutoTV.getText().toString();
+                Patient patient = mViewModel.getPatientByEmail(patientEmail);
+                patientFoundTv.setVisibility(View.VISIBLE);
+                if (patient == null){
+                    patientFoundTv.setText("Patient Not Found");
+                    patientNameTv.setVisibility(View.INVISIBLE);
+                    mDateAutoTV.setVisibility(View.INVISIBLE);
+                    mTimeAutoTV.setVisibility(View.INVISIBLE);
+                    createAppointmentBtn.setVisibility(View.INVISIBLE);
+
+                }
+                else{
+                    patientNameTv.setVisibility(View.VISIBLE);
+                    patientFoundTv.setText("Patient Found:");
+                    patientNameTv.setText(patient.getFullName());
+                    mDateAutoTV.setVisibility(View.VISIBLE);
+                    mTimeAutoTV.setVisibility(View.VISIBLE);
+                    createAppointmentBtn.setVisibility(View.VISIBLE);
+                }
+
+
+            }
+        });
+
 
         final SimpleDateFormat ddMMyyyy = new SimpleDateFormat("dd/MM/yyyy", Locale.getDefault());
         final SimpleDateFormat HHmm = new SimpleDateFormat("HH:mm", Locale.getDefault());
@@ -137,7 +181,7 @@ public class AddAppointmentFragment extends Fragment {
         Log.d(TAG, "zxc onCreateView: " + today00);
         calendar.setTime(today);
 
-        dateBtn.setOnClickListener(new View.OnClickListener() {
+        mDateAutoTV.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 final CalendarConstraints.Builder constraintBuilder = new CalendarConstraints.Builder();
@@ -159,15 +203,17 @@ public class AddAppointmentFragment extends Fragment {
                         calendar.setTimeInMillis(selectedTime);
                         calendar.set(Calendar.HOUR_OF_DAY, hourOfDay);
                         calendar.set(Calendar.MINUTE, minute);
-                        mDateTv.setVisibility(View.VISIBLE);
-                        mDateTv.setText(ddMMyyyy.format(calendar.getTime()));
+                        mDateAutoTV.setText(ddMMyyyy.format(calendar.getTime()));
+                        //mDateTv.setVisibility(View.VISIBLE);
+                        //mDateTv.setText(ddMMyyyy.format(calendar.getTime()));
+
                     }
                 });
             }
         });
 
         // TODO: Fix the TimePicker
-        timeBtn.setOnClickListener(new View.OnClickListener() {
+        mTimeAutoTV.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
@@ -179,8 +225,9 @@ public class AddAppointmentFragment extends Fragment {
                                 mViewModel.setMinutes(minute);
                                 calendar.set(Calendar.HOUR_OF_DAY, hourOfDay);
                                 calendar.set(Calendar.MINUTE, minute);
-                                mTimeTv.setVisibility(View.VISIBLE);
-                                mTimeTv.setText(HHmm.format(calendar.getTime()));
+                                //mTimeTv.setVisibility(View.VISIBLE);
+                                //mTimeTv.setText(HHmm.format(calendar.getTime()));
+                                mTimeAutoTV.setText(HHmm.format(calendar.getTime()));
                             }
                         }, calendar.get(Calendar.HOUR_OF_DAY), calendar.get(Calendar.MINUTE),
                         true);
@@ -208,6 +255,13 @@ public class AddAppointmentFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 final String patientEmail = mPatientEmailAutoTV.getText().toString();
+                patientFoundTv.setVisibility(View.INVISIBLE);
+                patientNameTv.setVisibility(View.INVISIBLE);
+                mDateAutoTV.setVisibility(View.INVISIBLE);
+                mTimeAutoTV.setVisibility(View.INVISIBLE);
+                mDateAutoTV.setText("");
+                mTimeAutoTV.setText("");
+                createAppointmentBtn.setVisibility(View.INVISIBLE);
 
                 if (validateFields(patientEmail)) {
                     mViewModel.addAppointment(patientEmail);

@@ -3,10 +3,62 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:animateLayoutChanges="true"
-    tools:context=".view.MainTherapistFragment">
+    tools:context=".view.MainTherapistFragment"
+    android:padding="20dp">
+
+    <RelativeLayout
+        android:id="@+id/title_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center">
+
+        <TextView
+            android:id="@+id/helloTv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Hello,"
+            android:textColor="@color/dark_gray"
+            android:textSize="20sp"
+            android:layout_marginEnd="5dp"
+            />
+
+        <TextView
+            android:id="@+id/therapist_name_tv"
+            android:layout_toEndOf="@+id/helloTv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="DR Avi Choen"
+            android:textColor="@color/dark_gray"
+            android:textSize="20sp"
+            />
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_marginTop="20dp"
+        android:id="@+id/sub_title_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/title_layout">
+
+        <TextView
+            android:layout_marginStart="20dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Upcoming Meetings:"
+            android:textColor="@color/black"
+            android:textSize="18sp"
+            />
+    </RelativeLayout>
+
+
 
     <androidx.recyclerview.widget.RecyclerView
+        android:layout_marginTop="5dp"
+        android:layout_below="@+id/sub_title_layout"
         android:id="@+id/recycler_view"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
@@ -18,7 +70,7 @@
         android:layout_alignParentBottom="true"
         android:layout_alignParentEnd="true"
         android:layout_margin="20dp"
-        android:tint="@color/white"
-        android:src="@drawable/ic_round_add_white_24" />
+        android:src="@drawable/ic_baseline_add_24"
+        />
 
 </RelativeLayout>
