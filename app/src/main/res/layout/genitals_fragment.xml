@@ -31,7 +31,7 @@
             android:layout_alignTop="@id/genitals_v"
             android:layout_alignBottom="@id/genitals_v"
             android:src="@drawable/ic_red_pain_point"
-            android:visibility="gone"
+            android:visibility="invisible"
             android:scaleType="fitCenter" />
         <View
             android:id="@+id/genitals_v"

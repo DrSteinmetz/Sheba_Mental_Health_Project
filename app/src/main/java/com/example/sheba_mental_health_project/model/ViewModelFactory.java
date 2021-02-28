@@ -7,7 +7,7 @@ import androidx.lifecycle.ViewModel;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.example.sheba_mental_health_project.model.enums.ViewModelEnum;
-import com.example.sheba_mental_health_project.viewmodel.AppointmentNotYetStartedViewModel;
+import com.example.sheba_mental_health_project.viewmodel.AppointmentLoungeViewModel;
 import com.example.sheba_mental_health_project.viewmodel.AppointmentPatientViewModel;
 import com.example.sheba_mental_health_project.viewmodel.AppointmentTherapistViewModel;
 import com.example.sheba_mental_health_project.viewmodel.ChatViewModel;
@@ -85,9 +85,9 @@ public class ViewModelFactory implements ViewModelProvider.Factory {
                     objectToReturn = (T) new PreMeetingCharacterViewModel(mContext);
                 }
                 break;
-            case AppointmentNotYetStarted:
-                if (modelClass.isAssignableFrom(AppointmentNotYetStartedViewModel.class)) {
-                    objectToReturn = (T) new AppointmentNotYetStartedViewModel(mContext);
+            case AppointmentLounge:
+                if (modelClass.isAssignableFrom(AppointmentLoungeViewModel.class)) {
+                    objectToReturn = (T) new AppointmentLoungeViewModel(mContext);
                 }
                 break;
             case AppointmentPatient:

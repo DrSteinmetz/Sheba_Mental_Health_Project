@@ -239,7 +239,7 @@ public class CharacterFragment extends Fragment {
         mLocationToIvMap.put(PainLocationEnum.LeftFingers, rootView.findViewById(R.id.right_fingers_iv));
 
         /** Genitals */
-        mLocationToIvMap.put(PainLocationEnum.Anus, rootView.findViewById(R.id.anus_iv));
+        mLocationToIvMap.put(PainLocationEnum.PrivatePart, rootView.findViewById(R.id.private_part_iv));
 
         /** Legs */
         mLocationToIvMap.put(PainLocationEnum.RightThigh, rootView.findViewById(R.id.left_thigh_iv));

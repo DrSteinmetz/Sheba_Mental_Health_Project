@@ -12,7 +12,6 @@ import androidx.fragment.app.FragmentManager;
 import androidx.lifecycle.ViewModelProvider;
 
 import android.annotation.SuppressLint;
-import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -20,8 +19,6 @@ import android.preference.PreferenceManager;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.Window;
-import android.view.WindowManager;
 
 import com.example.sheba_mental_health_project.R;
 import com.example.sheba_mental_health_project.model.ViewModelFactory;
@@ -44,8 +41,10 @@ public class MainActivity extends AppCompatActivity
         AppointmentTherapistFragment.AppointmentTherapistInterface,
         PhysicalPatientFragment.PhysicalPatientFragmentInterface,
         AppointmentPatientFragment.AppointmentPatientInterface,
-        MentalPatientFragment.MentalPatientFragmentInterface
-       {
+        MentalPatientFragment.MentalPatientFragmentInterface,
+        PreMeetingCharacterFragment.PreMeetingCharacterInterface,
+        AppointmentLoungeFragment.AppointmentLoungeFragmentInterface
+{
 
     private MainActivityViewModel mViewModel;
 
@@ -73,6 +72,7 @@ public class MainActivity extends AppCompatActivity
     private final String PATIENT_APPOINTMENT_FRAG = "Patient_Appointment_Fragment";
     private final String PHYSICAL_PATIENT_FRAG = "Physical_Patient_Fragment";
     private final String MENTAL_PATIENT_FRAG = "Mental_Patient_Fragment";
+    private final String APPOINTMENT_LOUNGE_FRAG = "Appointment_Lounge_Fragment";
 
     private final String CHAT_FRAG = "Chat_Fragment";
 
@@ -204,13 +204,11 @@ public class MainActivity extends AppCompatActivity
                         .replace(R.id.container, AddPatientFragment.newInstance(), ADD_PATIENT_FRAG)
                         .addToBackStack(null)
                         .commit();
+
                 mDrawerLayout.closeDrawers();
                 break;
             case R.id.chat_action:
-                getSupportFragmentManager().beginTransaction()
-                        .add(R.id.container, ChatFragment.newInstance(), CHAT_FRAG)
-                        .addToBackStack(null)
-                        .commit();
+                onChatClicked();
                 mDrawerLayout.closeDrawers();
                 break;
             case R.id.logout_action:
@@ -245,7 +243,7 @@ public class MainActivity extends AppCompatActivity
     }
 
     @Override
-    public void onPatientAppointmentClicked() {
+    public void onMoveToPreQuestions() {
         getSupportFragmentManager().beginTransaction()
                 //TODO: add enter and exit animations
                 .replace(R.id.container, PreQuestionsFragment.newInstance(), PRE_QUESTIONS_FRAG)
@@ -254,11 +252,17 @@ public class MainActivity extends AppCompatActivity
     }
 
     @Override
-    public void onPatientEnterAppointmentClicked() {
+    public void onEnterAppointment() {
         getSupportFragmentManager().beginTransaction()
-                .replace(R.id.container, AppointmentPatientFragment.newInstance(mViewModel.getCurrentAppointment()), PATIENT_APPOINTMENT_FRAG)
+                .replace(R.id.container, AppointmentPatientFragment
+                        .newInstance(mViewModel.getCurrentAppointment()), PATIENT_APPOINTMENT_FRAG)
                 .addToBackStack(null)
                 .commit();
+    }
+
+    @Override
+    public void onMoveToLounge() {
+        onMoveToAppointmentLounge();
     }
 
     @Override
@@ -311,6 +315,34 @@ public class MainActivity extends AppCompatActivity
                 .add(R.id.container, AppointmentTherapistFragment.newInstance(), APPOINTMENT_THERAPIST_FRAG)
                 .addToBackStack(null)
                 .commit();
+    }
+
+    @Override
+    public void onMoveToAppointmentPatient() {
+        onEnterAppointment();
+    }
+
+    @Override
+    public void onMoveToAppointmentLounge() {
+        getSupportFragmentManager().beginTransaction()
+                .replace(R.id.container, AppointmentLoungeFragment.newInstance(), APPOINTMENT_LOUNGE_FRAG)
+                .addToBackStack(null)
+                .commit();
+    }
+
+    @Override
+    public void onBackToAppointmentsBtnClicked() {
+        getSupportFragmentManager().popBackStack(null,
+                FragmentManager.POP_BACK_STACK_INCLUSIVE);
+        getSupportFragmentManager().beginTransaction()
+                .replace(R.id.container, MainPatientFragment.newInstance(), MAIN_PATIENT_FRAG)
+                .commit();
+    }
+
+    @Override
+    public void onEditAnswersBtnClicked() {
+        onBackToAppointmentsBtnClicked();
+        onMoveToPreQuestions();
     }
 
     /**<------ Character ------>*/

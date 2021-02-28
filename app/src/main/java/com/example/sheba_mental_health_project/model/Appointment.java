@@ -23,6 +23,7 @@ public class Appointment implements Serializable {
     private List<String> mAnswers = new ArrayList<>();
     private Map<String, Integer> mFeelingsAnswersMap = new HashMap<>();
     private AppointmentStateEnum mState;
+    private boolean mIsFinishedPreQuestions = false;
 
     public Appointment() {}
 
@@ -132,6 +133,14 @@ public class Appointment implements Serializable {
 
     public void setFeelingsAnswersMap(Map<String, Integer> FeelingsAnswersMap) {
         this.mFeelingsAnswersMap = FeelingsAnswersMap;
+    }
+
+    public boolean getIsFinishedPreQuestions() {
+        return mIsFinishedPreQuestions;
+    }
+
+    public void setIsFinishedPreQuestions(boolean isFinishedPreQuestions) {
+        this.mIsFinishedPreQuestions = isFinishedPreQuestions;
     }
 
     @Override

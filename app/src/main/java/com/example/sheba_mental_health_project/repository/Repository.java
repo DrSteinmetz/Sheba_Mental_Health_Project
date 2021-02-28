@@ -220,6 +220,19 @@ public class Repository {
         this.mRepositoryUpdateStateOfAppointmentListener = repositoryUpdateStateOfAppointmentInterface;
     }
 
+    /*<------ Update Finished Pre Questions ------>*/
+    public interface RepositoryUpdateFinishedPreQuestionsInterface {
+        void onUpdateFinishedPreQuestionsSucceed(boolean isFinishedPreQuestions);
+
+        void onUpdateFinishedPreQuestionsFailed(String error);
+    }
+
+    private RepositoryUpdateFinishedPreQuestionsInterface mRepositoryUpdateFinishedPreQuestionsListener;
+
+    public void setUpdateFinishedPreQuestionsInterface(RepositoryUpdateFinishedPreQuestionsInterface repositoryUpdateFinishedPreQuestionsInterface){
+        this.mRepositoryUpdateFinishedPreQuestionsListener = repositoryUpdateFinishedPreQuestionsInterface;
+    }
+
     /*<------ Upload Chat Message ------>*/
     public interface RepositoryUploadChatMessageInterface {
         void onUploadChatMessageFailed(String error);
@@ -570,8 +583,34 @@ public class Repository {
                         } else {
                             Log.e(TAG, "onComplete: ", task.getException());
                             if (mRepositoryUpdateAnswersOfFeelingsListener != null) {
-                                mRepositoryUpdateAnswersOfFeelingsListener.onUpdateAnswersOfFeelingsFailed(Objects.
+                                mRepositoryUpdateAnswersOfFeelingsListener
+                                        .onUpdateAnswersOfFeelingsFailed(Objects.
                                         requireNonNull(task.getException()).getMessage());
+                            }
+                        }
+                    }
+                });
+    }
+
+    public void updateFinishedPreQuestions() {
+        mCloudDB.collection(APPOINTMENTS)
+                .document(mCurrentAppointment.getId())
+                .update("isFinishedPreQuestions", true)
+                .addOnCompleteListener(new OnCompleteListener<Void>() {
+                    @Override
+                    public void onComplete(@NonNull Task<Void> task) {
+                        if (task.isSuccessful()) {
+                            mCurrentAppointment.setIsFinishedPreQuestions(true);
+                            if (mRepositoryUpdateFinishedPreQuestionsListener != null) {
+                                mRepositoryUpdateFinishedPreQuestionsListener
+                                        .onUpdateFinishedPreQuestionsSucceed(true);
+                            }
+                        } else {
+                            Log.e(TAG, "onComplete: ", task.getException());
+                            if (mRepositoryUpdateFinishedPreQuestionsListener != null) {
+                                mRepositoryUpdateFinishedPreQuestionsListener
+                                        .onUpdateFinishedPreQuestionsFailed(task
+                                                .getException().getMessage());
                             }
                         }
                     }
@@ -683,7 +722,7 @@ public class Repository {
     public void addFeelings() {
         final List<Feeling> feelings = new ArrayList<>();
 
-        feelings.add(new Feeling("1", R.drawable.afraid, "Fear"));
+        feelings.add(new Feeling("1", R.drawable.fear, "Fear"));
         feelings.add(new Feeling("2", R.drawable.sadness, "Sadness"));
         feelings.add(new Feeling("3", R.drawable.anger, "Anger"));
         feelings.add(new Feeling("4", R.drawable.anxiety, "Anxiety"));
@@ -692,7 +731,7 @@ public class Repository {
         feelings.add(new Feeling("7", R.drawable.embarrassment, "Embarrassment"));
         feelings.add(new Feeling("8", R.drawable.confussion, "Confusion"));
         feelings.add(new Feeling("9", R.drawable.aggressive, "Aggressive"));
-        feelings.add(new Feeling("10", R.drawable.tensed, "Tension"));
+        feelings.add(new Feeling("10", R.drawable.tension, "Tension"));
 
         for (Feeling feeling : feelings) {
             mCloudDB.collection(FEELINGS)

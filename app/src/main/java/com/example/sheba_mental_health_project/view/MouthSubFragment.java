@@ -75,8 +75,6 @@ public class MouthSubFragment extends Fragment {
 
                     break;
             }
-
-
         }
     };
 
@@ -116,7 +114,6 @@ public class MouthSubFragment extends Fragment {
     };
 
 
-
     public interface MouthSubFragmentInterface {
         void onContinueToStrengthBtnClicked(PainLocationEnum painLocationEnum, EnumMap<PainLocationEnum, PainPoint> mPainPointsMouthMap);
         void onSelectedPainPointColor(int color);
@@ -145,7 +142,6 @@ public class MouthSubFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
         final View rootView = inflater.inflate(R.layout.mouth_sub_fragment, container, false);
-
 
         mouthRg1 = rootView.findViewById(R.id.mouth_Rg1);
         mouthRg2 = rootView.findViewById(R.id.mouth_Rg2);
@@ -227,5 +223,4 @@ public class MouthSubFragment extends Fragment {
         DrawableCompat.setTint(wrappedDrawable,color);
         return  wrappedDrawable;
     }
-
 }

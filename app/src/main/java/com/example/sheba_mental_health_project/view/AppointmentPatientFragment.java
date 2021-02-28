@@ -17,9 +17,7 @@ import android.widget.TextView;
 import com.example.sheba_mental_health_project.R;
 import com.example.sheba_mental_health_project.model.Appointment;
 import com.example.sheba_mental_health_project.model.ViewModelFactory;
-import com.example.sheba_mental_health_project.model.enums.AppointmentStateEnum;
 import com.example.sheba_mental_health_project.model.enums.ViewModelEnum;
-import com.example.sheba_mental_health_project.viewmodel.AppointmentNotYetStartedViewModel;
 import com.example.sheba_mental_health_project.viewmodel.AppointmentPatientViewModel;
 import com.google.android.material.button.MaterialButton;
 
@@ -43,6 +41,7 @@ public class AppointmentPatientFragment extends Fragment {
     public interface AppointmentPatientInterface {
         void onPhysicalClicked();
         void onMentalClicked();
+        void onChatClicked();
     }
 
     private AppointmentPatientFragment.AppointmentPatientInterface listener;
@@ -82,6 +81,7 @@ public class AppointmentPatientFragment extends Fragment {
 
         final TextView dateTv = rootView.findViewById(R.id.date_tv);
         final MaterialButton physicalMentalBtn = rootView.findViewById(R.id.feeling_btn);
+        final MaterialButton chatBtn = rootView.findViewById(R.id.chat_btn);
 
         final String date = ddMMYYYY.format(mViewModel.getCurrentAppointment().getAppointmentDate());
         dateTv.setText(date);
@@ -105,8 +105,15 @@ public class AppointmentPatientFragment extends Fragment {
             }
         });
 
+        chatBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (listener != null) {
+                    listener.onChatClicked();
+                }
+            }
+        });
+
         return rootView;
     }
-
-
 }

@@ -20,7 +20,7 @@ public enum ViewModelEnum {
     AddPatient,
     MainPatient,
     PreMeetingCharacter,
-    AppointmentNotYetStarted,
+    AppointmentLounge,
     AppointmentPatient,
     MentalPatient,
     PhysicalPatient,

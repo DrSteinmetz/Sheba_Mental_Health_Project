@@ -38,7 +38,7 @@
                 android:textColor="@color/black"
                 android:layout_margin="5dp"
                 android:textSize="17sp"
-                android:text="Press on character"
+                android:text="Press on Character"
                 android:layout_below="@+id/title_tv"/>
 
 
