@@ -1,0 +1,145 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    app:cardUseCompatPadding="true"
+    app:cardElevation="10dp"
+    app:cardCornerRadius="10dp"
+    app:cardPreventCornerOverlap="false"
+    android:id="@+id/card_layout">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="20dp"
+        >
+
+        <TextView
+            android:id="@+id/pain_location_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="20sp"
+            android:textColor="@color/black"
+            android:textStyle="bold"
+            android:textAllCaps="false" />
+
+        <TextView
+            android:id="@+id/pain_strength_title_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/pain_location_tv"
+            android:text="Pain strength:"
+            android:textSize="17sp"
+            android:textColor="@color/black"
+            android:textAllCaps="false"
+            android:layout_marginTop="10dp"/>
+
+        <com.rtugeek.android.colorseekbar.ColorSeekBar
+            android:id="@+id/pain_strength_sb"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/pain_strength_title_tv"
+            app:barHeight="7dp"
+            app:maxPosition="10"
+            app:colorSeeds="@array/color_seek_bar"
+            />
+
+
+
+        <TextView
+            android:id="@+id/pain_type_title_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/pain_strength_sb"
+            android:text="Pain Type:"
+            android:textSize="17sp"
+            android:textColor="@color/black"
+            android:textAllCaps="false"
+            android:layout_marginTop="5dp"/>
+
+        <TextView
+            android:id="@+id/pain_type_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toEndOf="@+id/pain_type_title_tv"
+            android:layout_below="@+id/pain_strength_sb"
+            android:textSize="17sp"
+            android:textColor="#555555"
+            android:textAllCaps="false"
+            android:layout_marginTop="5dp"
+            android:layout_marginStart="5dp"/>
+
+        <TextView
+            android:id="@+id/other_feelings_title_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/pain_type_title_tv"
+            android:text="Other feelings:"
+            android:textSize="17sp"
+            android:textColor="@color/black"
+            android:textAllCaps="false"
+            android:layout_marginTop="5dp"/>
+
+        <TextView
+            android:id="@+id/other_feelings_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toEndOf="@+id/other_feelings_title_tv"
+            android:layout_below="@+id/pain_type_title_tv"
+            android:textSize="17sp"
+            android:textColor="#555555"
+            android:textAllCaps="false"
+            android:layout_marginStart="5dp"
+            android:layout_marginTop="5dp"/>
+
+        <TextView
+            android:id="@+id/feeling_frequency_title_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/other_feelings_title_tv"
+            android:text="Feeling frequency:"
+            android:textSize="17sp"
+            android:textColor="@color/black"
+            android:textAllCaps="false"
+            android:layout_marginTop="5dp"/>
+
+        <TextView
+            android:id="@+id/feeling_frequency_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toEndOf="@+id/feeling_frequency_title_tv"
+            android:layout_below="@+id/other_feelings_title_tv"
+            android:textSize="17sp"
+            android:textColor="#555555"
+            android:textAllCaps="false"
+            android:layout_marginStart="5dp"
+            android:layout_marginTop="5dp"/>
+
+        <TextView
+            android:id="@+id/description_title_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/feeling_frequency_title_tv"
+            android:text="Description:"
+            android:textSize="17sp"
+            android:textColor="@color/black"
+            android:textAllCaps="false"
+            android:layout_marginTop="5dp"/>
+
+        <TextView
+            android:id="@+id/description_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/description_title_tv"
+            android:textSize="17sp"
+            android:textColor="#555555"
+            android:textAllCaps="false"
+            android:layout_marginTop="5dp"
+            />
+
+
+
+    </RelativeLayout>
+
+</androidx.cardview.widget.CardView>

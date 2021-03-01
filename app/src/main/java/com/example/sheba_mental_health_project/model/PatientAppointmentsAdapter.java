@@ -1,14 +1,17 @@
 package com.example.sheba_mental_health_project.model;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
+import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.sheba_mental_health_project.R;
@@ -38,7 +41,7 @@ public class PatientAppointmentsAdapter extends RecyclerView.Adapter<PatientAppo
 
     public interface AppointmentListener {
         void onAppointmentClicked(int position, View view);
-        void onGetInAppointmentClicked(int position, View view);
+//        void onGetInAppointmentClicked(int position, View view);
     }
 
     private AppointmentListener listener;
@@ -53,7 +56,8 @@ public class PatientAppointmentsAdapter extends RecyclerView.Adapter<PatientAppo
         private final TextView nameTv;
         private final TextView dateTv;
         private final TextView timeTv;
-        private final MaterialButton getInBtn;
+        private final ImageView cellIv;
+        private final TextView cellStatusIv;
 
         public AppointmentViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -62,7 +66,9 @@ public class PatientAppointmentsAdapter extends RecyclerView.Adapter<PatientAppo
             nameTv = itemView.findViewById(R.id.patient_name_tv);
             dateTv = itemView.findViewById(R.id.date_tv);
             timeTv = itemView.findViewById(R.id.time_tv);
-            getInBtn = itemView.findViewById(R.id.getin_btn);
+            cellIv = itemView.findViewById(R.id.patient_cell_image);
+            cellStatusIv = itemView.findViewById(R.id.patient_cell_status);
+
 
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -73,12 +79,14 @@ public class PatientAppointmentsAdapter extends RecyclerView.Adapter<PatientAppo
                 }
             });
 
-            getInBtn.setOnClickListener(new View.OnClickListener() {
+            /*cellIv.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    listener.onGetInAppointmentClicked(getAdapterPosition(),v);
+                    if (listener != null && mAppointments.get(getAdapterPosition()).getState() == AppointmentStateEnum.Ongoing) {
+                        listener.onGetInAppointmentClicked(getAdapterPosition(), v);
+                    }
                 }
-            });
+            });*/
         }
     }
 
@@ -86,7 +94,7 @@ public class PatientAppointmentsAdapter extends RecyclerView.Adapter<PatientAppo
     @Override
     public AppointmentViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         final View view = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.patient_appointment_cell_layout, null);
+                .inflate(R.layout.patient_appointment_cell_layout, parent,false);
         return new AppointmentViewHolder(view);
     }
 
@@ -105,9 +113,13 @@ public class PatientAppointmentsAdapter extends RecyclerView.Adapter<PatientAppo
         holder.timeTv.setText(time);
 
         if (appointment.getState() == AppointmentStateEnum.Ongoing) {
-            holder.getInBtn.setVisibility(View.VISIBLE);
+            holder.cellIv.setImageResource(R.drawable.ic_enter);
+            holder.cellStatusIv.setText("Enter");
+            holder.cellStatusIv.setTextColor(Color.parseColor("#33cccc"));
         } else {
-            holder.getInBtn.setVisibility(View.GONE);
+            holder.cellIv.setImageResource(R.drawable.ic_clock);
+            holder.cellStatusIv.setText("Upcoming");
+            holder.cellStatusIv.setTextColor(Color.parseColor("#888888"));
         }
     }
 

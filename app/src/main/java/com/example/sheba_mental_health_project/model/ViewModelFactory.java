@@ -7,12 +7,20 @@ import androidx.lifecycle.ViewModel;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.example.sheba_mental_health_project.model.enums.ViewModelEnum;
+import com.example.sheba_mental_health_project.viewmodel.AppointmentLoungeViewModel;
+import com.example.sheba_mental_health_project.viewmodel.AppointmentPatientViewModel;
+import com.example.sheba_mental_health_project.viewmodel.AppointmentTherapistViewModel;
 import com.example.sheba_mental_health_project.viewmodel.ChatViewModel;
+import com.example.sheba_mental_health_project.viewmodel.MentalPatientViewModel;
+import com.example.sheba_mental_health_project.viewmodel.PhysicalPatientViewModel;
+import com.example.sheba_mental_health_project.viewmodel.PreMeetingCharacterViewModel;
 import com.example.sheba_mental_health_project.viewmodel.SanityCheckViewModel;
 import com.example.sheba_mental_health_project.viewmodel.BureaucracyViewModel;
 import com.example.sheba_mental_health_project.viewmodel.PreQuestionsViewModel;
+import com.example.sheba_mental_health_project.viewmodel.SearchPatientViewModel;
 import com.example.sheba_mental_health_project.viewmodel.StartMeetingViewModel;
 import com.example.sheba_mental_health_project.viewmodel.StatementViewModel;
+import com.example.sheba_mental_health_project.viewmodel.TherapistPhysicalStateViewModel;
 import com.example.sheba_mental_health_project.viewmodel.TreatyViewModel;
 import com.example.sheba_mental_health_project.viewmodel.AddAppointmentViewModel;
 import com.example.sheba_mental_health_project.viewmodel.AddPatientViewModel;
@@ -72,6 +80,31 @@ public class ViewModelFactory implements ViewModelProvider.Factory {
                     objectToReturn = (T) new MainPatientViewModel(mContext);
                 }
                 break;
+            case PreMeetingCharacter:
+                if (modelClass.isAssignableFrom(PreMeetingCharacterViewModel.class)) {
+                    objectToReturn = (T) new PreMeetingCharacterViewModel(mContext);
+                }
+                break;
+            case AppointmentLounge:
+                if (modelClass.isAssignableFrom(AppointmentLoungeViewModel.class)) {
+                    objectToReturn = (T) new AppointmentLoungeViewModel(mContext);
+                }
+                break;
+            case AppointmentPatient:
+                if (modelClass.isAssignableFrom(AppointmentPatientViewModel.class)) {
+                    objectToReturn = (T) new AppointmentPatientViewModel(mContext);
+                }
+                break;
+            case PhysicalPatient:
+                if (modelClass.isAssignableFrom(PhysicalPatientViewModel.class)) {
+                    objectToReturn = (T) new PhysicalPatientViewModel(mContext);
+                }
+                break;
+            case MentalPatient:
+                if (modelClass.isAssignableFrom(MentalPatientViewModel.class)) {
+                    objectToReturn = (T) new MentalPatientViewModel(mContext);
+                }
+                break;
             case Chat:
                 if (modelClass.isAssignableFrom(ChatViewModel.class)) {
                     objectToReturn = (T) new ChatViewModel(mContext);
@@ -107,9 +140,24 @@ public class ViewModelFactory implements ViewModelProvider.Factory {
                     objectToReturn = (T) new MainTherapistViewModel(mContext);
                 }
                 break;
+            case TherapistPhysicalState:
+                if (modelClass.isAssignableFrom(TherapistPhysicalStateViewModel.class)) {
+                    objectToReturn = (T) new TherapistPhysicalStateViewModel(mContext);
+                }
+                break;
             case StartMeeting:
                 if (modelClass.isAssignableFrom(StartMeetingViewModel.class)) {
                     objectToReturn = (T) new StartMeetingViewModel(mContext);
+                }
+                break;
+            case AppointmentTherapist:
+                if (modelClass.isAssignableFrom(AppointmentTherapistViewModel.class)) {
+                    objectToReturn = (T) new AppointmentTherapistViewModel(mContext);
+                }
+                break;
+            case SearchPatient:
+                if (modelClass.isAssignableFrom(SearchPatientViewModel.class)) {
+                    objectToReturn = (T) new SearchPatientViewModel(mContext);
                 }
                 break;
             case AddPatient:

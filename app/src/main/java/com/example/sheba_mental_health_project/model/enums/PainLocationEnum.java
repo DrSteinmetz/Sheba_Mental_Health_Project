@@ -9,9 +9,11 @@ public enum PainLocationEnum {
     RightEar,
     LeftEar,
     Mouth,
+    Pharynx,
     Tongue,
     Palate,
     Teeth,
+    Lips,
     Neck,
     Nape,
     RightShoulder,
@@ -53,4 +55,5 @@ public enum PainLocationEnum {
     Vagina,
     Penis,
     Testicles,
+    PrivatePart,
 }

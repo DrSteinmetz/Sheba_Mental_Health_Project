@@ -21,7 +21,6 @@
             android:paddingHorizontal="20dp"
             android:text="@string/hello"
             android:textSize="25sp"
-            android:textStyle="bold"
             android:textColor="@color/black"
             android:textAllCaps="false" />
 
@@ -33,7 +32,6 @@
             android:paddingHorizontal="20dp"
             android:text="@string/pre_questions_tv_2"
             android:textSize="25sp"
-            android:textStyle="bold"
             android:textColor="@color/black"
             android:textAllCaps="false" />
 
@@ -50,17 +48,12 @@
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/begin_btn"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
             android:layout_below="@id/therapist_name_tv"
             android:layout_centerHorizontal="true"
             android:layout_alignParentBottom="true"
             android:layout_marginTop="30dp"
             android:text="Begin"
-            android:textSize="30sp"
-            android:textStyle="bold"
-            android:textColor="@color/white"
-            android:textAllCaps="false" />
+            style="@style/blue_btn" />
 
     </RelativeLayout>
 

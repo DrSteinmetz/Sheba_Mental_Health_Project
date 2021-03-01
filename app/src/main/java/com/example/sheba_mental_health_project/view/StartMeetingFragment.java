@@ -131,7 +131,22 @@ public class StartMeetingFragment extends Fragment {
         startMeetingBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                mViewModel.updateState(AppointmentStateEnum.Ongoing);
+                WarningDialog warningDialog = new WarningDialog(requireContext());
+                warningDialog.setTitleWarningText("Start Meeting?");
+                warningDialog.setPromptText("pressing ok will send notification to the patient. starting a meeting can not be canceled");
+                warningDialog.setOnActionListener(new WarningDialog.WarningDialogActionInterface() {
+                    @Override
+                    public void onYesBtnClicked() {
+                        mViewModel.updateState(AppointmentStateEnum.Ongoing);
+                        listener.onTherapistStartMeetingClicked();
+                    }
+
+                    @Override
+                    public void onNoBtnClicked() {
+                        warningDialog.dismiss();
+                    }
+                });
+                warningDialog.show();
             }
         });
 

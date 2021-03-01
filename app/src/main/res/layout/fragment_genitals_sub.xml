@@ -1,0 +1,159 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    android:focusable="true"
+    android:clickable="true"
+    tools:context=".view.GenitalsSubFragment"
+    android:layout_marginVertical="10dp"
+    android:layout_marginHorizontal="20dp"
+    >
+
+    <TextView
+        android:id="@+id/title_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="choose:"
+        android:textColor="@color/black"
+        android:textSize="20sp"/>
+
+    <RadioGroup
+        android:id="@+id/gender_Rg"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/title_tv"
+        android:layout_marginTop="10dp">
+
+        <RadioButton
+            android:id="@+id/male_Rb"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Male genitals"
+            android:textColor="@color/black"
+            android:textSize="17sp"/>
+
+        <RadioButton
+            android:id="@+id/female_Rb"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Female genitals"
+            android:textColor="@color/black"
+            android:textSize="17sp"/>
+    </RadioGroup>
+
+    <TextView
+        android:visibility="invisible"
+        android:id="@+id/choose_title_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/gender_Rg"
+        android:text="Choose pain area:"
+        android:textSize="20sp"
+        android:textColor="@color/black"
+        android:layout_marginTop="10dp"/>
+
+    <LinearLayout
+        android:visibility="invisible"
+        android:id="@+id/male_linear"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_below="@+id/choose_title_tv"
+        android:layout_marginTop="10dp"
+        android:gravity="center_horizontal"
+        >
+
+        <RadioGroup
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/male_Rg"
+            android:orientation="horizontal"
+            android:layout_below="@id/title"
+            android:layout_marginTop="5dp">
+
+            <RadioButton
+                android:id="@+id/penis"
+                android:layout_width="100dp"
+                android:layout_height="75dp"
+                android:layout_marginEnd="10dp"
+                android:background="@drawable/mouth_card_background"
+                android:button="@null"
+                android:padding="10dp"
+                android:text="penis"
+                android:drawableBottom="@drawable/ic_white_point"
+                android:textAlignment="center"
+                android:textColor="@color/black"/>
+
+            <RadioButton
+                android:id="@+id/testicles"
+                android:layout_width="100dp"
+                android:layout_height="75dp"
+                android:layout_marginEnd="10dp"
+                android:background="@drawable/mouth_card_background"
+                android:drawableBottom="@drawable/ic_white_point"
+                android:button="@null"
+                android:padding="10dp"
+                android:text="testicles"
+                android:textAlignment="center"
+                android:textColor="@color/black" />
+
+        </RadioGroup>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:visibility="invisible"
+        android:id="@+id/female_linear"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_below="@+id/choose_title_tv"
+        android:layout_marginTop="10dp"
+        android:gravity="center_horizontal">
+
+        <RadioGroup
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/female_Rg"
+            android:orientation="horizontal"
+            android:layout_below="@id/choose_title_tv"
+            android:layout_marginTop="5dp">
+
+            <RadioButton
+                android:id="@+id/vagina"
+                android:layout_width="100dp"
+                android:layout_height="75dp"
+                android:layout_marginEnd="10dp"
+                android:background="@drawable/mouth_card_background"
+                android:button="@null"
+                android:padding="10dp"
+                android:text="vagina"
+                android:drawableBottom="@drawable/ic_white_point"
+                android:textAlignment="center"
+                android:textColor="@color/black"/>
+
+        </RadioGroup>
+
+    </LinearLayout>
+
+    <com.google.android.material.button.MaterialButton
+        android:visibility="invisible"
+        android:id="@+id/continue_btn"
+        android:layout_marginTop="40dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/male_linear"
+        app:cornerRadius="0dp"
+        android:layout_centerHorizontal="true"
+        android:text="Continue"
+        android:textAllCaps="false"
+        android:textSize="20sp"
+        android:padding="10dp"/>
+
+
+
+
+</RelativeLayout>

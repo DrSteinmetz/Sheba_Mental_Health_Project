@@ -19,6 +19,7 @@ public class HeadViewModel extends ViewModel {
 
     private PainPoint mPainPoint = new PainPoint();
     private EnumMap<PainLocationEnum, PainPoint> mPainPointsMap = new EnumMap<>(PainLocationEnum.class);
+    private EnumMap<PainLocationEnum, PainPoint> mPainPointsMouthMap = new EnumMap<>(PainLocationEnum.class);
 
     private MutableLiveData<PainPoint> mSetPainPointsSucceed;
     private MutableLiveData<String> mSetPainPointsFailed;
@@ -32,6 +33,8 @@ public class HeadViewModel extends ViewModel {
         for (PainPoint painPoint : painPoints) {
             mPainPointsMap.put(painPoint.getPainLocation(), painPoint);
         }
+
+        setMouthPainPointMap();
     }
 
     public MutableLiveData<PainPoint> getSetPainPointsSucceed() {
@@ -84,4 +87,27 @@ public class HeadViewModel extends ViewModel {
     public void setPainPointsInDB() {
         mRepository.setPainPoints(BodyPartEnum.Head, mPainPoint);
     }
+
+    public void setMouthPainPointMap(){
+        if (mPainPointsMap.containsKey(PainLocationEnum.Pharynx)){
+            mPainPointsMouthMap.put(PainLocationEnum.Pharynx,mPainPointsMap.get(PainLocationEnum.Pharynx));
+        }
+        if (mPainPointsMap.containsKey(PainLocationEnum.Teeth)){
+            mPainPointsMouthMap.put(PainLocationEnum.Teeth,mPainPointsMap.get(PainLocationEnum.Teeth));
+        }
+        if (mPainPointsMap.containsKey(PainLocationEnum.Lips)){
+            mPainPointsMouthMap.put(PainLocationEnum.Lips,mPainPointsMap.get(PainLocationEnum.Lips));
+        }
+        if (mPainPointsMap.containsKey(PainLocationEnum.Tongue)){
+            mPainPointsMouthMap.put(PainLocationEnum.Tongue,mPainPointsMap.get(PainLocationEnum.Tongue));
+        }
+        if (mPainPointsMap.containsKey(PainLocationEnum.Palate)){
+            mPainPointsMouthMap.put(PainLocationEnum.Palate,mPainPointsMap.get(PainLocationEnum.Palate));
+        }
+    }
+
+    public EnumMap<PainLocationEnum, PainPoint> getPainPointsMouthMap() {
+        return mPainPointsMouthMap;
+    }
+
 }

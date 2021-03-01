@@ -23,7 +23,7 @@
             android:scaleType="fitCenter" />
 
         <ImageView
-            android:id="@+id/genitals_iv"
+            android:id="@+id/private_part_iv"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignStart="@id/genitals_v"
@@ -31,7 +31,7 @@
             android:layout_alignTop="@id/genitals_v"
             android:layout_alignBottom="@id/genitals_v"
             android:src="@drawable/ic_red_pain_point"
-            android:visibility="gone"
+            android:visibility="invisible"
             android:scaleType="fitCenter" />
         <View
             android:id="@+id/genitals_v"

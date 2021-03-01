@@ -16,12 +16,14 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import com.example.sheba_mental_health_project.R;
 import com.example.sheba_mental_health_project.model.Appointment;
 import com.example.sheba_mental_health_project.model.TherapistAppointmentsAdapter;
 import com.example.sheba_mental_health_project.model.ViewModelFactory;
 import com.example.sheba_mental_health_project.model.enums.ViewModelEnum;
+import com.example.sheba_mental_health_project.repository.AuthRepository;
 import com.example.sheba_mental_health_project.viewmodel.MainTherapistViewModel;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
@@ -37,6 +39,8 @@ public class MainTherapistFragment extends Fragment {
 
     private RecyclerView mRecyclerView;
 
+    private Context context1;
+
     public interface MainTherapistInterface {
         void onTherapistAppointmentClicked();
         void onAddAppointClicked();
@@ -51,6 +55,7 @@ public class MainTherapistFragment extends Fragment {
     @Override
     public void onAttach(@NonNull Context context) {
         super.onAttach(context);
+        context1 = context;
 
         try {
             listener = (MainTherapistInterface) context;
@@ -101,7 +106,13 @@ public class MainTherapistFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
+
         final View rootView = inflater.inflate(R.layout.main_therapist_fragment, container, false);
+
+        AuthRepository authRepository = AuthRepository.getInstance(context1);
+
+        final TextView therapistName = rootView.findViewById(R.id.therapist_name_tv);
+        therapistName.setText(authRepository.getUser().getFullName());
 
         final FloatingActionButton addAppointFab = rootView.findViewById(R.id.add_appointment_fab);
         mRecyclerView = rootView.findViewById(R.id.recycler_view);

@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    app:cardUseCompatPadding="true"
+    app:cardElevation="10dp"
+    app:cardCornerRadius="10dp"
+    app:cardPreventCornerOverlap="false"
+    android:id="@+id/card_layout">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="20dp"
+
+        >
+
+        <TextView
+            android:id="@+id/feeling_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="17sp"
+            android:textColor="@color/black"
+            android:textAllCaps="false"
+            android:layout_centerHorizontal="true"
+           />
+
+        <ImageView
+            android:id="@+id/feeling_iv"
+            android:layout_width="130dp"
+            android:layout_height="130dp"
+            android:layout_below="@+id/feeling_tv"
+            android:layout_marginTop="10dp"
+            android:layout_centerHorizontal="true"
+            />
+
+        <SeekBar
+            android:min="0"
+            android:max="10"
+            android:layout_marginHorizontal="30dp"
+            android:layout_marginTop="20dp"
+            android:id="@+id/seek_bar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/feeling_iv"
+            />
+
+    </RelativeLayout>
+
+</androidx.cardview.widget.CardView>

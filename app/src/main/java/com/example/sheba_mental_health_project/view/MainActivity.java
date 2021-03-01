@@ -8,10 +8,10 @@ import androidx.coordinatorlayout.widget.CoordinatorLayout;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
 import androidx.lifecycle.ViewModelProvider;
 
 import android.annotation.SuppressLint;
-import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -37,7 +37,14 @@ public class MainActivity extends AppCompatActivity
         StatementFragment.StatementFragmentInterface,
         MainPatientFragment.MainPatientInterface,
         CharacterFragment.CharacterFragmentInterface,
-        StartMeetingFragment.StartMeetingTherapistInterface{
+        StartMeetingFragment.StartMeetingTherapistInterface,
+        AppointmentTherapistFragment.AppointmentTherapistInterface,
+        PhysicalPatientFragment.PhysicalPatientFragmentInterface,
+        AppointmentPatientFragment.AppointmentPatientInterface,
+        MentalPatientFragment.MentalPatientFragmentInterface,
+        PreMeetingCharacterFragment.PreMeetingCharacterInterface,
+        AppointmentLoungeFragment.AppointmentLoungeFragmentInterface
+{
 
     private MainActivityViewModel mViewModel;
 
@@ -48,8 +55,11 @@ public class MainActivity extends AppCompatActivity
 
     private final String MAIN_THERAPIST_FRAG = "Main_Therapist_Fragment";
     private final String ADD_PATIENT_FRAG = "Add_Patient_Fragment";
+    private final String SEARCH_PATIENT_FRAG = "Search_Patient_Fragment";
     private final String ADD_APPOINTMENT_FRAG = "Add_Appointment_Fragment";
     private final String START_MEETING_FRAG = "Start_Meeting_Fragment";
+    private final String APPOINTMENT_THERAPIST_FRAG = "Appointment_Therapist_Fragment";
+    private final String THERAPIST_PHYSICAL_STATE_FRAG = "Therapist_Physical_State_Fragment";
 
     private final String PRE_QUESTIONS_FRAG = "Pre_Questions_Fragment";
     private final String TREATY_FRAG = "Treaty_Fragment";
@@ -57,7 +67,12 @@ public class MainActivity extends AppCompatActivity
     private final String SANITY_CHECK_FRAG = "Sanity_Check_Fragment";
     private final String STATEMENT_FRAG = "Statement_Fragment";
     private final String CATEGORY_FRAG = "Category_Fragment";
+    private final String PRE_MEETING_CHARACTER_FRAG = "Pre_Meeting_Character_Frag";
     private final String MAIN_PATIENT_FRAG = "Main_Patient_Fragment";
+    private final String PATIENT_APPOINTMENT_FRAG = "Patient_Appointment_Fragment";
+    private final String PHYSICAL_PATIENT_FRAG = "Physical_Patient_Fragment";
+    private final String MENTAL_PATIENT_FRAG = "Mental_Patient_Fragment";
+    private final String APPOINTMENT_LOUNGE_FRAG = "Appointment_Lounge_Fragment";
 
     private final String CHAT_FRAG = "Chat_Fragment";
 
@@ -69,7 +84,9 @@ public class MainActivity extends AppCompatActivity
     private final String GENITALS_FRAG = "Genitals_Fragment";
     private final String LEGS_FRAG = "Legs_Fragment";
 
+
     private final String IS_THERAPIST = "is_therapist";
+
 
     private final String TAG = "MainActivity";
 
@@ -96,7 +113,7 @@ public class MainActivity extends AppCompatActivity
 
         ActionBar actionBar = getSupportActionBar();
         actionBar.setDisplayHomeAsUpEnabled(true);
-        actionBar.setHomeAsUpIndicator(R.drawable.ic_round_menu_white_24);
+        actionBar.setHomeAsUpIndicator(R.drawable.ic_round_menu_24);
 
         mDrawerLayout.addDrawerListener(this);
         final SharedPreferences sharedPreferences = PreferenceManager
@@ -175,18 +192,23 @@ public class MainActivity extends AppCompatActivity
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
 
         switch (item.getItemId()) {
+            case R.id.search_patient_action:
+                getSupportFragmentManager().beginTransaction()
+                        .replace(R.id.container, SearchPatientFragment.newInstance(), SEARCH_PATIENT_FRAG)
+                        .addToBackStack(null)
+                        .commit();
+                mDrawerLayout.closeDrawers();
+                break;
             case R.id.add_patient_action:
                 getSupportFragmentManager().beginTransaction()
                         .replace(R.id.container, AddPatientFragment.newInstance(), ADD_PATIENT_FRAG)
                         .addToBackStack(null)
                         .commit();
+
                 mDrawerLayout.closeDrawers();
                 break;
             case R.id.chat_action:
-                getSupportFragmentManager().beginTransaction()
-                        .add(R.id.container, ChatFragment.newInstance(), CHAT_FRAG)
-                        .addToBackStack(null)
-                        .commit();
+                onChatClicked();
                 mDrawerLayout.closeDrawers();
                 break;
             case R.id.logout_action:
@@ -221,12 +243,26 @@ public class MainActivity extends AppCompatActivity
     }
 
     @Override
-    public void onPatientAppointmentClicked() {
+    public void onMoveToPreQuestions() {
         getSupportFragmentManager().beginTransaction()
                 //TODO: add enter and exit animations
                 .replace(R.id.container, PreQuestionsFragment.newInstance(), PRE_QUESTIONS_FRAG)
                 .addToBackStack(null)
                 .commit();
+    }
+
+    @Override
+    public void onEnterAppointment() {
+        getSupportFragmentManager().beginTransaction()
+                .replace(R.id.container, AppointmentPatientFragment
+                        .newInstance(mViewModel.getCurrentAppointment()), PATIENT_APPOINTMENT_FRAG)
+                .addToBackStack(null)
+                .commit();
+    }
+
+    @Override
+    public void onMoveToLounge() {
+        onMoveToAppointmentLounge();
     }
 
     @Override
@@ -268,13 +304,45 @@ public class MainActivity extends AppCompatActivity
     @Override
     public void onContinueToCategoryQuestions() {
         getSupportFragmentManager().beginTransaction()
-                .add(R.id.container, CharacterFragment.newInstance(mViewModel.getCurrentAppointment(), true), CHARACTER_FRAG)
+                .add(R.id.container, PreMeetingCharacterFragment.newInstance(), PRE_MEETING_CHARACTER_FRAG)
                 .addToBackStack(null)
                 .commit();
     }
 
     @Override
     public void onTherapistStartMeetingClicked() {
+        getSupportFragmentManager().beginTransaction()
+                .add(R.id.container, AppointmentTherapistFragment.newInstance(), APPOINTMENT_THERAPIST_FRAG)
+                .addToBackStack(null)
+                .commit();
+    }
+
+    @Override
+    public void onMoveToAppointmentPatient() {
+        onEnterAppointment();
+    }
+
+    @Override
+    public void onMoveToAppointmentLounge() {
+        getSupportFragmentManager().beginTransaction()
+                .replace(R.id.container, AppointmentLoungeFragment.newInstance(), APPOINTMENT_LOUNGE_FRAG)
+                .addToBackStack(null)
+                .commit();
+    }
+
+    @Override
+    public void onBackToAppointmentsBtnClicked() {
+        getSupportFragmentManager().popBackStack(null,
+                FragmentManager.POP_BACK_STACK_INCLUSIVE);
+        getSupportFragmentManager().beginTransaction()
+                .replace(R.id.container, MainPatientFragment.newInstance(), MAIN_PATIENT_FRAG)
+                .commit();
+    }
+
+    @Override
+    public void onEditAnswersBtnClicked() {
+        onBackToAppointmentsBtnClicked();
+        onMoveToPreQuestions();
     }
 
     /**<------ Character ------>*/
@@ -322,6 +390,58 @@ public class MainActivity extends AppCompatActivity
     public void onLegsClicked() {
         getSupportFragmentManager().beginTransaction()
                 .add(R.id.container, LegsFragment.newInstance(), LEGS_FRAG)
+                .addToBackStack(null)
+                .commit();
+    }
+
+    /**<------ AppointmentTherapist ------>*/
+    @Override
+    public void onChatClicked() {
+        getSupportFragmentManager().beginTransaction()
+                .add(R.id.container, ChatFragment.newInstance(), CHAT_FRAG)
+                .addToBackStack(null)
+                .commit();
+    }
+
+    @Override
+    public void onPhysicalStateClicked() {
+        Log.d("current",mViewModel.getCurrentAppointment().toString());
+        getSupportFragmentManager().beginTransaction()
+                .add(R.id.container, TherapistPhysicalStateFragment.newInstance(), THERAPIST_PHYSICAL_STATE_FRAG)
+                .addToBackStack(null)
+                .commit();
+
+
+    }
+
+    /**<------ PhysicalPatient ------>*/
+
+    @Override
+    public void onHomeBtnClicked() {
+        onBackPressed();
+    }
+
+    /**<------ MentalPatient ------>*/
+
+    @Override
+    public void onSaveFeelings() {
+        onBackPressed();
+    }
+
+    /**<------ AppointmentPatient ------>*/
+
+    @Override
+    public void onPhysicalClicked() {
+        getSupportFragmentManager().beginTransaction()
+                .add(R.id.container, PhysicalPatientFragment.newInstance(), PHYSICAL_PATIENT_FRAG)
+                .addToBackStack(null)
+                .commit();
+    }
+
+    @Override
+    public void onMentalClicked() {
+        getSupportFragmentManager().beginTransaction()
+                .add(R.id.container, MentalPatientFragment.newInstance(), MENTAL_PATIENT_FRAG)
                 .addToBackStack(null)
                 .commit();
     }

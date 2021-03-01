@@ -142,10 +142,10 @@ public class AddAppointmentViewModel extends ViewModel {
         mRepository.addAppointment(appointmentToAdd);
     }
 
-    private Patient getPatientByEmail(final String patientEmail){
+   /* private Patient getPatientByEmail(final String patientEmail){
         final int patientIndex = mPatientsEmails.indexOf(patientEmail);
         return Objects.requireNonNull(mGetAllPatientsSucceed.getValue()).get(patientIndex);
-    }
+    }*/
 
     private Date getCalculatedDate() {
         final Date chosenDate = new Date(mChosenDate);
@@ -159,5 +159,16 @@ public class AddAppointmentViewModel extends ViewModel {
 
     public void resetDateFields() {
         mChosenDate = mHourOfDay = mMinutes = -1;
+    }
+
+    public Patient getPatientByEmail(final String patientEmail){
+
+        final int patientIndex = mPatientsEmails.indexOf(patientEmail);
+        if( patientIndex != -1){
+            return Objects.requireNonNull(mGetAllPatientsSucceed.getValue()).get(patientIndex);
+        }
+        else{
+            return null;
+        }
     }
 }

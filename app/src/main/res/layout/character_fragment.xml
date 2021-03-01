@@ -361,7 +361,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="0dp"
                         android:layout_weight="4"
-                        android:layout_margin="25dp"
+                        android:padding="10dp"
                         android:src="@drawable/ic_red_pain_point"
                         android:visibility="visible"
                         android:scaleType="fitCenter" />
@@ -442,7 +442,7 @@
                 android:layout_height="0dp"
                 android:layout_weight="1">
                 <ImageView
-                    android:id="@+id/anus_iv"
+                    android:id="@+id/private_part_iv"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:padding="10dp"
