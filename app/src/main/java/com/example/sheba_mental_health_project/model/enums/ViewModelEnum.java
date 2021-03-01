@@ -13,6 +13,8 @@ public enum ViewModelEnum {
     Statement,
     MainTherapist,
     TherapistPhysicalState,
+    TherapistMentalState,
+    TherapistMentalGeneric,
     AppointmentTherapist,
     SearchPatient,
     StartMeeting,

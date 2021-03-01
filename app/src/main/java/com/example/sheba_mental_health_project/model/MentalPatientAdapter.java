@@ -3,6 +3,7 @@ package com.example.sheba_mental_health_project.model;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.graphics.drawable.Drawable;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -22,14 +23,14 @@ public class MentalPatientAdapter extends RecyclerView.Adapter<MentalPatientAdap
 
     private final Context mContext;
 
-    private final String TAG = "MentalPatientAdapter";
     private final List<Feeling> mFeelings;
     private final Map<String , Integer> mAnswers;
 
+    private final String TAG = "MentalPatientAdapter";
 
 
     public MentalPatientAdapter(final Context context, final List<Feeling> feelings,
-                                final Map<String , Integer> answers) {
+                                final Map<String, Integer> answers) {
         this.mContext = context;
         this.mFeelings = feelings;
         this.mAnswers = answers;
@@ -51,17 +52,16 @@ public class MentalPatientAdapter extends RecyclerView.Adapter<MentalPatientAdap
 
             seekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
                 @Override
-                public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
-                       // if (!mAnswers.containsKey(mFeelings.get(getAdapterPosition()).getId())) {
-                            mAnswers.put(mFeelings.get(getAdapterPosition()).getId(), progress);
-                       // }
-                }
+                public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {}
 
                 @Override
                 public void onStartTrackingTouch(SeekBar seekBar) {}
 
                 @Override
-                public void onStopTrackingTouch(SeekBar seekBar) {}
+                public void onStopTrackingTouch(SeekBar seekBar) {
+                    mAnswers.put(mFeelings.get(getAdapterPosition()).getId(), seekBar.getProgress());
+                    Log.d(TAG, "asd onProgressChanged: " + mFeelings.get(getAdapterPosition()).getId());
+                }
             });
         }
     }
@@ -82,10 +82,9 @@ public class MentalPatientAdapter extends RecyclerView.Adapter<MentalPatientAdap
         setImageByFeelingId(feeling.getId(), holder.feelingIv);
         if (mAnswers.containsKey(feeling.getId())) {
             holder.seekBar.setProgress(mAnswers.get(feeling.getId()));
+        } else {
+            holder.seekBar.setProgress(0);
         }
-
-        // TODO: Switch-Case for images according to the feelings name
-        //  or use Storage for more dynamic app (?)
     }
 
     @Override

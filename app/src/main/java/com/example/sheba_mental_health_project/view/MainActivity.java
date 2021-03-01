@@ -59,6 +59,7 @@ public class MainActivity extends AppCompatActivity
     private final String ADD_APPOINTMENT_FRAG = "Add_Appointment_Fragment";
     private final String START_MEETING_FRAG = "Start_Meeting_Fragment";
     private final String APPOINTMENT_THERAPIST_FRAG = "Appointment_Therapist_Fragment";
+    private final String THERAPIST_MENTAL_STATE_FRAG = "Therapist_Mental_State_Fragment";
     private final String THERAPIST_PHYSICAL_STATE_FRAG = "Therapist_Physical_State_Fragment";
 
     private final String PRE_QUESTIONS_FRAG = "Pre_Questions_Fragment";
@@ -209,6 +210,13 @@ public class MainActivity extends AppCompatActivity
                 break;
             case R.id.chat_action:
                 onChatClicked();
+                mDrawerLayout.closeDrawers();
+                break;
+            case R.id.settings_action:
+                getSupportFragmentManager().beginTransaction()
+                        .add(android.R.id.content, SettingsFragment.newInstance())
+                        .addToBackStack(null)
+                        .commit();
                 mDrawerLayout.closeDrawers();
                 break;
             case R.id.logout_action:
@@ -404,14 +412,19 @@ public class MainActivity extends AppCompatActivity
     }
 
     @Override
+    public void onMentalStateClicked() {
+        getSupportFragmentManager().beginTransaction()
+                .add(R.id.container, TherapistMentalStateFragment.newInstance(), THERAPIST_MENTAL_STATE_FRAG)
+                .addToBackStack(null)
+                .commit();
+    }
+
+    @Override
     public void onPhysicalStateClicked() {
-        Log.d("current",mViewModel.getCurrentAppointment().toString());
         getSupportFragmentManager().beginTransaction()
                 .add(R.id.container, TherapistPhysicalStateFragment.newInstance(), THERAPIST_PHYSICAL_STATE_FRAG)
                 .addToBackStack(null)
                 .commit();
-
-
     }
 
     /**<------ PhysicalPatient ------>*/

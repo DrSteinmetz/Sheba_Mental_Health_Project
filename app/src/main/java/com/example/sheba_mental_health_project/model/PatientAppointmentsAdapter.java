@@ -41,7 +41,6 @@ public class PatientAppointmentsAdapter extends RecyclerView.Adapter<PatientAppo
 
     public interface AppointmentListener {
         void onAppointmentClicked(int position, View view);
-//        void onGetInAppointmentClicked(int position, View view);
     }
 
     private AppointmentListener listener;
@@ -78,15 +77,6 @@ public class PatientAppointmentsAdapter extends RecyclerView.Adapter<PatientAppo
                     }
                 }
             });
-
-            /*cellIv.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    if (listener != null && mAppointments.get(getAdapterPosition()).getState() == AppointmentStateEnum.Ongoing) {
-                        listener.onGetInAppointmentClicked(getAdapterPosition(), v);
-                    }
-                }
-            });*/
         }
     }
 
@@ -95,6 +85,7 @@ public class PatientAppointmentsAdapter extends RecyclerView.Adapter<PatientAppo
     public AppointmentViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         final View view = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.patient_appointment_cell_layout, parent,false);
+
         return new AppointmentViewHolder(view);
     }
 

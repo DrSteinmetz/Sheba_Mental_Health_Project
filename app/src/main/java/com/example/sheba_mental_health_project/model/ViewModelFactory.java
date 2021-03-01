@@ -20,6 +20,8 @@ import com.example.sheba_mental_health_project.viewmodel.PreQuestionsViewModel;
 import com.example.sheba_mental_health_project.viewmodel.SearchPatientViewModel;
 import com.example.sheba_mental_health_project.viewmodel.StartMeetingViewModel;
 import com.example.sheba_mental_health_project.viewmodel.StatementViewModel;
+import com.example.sheba_mental_health_project.viewmodel.TherapistMentalGenericViewModel;
+import com.example.sheba_mental_health_project.viewmodel.TherapistMentalStateViewModel;
 import com.example.sheba_mental_health_project.viewmodel.TherapistPhysicalStateViewModel;
 import com.example.sheba_mental_health_project.viewmodel.TreatyViewModel;
 import com.example.sheba_mental_health_project.viewmodel.AddAppointmentViewModel;
@@ -143,6 +145,16 @@ public class ViewModelFactory implements ViewModelProvider.Factory {
             case TherapistPhysicalState:
                 if (modelClass.isAssignableFrom(TherapistPhysicalStateViewModel.class)) {
                     objectToReturn = (T) new TherapistPhysicalStateViewModel(mContext);
+                }
+                break;
+            case TherapistMentalState:
+                if (modelClass.isAssignableFrom(TherapistMentalStateViewModel.class)) {
+                    objectToReturn = (T) new TherapistMentalStateViewModel(mContext);
+                }
+                break;
+            case TherapistMentalGeneric:
+                if (modelClass.isAssignableFrom(TherapistMentalGenericViewModel.class)) {
+                    objectToReturn = (T) new TherapistMentalGenericViewModel(mContext);
                 }
                 break;
             case StartMeeting:

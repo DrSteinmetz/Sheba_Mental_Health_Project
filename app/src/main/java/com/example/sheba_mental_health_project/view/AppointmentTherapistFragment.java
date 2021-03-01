@@ -26,23 +26,27 @@ public class AppointmentTherapistFragment extends Fragment {
 
     private AppointmentTherapistViewModel mViewModel;
 
+    private final String TAG = "AppointmentTherapistFragment";
+
+
     public static AppointmentTherapistFragment newInstance() {
         return new AppointmentTherapistFragment();
     }
 
     public interface AppointmentTherapistInterface {
         void onChatClicked();
+        void onMentalStateClicked();
         void onPhysicalStateClicked();
     }
 
-    private AppointmentTherapistFragment.AppointmentTherapistInterface listener;
+    private AppointmentTherapistInterface listener;
 
     @Override
     public void onAttach(@NonNull Context context) {
         super.onAttach(context);
 
         try {
-            listener = (AppointmentTherapistFragment.AppointmentTherapistInterface) context;
+            listener = (AppointmentTherapistInterface) context;
         } catch (Exception ex) {
             throw new ClassCastException("The Activity Must Implements AppointmentTherapistInterface listener!");
         }
@@ -52,11 +56,13 @@ public class AppointmentTherapistFragment extends Fragment {
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        mViewModel = new ViewModelProvider(this,new ViewModelFactory(getContext(),
+        mViewModel = new ViewModelProvider(this, new ViewModelFactory(getContext(),
                 ViewModelEnum.AppointmentTherapist)).get(AppointmentTherapistViewModel.class);
 
         getChildFragmentManager().beginTransaction()
-                .add(R.id.character_container, CharacterFragment.newInstance(mViewModel.getCurrentAppointment(), false))
+                .add(R.id.character_container,
+                        CharacterFragment.newInstance(mViewModel.getCurrentAppointment(),
+                                false))
                 .commit();
     }
 
@@ -80,21 +86,34 @@ public class AppointmentTherapistFragment extends Fragment {
         chatBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                listener.onChatClicked();
+                if (listener != null) {
+                    listener.onChatClicked();
+                }
+            }
+        });
+
+        mentalBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (listener != null) {
+                    listener.onMentalStateClicked();
+                }
             }
         });
 
         physicalBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                listener.onPhysicalStateClicked();
+                if (listener != null) {
+                    listener.onPhysicalStateClicked();
+                }
             }
         });
 
         endMeetingBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                WarningDialog warningDialog = new WarningDialog(requireContext());
+                final WarningDialog warningDialog = new WarningDialog(requireContext());
                 warningDialog.setTitleWarningText("End Meeting?");
                 warningDialog.setPromptText("pressing ok will end this meeting for you and for the patient");
                 warningDialog.setOnActionListener(new WarningDialog.WarningDialogActionInterface() {
@@ -113,6 +132,4 @@ public class AppointmentTherapistFragment extends Fragment {
         });
         return rootView;
     }
-
-
 }

@@ -35,7 +35,6 @@ public class AppointmentPatientFragment extends Fragment {
             args.putSerializable("appointment", appointment);
             fragment.setArguments(args);
             return fragment;
-
     }
 
     public interface AppointmentPatientInterface {

@@ -21,13 +21,9 @@ import com.example.sheba_mental_health_project.R;
 import com.example.sheba_mental_health_project.model.Appointment;
 import com.example.sheba_mental_health_project.model.Feeling;
 import com.example.sheba_mental_health_project.model.MentalPatientAdapter;
-import com.example.sheba_mental_health_project.model.Question;
-import com.example.sheba_mental_health_project.model.QuestionsAdapter;
 import com.example.sheba_mental_health_project.model.ViewModelFactory;
 import com.example.sheba_mental_health_project.model.enums.ViewModelEnum;
-import com.example.sheba_mental_health_project.viewmodel.BureaucracyViewModel;
 import com.example.sheba_mental_health_project.viewmodel.MentalPatientViewModel;
-import com.example.sheba_mental_health_project.viewmodel.PhysicalPatientViewModel;
 import com.google.android.material.button.MaterialButton;
 
 import java.util.List;
@@ -35,16 +31,17 @@ import java.util.List;
 public class MentalPatientFragment extends Fragment {
 
     private MentalPatientViewModel mViewModel;
-    private MentalPatientAdapter mentalPatientAdapter;
+    private MentalPatientAdapter mMentalPatientAdapter;
     private RecyclerView mRecyclerView;
 
     private final String TAG = "MentalPatientFragment";
+
 
     public interface MentalPatientFragmentInterface {
         void onSaveFeelings();
     }
 
-    private MentalPatientFragment.MentalPatientFragmentInterface listener;
+    private MentalPatientFragmentInterface listener;
 
     public static MentalPatientFragment newInstance() {
         return new MentalPatientFragment();
@@ -55,7 +52,7 @@ public class MentalPatientFragment extends Fragment {
         super.onAttach(context);
 
         try {
-            listener = (MentalPatientFragment.MentalPatientFragmentInterface) context;
+            listener = (MentalPatientFragmentInterface) context;
         } catch (Exception ex) {
             throw new ClassCastException("The Activity Must Implements MentalPatientFragmentInterface listener!");
         }
@@ -71,9 +68,9 @@ public class MentalPatientFragment extends Fragment {
         final Observer<List<Feeling>> onGetPatientFeelingsSucceed = new Observer<List<Feeling>>() {
             @Override
             public void onChanged(List<Feeling> feelings) {
-                mentalPatientAdapter = new MentalPatientAdapter(getContext(), feelings,
+                mMentalPatientAdapter = new MentalPatientAdapter(getContext(), feelings,
                         mViewModel.getCurrentAppointment().getFeelingsAnswersMap());
-                mRecyclerView.setAdapter(mentalPatientAdapter);
+                mRecyclerView.setAdapter(mMentalPatientAdapter);
             }
         };
 
@@ -88,7 +85,6 @@ public class MentalPatientFragment extends Fragment {
             @Override
             public void onChanged(Appointment appointment) {
                 if (listener != null) {
-                    Log.e(TAG, "success" );
                     listener.onSaveFeelings();
                 }
             }
@@ -115,13 +111,13 @@ public class MentalPatientFragment extends Fragment {
         mViewModel.attachSetGetPatientFeelingsListener();
         mViewModel.attachSetUpdateFeelingsAnswersListener();
 
+        final MaterialButton saveBtn = rootView.findViewById(R.id.save_btn);
         mRecyclerView = rootView.findViewById(R.id.recycler_view);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         mRecyclerView.setHasFixedSize(true);
 
         mViewModel.getAllFeelings();
 
-        final MaterialButton saveBtn = rootView.findViewById(R.id.save_btn);
         saveBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -129,11 +125,6 @@ public class MentalPatientFragment extends Fragment {
             }
         });
 
-
-
-
         return rootView;
     }
-
-
 }

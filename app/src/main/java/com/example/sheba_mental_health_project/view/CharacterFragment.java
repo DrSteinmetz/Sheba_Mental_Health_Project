@@ -21,6 +21,7 @@ import android.widget.RelativeLayout;
 import com.example.sheba_mental_health_project.R;
 import com.example.sheba_mental_health_project.model.Appointment;
 import com.example.sheba_mental_health_project.model.PainPoint;
+import com.example.sheba_mental_health_project.model.enums.BodyPartEnum;
 import com.example.sheba_mental_health_project.model.enums.PainLocationEnum;
 import com.example.sheba_mental_health_project.model.enums.ViewModelEnum;
 import com.example.sheba_mental_health_project.model.ViewModelFactory;

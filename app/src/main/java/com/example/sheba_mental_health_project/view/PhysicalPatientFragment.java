@@ -25,6 +25,9 @@ public class PhysicalPatientFragment extends Fragment {
 
     private PhysicalPatientViewModel mViewModel;
 
+    private final String TAG = "PhysicalPatientFragment";
+
+
     public interface PhysicalPatientFragmentInterface {
         void onHomeBtnClicked();
     }
@@ -38,7 +41,6 @@ public class PhysicalPatientFragment extends Fragment {
     @Override
     public void onAttach(@NonNull Context context) {
         super.onAttach(context);
-
 
         try {
             listener = (PhysicalPatientFragment.PhysicalPatientFragmentInterface) context;
@@ -55,7 +57,9 @@ public class PhysicalPatientFragment extends Fragment {
                 ViewModelEnum.PhysicalPatient)).get(PhysicalPatientViewModel.class);
 
         getChildFragmentManager().beginTransaction()
-                .add(R.id.character_container, CharacterFragment.newInstance(mViewModel.getCurrentAppointment(), true))
+                .add(R.id.character_container,
+                        CharacterFragment.newInstance(mViewModel.getCurrentAppointment(),
+                                true))
                 .commit();
     }
 
@@ -72,9 +76,6 @@ public class PhysicalPatientFragment extends Fragment {
             }
         });
 
-
         return rootView;
     }
-
-
 }

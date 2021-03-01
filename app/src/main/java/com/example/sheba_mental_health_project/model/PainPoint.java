@@ -19,8 +19,7 @@ public class PainPoint implements Serializable {
     private String mDescription;
     private int mColor;
 
-    public PainPoint() {
-    }
+    public PainPoint() {}
 
     public PainPoint(int painStrength, PainLocationEnum location,
                      PainTypeEnum painType, PainFrequencyEnum frequency) {
@@ -98,6 +97,19 @@ public class PainPoint implements Serializable {
 
     public void setColor(int mColor) {
         this.mColor = mColor;
+    }
+
+    @Override
+    public String toString() {
+        return "PainPoint{" +
+                "mPainStrength=" + mPainStrength +
+                ", mPainLocation=" + mPainLocation +
+                ", mPainType=" + mPainType +
+                ", mFrequency=" + mFrequency +
+                ", mOtherFeeling=" + mOtherFeeling +
+                ", mDescription='" + mDescription + '\'' +
+                ", mColor=" + mColor +
+                '}';
     }
 
     @Override

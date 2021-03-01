@@ -15,6 +15,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.example.sheba_mental_health_project.R;
+import com.example.sheba_mental_health_project.model.Appointment;
 import com.example.sheba_mental_health_project.model.ViewModelFactory;
 import com.example.sheba_mental_health_project.model.enums.ViewModelEnum;
 import com.example.sheba_mental_health_project.viewmodel.AppointmentLoungeViewModel;
@@ -68,11 +69,20 @@ public class AppointmentLoungeFragment extends Fragment {
         final View rootView = inflater.inflate(R.layout.appointment_lounge_fragment, container, false);
 
         final TextView dateTv = rootView.findViewById(R.id.date_tv);
+        final TextView mainTv = rootView.findViewById(R.id.main_tv);
         final MaterialButton backBtn = rootView.findViewById(R.id.back_btn);
         final MaterialButton editBtn = rootView.findViewById(R.id.edit_btn);
-        final String date = ddMMYYYY.format(mViewModel.getCurrentAppointment().getAppointmentDate());
 
+        final Appointment appointment = mViewModel.getCurrentAppointment();
+
+        final String date = ddMMYYYY.format(appointment.getAppointmentDate());
         dateTv.setText(date);
+
+        final String text = getString(R.string.hello) + ' ' +
+                appointment.getPatient().getFirstName() + ",\n" +
+                getString(R.string.lounge_text_1) + appointment.getTherapist().getLastName() +
+                ' ' + getString(R.string.lounge_text_2);
+        mainTv.setText(text);
 
         backBtn.setOnClickListener(new View.OnClickListener() {
             @Override

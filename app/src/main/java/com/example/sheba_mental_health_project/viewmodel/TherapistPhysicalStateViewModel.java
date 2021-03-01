@@ -76,7 +76,7 @@ public class TherapistPhysicalStateViewModel extends ViewModel {
         return mRepository.getCurrentAppointment();
     }
 
-
-
-
+    public void removeGetAllPainPointsListener() {
+        mRepository.removeGetAllPainPointsListener();
+    }
 }

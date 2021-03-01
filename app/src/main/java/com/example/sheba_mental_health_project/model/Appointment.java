@@ -18,7 +18,6 @@ public class Appointment implements Serializable {
     private Therapist mTherapist;
     private Patient mPatient;
    // private MentalState mPatientMentalState;
-//    private PhysicalState mPatientPhysicalState;
     private Map<String, List<PainPoint>> mPainPointsOfBodyPartMap = new HashMap<>();
     private List<String> mAnswers = new ArrayList<>();
     private Map<String, Integer> mFeelingsAnswersMap = new HashMap<>();

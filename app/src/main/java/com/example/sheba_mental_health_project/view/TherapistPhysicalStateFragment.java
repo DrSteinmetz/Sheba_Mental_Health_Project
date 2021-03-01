@@ -32,11 +32,13 @@ import java.util.List;
 
 public class TherapistPhysicalStateFragment extends Fragment {
 
-    private final String TAG = " TherapistFragment";
-
     private TherapistPhysicalStateViewModel mViewModel;
+
     private RecyclerView mRecyclerView;
     private TherapistPhysicalStateAdapter mTherapistPhysicalStateAdapter;
+
+    private final String TAG = "TherapistFragment";
+
 
     public static TherapistPhysicalStateFragment newInstance() {
         return new TherapistPhysicalStateFragment();
@@ -52,13 +54,13 @@ public class TherapistPhysicalStateFragment extends Fragment {
         final Observer<List <PainPoint>> onGetTherapistPhysicalStateSucceed = new Observer<List<PainPoint>>() {
             @Override
             public void onChanged(List<PainPoint> painPoints) {
-                for( int i=0; i<painPoints.size(); i++){
-                    if(painPoints.get(i).getPainLocation() == PainLocationEnum.Mouth){
+                for (int i = 0; i < painPoints.size(); i++) {
+                    if (painPoints.get(i).getPainLocation() == PainLocationEnum.Mouth) {
                         painPoints.remove(painPoints.get(i));
                     }
                 }
 
-                mTherapistPhysicalStateAdapter = new TherapistPhysicalStateAdapter(requireContext(),painPoints);
+                mTherapistPhysicalStateAdapter = new TherapistPhysicalStateAdapter(requireContext(), painPoints);
                 mRecyclerView.setAdapter(mTherapistPhysicalStateAdapter);
             }
         };
@@ -88,15 +90,13 @@ public class TherapistPhysicalStateFragment extends Fragment {
 
         mViewModel.getPainPoints(mViewModel.getCurrentAppointment());
 
-
         return rootView;
     }
 
     @Override
-    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
-        super.onActivityCreated(savedInstanceState);
-        mViewModel = new ViewModelProvider(this).get(TherapistPhysicalStateViewModel.class);
-        // TODO: Use the ViewModel
-    }
+    public void onDestroy() {
+        super.onDestroy();
 
+        mViewModel.removeGetAllPainPointsListener();
+    }
 }

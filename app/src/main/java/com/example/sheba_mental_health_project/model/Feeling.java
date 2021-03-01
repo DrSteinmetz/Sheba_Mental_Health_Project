@@ -1,7 +1,5 @@
 package com.example.sheba_mental_health_project.model;
 
-import android.graphics.drawable.Drawable;
-
 import java.io.Serializable;
 
 public class Feeling implements Serializable {
