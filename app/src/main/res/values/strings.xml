@@ -6,8 +6,16 @@
 
     <string name="choose">Choose…</string>
 
+    <string name="physical_state">Physical State</string>
+    <string name="pain_location_tv">Pain Location:</string>
+    <string name="pain_strength_tv">Pain Strength:</string>
+    <string name="pain_type_tv">Pain Type:</string>
+    <string name="pain_frequency_tv">Pain Frequency:</string>
+    <string name="other_feelings_tv">Other Feelings:</string>
+    <string name="description_tv">Description:</string>
+
     <string name="mental_state">Mental State</string>
-    <string name="mental_state_cell_feeling_strength">Feeling Strength:</string>
+    <string name="feeling_strength_tv">Feeling Strength:</string>
 
     <!-- Pain Types -->
     <string name="sharp">Sharp</string>
@@ -87,5 +95,62 @@
     <string name="enabled">Enabled</string>
     <string name="disabled">Disabled</string>
     <string name="about">About</string>
+
+    <!-- Pain Points Locations -->
+    <string name="scalp">Scalp</string>
+    <string name="forehead">Forehead</string>
+    <string name="nose">Nose</string>
+    <string name="right_eye">Right Eye</string>
+    <string name="left_eye">Left Eye</string>
+    <string name="right_ear">Right Ear</string>
+    <string name="left_ear">Left Ear</string>
+    <string name="mouth">Mouth</string>
+    <string name="pharynx">Pharynx</string>
+    <string name="tongue">Tongue</string>
+    <string name="palate">Palate</string>
+    <string name="teeth">Teeth</string>
+    <string name="lips">Lips</string>
+    <string name="neck">Neck</string>
+    <string name="nape">Nape</string>
+    <string name="right_shoulder">Right Shoulder</string>
+    <string name="left_shoulder">Left Shoulder</string>
+    <string name="right_arm">Right Arm</string>
+    <string name="left_arm">Left Arm</string>
+    <string name="right_elbow">Right Elbow</string>
+    <string name="left_elbow">Left Elbow</string>
+    <string name="right_forearm">Right Forearm</string>
+    <string name="left_forearm">Left Forearm</string>
+    <string name="right_wrist">Right Wrist</string>
+    <string name="left_wrist">Left Wrist</string>
+    <string name="right_palm">Right Palm</string>
+    <string name="left_palm">Left Palm</string>
+    <string name="right_fingers">Right Fingers</string>
+    <string name="left_fingers">Left Fingers</string>
+    <string name="upper_back">Upper Back</string>
+    <string name="lower_back">Lower Back</string>
+    <string name="upper_right_abdomen">Upper Right Abdomen</string>
+    <string name="upper_left_abdomen">Upper Left Abdomen</string>
+    <string name="navel">Navel</string>
+    <string name="lower_right_abdomen">Lower Right Abdomen</string>
+    <string name="lower_left_abdomen">Lower Left Abdomen</string>
+    <string name="chest">Chest</string>
+    <string name="breast">Breast</string>
+    <string name="right_thigh">Right Thigh</string>
+    <string name="left_thigh">Left Thigh</string>
+    <string name="right_knee">Right Knee</string>
+    <string name="left_knee">Left Knee</string>
+    <string name="right_shin">Right Shin</string>
+    <string name="left_shin">Left Shin</string>
+    <string name="right_ankle">Right Ankle</string>
+    <string name="left_ankle">Left Ankle</string>
+    <string name="right_foot">Right Foot</string>
+    <string name="left_foot">Left Foot</string>
+    <string name="right_toes">Right Toes</string>
+    <string name="left_toes">Left Toes</string>
+    <string name="anus">Anus</string>
+    <string name="vagina">Vagina</string>
+    <string name="penis">Penis</string>
+    <string name="testicles">Testicles</string>
+    <string name="private_part">Private Part</string>
 
 </resources>

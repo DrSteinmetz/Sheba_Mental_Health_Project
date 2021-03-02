@@ -71,6 +71,7 @@ public class MentalPatientAdapter extends RecyclerView.Adapter<MentalPatientAdap
     public MentalPatientViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         final View view = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.mental_patient_state_cell_layout, null);
+
         return new MentalPatientViewHolder(view);
     }
 

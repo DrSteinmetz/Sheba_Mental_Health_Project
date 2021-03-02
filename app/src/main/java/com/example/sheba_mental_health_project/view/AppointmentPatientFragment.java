@@ -27,7 +27,11 @@ import java.util.Locale;
 public class AppointmentPatientFragment extends Fragment {
 
     private AppointmentPatientViewModel mViewModel;
-    final SimpleDateFormat ddMMYYYY = new SimpleDateFormat("dd.MM.yyyy", Locale.getDefault());
+
+    private final SimpleDateFormat ddMMYYYY = new SimpleDateFormat("dd.MM.yyyy", Locale.getDefault());
+
+    private final String TAG = "AppointmentPatientFragment";
+
 
     public static AppointmentPatientFragment newInstance(Appointment appointment) {
             AppointmentPatientFragment fragment = new AppointmentPatientFragment();
@@ -68,7 +72,8 @@ public class AppointmentPatientFragment extends Fragment {
                     .getSerializable("appointment");
 
             getChildFragmentManager().beginTransaction()
-                    .add(R.id.character_container, CharacterFragment.newInstance(appointment, false))
+                    .add(R.id.character_container, CharacterFragment.newInstance(appointment,
+                            false, false))
                     .commit();
         }
     }

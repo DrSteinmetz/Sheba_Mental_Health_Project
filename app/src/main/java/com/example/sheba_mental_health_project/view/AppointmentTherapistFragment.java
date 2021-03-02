@@ -62,7 +62,7 @@ public class AppointmentTherapistFragment extends Fragment {
         getChildFragmentManager().beginTransaction()
                 .add(R.id.character_container,
                         CharacterFragment.newInstance(mViewModel.getCurrentAppointment(),
-                                false))
+                                false, true))
                 .commit();
     }
 
@@ -130,6 +130,7 @@ public class AppointmentTherapistFragment extends Fragment {
                 warningDialog.show();
             }
         });
+
         return rootView;
     }
 }

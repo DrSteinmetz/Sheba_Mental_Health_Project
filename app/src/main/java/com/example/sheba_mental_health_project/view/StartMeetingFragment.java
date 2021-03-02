@@ -32,15 +32,16 @@ import java.text.SimpleDateFormat;
 
 public class StartMeetingFragment extends Fragment {
 
-    private final String TAG = "StartMeetingFragment";
-
     private StartMeetingViewModel mViewModel;
 
+    private RelativeLayout mMainLayout;
     private TextView mDateTv;
     private TextView mTherapistNameTv;
     private TextView mPatientNameTv;
     private TextView mNoMeetingTv;
-    private RelativeLayout mMainLayout;
+
+    private final String TAG = "StartMeetingFragment";
+
 
     public interface StartMeetingTherapistInterface {
         void onTherapistStartMeetingClicked();
@@ -82,7 +83,8 @@ public class StartMeetingFragment extends Fragment {
                 mNoMeetingTv.setVisibility(View.GONE);
 
                 getChildFragmentManager().beginTransaction()
-                        .add(R.id.character_container, CharacterFragment.newInstance(appointment, false))
+                        .add(R.id.character_container, CharacterFragment.newInstance(appointment,
+                                false, false))
                         .commit();
             }
         };

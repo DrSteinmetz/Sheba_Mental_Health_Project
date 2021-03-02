@@ -28,7 +28,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@+id/feeling_name_tv"
-            android:text="@string/mental_state_cell_feeling_strength"
+            android:text="@string/feeling_strength_tv"
             android:textSize="17sp"
             android:textColor="@color/black"
             android:textAllCaps="false"

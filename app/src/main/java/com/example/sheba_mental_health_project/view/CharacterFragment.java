@@ -1,30 +1,29 @@
 package com.example.sheba_mental_health_project.view;
 
-import androidx.lifecycle.Observer;
-import androidx.lifecycle.ViewModelProvider;
-
 import android.content.Context;
 import android.os.Bundle;
-
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.fragment.app.Fragment;
-
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewTreeObserver;
 import android.widget.ImageView;
+import android.widget.PopupWindow;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.fragment.app.Fragment;
+import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProvider;
 
 import com.example.sheba_mental_health_project.R;
 import com.example.sheba_mental_health_project.model.Appointment;
 import com.example.sheba_mental_health_project.model.PainPoint;
-import com.example.sheba_mental_health_project.model.enums.BodyPartEnum;
+import com.example.sheba_mental_health_project.model.ViewModelFactory;
 import com.example.sheba_mental_health_project.model.enums.PainLocationEnum;
 import com.example.sheba_mental_health_project.model.enums.ViewModelEnum;
-import com.example.sheba_mental_health_project.model.ViewModelFactory;
 import com.example.sheba_mental_health_project.viewmodel.CharacterViewModel;
 
 import org.jetbrains.annotations.NotNull;
@@ -41,7 +40,10 @@ public class CharacterFragment extends Fragment {
 
     private ImageView mCharacterIv;
 
+    private PopupWindow mPreviousPopupWindow;
+
     private boolean mIsClickable;
+    private boolean mIsPainPointClickable;
 
     private final String TAG = "CharacterFragment";
 
@@ -58,11 +60,13 @@ public class CharacterFragment extends Fragment {
     private CharacterFragmentInterface listener;
 
     public static CharacterFragment newInstance(final Appointment appointment,
-                                                final boolean isClickable) {
+                                                final boolean isClickable,
+                                                final boolean isPainPointClickable) {
         CharacterFragment fragment = new CharacterFragment();
         Bundle args = new Bundle();
         args.putSerializable("appointment", appointment);
         args.putBoolean("is_clickable", isClickable);
+        args.putBoolean("is_pain_point_clickable", isPainPointClickable);
         fragment.setArguments(args);
         return fragment;
     }
@@ -87,6 +91,7 @@ public class CharacterFragment extends Fragment {
 
         if (getArguments() != null) {
             mIsClickable = getArguments().getBoolean("is_clickable", true);
+            mIsPainPointClickable = getArguments().getBoolean("is_pain_point_clickable", false);
             mViewModel.setAppointment((Appointment) getArguments().getSerializable("appointment"));
         }
 
@@ -94,6 +99,10 @@ public class CharacterFragment extends Fragment {
             @Override
             public void onChanged(Map<String, List<PainPoint>> map) {
                 showPainPoints();
+
+                if (mIsPainPointClickable) {
+                    initializePainPointsPopupWindow();
+                }
             }
         };
 
@@ -194,6 +203,8 @@ public class CharacterFragment extends Fragment {
                     }
                 }
             });
+        } else if (mIsPainPointClickable) {
+            initializePainPointsPopupWindow();
         }
 
         mViewModel.getAllPainPoints();
@@ -253,6 +264,77 @@ public class CharacterFragment extends Fragment {
         mLocationToIvMap.put(PainLocationEnum.LeftFoot, rootView.findViewById(R.id.right_foot_iv));
         mLocationToIvMap.put(PainLocationEnum.RightToes, rootView.findViewById(R.id.left_toes_iv));
         mLocationToIvMap.put(PainLocationEnum.LeftToes, rootView.findViewById(R.id.right_toes_iv));
+    }
+
+    private void initializePainPointsPopupWindow() {
+        for (Map.Entry<PainLocationEnum, ImageView> entry : mLocationToIvMap.entrySet()) {
+            if (mViewModel.getPainPointsMap().containsKey(entry.getKey())) {
+                final ImageView iv = entry.getValue();
+                final PainPoint painPoint = mViewModel.getPainPointsMap().get(entry.getKey());
+
+                final PopupWindow painPointWindow;
+                final LayoutInflater inflater = getLayoutInflater();
+                final View view = inflater.inflate(R.layout.pain_point_popup_window, null);
+
+                final TextView painLocationTv = view.findViewById(R.id.pain_location_tv);
+                final TextView painStrengthTv = view.findViewById(R.id.pain_strength_tv);
+                final TextView painTypeTitleTv = view.findViewById(R.id.pain_type_title_tv);
+                final TextView painTypeTv = view.findViewById(R.id.pain_type_tv);
+                final TextView painFrequencyTitleTv = view.findViewById(R.id.pain_frequency_title_tv);
+                final TextView painFrequencyTv = view.findViewById(R.id.pain_frequency_tv);
+                final TextView otherFeelingTitleTv = view.findViewById(R.id.other_feelings_title_tv);
+                final TextView otherFeelingTv = view.findViewById(R.id.other_feelings_tv);
+                final TextView descriptionTitleTv = view.findViewById(R.id.description_title_tv);
+                final TextView descriptionTv = view.findViewById(R.id.description_tv);
+
+                painLocationTv.setText(painPoint.getPainPointLocationLocalString(getContext()));
+
+                painStrengthTv.setText(painPoint.getPainStrength() + "");
+                painStrengthTv.setTextColor(painPoint.getColor());
+
+                final String painTypeTxt = painPoint.getPainPointTypeLocalString(getContext());
+                painTypeTv.setText(painTypeTxt);
+                painTypeTv.setVisibility(painTypeTxt.isEmpty() ? View.GONE : View.VISIBLE);
+                painTypeTitleTv.setVisibility(painTypeTv.getVisibility());
+
+                final String painFrequencyTxt = painPoint.getPainPointFrequencyLocalString(getContext());
+                painFrequencyTv.setText(painFrequencyTxt);
+                painFrequencyTv.setVisibility(painFrequencyTxt.isEmpty() ? View.GONE : View.VISIBLE);
+                painFrequencyTitleTv.setVisibility(painFrequencyTv.getVisibility());
+
+                final String otherFeelingTxt = painPoint.getOtherFeelingLocalString(getContext());
+                otherFeelingTv.setText(otherFeelingTxt);
+                otherFeelingTv.setVisibility(otherFeelingTxt.isEmpty() ? View.GONE : View.VISIBLE);
+                otherFeelingTitleTv.setVisibility(otherFeelingTv.getVisibility());
+
+                final String descriptionTxt = painPoint.getDescription().isEmpty() ? ""
+                        : painPoint.getDescription();
+                descriptionTv.setText(descriptionTxt);
+                descriptionTv.setVisibility(descriptionTxt.isEmpty() ? View.GONE : View.VISIBLE);
+                descriptionTitleTv.setVisibility(descriptionTv.getVisibility());
+
+                painPointWindow = new PopupWindow(view, RelativeLayout.LayoutParams.WRAP_CONTENT,
+                        RelativeLayout.LayoutParams.WRAP_CONTENT, true);
+
+                painPointWindow.getContentView().setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        painPointWindow.dismiss();
+                    }
+                });
+
+                iv.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        if (mPreviousPopupWindow != null && mPreviousPopupWindow.isShowing()) {
+                            mPreviousPopupWindow.dismiss();
+                        }
+                        mPreviousPopupWindow = painPointWindow;
+                        painPointWindow.showAsDropDown(v);
+                    }
+                });
+            }
+        }
     }
 
     private void showPainPoints() {

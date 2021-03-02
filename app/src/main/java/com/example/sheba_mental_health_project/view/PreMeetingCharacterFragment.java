@@ -94,7 +94,7 @@ public class PreMeetingCharacterFragment extends Fragment {
         getChildFragmentManager().beginTransaction()
                 .add(R.id.character_container,
                         CharacterFragment.newInstance(mViewModel.getCurrentAppointment(),
-                                true))
+                                true, false))
                 .commit();
 
         finishBtn.setOnClickListener(new View.OnClickListener() {

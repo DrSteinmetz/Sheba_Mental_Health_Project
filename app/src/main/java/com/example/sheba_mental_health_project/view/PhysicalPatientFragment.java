@@ -1,24 +1,20 @@
 package com.example.sheba_mental_health_project.view;
 
-import androidx.lifecycle.ViewModelProvider;
-
 import android.content.Context;
 import android.os.Bundle;
-
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.fragment.app.Fragment;
-
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProvider;
+
 import com.example.sheba_mental_health_project.R;
 import com.example.sheba_mental_health_project.model.ViewModelFactory;
-import com.example.sheba_mental_health_project.model.enums.PainTypeEnum;
 import com.example.sheba_mental_health_project.model.enums.ViewModelEnum;
 import com.example.sheba_mental_health_project.viewmodel.PhysicalPatientViewModel;
-import com.example.sheba_mental_health_project.viewmodel.RightArmViewModel;
 import com.google.android.material.button.MaterialButton;
 
 public class PhysicalPatientFragment extends Fragment {
@@ -32,7 +28,7 @@ public class PhysicalPatientFragment extends Fragment {
         void onHomeBtnClicked();
     }
 
-    private PhysicalPatientFragment.PhysicalPatientFragmentInterface listener;
+    private PhysicalPatientFragmentInterface listener;
 
     public static PhysicalPatientFragment newInstance() {
         return new PhysicalPatientFragment();
@@ -43,7 +39,7 @@ public class PhysicalPatientFragment extends Fragment {
         super.onAttach(context);
 
         try {
-            listener = (PhysicalPatientFragment.PhysicalPatientFragmentInterface) context;
+            listener = (PhysicalPatientFragmentInterface) context;
         } catch (Exception ex) {
             throw new ClassCastException("The Activity Must Implements PhysicalPatientFragmentInterface listener!");
         }
@@ -59,7 +55,7 @@ public class PhysicalPatientFragment extends Fragment {
         getChildFragmentManager().beginTransaction()
                 .add(R.id.character_container,
                         CharacterFragment.newInstance(mViewModel.getCurrentAppointment(),
-                                true))
+                                true, false))
                 .commit();
     }
 

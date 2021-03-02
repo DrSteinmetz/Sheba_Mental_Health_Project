@@ -1,7 +1,10 @@
 package com.example.sheba_mental_health_project.model;
 
+import android.content.Context;
+
 import androidx.annotation.Nullable;
 
+import com.example.sheba_mental_health_project.R;
 import com.example.sheba_mental_health_project.model.enums.PainFrequencyEnum;
 import com.example.sheba_mental_health_project.model.enums.PainLocationEnum;
 import com.example.sheba_mental_health_project.model.enums.PainOtherFeelingsEnum;
@@ -21,16 +24,16 @@ public class PainPoint implements Serializable {
 
     public PainPoint() {}
 
+    public PainPoint(PainLocationEnum mPainLocation) {
+        this.mPainLocation = mPainLocation;
+    }
+
     public PainPoint(int painStrength, PainLocationEnum location,
                      PainTypeEnum painType, PainFrequencyEnum frequency) {
         this.mPainStrength = painStrength;
         this.mPainLocation = location;
         this.mPainType = painType;
         this.mFrequency = frequency;
-    }
-
-    public PainPoint(PainLocationEnum mPainLocation) {
-        this.mPainLocation = mPainLocation;
     }
 
     public PainPoint(final PainPoint originalPainPoint) {
@@ -55,12 +58,22 @@ public class PainPoint implements Serializable {
         return mPainLocation;
     }
 
+    public String getPainPointLocationLocalString(final Context context) {
+        final String[] painPoints = context.getResources().getStringArray(R.array.pain_points);
+        return painPoints[getPainLocation().ordinal()];
+    }
+
     public void setPainLocation(PainLocationEnum mPainLocation) {
         this.mPainLocation = mPainLocation;
     }
 
     public PainTypeEnum getPainType() {
         return mPainType;
+    }
+
+    public String getPainPointTypeLocalString(final Context context) {
+        final String[] painTypes = context.getResources().getStringArray(R.array.pain_types);
+        return (getPainType() != null ? painTypes[getPainType().ordinal()] : "");
     }
 
     public void setPainType(PainTypeEnum mPainType) {
@@ -71,12 +84,22 @@ public class PainPoint implements Serializable {
         return mFrequency;
     }
 
+    public String getPainPointFrequencyLocalString(final Context context) {
+        final String[] painFrequencies = context.getResources().getStringArray(R.array.pain_frequencies);
+        return (getFrequency() != null ? painFrequencies[getFrequency().ordinal()] : "");
+    }
+
     public void setFrequency(PainFrequencyEnum mFrequency) {
         this.mFrequency = mFrequency;
     }
 
     public PainOtherFeelingsEnum getOtherFeeling() {
         return mOtherFeeling;
+    }
+
+    public String getOtherFeelingLocalString(final Context context) {
+        final String[] otherFeelings = context.getResources().getStringArray(R.array.other_feelings);
+        return (getOtherFeeling() != null ? otherFeelings[getOtherFeeling().ordinal()] : "");
     }
 
     public void setOtherFeeling(PainOtherFeelingsEnum mOtherFeeling) {
