@@ -265,6 +265,20 @@
 
         </LinearLayout>
 
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/delete_pain_point_fab"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:fabSize="mini"
+            android:layout_alignParentBottom="true"
+            android:contentDescription="@string/delete"
+            android:tooltipText="@string/delete"
+            android:layout_margin="10dp"
+            android:visibility="gone"
+            app:tint="@color/light_blue"
+            app:backgroundTint="@color/white"
+            android:src="@drawable/ic_round_delete_black_24" />
+
     </RelativeLayout>
 
     <ScrollView

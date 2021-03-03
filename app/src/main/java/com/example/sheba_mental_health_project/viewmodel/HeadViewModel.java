@@ -24,7 +24,11 @@ public class HeadViewModel extends ViewModel {
     private MutableLiveData<PainPoint> mSetPainPointsSucceed;
     private MutableLiveData<String> mSetPainPointsFailed;
 
+    private MutableLiveData<PainPoint> mDeletePainPointSucceed;
+    private MutableLiveData<String> mDeletePainPointFailed;
+
     private final String TAG = "HeadViewModel";
+
 
     public HeadViewModel(final Context context) {
         mRepository = Repository.getInstance(context);
@@ -67,6 +71,45 @@ public class HeadViewModel extends ViewModel {
         });
     }
 
+    public MutableLiveData<PainPoint> getDeletePainPointSucceed() {
+        if (mDeletePainPointSucceed == null) {
+            mDeletePainPointSucceed = new MutableLiveData<>();
+            attachDeletePainPointListener();
+        }
+        return mDeletePainPointSucceed;
+    }
+
+    public MutableLiveData<String> getDeletePainPointFailed() {
+        if (mDeletePainPointFailed == null) {
+            mDeletePainPointFailed = new MutableLiveData<>();
+            attachDeletePainPointListener();
+        }
+        return mDeletePainPointFailed;
+    }
+
+    private void attachDeletePainPointListener() {
+        mRepository.setDeletePainPointInterface(new Repository.RepositoryDeletePainPointInterface() {
+            @Override
+            public void onDeletePainPointSucceed(PainPoint painPoint) {
+                mPainPointsMap.remove(painPoint.getPainLocation());
+
+                mPainPointsMouthMap.remove(painPoint.getPainLocation());
+                if (mPainPointsMouthMap.isEmpty() &&
+                        mPainPointsMap.containsKey(PainLocationEnum.Mouth)) {
+                    mPainPoint.setPainLocation(PainLocationEnum.Mouth);
+                    deletePainPoint();
+                }
+
+                mDeletePainPointSucceed.setValue(painPoint);
+            }
+
+            @Override
+            public void onDeletePainPointFailed(String error) {
+                mDeletePainPointFailed.setValue(error);
+            }
+        });
+    }
+
 
     public PainPoint getPainPoint() {
         return mPainPoint;
@@ -88,21 +131,25 @@ public class HeadViewModel extends ViewModel {
         mRepository.setPainPoints(BodyPartEnum.Head, mPainPoint);
     }
 
-    public void setMouthPainPointMap(){
-        if (mPainPointsMap.containsKey(PainLocationEnum.Pharynx)){
-            mPainPointsMouthMap.put(PainLocationEnum.Pharynx,mPainPointsMap.get(PainLocationEnum.Pharynx));
+    public void setMouthPainPointMap() {
+        if (mPainPointsMap.containsKey(PainLocationEnum.Pharynx)) {
+            mPainPointsMouthMap.put(PainLocationEnum.Pharynx, mPainPointsMap.get(PainLocationEnum.Pharynx));
         }
-        if (mPainPointsMap.containsKey(PainLocationEnum.Teeth)){
-            mPainPointsMouthMap.put(PainLocationEnum.Teeth,mPainPointsMap.get(PainLocationEnum.Teeth));
+
+        if (mPainPointsMap.containsKey(PainLocationEnum.Teeth)) {
+            mPainPointsMouthMap.put(PainLocationEnum.Teeth, mPainPointsMap.get(PainLocationEnum.Teeth));
         }
-        if (mPainPointsMap.containsKey(PainLocationEnum.Lips)){
-            mPainPointsMouthMap.put(PainLocationEnum.Lips,mPainPointsMap.get(PainLocationEnum.Lips));
+
+        if (mPainPointsMap.containsKey(PainLocationEnum.Lips)) {
+            mPainPointsMouthMap.put(PainLocationEnum.Lips, mPainPointsMap.get(PainLocationEnum.Lips));
         }
-        if (mPainPointsMap.containsKey(PainLocationEnum.Tongue)){
-            mPainPointsMouthMap.put(PainLocationEnum.Tongue,mPainPointsMap.get(PainLocationEnum.Tongue));
+
+        if (mPainPointsMap.containsKey(PainLocationEnum.Tongue)) {
+            mPainPointsMouthMap.put(PainLocationEnum.Tongue, mPainPointsMap.get(PainLocationEnum.Tongue));
         }
-        if (mPainPointsMap.containsKey(PainLocationEnum.Palate)){
-            mPainPointsMouthMap.put(PainLocationEnum.Palate,mPainPointsMap.get(PainLocationEnum.Palate));
+
+        if (mPainPointsMap.containsKey(PainLocationEnum.Palate)) {
+            mPainPointsMouthMap.put(PainLocationEnum.Palate, mPainPointsMap.get(PainLocationEnum.Palate));
         }
     }
 
@@ -110,4 +157,7 @@ public class HeadViewModel extends ViewModel {
         return mPainPointsMouthMap;
     }
 
+    public void deletePainPoint() {
+        mRepository.deletePainPoint(BodyPartEnum.Head, mPainPoint);
+    }
 }

@@ -27,6 +27,8 @@ import java.util.EnumMap;
 
 public class GenitalsSubFragment extends Fragment {
 
+    private Context mContext;
+
     private RadioGroup genderRg;
     private RadioGroup maleRg;
     private RadioGroup femaleRg;
@@ -39,18 +41,20 @@ public class GenitalsSubFragment extends Fragment {
     private RadioButton vaginaRb;
     private PainLocationEnum selectedLocation;
 
-    private Context context1;
-
     private EnumMap<PainLocationEnum, PainPoint> mPainPointsGenitalsMap = new EnumMap<>(PainLocationEnum.class);
+
+    private final String TAG = "GenitalsSubFragment";
+
 
     @Override
     public void onAttach(@NonNull Context context) {
         super.onAttach(context);
         listener = (GenitalsFragment) getParentFragment();
-        context1 = context;
+        mContext = context;
     }
 
-    public static GenitalsSubFragment newInstance(EnumMap<PainLocationEnum, PainPoint> mPainPointsGenitalsMap , final BodyPartEnum fragmentName) {
+    public static GenitalsSubFragment newInstance(EnumMap<PainLocationEnum, PainPoint> mPainPointsGenitalsMap,
+                                                  final BodyPartEnum fragmentName) {
         GenitalsSubFragment fragment = new GenitalsSubFragment();
         Bundle args = new Bundle();
         args.putSerializable("genitals_pain_points", mPainPointsGenitalsMap);
@@ -59,14 +63,12 @@ public class GenitalsSubFragment extends Fragment {
         return fragment;
     }
 
-
     public interface GenitalsSubFragmentInterface {
         void onContinueToStrengthBtnClicked(PainLocationEnum painLocationEnum ,int painStrength);
         void onSelectedPainPointColor(int color);
     }
 
     private GenitalsSubFragment.GenitalsSubFragmentInterface listener;
-
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -88,42 +90,42 @@ public class GenitalsSubFragment extends Fragment {
             mPainPointsGenitalsMap  = (EnumMap<PainLocationEnum, PainPoint> ) getArguments()
                     .getSerializable("genitals_pain_points");
 
-            if (mPainPointsGenitalsMap.containsKey(PainLocationEnum.Penis)){
+            if (mPainPointsGenitalsMap.containsKey(PainLocationEnum.Penis)) {
                 int color = mPainPointsGenitalsMap.get(PainLocationEnum.Penis).getColor();
                 listener.onSelectedPainPointColor(color);
             }
 
-            if (mPainPointsGenitalsMap.containsKey(PainLocationEnum.Vagina)){
+            if (mPainPointsGenitalsMap.containsKey(PainLocationEnum.Vagina)) {
                 int color = mPainPointsGenitalsMap.get(PainLocationEnum.Vagina).getColor();
                 listener.onSelectedPainPointColor(color);
             }
-            if (mPainPointsGenitalsMap.containsKey(PainLocationEnum.Penis)){
+
+            if (mPainPointsGenitalsMap.containsKey(PainLocationEnum.Penis)) {
                 PainPoint painPoint = mPainPointsGenitalsMap.get(PainLocationEnum.Penis);
                 int color = painPoint.getColor();
-                Drawable wrappedDrawable = setGenitalsPainPointsColor(color,R.drawable.ic_penis);
-                penisRb.setCompoundDrawablesWithIntrinsicBounds(null,null,null,wrappedDrawable);
+                Drawable wrappedDrawable = setGenitalsPainPointsColor(color, R.drawable.ic_penis);
+                penisRb.setCompoundDrawablesWithIntrinsicBounds(null, null, null, wrappedDrawable);
             }
 
-            if (mPainPointsGenitalsMap.containsKey(PainLocationEnum.Testicles)){
+            if (mPainPointsGenitalsMap.containsKey(PainLocationEnum.Testicles)) {
                 PainPoint painPoint = mPainPointsGenitalsMap.get(PainLocationEnum.Testicles);
                 int color = painPoint.getColor();
-                Drawable wrappedDrawable = setGenitalsPainPointsColor(color,R.drawable.ic_testicles);
-                testiclesRb.setCompoundDrawablesWithIntrinsicBounds(null,null,null,wrappedDrawable);
+                Drawable wrappedDrawable = setGenitalsPainPointsColor(color, R.drawable.ic_testicles);
+                testiclesRb.setCompoundDrawablesWithIntrinsicBounds(null, null, null, wrappedDrawable);
             }
 
-            if (mPainPointsGenitalsMap.containsKey(PainLocationEnum.Vagina)){
+            if (mPainPointsGenitalsMap.containsKey(PainLocationEnum.Vagina)) {
                 PainPoint painPoint = mPainPointsGenitalsMap.get(PainLocationEnum.Vagina);
                 int color = painPoint.getColor();
-                Drawable wrappedDrawable = setGenitalsPainPointsColor(color,R.drawable.ic_vagina);
-                vaginaRb.setCompoundDrawablesWithIntrinsicBounds(null,null,null,wrappedDrawable);
+                Drawable wrappedDrawable = setGenitalsPainPointsColor(color, R.drawable.ic_vagina);
+                vaginaRb.setCompoundDrawablesWithIntrinsicBounds(null, null, null, wrappedDrawable);
             }
         }
-
 
         maleRg.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(RadioGroup group, int checkedId) {
-                switch (checkedId){
+                switch (checkedId) {
                     case R.id.penis:
                        selectedLocation = PainLocationEnum.Penis;
                        break;
@@ -131,17 +133,15 @@ public class GenitalsSubFragment extends Fragment {
                         selectedLocation = PainLocationEnum.Testicles;
                         break;
                 }
-
             }
         });
-
 
         genderRg.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(RadioGroup group, int checkedId) {
                 chooseTitleTv.setVisibility(View.VISIBLE);
                 continueBtn.setVisibility(View.VISIBLE);
-                switch (checkedId){
+                switch (checkedId) {
                     case R.id.male_Rb:
                       maleLayout.setVisibility(View.VISIBLE);
                       femaleLayout.setVisibility(View.INVISIBLE);
@@ -155,36 +155,29 @@ public class GenitalsSubFragment extends Fragment {
                         vaginaRb.setChecked(true);
                         selectedLocation = PainLocationEnum.Vagina;
                         break;
-
                 }
             }
         });
-
 
         continueBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(mPainPointsGenitalsMap.containsKey(selectedLocation)){
-                   int painStrength = mPainPointsGenitalsMap.get(selectedLocation).getPainStrength();
-                    listener.onContinueToStrengthBtnClicked(selectedLocation,painStrength);
+                if (mPainPointsGenitalsMap.containsKey(selectedLocation)) {
+                    int painStrength = mPainPointsGenitalsMap.get(selectedLocation).getPainStrength();
+                    listener.onContinueToStrengthBtnClicked(selectedLocation, painStrength);
+                } else {
+                    listener.onContinueToStrengthBtnClicked(selectedLocation, 0);
                 }
-                else{
-                    listener.onContinueToStrengthBtnClicked(selectedLocation,0);
-                }
-
             }
         });
-
-
-
 
         return rootView;
     }
 
-    public Drawable setGenitalsPainPointsColor(int color, int drawable){
-        Drawable unwrappedDrawable = AppCompatResources.getDrawable(context1, drawable);
+    public Drawable setGenitalsPainPointsColor(int color, int drawable) {
+        Drawable unwrappedDrawable = AppCompatResources.getDrawable(mContext, drawable);
         Drawable wrappedDrawable = DrawableCompat.wrap(unwrappedDrawable);
-        DrawableCompat.setTint(wrappedDrawable,color);
+        DrawableCompat.setTint(wrappedDrawable, color);
         return  wrappedDrawable;
     }
 }

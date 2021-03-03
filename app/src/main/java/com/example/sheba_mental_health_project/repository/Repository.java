@@ -135,7 +135,7 @@ public class Repository {
 
     private RepositoryAddAppointmentInterface mRepositoryAddAppointmentListener;
 
-    public void setAddAppointmentInterface(RepositoryAddAppointmentInterface repositoryAddAppointmentListener){
+    public void setAddAppointmentInterface(RepositoryAddAppointmentInterface repositoryAddAppointmentListener) {
         this.mRepositoryAddAppointmentListener = repositoryAddAppointmentListener;
     }
 
@@ -147,7 +147,7 @@ public class Repository {
 
     private RepositoryGetLastAppointmentInterface mGetLastAppointmentInterface;
 
-    public void setGetLastAppointmentInterface(RepositoryGetLastAppointmentInterface lastAppointmentInterface){
+    public void setGetLastAppointmentInterface(RepositoryGetLastAppointmentInterface lastAppointmentInterface) {
         this.mGetLastAppointmentInterface = lastAppointmentInterface;
     }
 
@@ -160,8 +160,21 @@ public class Repository {
 
     private RepositorySetPainPointsInterface mRepositorySetPainPointsListener;
 
-    public void setSetPainPointsInterface(RepositorySetPainPointsInterface repositorySetPainPointsInterface){
+    public void setSetPainPointsInterface(RepositorySetPainPointsInterface repositorySetPainPointsInterface) {
         this.mRepositorySetPainPointsListener = repositorySetPainPointsInterface;
+    }
+
+    /*<------ Delete Pain Point ------>*/
+    public interface RepositoryDeletePainPointInterface {
+        void onDeletePainPointSucceed(PainPoint painPoint);
+
+        void onDeletePainPointFailed(String error);
+    }
+
+    private RepositoryDeletePainPointInterface mRepositoryDeletePainPointListener;
+
+    public void setDeletePainPointInterface(RepositoryDeletePainPointInterface repositoryDeletePainPointInterface) {
+        this.mRepositoryDeletePainPointListener = repositoryDeletePainPointInterface;
     }
 
     /*<------ Get Questions of Page ------>*/
@@ -173,7 +186,7 @@ public class Repository {
 
     private RepositoryGetQuestionsOfPageInterface mRepositoryGetQuestionsOfPageListener;
 
-    public void setGetQuestionsOfPageInterface(RepositoryGetQuestionsOfPageInterface repositoryGetQuestionsOfPageInterface){
+    public void setGetQuestionsOfPageInterface(RepositoryGetQuestionsOfPageInterface repositoryGetQuestionsOfPageInterface) {
         this.mRepositoryGetQuestionsOfPageListener = repositoryGetQuestionsOfPageInterface;
     }
 
@@ -186,7 +199,7 @@ public class Repository {
 
     private RepositoryGetFeelingsAnswersInterface mRepositoryGetFeelingsAnswersListener;
 
-    public void setGetFeelingsAnswersInterface(RepositoryGetFeelingsAnswersInterface repositoryGetFeelingsAnswersInterface){
+    public void setGetFeelingsAnswersInterface(RepositoryGetFeelingsAnswersInterface repositoryGetFeelingsAnswersInterface) {
         this.mRepositoryGetFeelingsAnswersListener = repositoryGetFeelingsAnswersInterface;
     }
 
@@ -199,7 +212,7 @@ public class Repository {
 
     private RepositoryGetPatientFeelingsInterface mRepositoryGetPatientFeelingsListener;
 
-    public void setGetPatientFeelingsInterface(RepositoryGetPatientFeelingsInterface repositoryGetPatientFeelingsInterface){
+    public void setGetPatientFeelingsInterface(RepositoryGetPatientFeelingsInterface repositoryGetPatientFeelingsInterface) {
         this.mRepositoryGetPatientFeelingsListener = repositoryGetPatientFeelingsInterface;
     }
 
@@ -419,7 +432,7 @@ public class Repository {
 
     public void setPainPoints(final BodyPartEnum bodyPart, final PainPoint painPoint) {
         final Map<String, List<PainPoint>> map =  mCurrentAppointment.getPainPointsOfBodyPartMap();
-        List<PainPoint> painPoints = mCurrentAppointment.getPainPointsOfBodyPartMap().get(bodyPart.name());
+        List<PainPoint> painPoints = map.get(bodyPart.name());
         if (painPoints == null) {
             painPoints = new ArrayList<>();
             painPoints.add(painPoint);
@@ -449,6 +462,36 @@ public class Repository {
                             Log.w(TAG, "onComplete: ", task.getException());
                             if (mRepositorySetPainPointsListener != null) {
                                 mRepositorySetPainPointsListener.onSetPainPointsFailed(error);
+                            }
+                        }
+                    }
+                });
+    }
+
+    public void deletePainPoint(final BodyPartEnum bodyPart, final PainPoint painPoint) {
+        final Map<String, List<PainPoint>> map =  mCurrentAppointment.getPainPointsOfBodyPartMap();
+        List<PainPoint> painPoints = map.get(bodyPart.name());
+
+        if (painPoints != null) {
+            painPoints.remove(painPoint);
+        }
+
+        mCloudDB.collection(APPOINTMENTS)
+                .document(mCurrentAppointment.getId())
+                .update("painPointsOfBodyPartMap", map)
+                .addOnCompleteListener(new OnCompleteListener<Void>() {
+                    @Override
+                    public void onComplete(@NonNull Task<Void> task) {
+                        if (task.isSuccessful()) {
+                            if (mRepositoryDeletePainPointListener != null) {
+                                mRepositoryDeletePainPointListener.onDeletePainPointSucceed(painPoint);
+                            }
+                        } else {
+                            final String error = Objects.requireNonNull(task.getException())
+                                    .getMessage();
+                            Log.w(TAG, "onComplete: ", task.getException());
+                            if (mRepositoryDeletePainPointListener != null) {
+                                mRepositoryDeletePainPointListener.onDeletePainPointFailed(error);
                             }
                         }
                     }

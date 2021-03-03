@@ -5,6 +5,10 @@
     <string name="no">No</string>
 
     <string name="choose">Choose…</string>
+    <string name="delete">Delete</string>
+    <string name="pain_point_deletion_prompt">Are You Sure You Want To Permanently Delete This Point?</string>
+    <string name="pain_point_deleted_prompt">Deleted Successfully</string>
+    <string name="undo">Undo</string>
 
     <string name="physical_state">Physical State</string>
     <string name="pain_location_tv">Pain Location:</string>

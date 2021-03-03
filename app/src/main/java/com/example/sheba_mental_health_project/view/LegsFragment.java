@@ -28,6 +28,8 @@ import com.example.sheba_mental_health_project.model.enums.PainOtherFeelingsEnum
 import com.example.sheba_mental_health_project.model.enums.PainTypeEnum;
 import com.example.sheba_mental_health_project.model.enums.ViewModelEnum;
 import com.example.sheba_mental_health_project.viewmodel.LegsViewModel;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.android.material.snackbar.Snackbar;
 
 import org.jetbrains.annotations.NotNull;
 
@@ -49,6 +51,8 @@ public class LegsFragment extends Fragment implements PainStrengthSubFragment.Pa
     private ImageView mLeftFootIv;
     private ImageView mRightToesIv;
     private ImageView mLeftToesIv;
+
+    private FloatingActionButton deletePainPointFab;
 
     private ImageView mSelectedIv;
 
@@ -92,9 +96,27 @@ public class LegsFragment extends Fragment implements PainStrengthSubFragment.Pa
             }
         };
 
+        final Observer<PainPoint> onDeletePainPointSucceed = new Observer<PainPoint>() {
+            @Override
+            public void onChanged(PainPoint painPoint) {
+                if (getView() != null) {
+                    Snackbar.make(getView(), getString(R.string.pain_point_deleted_prompt),
+                            Snackbar.LENGTH_LONG).show();
+                }
+            }
+        };
+
+        final Observer<String> onDeletePainPointFailed = new Observer<String>() {
+            @Override
+            public void onChanged(String error) {
+                Log.e(TAG, "onChanged: " + error);
+            }
+        };
+
         mViewModel.getSetPainPointsSucceed().observe(this, onSetPainPointsSucceed);
         mViewModel.getSetPainPointsFailed().observe(this, onSetPainPointsFailed);
-
+        mViewModel.getDeletePainPointSucceed().observe(this, onDeletePainPointSucceed);
+        mViewModel.getDeletePainPointFailed().observe(this, onDeletePainPointFailed);
     }
 
     @Override
@@ -122,6 +144,8 @@ public class LegsFragment extends Fragment implements PainStrengthSubFragment.Pa
         mLeftFootIv = rootView.findViewById(R.id.left_foot_iv);
         mRightToesIv = rootView.findViewById(R.id.right_toes_iv);
         mLeftToesIv = rootView.findViewById(R.id.left_toes_iv);
+
+        deletePainPointFab = rootView.findViewById(R.id.delete_pain_point_fab);
 
         alphaAnimation.setRepeatCount(Animation.INFINITE);
         alphaAnimation.setRepeatMode(Animation.REVERSE);
@@ -196,6 +220,34 @@ public class LegsFragment extends Fragment implements PainStrengthSubFragment.Pa
             @Override
             public void onClick(View v) {
                 onPainPointViewClicked(mLeftToesIv, PainLocationEnum.LeftToes);
+            }
+        });
+
+
+        deletePainPointFab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                final WarningDialog warningDialog = new WarningDialog(getContext());
+                warningDialog.setPromptText(getString(R.string.pain_point_deletion_prompt));
+                warningDialog.setOnActionListener(new WarningDialog.WarningDialogActionInterface() {
+                    @Override
+                    public void onYesBtnClicked() {
+                        getChildFragmentManager().popBackStack(SUB_FRAGS_STACK,
+                                FragmentManager.POP_BACK_STACK_INCLUSIVE);
+                        if (mSelectedIv != null) {
+                            mSelectedIv.setAnimation(null);
+                            mSelectedIv.setVisibility(View.GONE);
+                        }
+                        mSelectedIv = null;
+                        deletePainPointFab.hide();
+
+                        mViewModel.deletePainPoint();
+                    }
+
+                    @Override
+                    public void onNoBtnClicked() {}
+                });
+                warningDialog.show();
             }
         });
 
@@ -275,7 +327,7 @@ public class LegsFragment extends Fragment implements PainStrengthSubFragment.Pa
             final PainPoint painPoint = mViewModel.getPainPoint();
 
             openPainStrengthFragment(painPoint.getPainStrength());
-
+            deletePainPointFab.show();
         } else {
             mViewModel.setPainPoint(new PainPoint(painLocationEnum));
             openPainStrengthFragment(0);
@@ -297,6 +349,7 @@ public class LegsFragment extends Fragment implements PainStrengthSubFragment.Pa
                 mSelectedIv.setAnimation(null);
             }
             mSelectedIv = view;
+            deletePainPointFab.hide();
             onPainPointClicked(view, painLocationEnum);
         } else {
             WarningDialog warningDialog = new WarningDialog(requireContext());
@@ -308,12 +361,12 @@ public class LegsFragment extends Fragment implements PainStrengthSubFragment.Pa
                         mSelectedIv.setAnimation(null);
                     }
                     mSelectedIv = view;
+                    deletePainPointFab.hide();
                     onPainPointClicked(view, painLocationEnum);
                 }
 
                 @Override
-                public void onNoBtnClicked() {
-                }
+                public void onNoBtnClicked() {}
             });
             warningDialog.show();
         }

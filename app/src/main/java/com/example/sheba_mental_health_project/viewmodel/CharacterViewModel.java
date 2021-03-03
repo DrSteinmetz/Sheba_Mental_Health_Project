@@ -49,10 +49,11 @@ public class CharacterViewModel extends ViewModel {
         return mGetAllPaintPointsFailed;
     }
 
-    private void attachGetAllPainPointsListener() {
+    public void attachGetAllPainPointsListener() {
         mRepository.setGetAllPainPointsInterface(new Repository.RepositoryGetAllPainPointsInterface() {
             @Override
             public void onGetAllPainPointsSucceed(Map<String, List<PainPoint>> painPointsMap) {
+                mPainPointsMap.clear();
                 for (String key : painPointsMap.keySet()) {
                     for (PainPoint painPoint : painPointsMap.get(key)) {
                         mPainPointsMap.put(painPoint.getPainLocation(), painPoint);

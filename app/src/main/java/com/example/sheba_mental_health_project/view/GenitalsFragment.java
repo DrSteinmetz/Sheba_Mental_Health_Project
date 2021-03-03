@@ -28,6 +28,8 @@ import com.example.sheba_mental_health_project.model.enums.PainOtherFeelingsEnum
 import com.example.sheba_mental_health_project.model.enums.PainTypeEnum;
 import com.example.sheba_mental_health_project.model.enums.ViewModelEnum;
 import com.example.sheba_mental_health_project.viewmodel.GenitalsViewModel;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.android.material.snackbar.Snackbar;
 
 import org.jetbrains.annotations.NotNull;
 
@@ -44,6 +46,8 @@ public class GenitalsFragment extends Fragment
     private GenitalsViewModel mViewModel;
 
     private ImageView mPrivatePartIv;
+
+    private FloatingActionButton deletePainPointFab;
 
     private ImageView mSelectedIv;
 
@@ -96,8 +100,39 @@ public class GenitalsFragment extends Fragment
             }
         };
 
+        final Observer<PainPoint> onDeletePainPointSucceed = new Observer<PainPoint>() {
+            @Override
+            public void onChanged(PainPoint painPoint) {
+                if (getView() != null) {
+                    Snackbar.make(getView(), getString(R.string.pain_point_deleted_prompt),
+                            Snackbar.LENGTH_LONG).show();
+
+                    if (mSelectedIv != null) {
+                        mSelectedIv.setAnimation(null);
+                        if (mSelectedIv.getId() == R.id.mouth_iv) {
+                            /*if (mViewModel.getPainPointsMouthMap().isEmpty()) {
+                                mSelectedIv.setVisibility(View.GONE);
+                            }*/
+                        } else {
+                            mSelectedIv.setVisibility(View.GONE);
+                        }
+                    }
+                    mSelectedIv = null;
+                }
+            }
+        };
+
+        final Observer<String> onDeletePainPointFailed = new Observer<String>() {
+            @Override
+            public void onChanged(String error) {
+                Log.e(TAG, "onChanged: " + error);
+            }
+        };
+
         mViewModel.getSetPainPointsSucceed().observe(this, onSetPainPointsSucceed);
         mViewModel.getSetPainPointsFailed().observe(this, onSetPainPointsFailed);
+        mViewModel.getDeletePainPointSucceed().observe(this, onDeletePainPointSucceed);
+        mViewModel.getDeletePainPointFailed().observe(this, onDeletePainPointFailed);
     }
 
     @Override
@@ -108,16 +143,18 @@ public class GenitalsFragment extends Fragment
         final View genitalsV = rootView.findViewById(R.id.genitals_v);
         mPrivatePartIv = rootView.findViewById(R.id.private_part_iv);
 
+        deletePainPointFab = rootView.findViewById(R.id.delete_pain_point_fab);
+
+        alphaAnimation.setRepeatCount(Animation.INFINITE);
+        alphaAnimation.setRepeatMode(Animation.REVERSE);
+        alphaAnimation.setDuration(700);
+
         genitalsV.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 onPainPointViewClicked(mPrivatePartIv, PainLocationEnum.PrivatePart);
             }
         });
-
-        alphaAnimation.setRepeatCount(Animation.INFINITE);
-        alphaAnimation.setRepeatMode(Animation.REVERSE);
-        alphaAnimation.setDuration(700);
 
         showPainPoints();
 
@@ -138,12 +175,13 @@ public class GenitalsFragment extends Fragment
         showPainPoints();
 
         if (view.getVisibility() == View.VISIBLE) {
+            // Editing
             mViewModel.setPainPoint(new PainPoint(mViewModel.getPainPointsMap().get(painLocationEnum)));
-            openGenitalsSubFragment(mViewModel.getPainPointsMap());
         } else {
+            // Adding
             mViewModel.setPainPoint(new PainPoint(painLocationEnum));
-            openGenitalsSubFragment(mViewModel.getPainPointsMap());
         }
+        openGenitalsSubFragment(mViewModel.getPainPointsMap());
 
         view.setVisibility(View.GONE);
         view.setVisibility(View.VISIBLE);
@@ -183,10 +221,10 @@ public class GenitalsFragment extends Fragment
         }
     }
 
-    private void openGenitalsSubFragment(EnumMap<PainLocationEnum, PainPoint> mPainPointsGenitalsMap) {
+    private void openGenitalsSubFragment(EnumMap<PainLocationEnum, PainPoint> painPointsGenitalsMap) {
         getChildFragmentManager().popBackStack(SUB_FRAGS_STACK, FragmentManager.POP_BACK_STACK_INCLUSIVE);
         getChildFragmentManager().beginTransaction()
-                .add(R.id.fragment_container, GenitalsSubFragment.newInstance(mPainPointsGenitalsMap,
+                .add(R.id.fragment_container, GenitalsSubFragment.newInstance(painPointsGenitalsMap,
                         BodyPartEnum.Genitals), GENITALS_SUB_FRAG)
                 .addToBackStack(SUB_FRAGS_STACK)
                 .commit();
