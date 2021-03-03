@@ -31,18 +31,18 @@
             <Space
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
-                android:layout_weight="1" />
+                android:layout_weight="0.8" />
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
-                android:layout_weight="1"
+                android:layout_weight="1.2"
                 android:orientation="horizontal">
 
                 <Space
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
-                    android:layout_weight="1" />
+                    android:layout_weight="1.4" />
 
                 <RelativeLayout
                     android:layout_width="0dp"
@@ -83,7 +83,7 @@
                 <Space
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
-                    android:layout_weight="1" />
+                    android:layout_weight="1.4" />
 
             </LinearLayout>
 
@@ -204,7 +204,7 @@
                 <Space
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
-                    android:layout_weight="1.6" />
+                    android:layout_weight="2" />
 
                 <RelativeLayout
                     android:layout_width="0dp"
@@ -245,7 +245,7 @@
                 <Space
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
-                    android:layout_weight="1.6" />
+                    android:layout_weight="2" />
 
             </LinearLayout>
 
@@ -258,7 +258,7 @@
                 <Space
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
-                    android:layout_weight="3" />
+                    android:layout_weight="4" />
 
                 <RelativeLayout
                     android:layout_width="0dp"
@@ -281,7 +281,7 @@
                 <Space
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
-                    android:layout_weight="2" />
+                    android:layout_weight="1.6" />
 
                 <RelativeLayout
                     android:layout_width="0dp"
@@ -304,7 +304,7 @@
                 <Space
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
-                    android:layout_weight="3" />
+                    android:layout_weight="4" />
 
             </LinearLayout>
 

@@ -73,7 +73,7 @@ public class AppointmentPatientFragment extends Fragment {
 
             getChildFragmentManager().beginTransaction()
                     .add(R.id.character_container, CharacterFragment.newInstance(appointment,
-                            false, false))
+                            false, true))
                     .commit();
         }
     }

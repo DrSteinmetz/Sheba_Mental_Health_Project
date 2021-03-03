@@ -109,11 +109,7 @@ public class GenitalsFragment extends Fragment
 
                     if (mSelectedIv != null) {
                         mSelectedIv.setAnimation(null);
-                        if (mSelectedIv.getId() == R.id.mouth_iv) {
-                            /*if (mViewModel.getPainPointsMouthMap().isEmpty()) {
-                                mSelectedIv.setVisibility(View.GONE);
-                            }*/
-                        } else {
+                        if (mViewModel.getPainPointsGenitalsMap().isEmpty()) {
                             mSelectedIv.setVisibility(View.GONE);
                         }
                     }
@@ -149,6 +145,8 @@ public class GenitalsFragment extends Fragment
         alphaAnimation.setRepeatMode(Animation.REVERSE);
         alphaAnimation.setDuration(700);
 
+        showPainPoints();
+
         genitalsV.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -156,7 +154,28 @@ public class GenitalsFragment extends Fragment
             }
         });
 
-        showPainPoints();
+
+        deletePainPointFab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                final WarningDialog warningDialog = new WarningDialog(getContext());
+                warningDialog.setPromptText(getString(R.string.pain_point_deletion_prompt));
+                warningDialog.setOnActionListener(new WarningDialog.WarningDialogActionInterface() {
+                    @Override
+                    public void onYesBtnClicked() {
+                        getChildFragmentManager().popBackStack(SUB_FRAGS_STACK,
+                                FragmentManager.POP_BACK_STACK_INCLUSIVE);
+
+                        deletePainPointFab.hide();
+                        mViewModel.deletePainPoint();
+                    }
+
+                    @Override
+                    public void onNoBtnClicked() {}
+                });
+                warningDialog.show();
+            }
+        });
 
         return rootView;
     }
@@ -199,6 +218,7 @@ public class GenitalsFragment extends Fragment
                 mSelectedIv.setAnimation(null);
             }
             mSelectedIv = view;
+            deletePainPointFab.hide();
             onPainPointClicked(view, painLocationEnum);
         } else {
             WarningDialog warningDialog = new WarningDialog(requireContext());
@@ -210,6 +230,7 @@ public class GenitalsFragment extends Fragment
                         mSelectedIv.setAnimation(null);
                     }
                     mSelectedIv = view;
+                    deletePainPointFab.hide();
                     onPainPointClicked(view, painLocationEnum);
                 }
 
@@ -243,6 +264,9 @@ public class GenitalsFragment extends Fragment
     @Override
     public void onContinueToStrengthBtnClicked(PainLocationEnum painLocationEnum, int painStrength) {
         mViewModel.getPainPoint().setPainLocation(painLocationEnum);
+        if (mViewModel.getPainPointsGenitalsMap().containsKey(painLocationEnum)) {
+            deletePainPointFab.show();
+        }
         openPainStrengthFragment(painStrength);
     }
 

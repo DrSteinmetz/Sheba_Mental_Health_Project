@@ -462,10 +462,10 @@ public class HeadFragment extends Fragment
     /**<------ Mouth Sub Fragment ------>*/
     @Override
     public void onContinueToStrengthBtnClicked(PainLocationEnum painLocationEnum,
-                                               EnumMap<PainLocationEnum, PainPoint> mPainPointsMouthMap) {
+                                               EnumMap<PainLocationEnum, PainPoint> painPointsMouthMap) {
         mViewModel.getPainPoint().setPainLocation(painLocationEnum);
-        if (mPainPointsMouthMap.containsKey(painLocationEnum)) {
-            openPainStrengthFragment(mPainPointsMouthMap.get(painLocationEnum).getPainStrength());
+        if (painPointsMouthMap.containsKey(painLocationEnum)) {
+            openPainStrengthFragment(painPointsMouthMap.get(painLocationEnum).getPainStrength());
             deletePainPointFab.show();
         } else {
             openPainStrengthFragment(0);

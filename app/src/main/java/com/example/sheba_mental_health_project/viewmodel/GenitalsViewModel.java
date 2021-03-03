@@ -91,12 +91,12 @@ public class GenitalsViewModel extends ViewModel {
             public void onDeletePainPointSucceed(PainPoint painPoint) {
                 mPainPointsMap.remove(painPoint.getPainLocation());
 
-                /*mPainPointsMouthMap.remove(painPoint.getPainLocation());
-                if (mPainPointsMouthMap.isEmpty() &&
-                        mPainPointsMap.containsKey(PainLocationEnum.Mouth)) {
-                    mPainPoint.setPainLocation(PainLocationEnum.Mouth);
+                mPainPointsGenitalsMap.remove(painPoint.getPainLocation());
+                if (mPainPointsGenitalsMap.isEmpty() &&
+                        mPainPointsMap.containsKey(PainLocationEnum.PrivatePart)) {
+                    mPainPoint.setPainLocation(PainLocationEnum.PrivatePart);
                     deletePainPoint();
-                }*/
+                }
 
                 mDeletePainPointSucceed.setValue(painPoint);
             }
