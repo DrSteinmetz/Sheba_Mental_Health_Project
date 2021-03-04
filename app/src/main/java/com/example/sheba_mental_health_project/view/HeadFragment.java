@@ -491,10 +491,12 @@ public class HeadFragment extends Fragment
     public void onContinueToOtherFeelingsBtnClicked(PainTypeEnum painType) {
         mViewModel.getPainPoint().setPainType(painType);
 
+        final PainPoint painPoint = mViewModel.getPainPoint();
+        final String otherFeeling = painPoint.getOtherFeelingLocalString(getContext());
         getChildFragmentManager().beginTransaction()
                 .add(R.id.fragment_container,
-                        OtherFeelingSubFragment.newInstance(mViewModel.getPainPoint().getOtherFeeling(),
-                                mViewModel.getPainPoint().getPainLocation(),
+                        OtherFeelingSubFragment.newInstance(otherFeeling,
+                                painPoint.getPainLocation(),
                                 BodyPartEnum.Head), OTHER_FEELING_FRAG)
                 .addToBackStack(SUB_FRAGS_STACK)
                 .commit();

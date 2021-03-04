@@ -423,9 +423,10 @@ public class LegsFragment extends Fragment implements PainStrengthSubFragment.Pa
     public void onContinueToOtherFeelingsBtnClicked(PainTypeEnum painType) {
         mViewModel.getPainPoint().setPainType(painType);
 
+        final String otherFeeling = mViewModel.getPainPoint()
+                .getOtherFeelingLocalString(getContext());
         getChildFragmentManager().beginTransaction()
-                .add(R.id.fragment_container,
-                        OtherFeelingSubFragment.newInstance(mViewModel.getPainPoint().getOtherFeeling(),
+                .add(R.id.fragment_container, OtherFeelingSubFragment.newInstance(otherFeeling,
                                 BodyPartEnum.Legs), OTHER_FEELING_FRAG)
                 .addToBackStack(SUB_FRAGS_STACK)
                 .commit();

@@ -7,6 +7,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.widget.AppCompatSpinner;
 import androidx.fragment.app.Fragment;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,6 +18,8 @@ import com.example.sheba_mental_health_project.model.enums.BodyPartEnum;
 import com.example.sheba_mental_health_project.model.enums.PainLocationEnum;
 import com.example.sheba_mental_health_project.model.enums.PainOtherFeelingsEnum;
 import com.google.android.material.button.MaterialButton;
+
+import java.util.Arrays;
 
 public class OtherFeelingSubFragment extends Fragment {
 
@@ -29,22 +32,22 @@ public class OtherFeelingSubFragment extends Fragment {
 
     private OtherFeelingSubFragmentInterface listener;
 
-    public static OtherFeelingSubFragment newInstance(final PainOtherFeelingsEnum otherFeelings,
+    public static OtherFeelingSubFragment newInstance(final String otherFeelingLocal,
                                                       final BodyPartEnum fragmentName) {
         OtherFeelingSubFragment fragment = new OtherFeelingSubFragment();
         Bundle args = new Bundle();
-        args.putSerializable("other_feelings", otherFeelings);
+        args.putString("other_feeling_local", otherFeelingLocal);
         args.putSerializable("fragment_name", fragmentName);
         fragment.setArguments(args);
         return fragment;
     }
 
-    public static OtherFeelingSubFragment newInstance(final PainOtherFeelingsEnum otherFeelings,
+    public static OtherFeelingSubFragment newInstance(final String otherFeelingLocal,
                                                       final PainLocationEnum chosenPoint,
                                                       final BodyPartEnum fragmentName) {
         OtherFeelingSubFragment fragment = new OtherFeelingSubFragment();
         Bundle args = new Bundle();
-        args.putSerializable("other_feelings", otherFeelings);
+        args.putString("other_feeling_local", otherFeelingLocal);
         args.putSerializable("chosen_point", chosenPoint);
         args.putSerializable("fragment_name", fragmentName);
         fragment.setArguments(args);
@@ -94,10 +97,13 @@ public class OtherFeelingSubFragment extends Fragment {
         spinner.setAdapter(adapter);
 
         if (getArguments() != null) {
-            final PainOtherFeelingsEnum otherFeeling = (PainOtherFeelingsEnum) getArguments()
-                    .getSerializable("other_feelings");
+            final String otherFeeling = getArguments().getString("other_feeling_local");
             if (otherFeeling != null) {
-                spinner.setSelection(otherFeeling.ordinal() + 1);
+                final int selectedPosition = Arrays.asList(feelings).indexOf(otherFeeling);
+
+                Log.d(TAG, "liran onCreateView: " + selectedPosition);
+                Log.d(TAG, "liran onCreateView: " + otherFeeling);
+                spinner.setSelection(selectedPosition != -1 ? selectedPosition : 0);
             }
         }
 

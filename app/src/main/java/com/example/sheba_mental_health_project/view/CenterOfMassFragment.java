@@ -289,10 +289,11 @@ public class CenterOfMassFragment extends Fragment
     public void onContinueToOtherFeelingsBtnClicked(PainTypeEnum painType) {
         mViewModel.getPainPoint().setPainType(painType);
 
+        final PainPoint painPoint = mViewModel.getPainPoint();
+        final String otherFeeling = painPoint.getOtherFeelingLocalString(getContext());
         getChildFragmentManager().beginTransaction()
-                .add(R.id.fragment_container,
-                        OtherFeelingSubFragment.newInstance(mViewModel.getPainPoint().getOtherFeeling(),
-                                mViewModel.getPainPoint().getPainLocation(),
+                .add(R.id.fragment_container, OtherFeelingSubFragment.newInstance(otherFeeling,
+                                painPoint.getPainLocation(),
                                 BodyPartEnum.CenterOfMass), OTHER_FEELING_FRAG)
                 .addToBackStack(SUB_FRAGS_STACK)
                 .commit();
