@@ -19,7 +19,6 @@ public class GenitalsViewModel extends ViewModel {
 
     private PainPoint mPainPoint = new PainPoint();
     private EnumMap<PainLocationEnum, PainPoint> mPainPointsMap = new EnumMap<>(PainLocationEnum.class);
-    private EnumMap<PainLocationEnum, PainPoint> mPainPointsGenitalsMap = new EnumMap<>(PainLocationEnum.class);
 
     private MutableLiveData<PainPoint> mSetPainPointsSucceed;
     private MutableLiveData<String> mSetPainPointsFailed;
@@ -91,13 +90,6 @@ public class GenitalsViewModel extends ViewModel {
             public void onDeletePainPointSucceed(PainPoint painPoint) {
                 mPainPointsMap.remove(painPoint.getPainLocation());
 
-                mPainPointsGenitalsMap.remove(painPoint.getPainLocation());
-                if (mPainPointsGenitalsMap.isEmpty() &&
-                        mPainPointsMap.containsKey(PainLocationEnum.PrivatePart)) {
-                    mPainPoint.setPainLocation(PainLocationEnum.PrivatePart);
-                    deletePainPoint();
-                }
-
                 mDeletePainPointSucceed.setValue(painPoint);
             }
 
@@ -123,28 +115,6 @@ public class GenitalsViewModel extends ViewModel {
 
     public void setPainPointsMap(EnumMap<PainLocationEnum, PainPoint> mPainPointsMap) {
         this.mPainPointsMap = mPainPointsMap;
-    }
-
-    public EnumMap<PainLocationEnum, PainPoint> getPainPointsGenitalsMap() {
-        return mPainPointsGenitalsMap;
-    }
-
-    public void setPainPointsGenitalsMap(EnumMap<PainLocationEnum, PainPoint> mPainPointsGenitalsMap) {
-        this.mPainPointsGenitalsMap = mPainPointsGenitalsMap;
-    }
-
-    public void setGenitalsPainPointMap() {
-        if (mPainPointsMap.containsKey(PainLocationEnum.Vagina)) {
-            mPainPointsGenitalsMap.put(PainLocationEnum.Vagina, mPainPointsMap.get(PainLocationEnum.Vagina));
-        }
-
-        if (mPainPointsMap.containsKey(PainLocationEnum.Penis)) {
-            mPainPointsGenitalsMap.put(PainLocationEnum.Penis, mPainPointsMap.get(PainLocationEnum.Penis));
-        }
-
-        if (mPainPointsMap.containsKey(PainLocationEnum.Testicles)) {
-            mPainPointsGenitalsMap.put(PainLocationEnum.Testicles, mPainPointsMap.get(PainLocationEnum.Testicles));
-        }
     }
 
     public void setPainPointsInDB() {

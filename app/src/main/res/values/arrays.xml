@@ -126,7 +126,6 @@
         <item>@string/lower_right_abdomen</item>
         <item>@string/lower_left_abdomen</item>
         <item>@string/chest</item>
-        <item>@string/breast</item>
         <item>@string/right_thigh</item>
         <item>@string/left_thigh</item>
         <item>@string/right_knee</item>
@@ -140,9 +139,6 @@
         <item>@string/right_toes</item>
         <item>@string/left_toes</item>
         <item>@string/anus</item>
-        <item>@string/vagina</item>
-        <item>@string/penis</item>
-        <item>@string/testicles</item>
         <item>@string/private_part</item>
     </string-array>
 

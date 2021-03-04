@@ -38,7 +38,6 @@ public enum PainLocationEnum {
     LowerRightAbdomen,
     LowerLeftAbdomen,
     Chest,
-    Breast,
     RightThigh,
     LeftThigh,
     RightKnee,
@@ -52,8 +51,5 @@ public enum PainLocationEnum {
     RightToes,
     LeftToes,
     Anus,
-    Vagina,
-    Penis,
-    Testicles,
     PrivatePart,
 }
