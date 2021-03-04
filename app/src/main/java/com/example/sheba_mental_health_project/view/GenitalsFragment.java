@@ -188,6 +188,7 @@ public class GenitalsFragment extends Fragment
             // Editing
             mViewModel.setPainPoint(new PainPoint(mViewModel.getPainPointsMap().get(painLocationEnum)));
             openPainStrengthFragment(mViewModel.getPainPoint().getPainStrength());
+            deletePainPointFab.show();
         } else {
             // Adding
             mViewModel.setPainPoint(new PainPoint(painLocationEnum));
