@@ -101,8 +101,6 @@ public class OtherFeelingSubFragment extends Fragment {
             if (otherFeeling != null) {
                 final int selectedPosition = Arrays.asList(feelings).indexOf(otherFeeling);
 
-                Log.d(TAG, "liran onCreateView: " + selectedPosition);
-                Log.d(TAG, "liran onCreateView: " + otherFeeling);
                 spinner.setSelection(selectedPosition != -1 ? selectedPosition : 0);
             }
         }

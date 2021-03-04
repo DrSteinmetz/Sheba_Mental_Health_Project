@@ -134,8 +134,8 @@ public class StartMeetingFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 WarningDialog warningDialog = new WarningDialog(requireContext());
-                warningDialog.setTitleWarningText("Start Meeting?");
-                warningDialog.setPromptText("pressing ok will send notification to the patient. starting a meeting can not be canceled");
+                warningDialog.setTitleWarningText(getString(R.string.start_meeting_title));
+                warningDialog.setPromptText(getString(R.string.start_meeting_prompt));
                 warningDialog.setOnActionListener(new WarningDialog.WarningDialogActionInterface() {
                     @Override
                     public void onYesBtnClicked() {
