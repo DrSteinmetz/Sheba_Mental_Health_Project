@@ -25,8 +25,10 @@ import com.example.sheba_mental_health_project.model.ViewModelFactory;
 import com.example.sheba_mental_health_project.model.enums.AppointmentStateEnum;
 import com.example.sheba_mental_health_project.model.enums.BodyPartEnum;
 import com.example.sheba_mental_health_project.model.enums.ViewModelEnum;
+import com.example.sheba_mental_health_project.repository.Repository;
 import com.example.sheba_mental_health_project.viewmodel.StartMeetingViewModel;
 import com.google.android.material.button.MaterialButton;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.text.SimpleDateFormat;
 
@@ -112,10 +114,42 @@ public class StartMeetingFragment extends Fragment {
             }
         };
 
+        Observer<String> updateAppointmentSucceedObserver = new Observer<String>() {
+            @Override
+            public void onChanged(String s) {
+
+            }
+        };
+
+        Observer<String> updateAppointmentFailedObserver = new Observer<String>() {
+            @Override
+            public void onChanged(String s) {
+                Log.e(TAG, "onChanged: "+s );
+            }
+        };
+
+        Observer<Appointment> deleteAppointmentSucceedObserver = new Observer<Appointment>() {
+            @Override
+            public void onChanged(Appointment appointment) {
+
+            }
+        };
+
+        Observer<String> deleteAppointmentFailedObserver = new Observer<String>() {
+            @Override
+            public void onChanged(String s) {
+                Log.e(TAG, "onChanged: "+s );
+            }
+        };
+
         mViewModel.getGetLastAppointmentSucceed().observe(this,appointmentSucceedObserver);
         mViewModel.getGetLastAppointmentFailed().observe(this,appointmentFailedObserver);
         mViewModel.getGetUpdateStateSucceed().observe(this,appointmentStateSucceedObserver);
         mViewModel.getGetUpdateStateFailed().observe(this,appointmentStateFailedObserver);
+        mViewModel.getUpdateAppointmentSucceed().observe(this,updateAppointmentSucceedObserver);
+        mViewModel.getUpdateAppointmentFailed().observe(this,updateAppointmentFailedObserver);
+        mViewModel.getDeleteAppointmentSucceed().observe(this,deleteAppointmentSucceedObserver);
+        mViewModel.getDeleteAppointmentFailed().observe(this,deleteAppointmentFailedObserver);
     }
 
     @Override
@@ -129,6 +163,22 @@ public class StartMeetingFragment extends Fragment {
         mNoMeetingTv = rootView.findViewById(R.id.no_meeting_tv);
         mMainLayout = rootView.findViewById(R.id.start_meeting_relative);
         final MaterialButton startMeetingBtn = rootView.findViewById(R.id.start_meeting_btn);
+        final FloatingActionButton editFab = rootView.findViewById(R.id.edit_appointment_fab);
+        final FloatingActionButton deleteFab = rootView.findViewById(R.id.delete_appointment_fab);
+
+        editFab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+            }
+        });
+
+        deleteFab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+            }
+        });
 
         startMeetingBtn.setOnClickListener(new View.OnClickListener() {
             @Override

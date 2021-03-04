@@ -26,6 +26,18 @@ public class Appointment implements Serializable {
 
     public Appointment() {}
 
+    public Appointment(final Appointment appointment) {
+        this.mId = appointment.mId;
+        this.mAppointmentDate = appointment.mAppointmentDate;
+        this.mTherapist = appointment.mTherapist;
+        this.mPatient = appointment.mPatient;
+        this.mPainPointsOfBodyPartMap = appointment.mPainPointsOfBodyPartMap;
+        this.mAnswers = appointment.mAnswers;
+        this.mFeelingsAnswersMap = appointment.mFeelingsAnswersMap;
+        this.mState = appointment.mState;
+        this.mIsFinishedPreQuestions = appointment.mIsFinishedPreQuestions;
+    }
+
     public Appointment(Date appointmentDate, Therapist therapist, Patient patient) {
         this.mAppointmentDate = appointmentDate;
         this.mTherapist = therapist;

@@ -139,6 +139,32 @@ public class Repository {
         this.mRepositoryAddAppointmentListener = repositoryAddAppointmentListener;
     }
 
+    /*<------ Update Appointment ------>*/
+    public interface RepositoryUpdateAppointmentInterface {
+        void onUpdateAppointmentSucceed(String appointmentId);
+
+        void onUpdateAppointmentFailed(String error);
+    }
+
+    private RepositoryUpdateAppointmentInterface mRepositoryUpdateAppointmentListener;
+
+    public void setUpdateAppointmentInterface(RepositoryUpdateAppointmentInterface repositoryUpdateAppointmentListener) {
+        this.mRepositoryUpdateAppointmentListener = repositoryUpdateAppointmentListener;
+    }
+
+    /*<------ Delete Appointment ------>*/
+    public interface RepositoryDeleteAppointmentInterface {
+        void onDeleteAppointmentSucceed(Appointment appointment);
+
+        void onDeleteAppointmentFailed(String error);
+    }
+
+    private RepositoryDeleteAppointmentInterface mRepositoryDeleteAppointmentListener;
+
+    public void setDeleteAppointmentInterface(RepositoryDeleteAppointmentInterface repositoryDeleteAppointmentListener) {
+        this.mRepositoryDeleteAppointmentListener = repositoryDeleteAppointmentListener;
+    }
+
     /*<------ Get Last Appointment ------>*/
     public interface RepositoryGetLastAppointmentInterface {
         void onGetLastAppointmentSucceed(Appointment lastAppointment);
@@ -340,6 +366,55 @@ public class Repository {
                             Log.w(TAG, "onComplete: ", task.getException());
                             if (mRepositoryAddAppointmentListener != null) {
                                 mRepositoryAddAppointmentListener.onAddAppointmentFailed(error);
+                            }
+                        }
+                    }
+                });
+    }
+
+    public void updateAppointment(final Appointment appointment){
+
+        mCloudDB.collection(APPOINTMENTS)
+                .document(appointment.getId())
+                .set(appointment)
+                .addOnCompleteListener(new OnCompleteListener<Void>() {
+                    @Override
+                    public void onComplete(@NonNull Task<Void> task) {
+                        if (task.isSuccessful()) {
+                            setCurrentAppointment(appointment);
+                            if (mRepositoryUpdateAppointmentListener != null) {
+                                mRepositoryUpdateAppointmentListener.onUpdateAppointmentSucceed(appointment.getId());
+                            }
+                        } else {
+                            final String error = Objects
+                                    .requireNonNull(task.getException()).getMessage();
+                            Log.w(TAG, "onComplete: ", task.getException());
+                            if (mRepositoryUpdateAppointmentListener != null) {
+                                mRepositoryUpdateAppointmentListener.onUpdateAppointmentFailed(error);
+                            }
+                        }
+                    }
+                });
+    }
+
+    public void deleteAppointment(){
+
+        mCloudDB.collection(APPOINTMENTS)
+                .document(mCurrentAppointment.getId())
+                .delete()
+                .addOnCompleteListener(new OnCompleteListener<Void>() {
+                    @Override
+                    public void onComplete(@NonNull Task<Void> task) {
+                        if (task.isSuccessful()) {
+                            if (mRepositoryDeleteAppointmentListener != null) {
+                                mRepositoryDeleteAppointmentListener.onDeleteAppointmentSucceed(mCurrentAppointment);
+                            }
+                        } else {
+                            final String error = Objects
+                                    .requireNonNull(task.getException()).getMessage();
+                            Log.w(TAG, "onComplete: ", task.getException());
+                            if (mRepositoryDeleteAppointmentListener != null) {
+                                mRepositoryDeleteAppointmentListener.onDeleteAppointmentFailed(error);
                             }
                         }
                     }
