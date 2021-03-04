@@ -81,9 +81,7 @@ public class OtherFeelingSubFragment extends Fragment {
                 chosenPoint == PainLocationEnum.LowerRightAbdomen ||
                 chosenPoint == PainLocationEnum.Navel) {
             feelings = requireContext().getResources().getStringArray(R.array.other_feeling_spinner_abdomen);
-        } else if (chosenPoint == PainLocationEnum.Vagina ||
-                chosenPoint == PainLocationEnum.Penis ||
-                chosenPoint == PainLocationEnum.Testicles) {
+        } else if (chosenPoint == PainLocationEnum.PrivatePart) {
             feelings = requireContext().getResources().getStringArray(R.array.other_feeling_spinner_genitals);
         } else {
             feelings = requireContext().getResources().getStringArray(R.array.other_feeling_spinner);
