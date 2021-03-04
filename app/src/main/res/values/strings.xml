@@ -3,15 +3,26 @@
 
     <string name="yes">Yes</string>
     <string name="no">No</string>
-
     <string name="choose">Choose…</string>
     <string name="delete">Delete</string>
     <string name="edit">Edit</string>
+    <string name="finish">Finish</string>
+    <string name="pick_date">Pick Date</string>
+    <string name="pick_time">Pick Time</string>
+    <string name="appointments_date">Appointment\'s Date</string>
+    <string name="edit_appointment_title">Edit Appointment With</string>
     <string name="pain_point_deletion_prompt">Are You Sure You Want To Permanently Delete This Point?</string>
-    <string name="pain_point_deleted_prompt">Deleted Successfully</string>
+    <string name="pain_point_deleted_prompt">Point Deleted Successfully!</string>
+    <string name="appointment_deletion_prompt">Are You Sure You Want to Permanently Delete This Appointment?</string>
+    <string name="appointment_added_prompt">Appointment Added Successfully!</string>
+    <string name="appointment_updated_prompt">Appointment Updated Successfully!</string>
+    <string name="appointment_deleted_prompt">Appointment Deleted Successfully!</string>
+    <string name="patient_not_found">Patient Not Found</string>
+    <string name="patient_found_prompt">Patient Found:</string>
     <string name="undo">Undo</string>
-    <string name="start_meeting_prompt">Starting a meeting can not be canceled</string>
+    <string name="start_meeting">Start Meeting</string>
     <string name="start_meeting_title">Start Meeting?</string>
+    <string name="start_meeting_prompt">Meeting That Started Can Not Be Canceled. Are You Sure You Want to Start This Meeting?</string>
 
     <string name="physical_state">Physical State</string>
     <string name="pain_location_tv">Pain Location:</string>

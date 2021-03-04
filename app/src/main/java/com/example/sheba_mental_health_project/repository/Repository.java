@@ -372,8 +372,7 @@ public class Repository {
                 });
     }
 
-    public void updateAppointment(final Appointment appointment){
-
+    public void updateAppointment(final Appointment appointment) {
         mCloudDB.collection(APPOINTMENTS)
                 .document(appointment.getId())
                 .set(appointment)
@@ -382,6 +381,7 @@ public class Repository {
                     public void onComplete(@NonNull Task<Void> task) {
                         if (task.isSuccessful()) {
                             setCurrentAppointment(appointment);
+                            cancelAppointmentNotificationByDate(appointment);
                             if (mRepositoryUpdateAppointmentListener != null) {
                                 mRepositoryUpdateAppointmentListener.onUpdateAppointmentSucceed(appointment.getId());
                             }
@@ -397,8 +397,7 @@ public class Repository {
                 });
     }
 
-    public void deleteAppointment(){
-
+    public void deleteAppointment() {
         mCloudDB.collection(APPOINTMENTS)
                 .document(mCurrentAppointment.getId())
                 .delete()
@@ -406,6 +405,7 @@ public class Repository {
                     @Override
                     public void onComplete(@NonNull Task<Void> task) {
                         if (task.isSuccessful()) {
+                            cancelAppointmentNotificationByDate(mCurrentAppointment);
                             if (mRepositoryDeleteAppointmentListener != null) {
                                 mRepositoryDeleteAppointmentListener.onDeleteAppointmentSucceed(mCurrentAppointment);
                             }
@@ -599,7 +599,6 @@ public class Repository {
                             final Appointment dbAppointment = value.toObject(Appointment.class);
                             if (mRepositoryGetAllPainPointsListener != null) {
                                 mRepositoryGetAllPainPointsListener.onGetAllPainPointsSucceed(dbAppointment.getPainPointsOfBodyPartMap());
-//                                setCurrentAppointment(appointment);
                                 appointment.setPainPointsOfBodyPartMap(dbAppointment.getPainPointsOfBodyPartMap());
                             }
                         } else {

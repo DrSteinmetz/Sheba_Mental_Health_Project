@@ -446,7 +446,7 @@ public class MainActivity extends AppCompatActivity
     @Override
     public void onPhysicalClicked() {
         getSupportFragmentManager().beginTransaction()
-                .add(R.id.container, PhysicalPatientFragment.newInstance(), PHYSICAL_PATIENT_FRAG)
+                .replace(R.id.container, PhysicalPatientFragment.newInstance(), PHYSICAL_PATIENT_FRAG)
                 .addToBackStack(null)
                 .commit();
     }

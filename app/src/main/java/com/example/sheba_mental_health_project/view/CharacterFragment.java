@@ -130,6 +130,8 @@ public class CharacterFragment extends Fragment {
         final View legsView = rootView.findViewById(R.id.legs_v);
         mCharacterIv = rootView.findViewById(R.id.character_iv);
 
+        mViewModel.attachGetAllPainPointsListener();
+
         rootView.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener() {
             @Override
             public void onGlobalLayout() {

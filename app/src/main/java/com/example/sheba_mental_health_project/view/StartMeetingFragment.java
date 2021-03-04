@@ -1,6 +1,5 @@
 package com.example.sheba_mental_health_project.view;
 
-import androidx.fragment.app.FragmentContainerView;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
@@ -15,7 +14,6 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -23,16 +21,17 @@ import com.example.sheba_mental_health_project.R;
 import com.example.sheba_mental_health_project.model.Appointment;
 import com.example.sheba_mental_health_project.model.ViewModelFactory;
 import com.example.sheba_mental_health_project.model.enums.AppointmentStateEnum;
-import com.example.sheba_mental_health_project.model.enums.BodyPartEnum;
 import com.example.sheba_mental_health_project.model.enums.ViewModelEnum;
-import com.example.sheba_mental_health_project.repository.Repository;
 import com.example.sheba_mental_health_project.viewmodel.StartMeetingViewModel;
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.android.material.snackbar.Snackbar;
 
 import java.text.SimpleDateFormat;
+import java.util.Date;
 
-public class StartMeetingFragment extends Fragment {
+public class StartMeetingFragment extends Fragment
+        implements EditAppointmentDialogFragment.EditAppointmentInterface {
 
     private StartMeetingViewModel mViewModel;
 
@@ -41,6 +40,8 @@ public class StartMeetingFragment extends Fragment {
     private TextView mTherapistNameTv;
     private TextView mPatientNameTv;
     private TextView mNoMeetingTv;
+
+    private final String EDIT_APPOINTMENT_DLG_FRAG = "Edit_Appointment_Dialog_Fragment";
 
     private final String TAG = "StartMeetingFragment";
 
@@ -70,10 +71,10 @@ public class StartMeetingFragment extends Fragment {
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        mViewModel = new ViewModelProvider(this,new ViewModelFactory(getContext(),
+        mViewModel = new ViewModelProvider(this, new ViewModelFactory(getContext(),
                 ViewModelEnum.StartMeeting)).get(StartMeetingViewModel.class);
 
-        Observer<Appointment> appointmentSucceedObserver = new Observer<Appointment>() {
+        final Observer<Appointment> onAppointmentSucceedObserver = new Observer<Appointment>() {
             @Override
             public void onChanged(Appointment appointment) {
                 final SimpleDateFormat simpleDateFormat = new SimpleDateFormat("HH:mm | dd/MM");
@@ -86,70 +87,81 @@ public class StartMeetingFragment extends Fragment {
 
                 getChildFragmentManager().beginTransaction()
                         .add(R.id.character_container, CharacterFragment.newInstance(appointment,
-                                false, false))
+                                false, true))
                         .commit();
             }
         };
 
-        Observer<String> appointmentFailedObserver = new Observer<String>() {
+        final Observer<String> onAppointmentFailedObserver = new Observer<String>() {
             @Override
-            public void onChanged(String s) {
-                Log.e(TAG, "onChanged: "+s);
+            public void onChanged(String error) {
+                Log.e(TAG, "onChanged: " + error);
                 mMainLayout.setVisibility(View.GONE);
                 mNoMeetingTv.setVisibility(View.VISIBLE);
             }
         };
 
-        Observer<AppointmentStateEnum> appointmentStateSucceedObserver = new Observer<AppointmentStateEnum>() {
+        final Observer<AppointmentStateEnum> onAppointmentStateSucceedObserver = new Observer<AppointmentStateEnum>() {
             @Override
             public void onChanged(AppointmentStateEnum appointmentStateEnum) {
-                //TODO send notification to patient and move to next fragment
+                if (listener != null) {
+                    listener.onTherapistStartMeetingClicked();
+                }
             }
         };
 
-        Observer<String> appointmentStateFailedObserver = new Observer<String>() {
+        final Observer<String> onAppointmentStateFailedObserver = new Observer<String>() {
             @Override
-            public void onChanged(String s) {
-                Log.e(TAG, "onChanged: "+s );
+            public void onChanged(String error) {
+                Log.e(TAG, "onChanged: " + error);
             }
         };
 
-        Observer<String> updateAppointmentSucceedObserver = new Observer<String>() {
+        final Observer<String> onUpdateAppointmentSucceedObserver = new Observer<String>() {
             @Override
-            public void onChanged(String s) {
-
+            public void onChanged(String appointmentId) {
+                Snackbar.make(getView(), getString(R.string.appointment_updated_prompt),
+                        Snackbar.LENGTH_LONG).show();
             }
         };
 
-        Observer<String> updateAppointmentFailedObserver = new Observer<String>() {
+        final Observer<String> onUpdateAppointmentFailedObserver = new Observer<String>() {
             @Override
-            public void onChanged(String s) {
-                Log.e(TAG, "onChanged: "+s );
+            public void onChanged(String error) {
+                Log.e(TAG, "onChanged: " + error);
             }
         };
 
-        Observer<Appointment> deleteAppointmentSucceedObserver = new Observer<Appointment>() {
+        final Observer<Appointment> onDeleteAppointmentSucceedObserver = new Observer<Appointment>() {
             @Override
             public void onChanged(Appointment appointment) {
-
+                Snackbar.make(getView(), getString(R.string.appointment_deleted_prompt),
+                        Snackbar.LENGTH_LONG)
+                        .setAction(getString(R.string.undo), new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                mViewModel.addAppointment(appointment);
+                            }
+                        }).show();
+                getActivity().onBackPressed();
             }
         };
 
-        Observer<String> deleteAppointmentFailedObserver = new Observer<String>() {
+        final Observer<String> onDeleteAppointmentFailedObserver = new Observer<String>() {
             @Override
-            public void onChanged(String s) {
-                Log.e(TAG, "onChanged: "+s );
+            public void onChanged(String error) {
+                Log.e(TAG, "onChanged: " + error);
             }
         };
 
-        mViewModel.getGetLastAppointmentSucceed().observe(this,appointmentSucceedObserver);
-        mViewModel.getGetLastAppointmentFailed().observe(this,appointmentFailedObserver);
-        mViewModel.getGetUpdateStateSucceed().observe(this,appointmentStateSucceedObserver);
-        mViewModel.getGetUpdateStateFailed().observe(this,appointmentStateFailedObserver);
-        mViewModel.getUpdateAppointmentSucceed().observe(this,updateAppointmentSucceedObserver);
-        mViewModel.getUpdateAppointmentFailed().observe(this,updateAppointmentFailedObserver);
-        mViewModel.getDeleteAppointmentSucceed().observe(this,deleteAppointmentSucceedObserver);
-        mViewModel.getDeleteAppointmentFailed().observe(this,deleteAppointmentFailedObserver);
+        mViewModel.getGetLastAppointmentSucceed().observe(this, onAppointmentSucceedObserver);
+        mViewModel.getGetLastAppointmentFailed().observe(this, onAppointmentFailedObserver);
+        mViewModel.getGetUpdateStateSucceed().observe(this, onAppointmentStateSucceedObserver);
+        mViewModel.getGetUpdateStateFailed().observe(this, onAppointmentStateFailedObserver);
+        mViewModel.getUpdateAppointmentSucceed().observe(this, onUpdateAppointmentSucceedObserver);
+        mViewModel.getUpdateAppointmentFailed().observe(this, onUpdateAppointmentFailedObserver);
+        mViewModel.getDeleteAppointmentSucceed().observe(this, onDeleteAppointmentSucceedObserver);
+        mViewModel.getDeleteAppointmentFailed().observe(this, onDeleteAppointmentFailedObserver);
     }
 
     @Override
@@ -169,34 +181,43 @@ public class StartMeetingFragment extends Fragment {
         editFab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                EditAppointmentDialogFragment.newInstance(mViewModel.getAppointment())
+                        .show(getChildFragmentManager(), EDIT_APPOINTMENT_DLG_FRAG);
             }
         });
 
         deleteFab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                final WarningDialog warningDialog = new WarningDialog(requireContext());
+                warningDialog.setPromptText(getString(R.string.appointment_deletion_prompt));
+                warningDialog.setOnActionListener(new WarningDialog.WarningDialogActionInterface() {
+                    @Override
+                    public void onYesBtnClicked() {
+                        mViewModel.deleteAppointment();
+                    }
 
+                    @Override
+                    public void onNoBtnClicked() {}
+                });
+                warningDialog.show();
             }
         });
 
         startMeetingBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                WarningDialog warningDialog = new WarningDialog(requireContext());
+                final WarningDialog warningDialog = new WarningDialog(requireContext());
                 warningDialog.setTitleWarningText(getString(R.string.start_meeting_title));
                 warningDialog.setPromptText(getString(R.string.start_meeting_prompt));
                 warningDialog.setOnActionListener(new WarningDialog.WarningDialogActionInterface() {
                     @Override
                     public void onYesBtnClicked() {
                         mViewModel.updateState(AppointmentStateEnum.Ongoing);
-                        listener.onTherapistStartMeetingClicked();
                     }
 
                     @Override
-                    public void onNoBtnClicked() {
-                        warningDialog.dismiss();
-                    }
+                    public void onNoBtnClicked() {}
                 });
                 warningDialog.show();
             }
@@ -204,5 +225,13 @@ public class StartMeetingFragment extends Fragment {
 
         mViewModel.getLastMeeting();
         return  rootView;
+    }
+
+    @Override
+    public void onFinishBtnClicked(Date date) {
+        if (!date.equals(mViewModel.getAppointment().getAppointmentDate())) {
+            mViewModel.getAppointment().setAppointmentDate(date);
+            mViewModel.updateAppointment();
+        }
     }
 }

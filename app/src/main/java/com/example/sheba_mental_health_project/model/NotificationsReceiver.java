@@ -15,6 +15,7 @@ import android.util.Log;
 import android.widget.RemoteViews;
 
 import androidx.core.app.NotificationCompat;
+import androidx.preference.PreferenceManager;
 
 import com.example.sheba_mental_health_project.R;
 import com.example.sheba_mental_health_project.view.MainActivity;
@@ -31,9 +32,13 @@ public class NotificationsReceiver extends BroadcastReceiver {
 
     @Override
     public void onReceive(Context context, Intent intent) {
+        final boolean isNotificationAllowed = PreferenceManager
+                .getDefaultSharedPreferences(context)
+                .getBoolean("notifications_sp", false);
+
         final Bundle bundle = intent.getBundleExtra("bundle");
 
-        if (bundle != null) {
+        if (isNotificationAllowed && bundle != null) {
             final Appointment appointment = (Appointment) bundle.getSerializable("appointment");
             final boolean isPatient = bundle.getBoolean("is_patient", true);
 

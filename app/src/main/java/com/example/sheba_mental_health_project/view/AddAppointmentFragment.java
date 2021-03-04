@@ -32,6 +32,7 @@ import com.google.android.material.datepicker.DateValidatorPointForward;
 import com.google.android.material.datepicker.MaterialDatePicker;
 import com.google.android.material.datepicker.MaterialPickerOnPositiveButtonClickListener;
 import com.google.android.material.datepicker.MaterialTextInputPicker;
+import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.textfield.MaterialAutoCompleteTextView;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textview.MaterialTextView;
@@ -94,9 +95,10 @@ public class AddAppointmentFragment extends Fragment {
             @Override
             public void onChanged(String appointmentId) {
                 mPatientEmailAutoTV.setText("");
-                //mDateTv.setVisibility(View.GONE);
-                //mTimeTv.setVisibility(View.GONE);
                 mViewModel.resetDateFields();
+
+                Snackbar.make(getView(), getString(R.string.appointment_added_prompt),
+                        Snackbar.LENGTH_LONG).show();
             }
         };
 
@@ -146,29 +148,26 @@ public class AddAppointmentFragment extends Fragment {
                 final String patientEmail = mPatientEmailAutoTV.getText().toString();
                 Patient patient = mViewModel.getPatientByEmail(patientEmail);
                 patientFoundTv.setVisibility(View.VISIBLE);
-                if (patient == null){
-                    patientFoundTv.setText("Patient Not Found");
+                if (patient == null) {
+                    patientFoundTv.setText(getString(R.string.patient_not_found));
                     patientNameTv.setVisibility(View.INVISIBLE);
                     mDateAutoTV.setVisibility(View.INVISIBLE);
                     mTimeAutoTV.setVisibility(View.INVISIBLE);
                     createAppointmentBtn.setVisibility(View.INVISIBLE);
 
-                }
-                else{
+                } else {
                     patientNameTv.setVisibility(View.VISIBLE);
-                    patientFoundTv.setText("Patient Found:");
+                    patientFoundTv.setText(getString(R.string.patient_found_prompt));
                     patientNameTv.setText(patient.getFullName());
                     mDateAutoTV.setVisibility(View.VISIBLE);
                     mTimeAutoTV.setVisibility(View.VISIBLE);
                     createAppointmentBtn.setVisibility(View.VISIBLE);
                 }
-
-
             }
         });
 
 
-        final SimpleDateFormat ddMMyyyy = new SimpleDateFormat("dd/MM/yyyy", Locale.getDefault());
+        final SimpleDateFormat ddMMyyyy = new SimpleDateFormat("dd.MM.yyyy", Locale.getDefault());
         final SimpleDateFormat HHmm = new SimpleDateFormat("HH:mm", Locale.getDefault());
         final Calendar calendar = Calendar.getInstance();
         calendar.set(Calendar.HOUR_OF_DAY, 0);
@@ -177,8 +176,6 @@ public class AddAppointmentFragment extends Fragment {
         calendar.set(Calendar.MILLISECOND, 0);
         final Date today = new Date();
         final Date today00 = new Date(calendar.getTimeInMillis());
-//        final Date today00 = new Date(today.getTime() - 86_400_000L);
-        Log.d(TAG, "zxc onCreateView: " + today00);
         calendar.setTime(today);
 
         mDateAutoTV.setOnClickListener(new View.OnClickListener() {
@@ -189,7 +186,7 @@ public class AddAppointmentFragment extends Fragment {
                 constraintBuilder.setValidator(DateValidatorPointForward.from(today00.getTime()));
                 final MaterialDatePicker.Builder builder = MaterialDatePicker.Builder.datePicker();
                 builder.setCalendarConstraints(constraintBuilder.build());
-                builder.setTitleText("Appointment's date");
+                builder.setTitleText(getString(R.string.appointments_date));
                 builder.setSelection(calendar.getTimeInMillis());
                 final MaterialDatePicker datePicker = builder.build();
                 datePicker.show(getChildFragmentManager(), DATE_PICKER);

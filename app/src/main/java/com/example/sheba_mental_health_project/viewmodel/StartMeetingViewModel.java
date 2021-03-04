@@ -1,5 +1,6 @@
 package com.example.sheba_mental_health_project.viewmodel;
 
+import android.app.Application;
 import android.content.Context;
 
 import androidx.lifecycle.MutableLiveData;
@@ -18,14 +19,14 @@ public class StartMeetingViewModel extends ViewModel {
     private MutableLiveData<Appointment> mGetLastAppointmentSucceed;
     private MutableLiveData<String> mGetLastAppointmentFailed;
 
-    private  MutableLiveData<AppointmentStateEnum> mGetUpdateStateSucceed;
-    private  MutableLiveData<String> mGetUpdateStateFailed;
+    private MutableLiveData<AppointmentStateEnum> mGetUpdateStateSucceed;
+    private MutableLiveData<String> mGetUpdateStateFailed;
 
-    private  MutableLiveData<String> mUpdateAppointmentSucceed;
-    private  MutableLiveData<String> mUpdateAppointmentFailed;
+    private MutableLiveData<String> mUpdateAppointmentSucceed;
+    private MutableLiveData<String> mUpdateAppointmentFailed;
 
-    private  MutableLiveData<Appointment> mDeleteAppointmentSucceed;
-    private  MutableLiveData<String> mDeleteAppointmentFailed;
+    private MutableLiveData<Appointment> mDeleteAppointmentSucceed;
+    private MutableLiveData<String> mDeleteAppointmentFailed;
 
     public StartMeetingViewModel(final Context context) {
         mRepository = Repository.getInstance(context);
@@ -70,8 +71,6 @@ public class StartMeetingViewModel extends ViewModel {
         return mGetUpdateStateSucceed;
     }
 
-
-
     public MutableLiveData<String> getGetUpdateStateFailed() {
         if (mGetUpdateStateFailed == null) {
             mGetUpdateStateFailed = new MutableLiveData<>();
@@ -110,7 +109,7 @@ public class StartMeetingViewModel extends ViewModel {
         return mUpdateAppointmentFailed;
     }
 
-    private void attachSetUpdateAppointmentListener(){
+    private void attachSetUpdateAppointmentListener() {
         mRepository.setUpdateAppointmentInterface(new Repository.RepositoryUpdateAppointmentInterface() {
             @Override
             public void onUpdateAppointmentSucceed(String appointmentId) {
@@ -154,6 +153,7 @@ public class StartMeetingViewModel extends ViewModel {
         });
     }
 
+
     public Appointment getAppointment() {
         return mAppointment;
     }
@@ -166,6 +166,10 @@ public class StartMeetingViewModel extends ViewModel {
         mRepository.updateAppointmentState(stateEnum);
     }
 
+    public void addAppointment(final Appointment appointment) {
+        mRepository.addAppointment(appointment);
+    }
+
     public void updateAppointment() {
         mRepository.updateAppointment(mAppointment);
     }
@@ -173,5 +177,4 @@ public class StartMeetingViewModel extends ViewModel {
     public void deleteAppointment() {
         mRepository.deleteAppointment();
     }
-
 }
