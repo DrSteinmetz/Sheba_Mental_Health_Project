@@ -18,13 +18,25 @@ public class Appointment implements Serializable {
     private Therapist mTherapist;
     private Patient mPatient;
    // private MentalState mPatientMentalState;
-//    private PhysicalState mPatientPhysicalState;
     private Map<String, List<PainPoint>> mPainPointsOfBodyPartMap = new HashMap<>();
     private List<String> mAnswers = new ArrayList<>();
     private Map<String, Integer> mFeelingsAnswersMap = new HashMap<>();
     private AppointmentStateEnum mState;
+    private boolean mIsFinishedPreQuestions = false;
 
     public Appointment() {}
+
+    public Appointment(final Appointment appointment) {
+        this.mId = appointment.mId;
+        this.mAppointmentDate = appointment.mAppointmentDate;
+        this.mTherapist = appointment.mTherapist;
+        this.mPatient = appointment.mPatient;
+        this.mPainPointsOfBodyPartMap = appointment.mPainPointsOfBodyPartMap;
+        this.mAnswers = appointment.mAnswers;
+        this.mFeelingsAnswersMap = appointment.mFeelingsAnswersMap;
+        this.mState = appointment.mState;
+        this.mIsFinishedPreQuestions = appointment.mIsFinishedPreQuestions;
+    }
 
     public Appointment(Date appointmentDate, Therapist therapist, Patient patient) {
         this.mAppointmentDate = appointmentDate;
@@ -132,6 +144,14 @@ public class Appointment implements Serializable {
 
     public void setFeelingsAnswersMap(Map<String, Integer> FeelingsAnswersMap) {
         this.mFeelingsAnswersMap = FeelingsAnswersMap;
+    }
+
+    public boolean getIsFinishedPreQuestions() {
+        return mIsFinishedPreQuestions;
+    }
+
+    public void setIsFinishedPreQuestions(boolean isFinishedPreQuestions) {
+        this.mIsFinishedPreQuestions = isFinishedPreQuestions;
     }
 
     @Override

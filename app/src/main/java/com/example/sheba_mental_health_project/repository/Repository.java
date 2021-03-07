@@ -1,7 +1,11 @@
 package com.example.sheba_mental_health_project.repository;
 
 import android.annotation.SuppressLint;
+import android.app.AlarmManager;
+import android.app.PendingIntent;
 import android.content.Context;
+import android.content.Intent;
+import android.os.Bundle;
 import android.util.Log;
 
 import androidx.annotation.NonNull;
@@ -11,6 +15,7 @@ import com.example.sheba_mental_health_project.R;
 import com.example.sheba_mental_health_project.model.Appointment;
 import com.example.sheba_mental_health_project.model.ChatMessage;
 import com.example.sheba_mental_health_project.model.Feeling;
+import com.example.sheba_mental_health_project.model.NotificationsReceiver;
 import com.example.sheba_mental_health_project.model.PainPoint;
 import com.example.sheba_mental_health_project.model.Patient;
 import com.example.sheba_mental_health_project.model.Question;
@@ -33,6 +38,7 @@ import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -47,11 +53,15 @@ public class Repository {
 
     private final Context mContext;
 
+    private final AlarmManager mAlarmManager;
+
     private Appointment mCurrentAppointment;
 
     private ListenerRegistration mPatientAppointmentsListener;
     private ListenerRegistration mTherapistAppointmentsListener;
     private ListenerRegistration mGetAllPainPointsListener;
+    private ListenerRegistration mGetAllPainPointsPhysicalListener;
+    private ListenerRegistration mGetFeelingsAnswersListener;
 
     private final String PATIENTS = "patients";
     private final String THERAPISTS = "therapists";
@@ -117,6 +127,19 @@ public class Repository {
         this.mRepositoryGetAllPainPointsListener = repositoryGetAllPainPointsListener;
     }
 
+    /*<------ Get All Pain Points for Physical State ------>*/
+    public interface RepositoryGetAllPainPointsPhysicalInterface {
+        void onGetAllPainPointsPhysicalSucceed(Map<String, List<PainPoint>> painPointsMap);
+
+        void onGetAllPainPointsPhysicalFailed(String error);
+    }
+
+    private RepositoryGetAllPainPointsPhysicalInterface mRepositoryGetAllPainPointsPhysicalListener;
+
+    public void setGetAllPainPointsPhysicalInterface(RepositoryGetAllPainPointsPhysicalInterface repositoryGetAllPainPointsPhysicalInterface){
+        this.mRepositoryGetAllPainPointsPhysicalListener = repositoryGetAllPainPointsPhysicalInterface;
+    }
+
     /*<------ Add Appointment ------>*/
     public interface RepositoryAddAppointmentInterface {
         void onAddAppointmentSucceed(String appointmentId);
@@ -126,8 +149,34 @@ public class Repository {
 
     private RepositoryAddAppointmentInterface mRepositoryAddAppointmentListener;
 
-    public void setAddAppointmentInterface(RepositoryAddAppointmentInterface repositoryAddAppointmentListener){
+    public void setAddAppointmentInterface(RepositoryAddAppointmentInterface repositoryAddAppointmentListener) {
         this.mRepositoryAddAppointmentListener = repositoryAddAppointmentListener;
+    }
+
+    /*<------ Update Appointment ------>*/
+    public interface RepositoryUpdateAppointmentInterface {
+        void onUpdateAppointmentSucceed(String appointmentId);
+
+        void onUpdateAppointmentFailed(String error);
+    }
+
+    private RepositoryUpdateAppointmentInterface mRepositoryUpdateAppointmentListener;
+
+    public void setUpdateAppointmentInterface(RepositoryUpdateAppointmentInterface repositoryUpdateAppointmentListener) {
+        this.mRepositoryUpdateAppointmentListener = repositoryUpdateAppointmentListener;
+    }
+
+    /*<------ Delete Appointment ------>*/
+    public interface RepositoryDeleteAppointmentInterface {
+        void onDeleteAppointmentSucceed(Appointment appointment);
+
+        void onDeleteAppointmentFailed(String error);
+    }
+
+    private RepositoryDeleteAppointmentInterface mRepositoryDeleteAppointmentListener;
+
+    public void setDeleteAppointmentInterface(RepositoryDeleteAppointmentInterface repositoryDeleteAppointmentListener) {
+        this.mRepositoryDeleteAppointmentListener = repositoryDeleteAppointmentListener;
     }
 
     /*<------ Get Last Appointment ------>*/
@@ -138,7 +187,7 @@ public class Repository {
 
     private RepositoryGetLastAppointmentInterface mGetLastAppointmentInterface;
 
-    public void setGetLastAppointmentInterface(RepositoryGetLastAppointmentInterface lastAppointmentInterface){
+    public void setGetLastAppointmentInterface(RepositoryGetLastAppointmentInterface lastAppointmentInterface) {
         this.mGetLastAppointmentInterface = lastAppointmentInterface;
     }
 
@@ -151,8 +200,21 @@ public class Repository {
 
     private RepositorySetPainPointsInterface mRepositorySetPainPointsListener;
 
-    public void setSetPainPointsInterface(RepositorySetPainPointsInterface repositorySetPainPointsInterface){
+    public void setSetPainPointsInterface(RepositorySetPainPointsInterface repositorySetPainPointsInterface) {
         this.mRepositorySetPainPointsListener = repositorySetPainPointsInterface;
+    }
+
+    /*<------ Delete Pain Point ------>*/
+    public interface RepositoryDeletePainPointInterface {
+        void onDeletePainPointSucceed(PainPoint painPoint);
+
+        void onDeletePainPointFailed(String error);
+    }
+
+    private RepositoryDeletePainPointInterface mRepositoryDeletePainPointListener;
+
+    public void setDeletePainPointInterface(RepositoryDeletePainPointInterface repositoryDeletePainPointInterface) {
+        this.mRepositoryDeletePainPointListener = repositoryDeletePainPointInterface;
     }
 
     /*<------ Get Questions of Page ------>*/
@@ -164,8 +226,21 @@ public class Repository {
 
     private RepositoryGetQuestionsOfPageInterface mRepositoryGetQuestionsOfPageListener;
 
-    public void setGetQuestionsOfPageInterface(RepositoryGetQuestionsOfPageInterface repositoryGetQuestionsOfPageInterface){
+    public void setGetQuestionsOfPageInterface(RepositoryGetQuestionsOfPageInterface repositoryGetQuestionsOfPageInterface) {
         this.mRepositoryGetQuestionsOfPageListener = repositoryGetQuestionsOfPageInterface;
+    }
+
+    /*<------ Get Feelings Answers ------>*/
+    public interface RepositoryGetFeelingsAnswersInterface {
+        void onGetFeelingsAnswersSucceed(Map<String, Integer> feelingsAnswers);
+
+        void onGetFeelingsAnswersFailed(String error);
+    }
+
+    private RepositoryGetFeelingsAnswersInterface mRepositoryGetFeelingsAnswersListener;
+
+    public void setGetFeelingsAnswersInterface(RepositoryGetFeelingsAnswersInterface repositoryGetFeelingsAnswersInterface) {
+        this.mRepositoryGetFeelingsAnswersListener = repositoryGetFeelingsAnswersInterface;
     }
 
     /*<------ Get Patient Feelings ------>*/
@@ -177,7 +252,7 @@ public class Repository {
 
     private RepositoryGetPatientFeelingsInterface mRepositoryGetPatientFeelingsListener;
 
-    public void setGetPatientFeelingsInterface(RepositoryGetPatientFeelingsInterface repositoryGetPatientFeelingsInterface){
+    public void setGetPatientFeelingsInterface(RepositoryGetPatientFeelingsInterface repositoryGetPatientFeelingsInterface) {
         this.mRepositoryGetPatientFeelingsListener = repositoryGetPatientFeelingsInterface;
     }
 
@@ -220,6 +295,19 @@ public class Repository {
         this.mRepositoryUpdateStateOfAppointmentListener = repositoryUpdateStateOfAppointmentInterface;
     }
 
+    /*<------ Update Finished Pre Questions ------>*/
+    public interface RepositoryUpdateFinishedPreQuestionsInterface {
+        void onUpdateFinishedPreQuestionsSucceed(boolean isFinishedPreQuestions);
+
+        void onUpdateFinishedPreQuestionsFailed(String error);
+    }
+
+    private RepositoryUpdateFinishedPreQuestionsInterface mRepositoryUpdateFinishedPreQuestionsListener;
+
+    public void setUpdateFinishedPreQuestionsInterface(RepositoryUpdateFinishedPreQuestionsInterface repositoryUpdateFinishedPreQuestionsInterface){
+        this.mRepositoryUpdateFinishedPreQuestionsListener = repositoryUpdateFinishedPreQuestionsInterface;
+    }
+
     /*<------ Upload Chat Message ------>*/
     public interface RepositoryUploadChatMessageInterface {
         void onUploadChatMessageFailed(String error);
@@ -241,6 +329,7 @@ public class Repository {
 
     private Repository(final Context context) {
         this.mContext = context;
+        mAlarmManager = (AlarmManager) mContext.getSystemService(Context.ALARM_SERVICE);
 //        addQuestions();
     }
 
@@ -295,10 +384,55 @@ public class Repository {
                         }
                     }
                 });
+    }
 
-        /*mCloudDB.collection(APPOINTMENTS)
-                .document(id)
-                .*/
+    public void updateAppointment(final Appointment appointment) {
+        mCloudDB.collection(APPOINTMENTS)
+                .document(appointment.getId())
+                .set(appointment)
+                .addOnCompleteListener(new OnCompleteListener<Void>() {
+                    @Override
+                    public void onComplete(@NonNull Task<Void> task) {
+                        if (task.isSuccessful()) {
+                            setCurrentAppointment(appointment);
+                            cancelAppointmentNotificationByDate(appointment);
+                            if (mRepositoryUpdateAppointmentListener != null) {
+                                mRepositoryUpdateAppointmentListener.onUpdateAppointmentSucceed(appointment.getId());
+                            }
+                        } else {
+                            final String error = Objects
+                                    .requireNonNull(task.getException()).getMessage();
+                            Log.w(TAG, "onComplete: ", task.getException());
+                            if (mRepositoryUpdateAppointmentListener != null) {
+                                mRepositoryUpdateAppointmentListener.onUpdateAppointmentFailed(error);
+                            }
+                        }
+                    }
+                });
+    }
+
+    public void deleteAppointment() {
+        mCloudDB.collection(APPOINTMENTS)
+                .document(mCurrentAppointment.getId())
+                .delete()
+                .addOnCompleteListener(new OnCompleteListener<Void>() {
+                    @Override
+                    public void onComplete(@NonNull Task<Void> task) {
+                        if (task.isSuccessful()) {
+                            cancelAppointmentNotificationByDate(mCurrentAppointment);
+                            if (mRepositoryDeleteAppointmentListener != null) {
+                                mRepositoryDeleteAppointmentListener.onDeleteAppointmentSucceed(mCurrentAppointment);
+                            }
+                        } else {
+                            final String error = Objects
+                                    .requireNonNull(task.getException()).getMessage();
+                            Log.w(TAG, "onComplete: ", task.getException());
+                            if (mRepositoryDeleteAppointmentListener != null) {
+                                mRepositoryDeleteAppointmentListener.onDeleteAppointmentFailed(error);
+                            }
+                        }
+                    }
+                });
     }
 
     public void getAppointmentsOfSpecificTherapist() {
@@ -317,7 +451,9 @@ public class Repository {
                         if (error == null && value != null) {
                             final List<Appointment> appointments = new ArrayList<>();
                             for (DocumentSnapshot document : value.getDocuments()) {
-                                appointments.add(document.toObject(Appointment.class));
+                                final Appointment appointment = document.toObject(Appointment.class);
+                                appointments.add(appointment);
+                                setAppointmentNotificationByDate(appointment, false);
                             }
                             Log.d(TAG, "onEvent: " + appointments.size());
                             if (mRepositoryGetAppointmentOfSpecificTherapistListener != null) {
@@ -341,13 +477,7 @@ public class Repository {
                 });
     }
 
-    public void getAppointmentsOfSpecificPatient() {
-        final String id = Objects.requireNonNull(FirebaseAuth.getInstance().getCurrentUser()).getUid();
-
-        final List<AppointmentStateEnum> stateQuery = new ArrayList<>();
-        stateQuery.add(AppointmentStateEnum.PreMeeting);
-        stateQuery.add(AppointmentStateEnum.Ongoing);
-
+    public void getAppointmentsOfSpecificPatient(final String id, final List<AppointmentStateEnum> stateQuery) {
         mPatientAppointmentsListener = mCloudDB.collection(APPOINTMENTS)
                 .whereEqualTo(FieldPath.of("patient", "id"), id)
                 .whereIn("state", stateQuery)
@@ -357,7 +487,9 @@ public class Repository {
                         if (error == null && value != null) {
                             final List<Appointment> appointments = new ArrayList<>();
                             for (DocumentSnapshot document : value.getDocuments()) {
-                                appointments.add(document.toObject(Appointment.class));
+                                final Appointment appointment = document.toObject(Appointment.class);
+                                appointments.add(appointment);
+                                setAppointmentNotificationByDate(appointment, true);
                             }
                             Log.d(TAG, "onEvent: appointments size: " + appointments.size());
                             if (mRepositoryGetAppointmentOfSpecificPatientListener != null) {
@@ -383,7 +515,7 @@ public class Repository {
 
     public void setPainPoints(final BodyPartEnum bodyPart, final PainPoint painPoint) {
         final Map<String, List<PainPoint>> map =  mCurrentAppointment.getPainPointsOfBodyPartMap();
-        List<PainPoint> painPoints = mCurrentAppointment.getPainPointsOfBodyPartMap().get(bodyPart.name());
+        List<PainPoint> painPoints = map.get(bodyPart.name());
         if (painPoints == null) {
             painPoints = new ArrayList<>();
             painPoints.add(painPoint);
@@ -419,6 +551,36 @@ public class Repository {
                 });
     }
 
+    public void deletePainPoint(final BodyPartEnum bodyPart, final PainPoint painPoint) {
+        final Map<String, List<PainPoint>> map =  mCurrentAppointment.getPainPointsOfBodyPartMap();
+        List<PainPoint> painPoints = map.get(bodyPart.name());
+
+        if (painPoints != null) {
+            painPoints.remove(painPoint);
+        }
+
+        mCloudDB.collection(APPOINTMENTS)
+                .document(mCurrentAppointment.getId())
+                .update("painPointsOfBodyPartMap", map)
+                .addOnCompleteListener(new OnCompleteListener<Void>() {
+                    @Override
+                    public void onComplete(@NonNull Task<Void> task) {
+                        if (task.isSuccessful()) {
+                            if (mRepositoryDeletePainPointListener != null) {
+                                mRepositoryDeletePainPointListener.onDeletePainPointSucceed(painPoint);
+                            }
+                        } else {
+                            final String error = Objects.requireNonNull(task.getException())
+                                    .getMessage();
+                            Log.w(TAG, "onComplete: ", task.getException());
+                            if (mRepositoryDeletePainPointListener != null) {
+                                mRepositoryDeletePainPointListener.onDeletePainPointFailed(error);
+                            }
+                        }
+                    }
+                });
+    }
+
     public Appointment getCurrentAppointment() {
         return mCurrentAppointment;
     }
@@ -445,13 +607,36 @@ public class Repository {
                             final Appointment dbAppointment = value.toObject(Appointment.class);
                             if (mRepositoryGetAllPainPointsListener != null) {
                                 mRepositoryGetAllPainPointsListener.onGetAllPainPointsSucceed(dbAppointment.getPainPointsOfBodyPartMap());
-//                                setCurrentAppointment(appointment);
                                 appointment.setPainPointsOfBodyPartMap(dbAppointment.getPainPointsOfBodyPartMap());
                             }
                         } else {
                             Log.w(TAG, "onEvent: ", error);
                             if (mRepositoryGetAllPainPointsListener != null) {
                                 mRepositoryGetAllPainPointsListener.onGetAllPainPointsFailed(error.getMessage());
+                            }
+                        }
+                    }
+                });
+    }
+
+    public void getAllPainPointsPhysical(final Appointment appointment) {
+        mGetAllPainPointsPhysicalListener = mCloudDB.collection(APPOINTMENTS)
+                .document(appointment.getId())
+                .addSnapshotListener(new EventListener<DocumentSnapshot>() {
+                    @Override
+                    public void onEvent(@Nullable DocumentSnapshot value, @Nullable FirebaseFirestoreException error) {
+                        if (value != null && value.exists()) {
+                            final Appointment dbAppointment = value.toObject(Appointment.class);
+                            if (mRepositoryGetAllPainPointsPhysicalListener != null) {
+                                mRepositoryGetAllPainPointsPhysicalListener
+                                        .onGetAllPainPointsPhysicalSucceed(dbAppointment.getPainPointsOfBodyPartMap());
+                                appointment.setPainPointsOfBodyPartMap(dbAppointment.getPainPointsOfBodyPartMap());
+                            }
+                        } else {
+                            Log.w(TAG, "onEvent: ", error);
+                            if (mRepositoryGetAllPainPointsPhysicalListener != null) {
+                                mRepositoryGetAllPainPointsPhysicalListener
+                                        .onGetAllPainPointsPhysicalFailed(error.getMessage());
                             }
                         }
                     }
@@ -470,6 +655,38 @@ public class Repository {
         mGetAllPainPointsListener.remove();
     }
 
+    public void removeGetAllPainPointsPhysicalListener() {
+        mGetAllPainPointsPhysicalListener.remove();
+    }
+
+    public void getFeelingsAnswers(final Appointment appointment) {
+        mGetFeelingsAnswersListener = mCloudDB.collection(APPOINTMENTS)
+                .document(appointment.getId())
+                .addSnapshotListener(new EventListener<DocumentSnapshot>() {
+                    @Override
+                    public void onEvent(@Nullable DocumentSnapshot value, @Nullable FirebaseFirestoreException error) {
+                        if (value != null && value.exists()) {
+                            final Appointment dbAppointment = value.toObject(Appointment.class);
+                            if (mRepositoryGetFeelingsAnswersListener != null) {
+                                mRepositoryGetFeelingsAnswersListener
+                                        .onGetFeelingsAnswersSucceed(dbAppointment.getFeelingsAnswersMap());
+
+                                appointment.setFeelingsAnswersMap(dbAppointment.getFeelingsAnswersMap());
+                            }
+                        } else {
+                            Log.w(TAG, "onEvent: ", error);
+                            if (mRepositoryGetFeelingsAnswersListener != null) {
+                                mRepositoryGetFeelingsAnswersListener
+                                        .onGetFeelingsAnswersFailed(error.getMessage());
+                            }
+                        }
+                    }
+                });
+    }
+
+    public void removeGetFeelingsAnswersListener() {
+        mGetFeelingsAnswersListener.remove();
+    }
 
     public void getQuestions(final ViewModelEnum page) {
         final String language = Locale.getDefault().getLanguage(); // 'he' 'en'
@@ -532,7 +749,6 @@ public class Repository {
                 });
     }
 
-
     public void updateAnswersOfAppointment() {
         Log.d(TAG, "updateAnswersOfAppointment: " + mCurrentAppointment.getAnswers());
         mCloudDB.collection(APPOINTMENTS)
@@ -570,8 +786,34 @@ public class Repository {
                         } else {
                             Log.e(TAG, "onComplete: ", task.getException());
                             if (mRepositoryUpdateAnswersOfFeelingsListener != null) {
-                                mRepositoryUpdateAnswersOfFeelingsListener.onUpdateAnswersOfFeelingsFailed(Objects.
+                                mRepositoryUpdateAnswersOfFeelingsListener
+                                        .onUpdateAnswersOfFeelingsFailed(Objects.
                                         requireNonNull(task.getException()).getMessage());
+                            }
+                        }
+                    }
+                });
+    }
+
+    public void updateFinishedPreQuestions() {
+        mCloudDB.collection(APPOINTMENTS)
+                .document(mCurrentAppointment.getId())
+                .update("isFinishedPreQuestions", true)
+                .addOnCompleteListener(new OnCompleteListener<Void>() {
+                    @Override
+                    public void onComplete(@NonNull Task<Void> task) {
+                        if (task.isSuccessful()) {
+                            mCurrentAppointment.setIsFinishedPreQuestions(true);
+                            if (mRepositoryUpdateFinishedPreQuestionsListener != null) {
+                                mRepositoryUpdateFinishedPreQuestionsListener
+                                        .onUpdateFinishedPreQuestionsSucceed(true);
+                            }
+                        } else {
+                            Log.e(TAG, "onComplete: ", task.getException());
+                            if (mRepositoryUpdateFinishedPreQuestionsListener != null) {
+                                mRepositoryUpdateFinishedPreQuestionsListener
+                                        .onUpdateFinishedPreQuestionsFailed(task
+                                                .getException().getMessage());
                             }
                         }
                     }
@@ -602,7 +844,7 @@ public class Repository {
                 });
     }
 
-    public void getLastAppointment(){
+    public void getLastAppointment() {
         final String patientId = mCurrentAppointment.getPatient().getId();
         final List<AppointmentStateEnum> stateQuery = new ArrayList<>();
         stateQuery.add(AppointmentStateEnum.Ended);
@@ -632,24 +874,56 @@ public class Repository {
         });
     }
 
-    public void updateAppointmentState(AppointmentStateEnum appointmentStateEnum){
-    mCloudDB.collection(APPOINTMENTS).document(mCurrentAppointment.getId())
-            .update("state",appointmentStateEnum).addOnCompleteListener(new OnCompleteListener<Void>() {
-        @Override
-        public void onComplete(@NonNull Task<Void> task) {
-            if(task.isSuccessful()){
-                mCurrentAppointment.setState(appointmentStateEnum);
-                if(mRepositoryUpdateStateOfAppointmentListener != null) {
-                    mRepositoryUpdateStateOfAppointmentListener.onUpdateStateOfAppointmentSucceed(appointmentStateEnum);
-                }
-            } else {
-                if(mRepositoryUpdateStateOfAppointmentListener != null) {
-                    mRepositoryUpdateStateOfAppointmentListener.onUpdateAnswersOfAppointmentFailed(task.getException().getMessage());
+    public void updateAppointmentState(AppointmentStateEnum appointmentStateEnum) {
+        mCloudDB.collection(APPOINTMENTS).document(mCurrentAppointment.getId())
+                .update("state", appointmentStateEnum).addOnCompleteListener(new OnCompleteListener<Void>() {
+            @Override
+            public void onComplete(@NonNull Task<Void> task) {
+                if (task.isSuccessful()) {
+                    mCurrentAppointment.setState(appointmentStateEnum);
+                    if (mRepositoryUpdateStateOfAppointmentListener != null) {
+                        mRepositoryUpdateStateOfAppointmentListener.onUpdateStateOfAppointmentSucceed(appointmentStateEnum);
+                    }
+                } else {
+                    if (mRepositoryUpdateStateOfAppointmentListener != null) {
+                        mRepositoryUpdateStateOfAppointmentListener.onUpdateAnswersOfAppointmentFailed(task.getException().getMessage());
+                    }
                 }
             }
-        }
-    });
+        });
+    }
 
+    private void setAppointmentNotificationByDate(final Appointment appointment,
+                                                  final boolean isPatient) {
+        final long minuteMs = 60_000L;
+        final Date now = new Date(System.currentTimeMillis() + (10 * minuteMs));
+        if (appointment.getAppointmentDate() != null &&
+                appointment.getAppointmentDate().after(now)) {
+            final long alarmTimeMs = appointment.getAppointmentDate().getTime() - (10 * minuteMs);
+            final int requestCode = (int) appointment.getAppointmentDate().getTime();
+
+            final Bundle bundle = new Bundle();
+            final Intent intent = new Intent(mContext, NotificationsReceiver.class);
+            bundle.putSerializable("appointment", appointment);
+            bundle.putBoolean("is_patient", isPatient);
+            intent.putExtra("bundle", bundle);
+
+            final PendingIntent pendingIntent = PendingIntent.getBroadcast(mContext, requestCode,
+                    intent, PendingIntent.FLAG_CANCEL_CURRENT);
+
+            mAlarmManager.setExact(AlarmManager.RTC_WAKEUP, alarmTimeMs, pendingIntent);
+        }
+    }
+
+    private void cancelAppointmentNotificationByDate(final Appointment appointment) {
+        final int requestCode = (int) appointment.getAppointmentDate().getTime();
+
+        final Intent intent = new Intent(mContext, NotificationsReceiver.class);
+
+        final PendingIntent pendingIntent = PendingIntent.getBroadcast(mContext, requestCode,
+                intent, PendingIntent.FLAG_CANCEL_CURRENT);
+
+        mAlarmManager.cancel(pendingIntent);
     }
 
     public void addQuestions() {
@@ -683,7 +957,7 @@ public class Repository {
     public void addFeelings() {
         final List<Feeling> feelings = new ArrayList<>();
 
-        feelings.add(new Feeling("1", R.drawable.afraid, "Fear"));
+        feelings.add(new Feeling("1", R.drawable.fear, "Fear"));
         feelings.add(new Feeling("2", R.drawable.sadness, "Sadness"));
         feelings.add(new Feeling("3", R.drawable.anger, "Anger"));
         feelings.add(new Feeling("4", R.drawable.anxiety, "Anxiety"));
@@ -692,7 +966,7 @@ public class Repository {
         feelings.add(new Feeling("7", R.drawable.embarrassment, "Embarrassment"));
         feelings.add(new Feeling("8", R.drawable.confussion, "Confusion"));
         feelings.add(new Feeling("9", R.drawable.aggressive, "Aggressive"));
-        feelings.add(new Feeling("10", R.drawable.tensed, "Tension"));
+        feelings.add(new Feeling("10", R.drawable.tension, "Tension"));
 
         for (Feeling feeling : feelings) {
             mCloudDB.collection(FEELINGS)

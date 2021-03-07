@@ -27,6 +27,22 @@
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
+
+        <receiver
+            android:name=".model.NotificationsReceiver"
+            android:enabled="true"
+            android:logo="@drawable/ic_red_pain_point" />
+
+        <provider
+            android:name="androidx.core.content.FileProvider"
+            android:authorities="com.example.sheba_mental_health_project.provider"
+            android:exported="false"
+            android:logo="@drawable/ic_red_pain_point"
+            android:grantUriPermissions="true">
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/files_dir" />
+        </provider>
     </application>
 
 </manifest>

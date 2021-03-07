@@ -7,7 +7,10 @@ import androidx.lifecycle.ViewModel;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.example.sheba_mental_health_project.model.enums.ViewModelEnum;
-import com.example.sheba_mental_health_project.viewmodel.AppointmentNotYetStartedViewModel;
+import com.example.sheba_mental_health_project.view.therapist.HistoryFragment;
+import com.example.sheba_mental_health_project.viewmodel.HistoryViewModel;
+import com.example.sheba_mental_health_project.viewmodel.TherapistPhysicalStateViewModel;
+import com.example.sheba_mental_health_project.viewmodel.AppointmentLoungeViewModel;
 import com.example.sheba_mental_health_project.viewmodel.AppointmentPatientViewModel;
 import com.example.sheba_mental_health_project.viewmodel.AppointmentTherapistViewModel;
 import com.example.sheba_mental_health_project.viewmodel.ChatViewModel;
@@ -20,7 +23,9 @@ import com.example.sheba_mental_health_project.viewmodel.PreQuestionsViewModel;
 import com.example.sheba_mental_health_project.viewmodel.SearchPatientViewModel;
 import com.example.sheba_mental_health_project.viewmodel.StartMeetingViewModel;
 import com.example.sheba_mental_health_project.viewmodel.StatementViewModel;
-import com.example.sheba_mental_health_project.viewmodel.TherapistPhysicalStateViewModel;
+import com.example.sheba_mental_health_project.viewmodel.TherapistMentalGenericViewModel;
+import com.example.sheba_mental_health_project.viewmodel.TherapistMentalStateViewModel;
+import com.example.sheba_mental_health_project.viewmodel.TherapistPhysicalStateGenericViewModel;
 import com.example.sheba_mental_health_project.viewmodel.TreatyViewModel;
 import com.example.sheba_mental_health_project.viewmodel.AddAppointmentViewModel;
 import com.example.sheba_mental_health_project.viewmodel.AddPatientViewModel;
@@ -40,9 +45,9 @@ import com.example.sheba_mental_health_project.viewmodel.WelcomeViewModel;
 
 public class ViewModelFactory implements ViewModelProvider.Factory {
 
-    private Context mContext;
+    private final Context mContext;
 
-    private ViewModelEnum mViewModelEnum;
+    private final ViewModelEnum mViewModelEnum;
 
     public ViewModelFactory(final Context context, final ViewModelEnum viewModelEnum) {
         this.mContext = context;
@@ -85,9 +90,9 @@ public class ViewModelFactory implements ViewModelProvider.Factory {
                     objectToReturn = (T) new PreMeetingCharacterViewModel(mContext);
                 }
                 break;
-            case AppointmentNotYetStarted:
-                if (modelClass.isAssignableFrom(AppointmentNotYetStartedViewModel.class)) {
-                    objectToReturn = (T) new AppointmentNotYetStartedViewModel(mContext);
+            case AppointmentLounge:
+                if (modelClass.isAssignableFrom(AppointmentLoungeViewModel.class)) {
+                    objectToReturn = (T) new AppointmentLoungeViewModel(mContext);
                 }
                 break;
             case AppointmentPatient:
@@ -140,9 +145,24 @@ public class ViewModelFactory implements ViewModelProvider.Factory {
                     objectToReturn = (T) new MainTherapistViewModel(mContext);
                 }
                 break;
+            case TherapistPhysicalStateGeneric:
+                if (modelClass.isAssignableFrom(TherapistPhysicalStateGenericViewModel.class)) {
+                    objectToReturn = (T) new TherapistPhysicalStateGenericViewModel(mContext);
+                }
+                break;
             case TherapistPhysicalState:
                 if (modelClass.isAssignableFrom(TherapistPhysicalStateViewModel.class)) {
                     objectToReturn = (T) new TherapistPhysicalStateViewModel(mContext);
+                }
+                break;
+            case TherapistMentalState:
+                if (modelClass.isAssignableFrom(TherapistMentalStateViewModel.class)) {
+                    objectToReturn = (T) new TherapistMentalStateViewModel(mContext);
+                }
+                break;
+            case TherapistMentalGeneric:
+                if (modelClass.isAssignableFrom(TherapistMentalGenericViewModel.class)) {
+                    objectToReturn = (T) new TherapistMentalGenericViewModel(mContext);
                 }
                 break;
             case StartMeeting:
@@ -158,6 +178,11 @@ public class ViewModelFactory implements ViewModelProvider.Factory {
             case SearchPatient:
                 if (modelClass.isAssignableFrom(SearchPatientViewModel.class)) {
                     objectToReturn = (T) new SearchPatientViewModel(mContext);
+                }
+                break;
+            case History:
+                if (modelClass.isAssignableFrom(HistoryViewModel.class)) {
+                    objectToReturn = (T) new HistoryViewModel(mContext);
                 }
                 break;
             case AddPatient:

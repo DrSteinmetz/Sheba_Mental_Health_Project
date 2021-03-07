@@ -15,12 +15,16 @@ import java.util.Objects;
 
 public class SearchPatientViewModel extends ViewModel {
 
-    private MutableLiveData<List<Patient>> mGetAllPatientsSucceed;
-    private MutableLiveData<String> mGetAllPatientsFailed;
+    private final Repository mRepository;
+
+    private Patient mPatient;
+
     private final List<String> mPatientsEmails = new ArrayList<>();
 
+    private MutableLiveData<List<Patient>> mGetAllPatientsSucceed;
+    private MutableLiveData<String> mGetAllPatientsFailed;
 
-    private Repository mRepository;
+    private final String TAG = "SearchPatientViewModel";
 
     public SearchPatientViewModel(final Context context) {
         mRepository = Repository.getInstance(context);
@@ -62,6 +66,15 @@ public class SearchPatientViewModel extends ViewModel {
         });
     }
 
+
+    public Patient getPatient() {
+        return mPatient;
+    }
+
+    public void setPatient(Patient mPatient) {
+        this.mPatient = mPatient;
+    }
+
     public List<String> getPatientsEmails() {
         return mPatientsEmails;
     }
@@ -71,14 +84,12 @@ public class SearchPatientViewModel extends ViewModel {
     }
 
     public Patient getPatientByEmail(final String patientEmail){
-
         final int patientIndex = mPatientsEmails.indexOf(patientEmail);
-        if( patientIndex != -1){
+
+        if (patientIndex != -1) {
             return Objects.requireNonNull(mGetAllPatientsSucceed.getValue()).get(patientIndex);
-        }
-       else{
+        } else {
             return null;
         }
     }
-
 }

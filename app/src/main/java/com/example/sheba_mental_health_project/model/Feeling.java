@@ -5,10 +5,10 @@ import java.io.Serializable;
 public class Feeling implements Serializable {
 
     private String mId;
-    private int mImageId;
     private String mName;
+    private int mImageId;
 
-    public Feeling(){}
+    public Feeling() {}
 
     public Feeling(String mId, int mImageId, String mName) {
         this.mId = mId;

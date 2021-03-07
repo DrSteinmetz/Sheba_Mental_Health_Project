@@ -15,14 +15,19 @@ import java.util.List;
 
 public class LeftArmViewModel extends ViewModel {
 
-    private Repository mRepository;
+    private final Repository mRepository;
+
     private PainPoint mPainPoint = new PainPoint();
     private EnumMap<PainLocationEnum, PainPoint> mPainPointsMap = new EnumMap<>(PainLocationEnum.class);
 
     private MutableLiveData<PainPoint> mSetPainPointsSucceed;
     private MutableLiveData<String> mSetPainPointsFailed;
 
+    private MutableLiveData<PainPoint> mDeletePainPointSucceed;
+    private MutableLiveData<String> mDeletePainPointFailed;
+
     private final String TAG = "LeftArmViewModel";
+
 
     public LeftArmViewModel(final Context context) {
         mRepository = Repository.getInstance(context);
@@ -63,6 +68,38 @@ public class LeftArmViewModel extends ViewModel {
         });
     }
 
+    public MutableLiveData<PainPoint> getDeletePainPointSucceed() {
+        if (mDeletePainPointSucceed == null) {
+            mDeletePainPointSucceed = new MutableLiveData<>();
+            attachDeletePainPointListener();
+        }
+        return mDeletePainPointSucceed;
+    }
+
+    public MutableLiveData<String> getDeletePainPointFailed() {
+        if (mDeletePainPointFailed == null) {
+            mDeletePainPointFailed = new MutableLiveData<>();
+            attachDeletePainPointListener();
+        }
+        return mDeletePainPointFailed;
+    }
+
+    private void attachDeletePainPointListener() {
+        mRepository.setDeletePainPointInterface(new Repository.RepositoryDeletePainPointInterface() {
+            @Override
+            public void onDeletePainPointSucceed(PainPoint painPoint) {
+                mPainPointsMap.remove(painPoint.getPainLocation());
+                mDeletePainPointSucceed.setValue(painPoint);
+            }
+
+            @Override
+            public void onDeletePainPointFailed(String error) {
+                mDeletePainPointFailed.setValue(error);
+            }
+        });
+    }
+
+
     public PainPoint getPainPoint() {
         return mPainPoint;
     }
@@ -81,5 +118,9 @@ public class LeftArmViewModel extends ViewModel {
 
     public void setPainPointsInDB() {
         mRepository.setPainPoints(BodyPartEnum.LeftArm, mPainPoint);
+    }
+
+    public void deletePainPoint() {
+        mRepository.deletePainPoint(BodyPartEnum.LeftArm, mPainPoint);
     }
 }

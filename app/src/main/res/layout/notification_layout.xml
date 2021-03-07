@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent" android:layout_height="match_parent">
+
+    <RelativeLayout
+        android:id="@+id/notif_title_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="25dp">
+
+        <ImageView
+            android:id="@+id/notif_icon"
+            android:layout_width="25dp"
+            android:layout_height="25dp"
+            android:layout_centerVertical="true"
+            android:layout_marginVertical="10dp"
+            android:src="@drawable/ic_red_pain_point" />
+
+        <TextView
+            android:id="@+id/notif_title_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toEndOf="@id/notif_icon"
+            android:layout_marginTop="10dp"
+            android:layout_marginStart="10dp"
+            android:layout_centerVertical="true"
+            android:text="@string/app_name"
+            android:textSize="15sp"
+            android:textColor="@color/dark_gray"
+            android:textAllCaps="false" />
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/notif_details_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/notif_title_layout"
+        android:layout_alignParentStart="true"
+        android:layout_marginBottom="15dp"
+        android:layout_marginHorizontal="25dp">
+
+        <TextView
+            android:id="@+id/notif_subject_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:singleLine="true"
+            android:ellipsize="end"
+            android:text="Meeting with Dr.Amzaleg"
+            android:textStyle="bold"
+            android:textColor="@color/dark_gray"
+            android:textSize="14sp"
+            android:textAllCaps="false" />
+
+        <TextView
+            android:id="@+id/notif_details_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/notif_subject_tv"
+            android:singleLine="true"
+            android:ellipsize="end"
+            android:gravity="start"
+            android:text="@string/appointment_notif_body"
+            android:textColor="@color/dark_gray"
+            android:textSize="14sp"
+            android:textAllCaps="false" />
+
+    </RelativeLayout>
+
+</RelativeLayout>

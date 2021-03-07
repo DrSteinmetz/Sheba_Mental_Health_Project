@@ -6,6 +6,7 @@ import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
 import com.example.sheba_mental_health_project.model.Appointment;
+import com.example.sheba_mental_health_project.repository.AuthRepository;
 import com.example.sheba_mental_health_project.repository.Repository;
 
 import java.util.ArrayList;
@@ -13,7 +14,9 @@ import java.util.List;
 
 public class MainTherapistViewModel extends ViewModel {
 
-    private Repository mRepository;
+    private final Repository mRepository;
+
+    private final AuthRepository mAuthRepository;
 
     private final List<Appointment> mAppointments = new ArrayList<>();
 
@@ -24,6 +27,7 @@ public class MainTherapistViewModel extends ViewModel {
 
     public MainTherapistViewModel(final Context context) {
         mRepository = Repository.getInstance(context);
+        mAuthRepository = AuthRepository.getInstance(context);
     }
 
     public MutableLiveData<List<Appointment>> getMyAppointmentsSucceed() {
@@ -73,5 +77,9 @@ public class MainTherapistViewModel extends ViewModel {
 
     public void setCurrentAppointment(Appointment appointment) {
         mRepository.setCurrentAppointment(appointment);
+    }
+
+    public String getTherapistFullName() {
+        return mAuthRepository.getUser().getFullName();
     }
 }

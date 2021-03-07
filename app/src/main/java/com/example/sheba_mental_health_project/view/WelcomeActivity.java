@@ -5,18 +5,17 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
-import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.util.Log;
-import android.view.WindowManager;
-import android.widget.FrameLayout;
 
 import com.example.sheba_mental_health_project.R;
 import com.example.sheba_mental_health_project.model.ViewModelFactory;
 import com.example.sheba_mental_health_project.model.enums.ViewModelEnum;
+import com.example.sheba_mental_health_project.view.patient.PatientLoginFragment;
+import com.example.sheba_mental_health_project.view.therapist.TherapistLoginFragment;
 import com.example.sheba_mental_health_project.viewmodel.WelcomeViewModel;
 
 public class WelcomeActivity extends AppCompatActivity

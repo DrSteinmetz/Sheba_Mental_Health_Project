@@ -6,7 +6,7 @@
     android:background="@color/white"
     android:focusable="true"
     android:clickable="true"
-    tools:context=".view.TreatyFragment">
+    tools:context=".view.patient.TreatyFragment">
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -31,7 +31,7 @@
                 android:layout_marginEnd="10dp"
                 android:padding="10dp"
                 android:tag="3"
-                android:text="I Want a Long Meeting"
+                android:text="@string/long_meeting_prompt"
                 android:textSize="20sp"
                 android:textColor="@color/black" />
 
@@ -42,7 +42,7 @@
                 android:layout_marginEnd="10dp"
                 android:padding="10dp"
                 android:tag="4"
-                android:text="I Want a Short Meeting"
+                android:text="@string/short_meeting_prompt"
                 android:textSize="20sp"
                 android:textColor="@color/black" />
 
@@ -55,20 +55,18 @@
             android:layout_below="@id/meeting_time_pref_rg"
             android:layout_marginTop="40dp"
             android:tag="5"
-            android:text="I want another person to present with me during the meeting"
+            android:text="@string/another_person_prompt"
             android:textSize="20sp"
             android:textColor="@color/black"
             android:textAllCaps="false" />
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/continue_btn"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
             android:layout_centerHorizontal="true"
             android:layout_marginTop="30dp"
             android:layout_below="@id/another_person_cb"
-            android:text="Continue"
-            style="@style/blue_btn"/>
+            android:text="@string/continue_txt"
+            style="@style/blue_btn" />
 
     </RelativeLayout>
 

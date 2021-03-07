@@ -7,14 +7,16 @@ import androidx.lifecycle.ViewModel;
 
 import com.example.sheba_mental_health_project.model.Appointment;
 import com.example.sheba_mental_health_project.model.Patient;
+import com.example.sheba_mental_health_project.model.enums.AppointmentStateEnum;
 import com.example.sheba_mental_health_project.repository.Repository;
+import com.google.firebase.auth.FirebaseAuth;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class MainPatientViewModel extends ViewModel {
 
-    private Repository mRepository;
+    private final Repository mRepository;
 
     private final List<Appointment> mAppointments = new ArrayList<>();
 
@@ -22,6 +24,7 @@ public class MainPatientViewModel extends ViewModel {
     private MutableLiveData<String> mGetMyAppointmentsFailed;
 
     private final String TAG = "MainPatientViewModel";
+
 
     public MainPatientViewModel(final Context context) {
         mRepository = Repository.getInstance(context);
@@ -65,7 +68,13 @@ public class MainPatientViewModel extends ViewModel {
     }
 
     public void getMyAppointments() {
-        mRepository.getAppointmentsOfSpecificPatient();
+        final String id = FirebaseAuth.getInstance().getCurrentUser().getUid();
+
+        final List<AppointmentStateEnum> stateQuery = new ArrayList<>();
+        stateQuery.add(AppointmentStateEnum.PreMeeting);
+        stateQuery.add(AppointmentStateEnum.Ongoing);
+
+        mRepository.getAppointmentsOfSpecificPatient(id, stateQuery);
     }
 
     public void setCurrentAppointment(final Appointment appointment) {

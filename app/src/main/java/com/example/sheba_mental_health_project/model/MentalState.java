@@ -10,8 +10,7 @@ public class MentalState implements Serializable {
     private float mSadness;
     private FacialExpressionEnum mFacialExpression;
 
-    public MentalState() {
-    }
+    public MentalState() {}
 
     public float getHappiness() {
         return mHappiness;
