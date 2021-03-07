@@ -110,10 +110,10 @@
                 android:layout_height="wrap_content"
                 android:minHeight="?attr/actionBarSize"
                 app:tabGravity="fill"
-                app:tabIndicatorColor="@color/white"
                 app:tabTextColor="@color/dark_gray"
                 app:tabSelectedTextColor="@color/white"
                 app:tabIndicatorHeight="4dp"
+                app:tabIndicatorColor="@color/white"
                 app:tabBackground="@color/light_blue"
                 app:tabMode="fixed">
 
@@ -147,6 +147,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content" />
             </androidx.coordinatorlayout.widget.CoordinatorLayout>
+
         </RelativeLayout>
 
     </androidx.coordinatorlayout.widget.CoordinatorLayout>

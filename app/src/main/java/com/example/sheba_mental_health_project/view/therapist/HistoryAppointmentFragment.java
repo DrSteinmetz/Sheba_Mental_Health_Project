@@ -79,7 +79,6 @@ public class HistoryAppointmentFragment extends Fragment {
         patientNameTv.setText(mAppointment.getPatient().getFullName());
         therapistNameTv.setText(mAppointment.getTherapist().getFullName());
 
-        mViewPager.setOffscreenPageLimit(0);
         mViewPager.setAdapter(mPageAdapter);
         mTabLayout.setupWithViewPager(mViewPager);
 
