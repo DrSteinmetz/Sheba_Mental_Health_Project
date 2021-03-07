@@ -38,7 +38,7 @@ public class TherapistMentalGenericFragment extends Fragment {
 
 
     public static TherapistMentalGenericFragment newInstance(final Appointment appointment) {
-        final TherapistMentalGenericFragment fragment = new TherapistMentalGenericFragment();
+        TherapistMentalGenericFragment fragment = new TherapistMentalGenericFragment();
         Bundle args = new Bundle();
         args.putSerializable("appointment", appointment);
         fragment.setArguments(args);

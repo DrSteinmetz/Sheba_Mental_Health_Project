@@ -34,6 +34,7 @@ import com.example.sheba_mental_health_project.view.patient.AppointmentPatientFr
 import com.example.sheba_mental_health_project.view.patient.BureaucracyFragment;
 import com.example.sheba_mental_health_project.view.patient.MainPatientFragment;
 import com.example.sheba_mental_health_project.view.patient.MentalPatientFragment;
+import com.example.sheba_mental_health_project.view.patient.NotesFragment;
 import com.example.sheba_mental_health_project.view.patient.PhysicalPatientFragment;
 import com.example.sheba_mental_health_project.view.patient.PreMeetingCharacterFragment;
 import com.example.sheba_mental_health_project.view.patient.PreQuestionsFragment;
@@ -94,6 +95,7 @@ public class MainActivity extends AppCompatActivity
     private final String STATEMENT_FRAG = "Statement_Fragment";
     private final String CATEGORY_FRAG = "Category_Fragment";
     private final String PRE_MEETING_CHARACTER_FRAG = "Pre_Meeting_Character_Frag";
+    private final String NOTES_FRAG = "Notes_Fragment";
     private final String MAIN_PATIENT_FRAG = "Main_Patient_Fragment";
     private final String PATIENT_APPOINTMENT_FRAG = "Patient_Appointment_Fragment";
     private final String PHYSICAL_PATIENT_FRAG = "Physical_Patient_Fragment";
@@ -351,6 +353,14 @@ public class MainActivity extends AppCompatActivity
     }
 
     @Override
+    public void onLeaveNoteClicked() {
+        getSupportFragmentManager().beginTransaction()
+                .add(android.R.id.content, NotesFragment.newInstance(), NOTES_FRAG)
+                .addToBackStack(null)
+                .commit();
+    }
+
+    @Override
     public void onMoveToAppointmentPatient() {
         onEnterAppointment();
     }
@@ -431,7 +441,7 @@ public class MainActivity extends AppCompatActivity
     @Override
     public void onChatClicked() {
         getSupportFragmentManager().beginTransaction()
-                .add(R.id.container, ChatFragment.newInstance(), CHAT_FRAG)
+                .add(android.R.id.content, ChatFragment.newInstance(), CHAT_FRAG)
                 .addToBackStack(null)
                 .commit();
     }

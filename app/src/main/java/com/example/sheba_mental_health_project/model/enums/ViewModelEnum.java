@@ -12,6 +12,7 @@ public enum ViewModelEnum {
     SanityCheck,
     Statement,
     MainTherapist,
+    TherapistPhysicalStateGeneric,
     TherapistPhysicalState,
     TherapistMentalState,
     TherapistMentalGeneric,

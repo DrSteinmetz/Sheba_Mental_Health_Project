@@ -34,17 +34,17 @@ public class TherapistMentalStateFragment extends Fragment {
 
         mViewModel = new ViewModelProvider(this, new ViewModelFactory(getContext(),
                 ViewModelEnum.TherapistMentalState)).get(TherapistMentalStateViewModel.class);
-
-        getChildFragmentManager().beginTransaction()
-                .add(R.id.fragment_container,
-                        TherapistMentalGenericFragment.newInstance(mViewModel.getCurrentAppointment()))
-                .commit();
     }
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
         final View rootView = inflater.inflate(R.layout.therapist_mental_state_fragment, container, false);
+
+        getChildFragmentManager().beginTransaction()
+                .add(R.id.fragment_container, TherapistMentalGenericFragment
+                        .newInstance(mViewModel.getCurrentAppointment()))
+                .commit();
 
         return rootView;
     }

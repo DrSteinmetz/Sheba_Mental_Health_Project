@@ -35,6 +35,7 @@ public class PreMeetingCharacterFragment extends Fragment {
     }
 
     public interface PreMeetingCharacterInterface {
+        void onLeaveNoteClicked();
         void onMoveToAppointmentPatient();
         void onMoveToAppointmentLounge();
     }
@@ -88,6 +89,7 @@ public class PreMeetingCharacterFragment extends Fragment {
                              @Nullable Bundle savedInstanceState) {
         final View rootView = inflater.inflate(R.layout.pre_meeting_character_fragment, container, false);
 
+        final MaterialButton leaveNoteBtn = rootView.findViewById(R.id.leave_note_btn);
         final MaterialButton finishBtn = rootView.findViewById(R.id.finish_btn);
 
         getChildFragmentManager().beginTransaction()
@@ -95,6 +97,15 @@ public class PreMeetingCharacterFragment extends Fragment {
                         CharacterFragment.newInstance(mViewModel.getCurrentAppointment(),
                                 true, false))
                 .commit();
+
+        leaveNoteBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (listener != null) {
+                    listener.onLeaveNoteClicked();
+                }
+            }
+        });
 
         finishBtn.setOnClickListener(new View.OnClickListener() {
             @Override

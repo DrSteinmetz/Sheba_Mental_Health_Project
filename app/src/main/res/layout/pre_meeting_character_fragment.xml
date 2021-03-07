@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:background="#ffffff"
+    android:background="@color/white"
     tools:context=".view.patient.PreMeetingCharacterFragment">
 
     <RelativeLayout
@@ -16,7 +16,7 @@
             android:id="@+id/start_meeting_relative"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_above="@id/finish_btn"
+            android:layout_above="@id/leave_note_btn"
             android:clickable="false"
             android:focusable="false">
 
@@ -28,7 +28,7 @@
                 android:layout_margin="5dp"
                 android:textSize="20sp"
                 android:textColor="@color/black"
-                android:text="What would you like to share?"/>
+                android:text="@string/pre_meeting_char_frag_title" />
 
             <TextView
                 android:id="@+id/sub_title_tv"
@@ -38,10 +38,8 @@
                 android:textColor="@color/black"
                 android:layout_margin="5dp"
                 android:textSize="17sp"
-                android:text="Press on Character"
-                android:layout_below="@+id/title_tv"/>
-
-
+                android:text="@string/pre_meeting_char_frag_sub_title"
+                android:layout_below="@+id/title_tv" />
 
             <androidx.fragment.app.FragmentContainerView
                 android:id="@+id/character_container"
@@ -51,12 +49,20 @@
 
         </RelativeLayout>
 
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/leave_note_btn"
+            android:layout_centerHorizontal="true"
+            android:layout_above="@id/finish_btn"
+            android:text="@string/leave_note"
+            android:textSize="20sp"
+            style="@style/blue_btn" />
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/finish_btn"
             android:layout_centerHorizontal="true"
             android:layout_alignParentBottom="true"
-            android:text="Finish"
+            android:text="@string/finish"
+            android:textSize="20sp"
             style="@style/blue_btn" />
 
     </RelativeLayout>

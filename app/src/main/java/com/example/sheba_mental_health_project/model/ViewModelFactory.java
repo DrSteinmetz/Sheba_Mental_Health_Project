@@ -7,6 +7,7 @@ import androidx.lifecycle.ViewModel;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.example.sheba_mental_health_project.model.enums.ViewModelEnum;
+import com.example.sheba_mental_health_project.viewmodel.TherapistPhysicalStateViewModel;
 import com.example.sheba_mental_health_project.viewmodel.AppointmentLoungeViewModel;
 import com.example.sheba_mental_health_project.viewmodel.AppointmentPatientViewModel;
 import com.example.sheba_mental_health_project.viewmodel.AppointmentTherapistViewModel;
@@ -22,7 +23,7 @@ import com.example.sheba_mental_health_project.viewmodel.StartMeetingViewModel;
 import com.example.sheba_mental_health_project.viewmodel.StatementViewModel;
 import com.example.sheba_mental_health_project.viewmodel.TherapistMentalGenericViewModel;
 import com.example.sheba_mental_health_project.viewmodel.TherapistMentalStateViewModel;
-import com.example.sheba_mental_health_project.viewmodel.TherapistPhysicalStateViewModel;
+import com.example.sheba_mental_health_project.viewmodel.TherapistPhysicalStateGenericViewModel;
 import com.example.sheba_mental_health_project.viewmodel.TreatyViewModel;
 import com.example.sheba_mental_health_project.viewmodel.AddAppointmentViewModel;
 import com.example.sheba_mental_health_project.viewmodel.AddPatientViewModel;
@@ -42,9 +43,9 @@ import com.example.sheba_mental_health_project.viewmodel.WelcomeViewModel;
 
 public class ViewModelFactory implements ViewModelProvider.Factory {
 
-    private Context mContext;
+    private final Context mContext;
 
-    private ViewModelEnum mViewModelEnum;
+    private final ViewModelEnum mViewModelEnum;
 
     public ViewModelFactory(final Context context, final ViewModelEnum viewModelEnum) {
         this.mContext = context;
@@ -140,6 +141,11 @@ public class ViewModelFactory implements ViewModelProvider.Factory {
             case MainTherapist:
                 if (modelClass.isAssignableFrom(MainTherapistViewModel.class)) {
                     objectToReturn = (T) new MainTherapistViewModel(mContext);
+                }
+                break;
+            case TherapistPhysicalStateGeneric:
+                if (modelClass.isAssignableFrom(TherapistPhysicalStateGenericViewModel.class)) {
+                    objectToReturn = (T) new TherapistPhysicalStateGenericViewModel(mContext);
                 }
                 break;
             case TherapistPhysicalState:

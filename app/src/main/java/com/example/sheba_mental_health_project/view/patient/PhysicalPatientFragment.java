@@ -66,6 +66,7 @@ public class PhysicalPatientFragment extends Fragment {
         final View rootView = inflater.inflate(R.layout.physical_patient_fragment, container, false);
 
         final MaterialButton homeBtn = rootView.findViewById(R.id.home_screen_btn);
+
         homeBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
