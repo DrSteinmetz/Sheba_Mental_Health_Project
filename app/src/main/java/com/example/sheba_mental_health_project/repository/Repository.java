@@ -60,6 +60,7 @@ public class Repository {
     private ListenerRegistration mPatientAppointmentsListener;
     private ListenerRegistration mTherapistAppointmentsListener;
     private ListenerRegistration mGetAllPainPointsListener;
+    private ListenerRegistration mGetAllPainPointsPhysicalListener;
     private ListenerRegistration mGetFeelingsAnswersListener;
 
     private final String PATIENTS = "patients";
@@ -124,6 +125,19 @@ public class Repository {
 
     public void setGetAllPainPointsInterface(RepositoryGetAllPainPointsInterface repositoryGetAllPainPointsListener){
         this.mRepositoryGetAllPainPointsListener = repositoryGetAllPainPointsListener;
+    }
+
+    /*<------ Get All Pain Points for Physical State ------>*/
+    public interface RepositoryGetAllPainPointsPhysicalInterface {
+        void onGetAllPainPointsPhysicalSucceed(Map<String, List<PainPoint>> painPointsMap);
+
+        void onGetAllPainPointsPhysicalFailed(String error);
+    }
+
+    private RepositoryGetAllPainPointsPhysicalInterface mRepositoryGetAllPainPointsPhysicalListener;
+
+    public void setGetAllPainPointsPhysicalInterface(RepositoryGetAllPainPointsPhysicalInterface repositoryGetAllPainPointsPhysicalInterface){
+        this.mRepositoryGetAllPainPointsPhysicalListener = repositoryGetAllPainPointsPhysicalInterface;
     }
 
     /*<------ Add Appointment ------>*/
@@ -463,13 +477,7 @@ public class Repository {
                 });
     }
 
-    public void getAppointmentsOfSpecificPatient() {
-        final String id = Objects.requireNonNull(FirebaseAuth.getInstance().getCurrentUser()).getUid();
-
-        final List<AppointmentStateEnum> stateQuery = new ArrayList<>();
-        stateQuery.add(AppointmentStateEnum.PreMeeting);
-        stateQuery.add(AppointmentStateEnum.Ongoing);
-
+    public void getAppointmentsOfSpecificPatient(final String id, final List<AppointmentStateEnum> stateQuery) {
         mPatientAppointmentsListener = mCloudDB.collection(APPOINTMENTS)
                 .whereEqualTo(FieldPath.of("patient", "id"), id)
                 .whereIn("state", stateQuery)
@@ -611,6 +619,30 @@ public class Repository {
                 });
     }
 
+    public void getAllPainPointsPhysical(final Appointment appointment) {
+        mGetAllPainPointsPhysicalListener = mCloudDB.collection(APPOINTMENTS)
+                .document(appointment.getId())
+                .addSnapshotListener(new EventListener<DocumentSnapshot>() {
+                    @Override
+                    public void onEvent(@Nullable DocumentSnapshot value, @Nullable FirebaseFirestoreException error) {
+                        if (value != null && value.exists()) {
+                            final Appointment dbAppointment = value.toObject(Appointment.class);
+                            if (mRepositoryGetAllPainPointsPhysicalListener != null) {
+                                mRepositoryGetAllPainPointsPhysicalListener
+                                        .onGetAllPainPointsPhysicalSucceed(dbAppointment.getPainPointsOfBodyPartMap());
+                                appointment.setPainPointsOfBodyPartMap(dbAppointment.getPainPointsOfBodyPartMap());
+                            }
+                        } else {
+                            Log.w(TAG, "onEvent: ", error);
+                            if (mRepositoryGetAllPainPointsPhysicalListener != null) {
+                                mRepositoryGetAllPainPointsPhysicalListener
+                                        .onGetAllPainPointsPhysicalFailed(error.getMessage());
+                            }
+                        }
+                    }
+                });
+    }
+
     public void removeTherapistAppointmentsListener() {
         mTherapistAppointmentsListener.remove();
     }
@@ -621,6 +653,10 @@ public class Repository {
 
     public void removeGetAllPainPointsListener() {
         mGetAllPainPointsListener.remove();
+    }
+
+    public void removeGetAllPainPointsPhysicalListener() {
+        mGetAllPainPointsPhysicalListener.remove();
     }
 
     public void getFeelingsAnswers(final Appointment appointment) {

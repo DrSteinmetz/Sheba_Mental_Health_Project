@@ -28,7 +28,7 @@ public class PatientAppointmentsAdapter extends RecyclerView.Adapter<PatientAppo
 
     private final List<Appointment> mAppointments;
 
-    final SimpleDateFormat ddMMYYYY = new SimpleDateFormat("dd/MM/yyyy", Locale.getDefault());
+    final SimpleDateFormat ddMMYYYY = new SimpleDateFormat("dd.MM.yyyy", Locale.getDefault());
     final SimpleDateFormat HHmm = new SimpleDateFormat("HH:mm", Locale.getDefault());
 
     private final String TAG = "AppointmentsAdapter";

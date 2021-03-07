@@ -55,6 +55,10 @@ public class TherapistPhysicalStateGenericFragment extends Fragment {
         mViewModel = new ViewModelProvider(this, new ViewModelFactory(getContext(),
                 ViewModelEnum.TherapistPhysicalStateGeneric)).get(TherapistPhysicalStateGenericViewModel.class);
 
+        if (getArguments() != null) {
+            mViewModel.setAppointment((Appointment) getArguments().getSerializable("appointment"));
+        }
+
         final Observer<List <PainPoint>> onGetTherapistPhysicalStateSucceed = new Observer<List<PainPoint>>() {
             @Override
             public void onChanged(List<PainPoint> painPoints) {
@@ -94,13 +98,15 @@ public class TherapistPhysicalStateGenericFragment extends Fragment {
         final View rootView = inflater.inflate(R.layout.therapist_physical_state_generic_fragment,
                 container, false);
 
+        mViewModel.attachGetAllPainPointsPhysicalListener();
+
         mEmptyListTv = rootView.findViewById(R.id.empty_list_tv);
         mRecyclerView = rootView.findViewById(R.id.recycler_view);
 
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         mRecyclerView.setHasFixedSize(true);
 
-        mViewModel.getPainPoints(mViewModel.getCurrentAppointment());
+        mViewModel.getPainPointsPhysical(mViewModel.getAppointment());
 
         return rootView;
     }
@@ -109,6 +115,6 @@ public class TherapistPhysicalStateGenericFragment extends Fragment {
     public void onDestroy() {
         super.onDestroy();
 
-        mViewModel.removeGetAllPainPointsListener();
+        mViewModel.removeGetAllPainPointsPhysicalListener();
     }
 }

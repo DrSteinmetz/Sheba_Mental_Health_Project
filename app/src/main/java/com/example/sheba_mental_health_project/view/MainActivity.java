@@ -20,6 +20,8 @@ import android.view.MenuItem;
 import android.view.View;
 
 import com.example.sheba_mental_health_project.R;
+import com.example.sheba_mental_health_project.model.Appointment;
+import com.example.sheba_mental_health_project.model.Patient;
 import com.example.sheba_mental_health_project.model.ViewModelFactory;
 import com.example.sheba_mental_health_project.model.enums.ViewModelEnum;
 import com.example.sheba_mental_health_project.view.character.CenterOfMassFragment;
@@ -44,6 +46,8 @@ import com.example.sheba_mental_health_project.view.patient.TreatyFragment;
 import com.example.sheba_mental_health_project.view.therapist.AddAppointmentFragment;
 import com.example.sheba_mental_health_project.view.therapist.AddPatientFragment;
 import com.example.sheba_mental_health_project.view.therapist.AppointmentTherapistFragment;
+import com.example.sheba_mental_health_project.view.therapist.HistoryAppointmentFragment;
+import com.example.sheba_mental_health_project.view.therapist.HistoryFragment;
 import com.example.sheba_mental_health_project.view.therapist.MainTherapistFragment;
 import com.example.sheba_mental_health_project.view.therapist.SearchPatientFragment;
 import com.example.sheba_mental_health_project.view.therapist.StartMeetingFragment;
@@ -65,6 +69,8 @@ public class MainActivity extends AppCompatActivity
         CharacterFragment.CharacterFragmentInterface,
         StartMeetingFragment.StartMeetingTherapistInterface,
         AppointmentTherapistFragment.AppointmentTherapistInterface,
+        SearchPatientFragment.SearchPatientFragmentInterface,
+        HistoryFragment.HistoryFragmentInterface,
         PhysicalPatientFragment.PhysicalPatientFragmentInterface,
         AppointmentPatientFragment.AppointmentPatientInterface,
         MentalPatientFragment.MentalPatientFragmentInterface,
@@ -87,6 +93,8 @@ public class MainActivity extends AppCompatActivity
     private final String APPOINTMENT_THERAPIST_FRAG = "Appointment_Therapist_Fragment";
     private final String THERAPIST_MENTAL_STATE_FRAG = "Therapist_Mental_State_Fragment";
     private final String THERAPIST_PHYSICAL_STATE_FRAG = "Therapist_Physical_State_Fragment";
+    private final String HISTORY_FRAG = "History_Fragment";
+    private final String HISTORY_APPOINTMENT_FRAG = "History_Appointment_Fragment";
 
     private final String PRE_QUESTIONS_FRAG = "Pre_Questions_Fragment";
     private final String TREATY_FRAG = "Treaty_Fragment";
@@ -259,24 +267,8 @@ public class MainActivity extends AppCompatActivity
         return true;
     }
 
-    /**<------ Appointments ------>*/
-    @Override
-    public void onTherapistAppointmentClicked() {
-        getSupportFragmentManager().beginTransaction()
-                //TODO: add enter and exit animations
-                .replace(R.id.container, StartMeetingFragment.newInstance(), START_MEETING_FRAG)
-                .addToBackStack(null)
-                .commit();
-    }
 
-    @Override
-    public void onAddAppointClicked() {
-        getSupportFragmentManager().beginTransaction()
-                .add(R.id.container, AddAppointmentFragment.newInstance(), ADD_APPOINTMENT_FRAG)
-                .addToBackStack(null)
-                .commit();
-    }
-
+    /**<------ Patient Pre-Questions ------>*/
     @Override
     public void onMoveToPreQuestions() {
         getSupportFragmentManager().beginTransaction()
@@ -437,11 +429,28 @@ public class MainActivity extends AppCompatActivity
                 .commit();
     }
 
-    /**<------ AppointmentTherapist ------>*/
     @Override
     public void onChatClicked() {
         getSupportFragmentManager().beginTransaction()
                 .add(android.R.id.content, ChatFragment.newInstance(), CHAT_FRAG)
+                .addToBackStack(null)
+                .commit();
+    }
+
+    /**<------ Appointment Therapist ------>*/
+    @Override
+    public void onTherapistAppointmentClicked() {
+        getSupportFragmentManager().beginTransaction()
+                //TODO: add enter and exit animations
+                .replace(R.id.container, StartMeetingFragment.newInstance(), START_MEETING_FRAG)
+                .addToBackStack(null)
+                .commit();
+    }
+
+    @Override
+    public void onAddAppointClicked() {
+        getSupportFragmentManager().beginTransaction()
+                .add(R.id.container, AddAppointmentFragment.newInstance(), ADD_APPOINTMENT_FRAG)
                 .addToBackStack(null)
                 .commit();
     }
@@ -462,22 +471,35 @@ public class MainActivity extends AppCompatActivity
                 .commit();
     }
 
-    /**<------ PhysicalPatient ------>*/
+    @Override
+    public void onPatientHistoryClicked(Patient patient) {
+        getSupportFragmentManager().beginTransaction()
+                .add(R.id.container, HistoryFragment.newInstance(patient), HISTORY_FRAG)
+                .addToBackStack(null)
+                .commit();
+    }
 
+    @Override
+    public void onHistoryAppointmentClicked(final Appointment appointment) {
+        getSupportFragmentManager().beginTransaction()
+                .add(R.id.container, HistoryAppointmentFragment.newInstance(appointment), HISTORY_APPOINTMENT_FRAG)
+                .addToBackStack(null)
+                .commit();
+    }
+
+    /**<------ Physical Patient ------>*/
     @Override
     public void onHomeBtnClicked() {
         onBackPressed();
     }
 
     /**<------ MentalPatient ------>*/
-
     @Override
     public void onSaveFeelings() {
         onBackPressed();
     }
 
-    /**<------ AppointmentPatient ------>*/
-
+    /**<------ Appointment Patient ------>*/
     @Override
     public void onPhysicalClicked() {
         getSupportFragmentManager().beginTransaction()

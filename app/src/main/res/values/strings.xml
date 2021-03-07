@@ -12,6 +12,7 @@
     <string name="leave_note_info">The Therapist will See Your Messages Only When the Meeting Begins</string>
     <string name="pick_date">Pick Date</string>
     <string name="pick_time">Pick Time</string>
+    <string name="character">Character</string>
     <string name="appointments_date">Appointment\'s Date</string>
     <string name="edit_appointment_title">Edit Appointment With</string>
     <string name="pain_point_deletion_prompt">Are You Sure You Want To Permanently Delete This Point?</string>
@@ -20,12 +21,15 @@
     <string name="appointment_added_prompt">Appointment Added Successfully!</string>
     <string name="appointment_updated_prompt">Appointment Updated Successfully!</string>
     <string name="appointment_deleted_prompt">Appointment Deleted Successfully!</string>
+    <string name="search_patient">Search Patient</string>
     <string name="patient_not_found">Patient Not Found</string>
     <string name="patient_found_prompt">Patient Found:</string>
+    <string name="patient_history">Patient History</string>
+    <string name="appointments_history">Appointments History</string>
     <string name="undo">Undo</string>
     <string name="long_meeting_prompt">I Want a Long Meeting</string>
     <string name="short_meeting_prompt">I Want a Short Meeting</string>
-    <string name="another_person_prompt">I Want Another Person to Present with Me During the Meeting</string>
+    <string name="another_person_prompt">I Want Another Person to Be Present with Me During the Meeting</string>
     <string name="pre_meeting_char_frag_title">What Would You Like to Share?</string>
     <string name="pre_meeting_char_frag_sub_title">Click the Character</string>
     <string name="start_meeting">Start Meeting</string>
@@ -34,6 +38,13 @@
 
     <string name="physical_state">Physical State</string>
     <string name="empty_pain_points_list_prompt">No Physical State Details to Show…</string>
+    <string name="empty_history_list_prompt">This Patient Has No Previous Appointments…</string>
+    <string name="appointment_prompt">Appointment:</string>
+    <string name="patient_prompt">Patient:</string>
+    <string name="therapist_prompt">Therapist:</string>
+    <string name="date_prompt">Date:</string>
+    <string name="time_prompt">Time:</string>
+
     <string name="pain_location_tv">Pain Location:</string>
     <string name="pain_strength_tv">Pain Strength:</string>
     <string name="pain_type_tv">Pain Type:</string>

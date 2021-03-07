@@ -16,6 +16,9 @@ import java.util.Map;
 public class TherapistPhysicalStateGenericViewModel extends ViewModel {
 
     private final Repository mRepository;
+
+    private Appointment mAppointment;
+
     private final List<PainPoint> mPainPoints = new ArrayList<>();
 
     public TherapistPhysicalStateGenericViewModel(final Context context) {
@@ -31,7 +34,7 @@ public class TherapistPhysicalStateGenericViewModel extends ViewModel {
     public MutableLiveData<List<PainPoint>> getTherapistPhysicalStatePainPointsSucceed() {
         if(mGetTherapistPhysicalStatePainPointsSucceed == null){
             mGetTherapistPhysicalStatePainPointsSucceed = new MutableLiveData<>();
-            attachGetMyAppointmentsListener();
+            attachGetAllPainPointsPhysicalListener();
         }
         return mGetTherapistPhysicalStatePainPointsSucceed;
     }
@@ -39,45 +42,48 @@ public class TherapistPhysicalStateGenericViewModel extends ViewModel {
     public MutableLiveData<String> getTherapistPhysicalStatePainPointsFailed() {
         if(mGetTherapistPhysicalStatePainPointsFailed == null){
             mGetTherapistPhysicalStatePainPointsFailed = new MutableLiveData<>();
-            attachGetMyAppointmentsListener();
+            attachGetAllPainPointsPhysicalListener();
         }
         return mGetTherapistPhysicalStatePainPointsFailed;
     }
 
-    public void attachGetMyAppointmentsListener() {
-        mRepository.setGetAllPainPointsInterface(new Repository.RepositoryGetAllPainPointsInterface() {
+    public void attachGetAllPainPointsPhysicalListener() {
+        mRepository.setGetAllPainPointsPhysicalInterface(new Repository.RepositoryGetAllPainPointsPhysicalInterface() {
             @Override
-            public void onGetAllPainPointsSucceed(Map<String, List<PainPoint>> painPointsMap) {
+            public void onGetAllPainPointsPhysicalSucceed(Map<String, List<PainPoint>> painPointsMap) {
                 mPainPoints.clear();
                 for (String key : painPointsMap.keySet()) {
-                    for (PainPoint painPoint : painPointsMap.get(key)) {
-                        mPainPoints.add(painPoint);
-                    }
+                    mPainPoints.addAll(painPointsMap.get(key));
                 }
 
                 mGetTherapistPhysicalStatePainPointsSucceed.setValue(mPainPoints);
             }
 
             @Override
-            public void onGetAllPainPointsFailed(String error) {
+            public void onGetAllPainPointsPhysicalFailed(String error) {
                 mGetTherapistPhysicalStatePainPointsFailed.setValue(error);
             }
         });
     }
 
-    public void getPainPoints(Appointment appointment) {
-        mRepository.getAllPainPoints(appointment);
+
+    public void getPainPointsPhysical(Appointment appointment) {
+        mRepository.getAllPainPointsPhysical(appointment);
+    }
+
+    public Appointment getAppointment() {
+        return mAppointment;
+    }
+
+    public void setAppointment(Appointment mAppointment) {
+        this.mAppointment = mAppointment;
     }
 
     public final List<PainPoint> getPainPoints() {
         return mPainPoints;
     }
 
-    public Appointment getCurrentAppointment() {
-        return mRepository.getCurrentAppointment();
-    }
-
-    public void removeGetAllPainPointsListener() {
-        mRepository.removeGetAllPainPointsListener();
+    public void removeGetAllPainPointsPhysicalListener() {
+        mRepository.removeGetAllPainPointsPhysicalListener();
     }
 }

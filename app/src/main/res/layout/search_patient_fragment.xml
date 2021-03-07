@@ -17,7 +17,7 @@
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
         android:gravity="center"
-        android:text="Search patient"
+        android:text="@string/search_patient"
         android:textSize="25sp"
         android:textColor="@color/black"
         android:textAllCaps="false"
@@ -34,32 +34,29 @@
          android:layout_width="0dp"
          android:layout_height="match_parent"
          android:layout_weight="4"
-         app:boxStrokeColor="#888888"
+         app:boxStrokeColor="@color/light_gray"
          app:boxStrokeWidth="1.2dp"
          app:boxCornerRadiusBottomEnd="0dp"
          app:boxCornerRadiusBottomStart="0dp"
          app:boxCornerRadiusTopEnd="0dp"
          app:boxCornerRadiusTopStart="0dp"
-         app:hintTextColor="#33cccc"
+         app:hintTextColor="@color/light_blue"
          style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
-
          <com.google.android.material.textfield.MaterialAutoCompleteTextView
              android:id="@+id/patient_email_auto_tv"
              android:layout_width="match_parent"
              android:layout_height="match_parent"
-             android:hint="Email"
+             android:hint="@string/email"
              android:textSize="20sp"
              android:textColor="@color/black"
              android:textAllCaps="false"
-             android:padding="10dp"
-             />
+             android:padding="10dp" />
      </com.google.android.material.textfield.TextInputLayout>
-
 
         <Space
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:layout_weight="0.3"/>
+            android:layout_weight="0.3" />
 
         <ImageButton
             android:id="@+id/search_btn"
@@ -68,55 +65,46 @@
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:src="@drawable/ic_baseline_search_24"
-            android:background="#33cccc"
-            />
+            android:background="@color/light_blue" />
 
     </LinearLayout>
-
 
     <TextView
         android:visibility="invisible"
         android:id="@+id/patient_found_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Patient found:"
+        android:text="@string/patient_found_prompt"
         android:layout_below="@+id/search_layout"
         android:layout_marginTop="20dp"
         android:textSize="17sp"
-        android:layout_centerHorizontal="true"/>
+        android:layout_centerHorizontal="true" />
 
     <TextView
         android:visibility="invisible"
         android:id="@+id/patient_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Matan Romanov"
         android:layout_below="@+id/patient_found_title"
         android:layout_marginTop="5dp"
         android:textSize="20sp"
         android:textColor="@color/black"
-        android:layout_centerHorizontal="true"/>
+        android:layout_centerHorizontal="true" />
 
     <com.google.android.material.button.MaterialButton
-        android:visibility="invisible"
         android:id="@+id/patient_history_btn"
+        android:visibility="invisible"
         android:layout_below="@+id/patient_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="100dp"
         android:layout_centerHorizontal="true"
-        android:text="Patient History"
+        android:text="@string/patient_history"
         android:padding="10dp"
-        app:backgroundTint="#888888"
+        app:backgroundTint="@color/light_gray"
         android:textSize="20sp"
         app:cornerRadius="0dp"
         android:layout_marginBottom="15dp"
         android:textAllCaps="false" />
-
-
-
-
-
-
 
 </RelativeLayout>

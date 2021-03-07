@@ -3,6 +3,7 @@ package com.example.sheba_mental_health_project.view.therapist;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
+import android.content.Context;
 import android.graphics.Color;
 import android.os.Bundle;
 
@@ -33,15 +34,32 @@ public class SearchPatientFragment extends Fragment {
     private SearchPatientViewModel mViewModel;
     private ArrayAdapter<String> mPatientsEmailsAdapter;
     private MaterialAutoCompleteTextView mPatientEmailAutoTV;
-    private TextView patientFoundTv;
-    private TextView patientNameTv;
-    private ImageButton searchBtn;
-    private MaterialButton historyBtn;
+    private TextView mPatientFoundTv;
+    private TextView mPatientNameTv;
+    private MaterialButton mPatientHistoryBtn;
 
     private final String TAG = "SearchPatientFragment";
 
+
+    public interface SearchPatientFragmentInterface {
+        void onPatientHistoryClicked(Patient patient);
+    }
+
+    private SearchPatientFragmentInterface listener;
+
     public static SearchPatientFragment newInstance() {
         return new SearchPatientFragment();
+    }
+
+    @Override
+    public void onAttach(@NonNull Context context) {
+        super.onAttach(context);
+
+        try {
+            listener = (SearchPatientFragmentInterface) context;
+        } catch (Exception ex) {
+            throw new ClassCastException("The Activity Must Implements SearchPatientFragmentInterface listener!");
+        }
     }
 
     @Override
@@ -76,51 +94,51 @@ public class SearchPatientFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
         final View rootView = inflater.inflate(R.layout.search_patient_fragment, container, false);
+
         mPatientEmailAutoTV = rootView.findViewById(R.id.patient_email_auto_tv);
-        patientFoundTv = rootView.findViewById(R.id.patient_found_title);
-        patientNameTv = rootView.findViewById(R.id.patient_name);
-        searchBtn = rootView.findViewById(R.id.search_btn);
-        historyBtn = rootView.findViewById(R.id.patient_history_btn);
+        mPatientFoundTv = rootView.findViewById(R.id.patient_found_title);
+        mPatientNameTv = rootView.findViewById(R.id.patient_name);
+        final ImageButton searchBtn = rootView.findViewById(R.id.search_btn);
+        mPatientHistoryBtn = rootView.findViewById(R.id.patient_history_btn);
 
         mPatientEmailAutoTV.setThreshold(1);
         mPatientEmailAutoTV.setTextColor(Color.BLACK);
-
-        mViewModel.getAllPatients();
 
 
         searchBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 final String patientEmail = mPatientEmailAutoTV.getText().toString();
-                Patient patient = mViewModel.getPatientByEmail(patientEmail);
-                patientFoundTv.setVisibility(View.VISIBLE);
-                if (patient == null){
-                    patientFoundTv.setText("Patient Not Found");
-                    patientNameTv.setVisibility(View.INVISIBLE);
-                    historyBtn.setVisibility(View.INVISIBLE);
+                final Patient patient = mViewModel.getPatientByEmail(patientEmail);
 
+                mPatientFoundTv.setVisibility(View.VISIBLE);
+                if (patient == null) {
+                    mPatientFoundTv.setText(getString(R.string.patient_not_found));
+                    mPatientNameTv.setVisibility(View.INVISIBLE);
+                    mPatientHistoryBtn.setVisibility(View.INVISIBLE);
+
+                } else {
+                    mViewModel.setPatient(patient);
+
+                    mPatientNameTv.setVisibility(View.VISIBLE);
+                    mPatientFoundTv.setText(getString(R.string.patient_found_prompt));
+                    mPatientNameTv.setText(patient.getFullName());
+                    mPatientHistoryBtn.setVisibility(View.VISIBLE);
                 }
-                else{
-                    patientNameTv.setVisibility(View.VISIBLE);
-                    patientFoundTv.setText("Patient Found:");
-                    patientNameTv.setText(patient.getFullName());
-                    historyBtn.setVisibility(View.VISIBLE);
-                }
-
-
             }
         });
 
+        mPatientHistoryBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (listener != null) {
+                    listener.onPatientHistoryClicked(mViewModel.getPatient());
+                }
+            }
+        });
 
+        mViewModel.getAllPatients();
 
         return rootView;
     }
-
-    @Override
-    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
-        super.onActivityCreated(savedInstanceState);
-        mViewModel = new ViewModelProvider(this).get(SearchPatientViewModel.class);
-        // TODO: Use the ViewModel
-    }
-
 }

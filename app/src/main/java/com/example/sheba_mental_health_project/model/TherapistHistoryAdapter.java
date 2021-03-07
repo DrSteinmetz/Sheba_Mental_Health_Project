@@ -11,26 +11,25 @@ import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.sheba_mental_health_project.R;
-import com.google.android.material.button.MaterialButton;
 
 import java.text.SimpleDateFormat;
 import java.util.List;
 import java.util.Locale;
 
-public class TherapistAppointmentsAdapter extends RecyclerView.Adapter<TherapistAppointmentsAdapter.AppointmentViewHolder> {
+public class TherapistHistoryAdapter extends RecyclerView.Adapter<TherapistHistoryAdapter.HistoryViewHolder> {
 
     private final Context mContext;
 
     private final List<Appointment> mAppointments;
 
-    final SimpleDateFormat ddMMYYYY = new SimpleDateFormat("dd/MM/yyyy", Locale.getDefault());
+    final SimpleDateFormat ddMMYYYY = new SimpleDateFormat("dd.MM.yyyy", Locale.getDefault());
     final SimpleDateFormat HHmm = new SimpleDateFormat("HH:mm", Locale.getDefault());
 
-    private final String TAG = "AppointmentsAdapter";
+    private final String TAG = "TherapistHistoryAdapter";
 
 
-    public TherapistAppointmentsAdapter(final Context mContext,
-                                        final List<Appointment> mAppointments) {
+    public TherapistHistoryAdapter(final Context mContext,
+                                   final List<Appointment> mAppointments) {
         this.mContext = mContext;
         this.mAppointments = mAppointments;
     }
@@ -45,14 +44,14 @@ public class TherapistAppointmentsAdapter extends RecyclerView.Adapter<Therapist
         this.listener = listener;
     }
 
-    public class AppointmentViewHolder extends RecyclerView.ViewHolder {
+    public class HistoryViewHolder extends RecyclerView.ViewHolder {
 
         private final CardView cardLayout;
         private final TextView nameTv;
         private final TextView dateTv;
         private final TextView timeTv;
 
-        public AppointmentViewHolder(@NonNull View itemView) {
+        public HistoryViewHolder(@NonNull View itemView) {
             super(itemView);
 
             cardLayout = itemView.findViewById(R.id.card_layout);
@@ -73,18 +72,18 @@ public class TherapistAppointmentsAdapter extends RecyclerView.Adapter<Therapist
 
     @NonNull
     @Override
-    public AppointmentViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+    public HistoryViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         final View view = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.therapist_appointment_cell_layout, parent,false);
-        return new AppointmentViewHolder(view);
+                .inflate(R.layout.therapist_history_cell_layout, parent,false);
+        return new HistoryViewHolder(view);
     }
 
     @Override
-    public void onBindViewHolder(@NonNull AppointmentViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull HistoryViewHolder holder, int position) {
         final Appointment appointment = mAppointments.get(position);
 
-        final String patientName = appointment.getPatient().getFullName();
-        holder.nameTv.setText(patientName);
+        final String therapistName = appointment.getTherapist().getFullName();
+        holder.nameTv.setText(therapistName);
 
         final String date = ddMMYYYY.format(appointment.getAppointmentDate());
         holder.dateTv.setText(date);

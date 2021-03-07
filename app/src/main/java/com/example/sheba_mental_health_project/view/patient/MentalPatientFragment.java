@@ -31,6 +31,7 @@ import java.util.List;
 public class MentalPatientFragment extends Fragment {
 
     private MentalPatientViewModel mViewModel;
+
     private MentalPatientAdapter mMentalPatientAdapter;
     private RecyclerView mRecyclerView;
 

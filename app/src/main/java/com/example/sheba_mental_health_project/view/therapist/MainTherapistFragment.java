@@ -23,7 +23,6 @@ import com.example.sheba_mental_health_project.model.Appointment;
 import com.example.sheba_mental_health_project.model.TherapistAppointmentsAdapter;
 import com.example.sheba_mental_health_project.model.ViewModelFactory;
 import com.example.sheba_mental_health_project.model.enums.ViewModelEnum;
-import com.example.sheba_mental_health_project.repository.AuthRepository;
 import com.example.sheba_mental_health_project.viewmodel.MainTherapistViewModel;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
@@ -31,15 +30,14 @@ import java.util.List;
 
 public class MainTherapistFragment extends Fragment {
 
-    private final String TAG = "MainTherapistFragment";
-
     private MainTherapistViewModel mViewModel;
 
     private TherapistAppointmentsAdapter mAppointmentAdapter;
 
     private RecyclerView mRecyclerView;
 
-    private Context context1;
+    private final String TAG = "MainTherapistFragment";
+
 
     public interface MainTherapistInterface {
         void onTherapistAppointmentClicked();
@@ -55,7 +53,6 @@ public class MainTherapistFragment extends Fragment {
     @Override
     public void onAttach(@NonNull Context context) {
         super.onAttach(context);
-        context1 = context;
 
         try {
             listener = (MainTherapistInterface) context;
@@ -109,15 +106,13 @@ public class MainTherapistFragment extends Fragment {
 
         final View rootView = inflater.inflate(R.layout.main_therapist_fragment, container, false);
 
-        AuthRepository authRepository = AuthRepository.getInstance(context1);
-
         final TextView therapistName = rootView.findViewById(R.id.therapist_name_tv);
-        therapistName.setText(authRepository.getUser().getFullName());
+        therapistName.setText(mViewModel.getTherapistFullName());
 
         final FloatingActionButton addAppointFab = rootView.findViewById(R.id.add_appointment_fab);
         mRecyclerView = rootView.findViewById(R.id.recycler_view);
 
-        //TODO: Show some text if the appointments list is empty.
+        // TODO: Show some text if the appointments list is empty.
 
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         mRecyclerView.setHasFixedSize(true);
