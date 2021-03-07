@@ -7,7 +7,7 @@
     android:background="@color/white"
     android:focusable="true"
     android:clickable="true"
-    tools:context=".view.SanityCheckFragment">
+    tools:context=".view.patient.SanityCheckFragment">
 
     <TextView
         android:id="@+id/title_tv"

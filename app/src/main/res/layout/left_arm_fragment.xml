@@ -8,7 +8,7 @@
     android:background="@color/white"
     android:focusable="true"
     android:clickable="true"
-    tools:context=".view.LeftArmFragment">
+    tools:context=".view.character.LeftArmFragment">
 
     <RelativeLayout
         android:layout_width="match_parent"

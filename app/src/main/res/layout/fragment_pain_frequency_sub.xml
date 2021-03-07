@@ -7,7 +7,7 @@
     android:background="@color/white"
     android:focusable="true"
     android:clickable="true"
-    tools:context=".view.PainFrequencySubFragment">
+    tools:context=".view.character.PainFrequencySubFragment">
 
     <TextView
         android:id="@+id/pain_frequency_tv"

@@ -8,7 +8,7 @@
     android:clickable="true"
     android:padding="20dp"
     android:layoutDirection="ltr"
-    tools:context=".view.CharacterFragment">
+    tools:context=".view.character.CharacterFragment">
 
     <ImageView
         android:id="@+id/character_iv"

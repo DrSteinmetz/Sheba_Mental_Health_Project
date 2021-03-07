@@ -8,7 +8,7 @@
     android:background="@color/white"
     android:focusable="true"
     android:clickable="true"
-    tools:context=".view.GenitalsFragment">
+    tools:context=".view.character.GenitalsFragment">
 
     <RelativeLayout
         android:layout_width="match_parent"

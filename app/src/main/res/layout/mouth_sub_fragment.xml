@@ -7,7 +7,7 @@
     android:background="@color/white"
     android:focusable="true"
     android:clickable="true"
-    tools:context=".view.MouthSubFragment"
+    tools:context=".view.character.MouthSubFragment"
     android:layout_marginVertical="10dp"
     android:layout_marginHorizontal="20dp"
     >

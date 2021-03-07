@@ -6,7 +6,7 @@
     android:background="@color/white"
     android:focusable="true"
     android:clickable="true"
-    tools:context=".view.TreatyFragment">
+    tools:context=".view.patient.TreatyFragment">
 
     <RelativeLayout
         android:layout_width="match_parent"

@@ -5,7 +5,7 @@
     android:layout_height="match_parent"
     android:animateLayoutChanges="true"
     android:background="@color/white"
-    tools:context=".view.TherapistMentalGenericFragment">
+    tools:context=".view.therapist.TherapistMentalGenericFragment">
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recycler_view"

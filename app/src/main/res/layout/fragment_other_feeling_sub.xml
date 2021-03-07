@@ -7,7 +7,7 @@
     android:background="@color/white"
     android:focusable="true"
     android:clickable="true"
-    tools:context=".view.OtherFeelingSubFragment">
+    tools:context=".view.character.OtherFeelingSubFragment">
 
     <TextView
         android:id="@+id/other_feeling_tv"
