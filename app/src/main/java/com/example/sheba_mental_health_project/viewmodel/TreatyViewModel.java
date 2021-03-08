@@ -6,6 +6,9 @@ import android.util.Log;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
+import com.example.sheba_mental_health_project.model.Answer;
+import com.example.sheba_mental_health_project.model.AnswerBinary;
+import com.example.sheba_mental_health_project.model.AnswerOpen;
 import com.example.sheba_mental_health_project.model.Appointment;
 import com.example.sheba_mental_health_project.repository.Repository;
 
@@ -16,7 +19,7 @@ public class TreatyViewModel extends ViewModel {
 
     private final Repository mRepository;
 
-    private final List<String> mAnswers;
+    private final List<Answer> mAnswers;
 
     private MutableLiveData<Appointment> mUpdateAnswersOfAppointmentSucceed;
     private MutableLiveData<String> mUpdateAnswersOfAppointmentFailed;
@@ -65,12 +68,12 @@ public class TreatyViewModel extends ViewModel {
 
     public void updateAnswers(final boolean isChecked, final String id) {
         if (isChecked) {
-            if (!mAnswers.contains(id)) {
-                mAnswers.add(id);
+            if (!mAnswers.contains(new AnswerBinary(id))) {
+                mAnswers.add(new AnswerBinary(id));
                 Log.d(TAG, "qwe onCheckedChanged: Added, Size: " + mAnswers.size());
             }
         } else {
-            mAnswers.remove(id);
+            mAnswers.remove(new AnswerBinary(id));
             Log.d(TAG, "qwe onCheckedChanged: Removed");
         }
     }

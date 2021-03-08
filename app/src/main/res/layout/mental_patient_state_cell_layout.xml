@@ -23,8 +23,7 @@
             android:textSize="17sp"
             android:textColor="@color/black"
             android:textAllCaps="false"
-            android:layout_centerHorizontal="true"
-           />
+            android:layout_centerHorizontal="true" />
 
         <ImageView
             android:id="@+id/feeling_iv"
@@ -32,19 +31,25 @@
             android:layout_height="130dp"
             android:layout_below="@+id/feeling_tv"
             android:layout_marginTop="10dp"
-            android:layout_centerHorizontal="true"
-            />
+            android:layout_centerHorizontal="true" />
 
-        <SeekBar
-            android:min="0"
-            android:max="10"
-            android:layout_marginHorizontal="30dp"
-            android:layout_marginTop="20dp"
-            android:id="@+id/seek_bar"
+        <com.google.android.material.slider.Slider
+            android:id="@+id/slider"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@id/feeling_iv"
-            />
+            android:layout_marginTop="20dp"
+            android:layout_marginHorizontal="30dp"
+            app:trackColorInactive="#CCCCCC"
+            app:trackColorActive="@color/light_blue"
+            app:thumbColor="@color/light_blue"
+            app:thumbElevation="10dp"
+            app:thumbRadius="10dp"
+            android:value="5"
+            app:trackHeight="5dp"
+            android:valueFrom="0.0"
+            android:valueTo="10.0"
+            android:stepSize="1" />
 
     </RelativeLayout>
 

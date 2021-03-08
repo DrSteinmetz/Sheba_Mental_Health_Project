@@ -19,7 +19,7 @@ public class Appointment implements Serializable {
     private Patient mPatient;
    // private MentalState mPatientMentalState;
     private Map<String, List<PainPoint>> mPainPointsOfBodyPartMap = new HashMap<>();
-    private List<String> mAnswers = new ArrayList<>();
+    private List<Answer> mAnswers = new ArrayList<>();
     private Map<String, Integer> mFeelingsAnswersMap = new HashMap<>();
     private AppointmentStateEnum mState;
     private boolean mIsFinishedPreQuestions = false;
@@ -99,19 +99,19 @@ public class Appointment implements Serializable {
         this.mPainPointsOfBodyPartMap = mPainPointsOfBodyPartMap;
     }
 
-    public List<String> getAnswers() {
+    public List<Answer> getAnswers() {
         return mAnswers;
     }
 
-    public Set<String> answersAsSetGetter() {
+    public Set<Answer> answersAsSetGetter() {
         return new HashSet<>(mAnswers);
     }
 
-    public void setAnswers(List<String> answers) {
+    public void setAnswers(List<Answer> answers) {
         this.mAnswers = answers;
     }
 
-    public void answersAsSetSetter(Set<String> answers) {
+    public void answersAsSetSetter(Set<Answer> answers) {
         this.mAnswers = new ArrayList<>(answers);
     }
 

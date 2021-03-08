@@ -1,5 +1,6 @@
 package com.example.sheba_mental_health_project.model;
 
+import com.example.sheba_mental_health_project.model.enums.QuestionTypeEnum;
 import com.example.sheba_mental_health_project.model.enums.ViewModelEnum;
 
 import java.io.Serializable;
@@ -8,13 +9,16 @@ public class Question implements Serializable {
 
     private String mId;
     private String mQuestion;
+    private QuestionTypeEnum mQuestionType;
     private ViewModelEnum mPage;
 
     public Question() {}
 
-    public Question(final String mId, final String mQuestion, final ViewModelEnum mPage) {
+    public Question(final String mId, final String mQuestion,
+                    final QuestionTypeEnum mQuestionType, final ViewModelEnum mPage) {
         this.mId = mId;
         this.mQuestion = mQuestion;
+        this.mQuestionType = mQuestionType;
         this.mPage = mPage;
     }
 
@@ -32,6 +36,14 @@ public class Question implements Serializable {
 
     public void setQuestion(String question) {
         this.mQuestion = question;
+    }
+
+    public QuestionTypeEnum getQuestionType() {
+        return mQuestionType;
+    }
+
+    public void setQuestionType(QuestionTypeEnum questionType) {
+        this.mQuestionType = questionType;
     }
 
     public ViewModelEnum getPage() {

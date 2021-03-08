@@ -69,7 +69,7 @@ public class ChatAdapter extends FirestoreRecyclerAdapter<ChatMessage, ChatAdapt
 
     @Override
     protected void onBindViewHolder(@NonNull ChatAdapter.ChatViewHolder holder,
-                                    int position,@NonNull ChatMessage message) {
+                                    int position, @NonNull ChatMessage message) {
         holder.bind(message);
     }
 

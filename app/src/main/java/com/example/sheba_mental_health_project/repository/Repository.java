@@ -22,6 +22,7 @@ import com.example.sheba_mental_health_project.model.Question;
 import com.example.sheba_mental_health_project.model.Therapist;
 import com.example.sheba_mental_health_project.model.enums.AppointmentStateEnum;
 import com.example.sheba_mental_health_project.model.enums.BodyPartEnum;
+import com.example.sheba_mental_health_project.model.enums.QuestionTypeEnum;
 import com.example.sheba_mental_health_project.model.enums.ViewModelEnum;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
@@ -330,7 +331,7 @@ public class Repository {
     private Repository(final Context context) {
         this.mContext = context;
         mAlarmManager = (AlarmManager) mContext.getSystemService(Context.ALARM_SERVICE);
-//        addQuestions();
+        addQuestions();
     }
 
     public void getAllPatients() {
@@ -688,7 +689,7 @@ public class Repository {
         mGetFeelingsAnswersListener.remove();
     }
 
-    public void getQuestions(final ViewModelEnum page) {
+    public void getQuestionsByPage(final ViewModelEnum page) {
         final String language = Locale.getDefault().getLanguage(); // 'he' 'en'
 
         final List<Question> questions = new ArrayList<>();
@@ -929,21 +930,33 @@ public class Repository {
     public void addQuestions() {
         final List<Question> questions = new ArrayList<>();
 
-        questions.add(new Question("3", "I Want a Long Meeting", ViewModelEnum.Treaty));
-        questions.add(new Question("4", "I Want a Short Meeting", ViewModelEnum.Treaty));
-        questions.add(new Question("5", "I want another person to present with me during the meeting", ViewModelEnum.Treaty));
+        questions.add(new Question("3", "I Want a Long Meeting",
+                QuestionTypeEnum.Binary, ViewModelEnum.Treaty));
+        questions.add(new Question("4", "I Want a Short Meeting",
+                QuestionTypeEnum.Binary, ViewModelEnum.Treaty));
+        questions.add(new Question("5", "I want another person to present with me during the meeting",
+                QuestionTypeEnum.Binary, ViewModelEnum.Treaty));
 
-        questions.add(new Question("6", "document 17", ViewModelEnum.Bureaucracy));
-        questions.add(new Question("7", "Appointment summery", ViewModelEnum.Bureaucracy));
-        questions.add(new Question("8", "Prescriptions", ViewModelEnum.Bureaucracy));
+        questions.add(new Question("6", "document 17",
+                QuestionTypeEnum.Binary, ViewModelEnum.Bureaucracy));
+        questions.add(new Question("7", "Appointment summery",
+                QuestionTypeEnum.Binary, ViewModelEnum.Bureaucracy));
+        questions.add(new Question("8", "Prescriptions",
+                QuestionTypeEnum.Binary, ViewModelEnum.Bureaucracy));
 
-        questions.add(new Question("9", "I feel suicide", ViewModelEnum.SanityCheck));
-        questions.add(new Question("10", "I feel aggressive", ViewModelEnum.SanityCheck));
-        questions.add(new Question("11", "I hear voices", ViewModelEnum.SanityCheck));
-        questions.add(new Question("12", "I feel strong physical pain", ViewModelEnum.SanityCheck));
+        questions.add(new Question("9", "I feel suicide",
+                QuestionTypeEnum.Binary, ViewModelEnum.SanityCheck));
+        questions.add(new Question("10", "I feel aggressive",
+                QuestionTypeEnum.Binary, ViewModelEnum.SanityCheck));
+        questions.add(new Question("11", "I hear voices",
+                QuestionTypeEnum.Binary, ViewModelEnum.SanityCheck));
+        questions.add(new Question("12", "I feel strong physical pain",
+                QuestionTypeEnum.Binary, ViewModelEnum.SanityCheck));
 
-        questions.add(new Question("1", "I had an accident recently", ViewModelEnum.Statement));
-        questions.add(new Question("2", "I have been hospitalized recently", ViewModelEnum.Statement));
+        questions.add(new Question("1", "I had an accident recently",
+                QuestionTypeEnum.Binary, ViewModelEnum.Statement));
+        questions.add(new Question("2", "I have been hospitalized recently",
+                QuestionTypeEnum.Binary, ViewModelEnum.Statement));
 
         for (Question question : questions) {
             mCloudDB.collection(QUESTIONS)

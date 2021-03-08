@@ -94,7 +94,7 @@ public class BureaucracyViewModel extends ViewModel {
     }
 
     public void getQuestions(final ViewModelEnum page) {
-        mRepository.getQuestions(page);
+        mRepository.getQuestionsByPage(page);
     }
 
     public void updateAnswersOfAppointment() {

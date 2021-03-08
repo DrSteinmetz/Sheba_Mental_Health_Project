@@ -1,39 +1,36 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:background="#ffffff"
+    android:background="@color/white"
+    android:padding="10dp"
     tools:context=".view.patient.MentalPatientFragment">
 
-            <TextView
-                android:id="@+id/title_tv"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerHorizontal="true"
-                android:layout_margin="5dp"
-                android:textSize="20sp"
-                android:textColor="@color/black"
-                android:text="Feelings"/>
-
+    <TextView
+        android:id="@+id/title_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_margin="5dp"
+        android:text="@string/feelings"
+        android:textSize="20sp"
+        android:textColor="@color/black" />
 
         <androidx.recyclerview.widget.RecyclerView
             android:layout_below="@+id/title_tv"
             android:id="@+id/recycler_view"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_above="@id/save_btn"
-            />
-
+            android:layout_above="@id/save_btn" />
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/save_btn"
             android:layout_centerHorizontal="true"
             android:layout_alignParentBottom="true"
-            android:text="Save"
+            android:text="@string/save"
             android:textSize="20sp"
             style="@style/blue_btn" />
-
 
 </RelativeLayout>
