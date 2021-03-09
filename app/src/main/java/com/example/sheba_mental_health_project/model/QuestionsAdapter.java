@@ -23,6 +23,7 @@ import java.util.List;
 public class QuestionsAdapter extends RecyclerView.Adapter<QuestionsAdapter.QuestionsViewHolder> {
 
     private final Context mContext;
+
     private final List<Question> mQuestions;
     private final List<Answer> mAnswers;
 
@@ -33,22 +34,13 @@ public class QuestionsAdapter extends RecyclerView.Adapter<QuestionsAdapter.Ques
 
     private final String TAG = "QuestionsAdapter";
 
+
     public QuestionsAdapter(final Context context, final List<Question> questions,
                             final List<Answer> answers) {
         this.mContext = context;
         this.mQuestions = questions;
         this.mAnswers = answers;
     }
-
-    /*public interface QuestionsAdapterInterface {
-        void onQuestionCheckedChange(View view, boolean isChecked);
-    }
-
-    private QuestionsAdapterInterface listener;
-
-    public void setQuestionListener(final QuestionsAdapterInterface listener) {
-        this.listener = listener;
-    }*/
 
     public class QuestionsViewHolder extends RecyclerView.ViewHolder {
 
@@ -85,18 +77,14 @@ public class QuestionsAdapter extends RecyclerView.Adapter<QuestionsAdapter.Ques
             binaryQuestionCb.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
                 @Override
                 public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                    /*if (listener != null) {
-                        listener.onQuestionCheckedChange(buttonView, isChecked);
-                    }*/
-
                     final String questionId = mQuestions.get(getAdapterPosition()).getId();
                     if (isChecked) {
-                        if (!mAnswers.contains(new AnswerBinary(questionId))) {
+                        if (!mAnswers.contains(new Answer(questionId))) {
                             mAnswers.add(new AnswerBinary(questionId));
                             Log.d(TAG, "qwe onCheckedChanged: Added, Size: " + mAnswers.size());
                         }
                     } else {
-                        mAnswers.remove(new AnswerBinary(questionId));
+                        mAnswers.remove(new Answer(questionId));
                         Log.d(TAG, "qwe onCheckedChanged: Removed");
                     }
                 }
@@ -122,7 +110,7 @@ public class QuestionsAdapter extends RecyclerView.Adapter<QuestionsAdapter.Ques
 
         private void initializeNumberQuestion(final View itemView) {
             numberTv = itemView.findViewById(R.id.question_tv);
-            numberQuestionEt = itemView.findViewById(R.id.answer_layout);
+            numberQuestionEt = itemView.findViewById(R.id.answer_et);
 
             numberQuestionEt.addTextChangedListener(new TextWatcher() {
                 @Override
@@ -142,7 +130,7 @@ public class QuestionsAdapter extends RecyclerView.Adapter<QuestionsAdapter.Ques
 
         private void initializeOpenQuestion(final View itemView) {
             openTv = itemView.findViewById(R.id.question_tv);
-            openQuestionEt = itemView.findViewById(R.id.answer_layout);
+            openQuestionEt = itemView.findViewById(R.id.answer_et);
 
             openQuestionEt.addTextChangedListener(new TextWatcher() {
                 @Override
@@ -161,12 +149,16 @@ public class QuestionsAdapter extends RecyclerView.Adapter<QuestionsAdapter.Ques
         }
 
         private void setOpenAnswerValue(final String questionId, final String answerValue) {
-            final int indexOfAnswer = mAnswers.indexOf(new AnswerOpen(questionId));
-            if (indexOfAnswer == -1) {
-                mAnswers.add(new AnswerBinary(questionId));
-                Log.d(TAG, "qwe onCheckedChanged: Added, Size: " + mAnswers.size());
-            } else {
-                ((AnswerOpen) mAnswers.get(indexOfAnswer)).setAnswer(answerValue);
+            final int indexOfAnswer = mAnswers.indexOf(new Answer(questionId));
+            if (indexOfAnswer == -1 && !answerValue.isEmpty()) {
+                mAnswers.add(new AnswerOpen(questionId, answerValue));
+            } else if (indexOfAnswer != -1) {
+                final AnswerOpen openAnswer = ((AnswerOpen) mAnswers.get(indexOfAnswer));
+                if (!answerValue.isEmpty()) {
+                    openAnswer.setAnswer(answerValue);
+                } else {
+                    mAnswers.remove(openAnswer);
+                }
             }
         }
     }
@@ -209,7 +201,7 @@ public class QuestionsAdapter extends RecyclerView.Adapter<QuestionsAdapter.Ques
             final String questionText = question.getQuestion();
             final Answer answer;
 
-            final int indexOfAnswer = mAnswers.indexOf(new AnswerOpen(question.getId()));
+            final int indexOfAnswer = mAnswers.indexOf(new Answer(question.getId()));
             if (indexOfAnswer != -1) {
                 answer = mAnswers.get(indexOfAnswer);
             } else {

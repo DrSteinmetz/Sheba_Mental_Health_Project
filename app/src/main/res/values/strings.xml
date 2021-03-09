@@ -38,6 +38,8 @@
     <string name="start_meeting">Start Meeting</string>
     <string name="start_meeting_title">Start Meeting?</string>
     <string name="start_meeting_prompt">Meeting That Started Can Not Be Canceled. Are You Sure You Want to Start This Meeting?</string>
+    <string name="statement_frag_title_tv">Choose Phrases Which You Relate to:</string>
+    <string name="questions_warning_frag_title_tv">In The Next Pages You will Be Presented to a Series of Questions.\n\nPlease Try to Answer as Many as You Can In Order For the Therapist to Understand Better Your Needs.</string>
 
     <string name="physical_state">Physical State</string>
     <string name="empty_pain_points_list_prompt">No Physical State Details to Show…</string>

@@ -24,6 +24,7 @@ public class SanityCheckViewModel extends ViewModel {
 
     private final String TAG = "SanityCheckViewModel";
 
+
     public SanityCheckViewModel(final Context context) {
         mRepository = Repository.getInstance(context);
     }

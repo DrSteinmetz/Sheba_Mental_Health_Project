@@ -34,13 +34,18 @@ import com.example.sheba_mental_health_project.view.character.RightArmFragment;
 import com.example.sheba_mental_health_project.view.patient.AppointmentLoungeFragment;
 import com.example.sheba_mental_health_project.view.patient.AppointmentPatientFragment;
 import com.example.sheba_mental_health_project.view.patient.BureaucracyFragment;
+import com.example.sheba_mental_health_project.view.patient.Covid19QuestionsFragment;
+import com.example.sheba_mental_health_project.view.patient.HabitsQuestionsFragment;
 import com.example.sheba_mental_health_project.view.patient.MainPatientFragment;
 import com.example.sheba_mental_health_project.view.patient.MentalPatientFragment;
+import com.example.sheba_mental_health_project.view.patient.MentalQuestionsFragment;
 import com.example.sheba_mental_health_project.view.patient.NotesFragment;
 import com.example.sheba_mental_health_project.view.patient.PhysicalPatientFragment;
 import com.example.sheba_mental_health_project.view.patient.PreMeetingCharacterFragment;
 import com.example.sheba_mental_health_project.view.patient.PreQuestionsFragment;
+import com.example.sheba_mental_health_project.view.patient.QuestionsWarningFragment;
 import com.example.sheba_mental_health_project.view.patient.SanityCheckFragment;
+import com.example.sheba_mental_health_project.view.patient.SocialQuestionsFragment;
 import com.example.sheba_mental_health_project.view.patient.StatementFragment;
 import com.example.sheba_mental_health_project.view.patient.TreatyFragment;
 import com.example.sheba_mental_health_project.view.therapist.AddAppointmentFragment;
@@ -63,8 +68,13 @@ public class MainActivity extends AppCompatActivity
         PreQuestionsFragment.PreQuestionsFragmentInterface,
         TreatyFragment.TreatyFragmentInterface,
         BureaucracyFragment.BureaucracyFragmentInterface,
+        Covid19QuestionsFragment.Covid19QuestionsFragmentInterface,
         SanityCheckFragment.SanityCheckFragmentInterface,
+        QuestionsWarningFragment.QuestionsWarningFragmentInterface,
         StatementFragment.StatementFragmentInterface,
+        SocialQuestionsFragment.SocialQuestionsFragmentInterface,
+        HabitsQuestionsFragment.HabitsQuestionsFragmentInterface,
+        MentalQuestionsFragment.MentalQuestionsFragmentInterface,
         MainPatientFragment.MainPatientInterface,
         CharacterFragment.CharacterFragmentInterface,
         StartMeetingFragment.StartMeetingTherapistInterface,
@@ -99,8 +109,13 @@ public class MainActivity extends AppCompatActivity
     private final String PRE_QUESTIONS_FRAG = "Pre_Questions_Fragment";
     private final String TREATY_FRAG = "Treaty_Fragment";
     private final String BUREAUCRACY_FRAG = "Bureaucracy_Fragment";
+    private final String COVID19_QUESTIONS_FRAG = "Covid-19_Questions_Fragment";
     private final String SANITY_CHECK_FRAG = "Sanity_Check_Fragment";
+    private final String QUESTIONS_WARNING_FRAG = "Questions_Warning_Fragment";
     private final String STATEMENT_FRAG = "Statement_Fragment";
+    private final String SOCIAL_QUESTIONS_FRAG = "Social_Questions_Fragment";
+    private final String HABITS_QUESTIONS_FRAG = "Habits_Questions_Fragment";
+    private final String MENTAL_QUESTIONS_FRAG = "Mental_Questions_Fragment";
     private final String CATEGORY_FRAG = "Category_Fragment";
     private final String PRE_MEETING_CHARACTER_FRAG = "Pre_Meeting_Character_Frag";
     private final String NOTES_FRAG = "Notes_Fragment";
@@ -120,11 +135,10 @@ public class MainActivity extends AppCompatActivity
     private final String GENITALS_FRAG = "Genitals_Fragment";
     private final String LEGS_FRAG = "Legs_Fragment";
 
-
     private final String IS_THERAPIST = "is_therapist";
 
-
     private final String TAG = "MainActivity";
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -293,7 +307,7 @@ public class MainActivity extends AppCompatActivity
     }
 
     @Override
-    public void onContinueToTreaty() {
+    public void onContinueFromPreQuestions() {
         getSupportFragmentManager().beginTransaction()
                 //TODO: add enter and exit animations
                 .replace(R.id.container, TreatyFragment.newInstance(), TREATY_FRAG)
@@ -302,7 +316,7 @@ public class MainActivity extends AppCompatActivity
     }
 
     @Override
-    public void onContinueToBureaucracy() {
+    public void onContinueFromTreaty() {
         getSupportFragmentManager().beginTransaction()
                 //TODO: add enter and exit animations
                 .replace(R.id.container, BureaucracyFragment.newInstance(), BUREAUCRACY_FRAG)
@@ -311,7 +325,16 @@ public class MainActivity extends AppCompatActivity
     }
 
     @Override
-    public void onContinueToSanityCheck() {
+    public void onContinueFromBureaucracy() {
+        getSupportFragmentManager().beginTransaction()
+                //TODO: add enter and exit animations
+                .replace(R.id.container, Covid19QuestionsFragment.newInstance(), COVID19_QUESTIONS_FRAG)
+                .addToBackStack(null)
+                .commit();
+    }
+
+    @Override
+    public void onContinueFromCovid19Questions() {
         getSupportFragmentManager().beginTransaction()
                 //TODO: add enter and exit animations
                 .replace(R.id.container, SanityCheckFragment.newInstance(), SANITY_CHECK_FRAG)
@@ -320,7 +343,16 @@ public class MainActivity extends AppCompatActivity
     }
 
     @Override
-    public void onContinueToStatement() {
+    public void onContinueFromSanityCheck() {
+        getSupportFragmentManager().beginTransaction()
+                //TODO: add enter and exit animations
+                .replace(R.id.container, QuestionsWarningFragment.newInstance(), QUESTIONS_WARNING_FRAG)
+                .addToBackStack(null)
+                .commit();
+    }
+
+    @Override
+    public void onContinueFromQuestionsWarning() {
         getSupportFragmentManager().beginTransaction()
                 //TODO: add enter and exit animations
                 .replace(R.id.container, StatementFragment.newInstance(), STATEMENT_FRAG)
@@ -329,7 +361,31 @@ public class MainActivity extends AppCompatActivity
     }
 
     @Override
-    public void onContinueToCategoryQuestions() {
+    public void onContinueFromStatement() {
+        getSupportFragmentManager().beginTransaction()
+                .replace(R.id.container, SocialQuestionsFragment.newInstance(), SOCIAL_QUESTIONS_FRAG)
+                .addToBackStack(null)
+                .commit();
+    }
+
+    @Override
+    public void onContinueFromSocialQuestions() {
+        getSupportFragmentManager().beginTransaction()
+                .replace(R.id.container, HabitsQuestionsFragment.newInstance(), HABITS_QUESTIONS_FRAG)
+                .addToBackStack(null)
+                .commit();
+    }
+
+    @Override
+    public void onContinueFromHabitsQuestions() {
+        getSupportFragmentManager().beginTransaction()
+                .replace(R.id.container, MentalQuestionsFragment.newInstance(), MENTAL_QUESTIONS_FRAG)
+                .addToBackStack(null)
+                .commit();
+    }
+
+    @Override
+    public void onContinueFromMentalQuestions() {
         getSupportFragmentManager().beginTransaction()
                 .add(R.id.container, PreMeetingCharacterFragment.newInstance(), PRE_MEETING_CHARACTER_FRAG)
                 .addToBackStack(null)

@@ -33,7 +33,6 @@
                     app:trackColorInactive="#CCCCCC"
                     app:trackColorActive="@color/light_blue"
                     app:thumbColor="@color/light_blue"
-                    app:thumbElevation="10dp"
                     app:thumbRadius="10dp"
                     android:value="5"
                     app:trackHeight="5dp"

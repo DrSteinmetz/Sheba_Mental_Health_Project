@@ -12,7 +12,7 @@ import com.example.sheba_mental_health_project.repository.Repository;
 
 import java.util.List;
 
-public class StatementViewModel extends ViewModel {
+public class HabitsQuestionsViewModel extends ViewModel {
 
     private final Repository mRepository;
 
@@ -22,10 +22,10 @@ public class StatementViewModel extends ViewModel {
     private MutableLiveData<Appointment> mUpdateAnswersOfAppointmentSucceed;
     private MutableLiveData<String> mUpdateAnswersOfAppointmentFailed;
 
-    private final String TAG = "StatementViewModel";
+    private final String TAG = "HabitsQuestionsVM";
 
 
-    public StatementViewModel(final Context context) {
+    public HabitsQuestionsViewModel(final Context context) {
         mRepository = Repository.getInstance(context);
     }
 

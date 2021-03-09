@@ -75,6 +75,7 @@ public class Repository {
 
     private final String TAG = "Repository";
 
+
     /**<------ Interfaces ------>*/
     /*<------ Get All Patients ------>*/
     public interface RepositoryGetAllPatientsInterface {
@@ -98,7 +99,8 @@ public class Repository {
 
     private RepositoryGetAppointmentOfSpecificTherapistInterface mRepositoryGetAppointmentOfSpecificTherapistListener;
 
-    public void setGetAppointmentOfSpecificTherapist(RepositoryGetAppointmentOfSpecificTherapistInterface repositoryGetAppointmentOfSpecificTherapistListener){
+    public void setGetAppointmentOfSpecificTherapist(RepositoryGetAppointmentOfSpecificTherapistInterface
+                                                             repositoryGetAppointmentOfSpecificTherapistListener){
         this.mRepositoryGetAppointmentOfSpecificTherapistListener = repositoryGetAppointmentOfSpecificTherapistListener;
     }
 
@@ -111,7 +113,8 @@ public class Repository {
 
     private RepositoryGetAppointmentOfSpecificPatientInterface mRepositoryGetAppointmentOfSpecificPatientListener;
 
-    public void setGetAppointmentOfSpecificPatient(RepositoryGetAppointmentOfSpecificPatientInterface repositoryGetAppointmentOfSpecificPatientListener){
+    public void setGetAppointmentOfSpecificPatient(RepositoryGetAppointmentOfSpecificPatientInterface
+                                                           repositoryGetAppointmentOfSpecificPatientListener){
         this.mRepositoryGetAppointmentOfSpecificPatientListener = repositoryGetAppointmentOfSpecificPatientListener;
     }
 
@@ -137,7 +140,8 @@ public class Repository {
 
     private RepositoryGetAllPainPointsPhysicalInterface mRepositoryGetAllPainPointsPhysicalListener;
 
-    public void setGetAllPainPointsPhysicalInterface(RepositoryGetAllPainPointsPhysicalInterface repositoryGetAllPainPointsPhysicalInterface){
+    public void setGetAllPainPointsPhysicalInterface(RepositoryGetAllPainPointsPhysicalInterface
+                                                             repositoryGetAllPainPointsPhysicalInterface){
         this.mRepositoryGetAllPainPointsPhysicalListener = repositoryGetAllPainPointsPhysicalInterface;
     }
 
@@ -227,7 +231,8 @@ public class Repository {
 
     private RepositoryGetQuestionsOfPageInterface mRepositoryGetQuestionsOfPageListener;
 
-    public void setGetQuestionsOfPageInterface(RepositoryGetQuestionsOfPageInterface repositoryGetQuestionsOfPageInterface) {
+    public void setGetQuestionsOfPageInterface(RepositoryGetQuestionsOfPageInterface
+                                                       repositoryGetQuestionsOfPageInterface) {
         this.mRepositoryGetQuestionsOfPageListener = repositoryGetQuestionsOfPageInterface;
     }
 
@@ -240,7 +245,8 @@ public class Repository {
 
     private RepositoryGetFeelingsAnswersInterface mRepositoryGetFeelingsAnswersListener;
 
-    public void setGetFeelingsAnswersInterface(RepositoryGetFeelingsAnswersInterface repositoryGetFeelingsAnswersInterface) {
+    public void setGetFeelingsAnswersInterface(RepositoryGetFeelingsAnswersInterface
+                                                       repositoryGetFeelingsAnswersInterface) {
         this.mRepositoryGetFeelingsAnswersListener = repositoryGetFeelingsAnswersInterface;
     }
 
@@ -253,7 +259,8 @@ public class Repository {
 
     private RepositoryGetPatientFeelingsInterface mRepositoryGetPatientFeelingsListener;
 
-    public void setGetPatientFeelingsInterface(RepositoryGetPatientFeelingsInterface repositoryGetPatientFeelingsInterface) {
+    public void setGetPatientFeelingsInterface(RepositoryGetPatientFeelingsInterface
+                                                       repositoryGetPatientFeelingsInterface) {
         this.mRepositoryGetPatientFeelingsListener = repositoryGetPatientFeelingsInterface;
     }
 
@@ -266,7 +273,8 @@ public class Repository {
 
     private RepositoryUpdateAnswersOfAppointmentInterface mRepositoryUpdateAnswersOfAppointmentListener;
 
-    public void setUpdateAnswersOfAppointmentInterface(RepositoryUpdateAnswersOfAppointmentInterface repositoryUpdateAnswersOfAppointmentInterface){
+    public void setUpdateAnswersOfAppointmentInterface(RepositoryUpdateAnswersOfAppointmentInterface
+                                                               repositoryUpdateAnswersOfAppointmentInterface){
         this.mRepositoryUpdateAnswersOfAppointmentListener = repositoryUpdateAnswersOfAppointmentInterface;
     }
 
@@ -279,7 +287,8 @@ public class Repository {
 
     private RepositoryUpdateAnswersOfFeelingsInterface mRepositoryUpdateAnswersOfFeelingsListener;
 
-    public void setUpdateAnswersOfFeelingsInterface(RepositoryUpdateAnswersOfFeelingsInterface repositoryUpdateAnswersOfFeelingsInterface){
+    public void setUpdateAnswersOfFeelingsInterface(RepositoryUpdateAnswersOfFeelingsInterface
+                                                            repositoryUpdateAnswersOfFeelingsInterface){
         this.mRepositoryUpdateAnswersOfFeelingsListener = repositoryUpdateAnswersOfFeelingsInterface;
     }
 
@@ -292,7 +301,8 @@ public class Repository {
 
     private RepositoryUpdateStateOfAppointmentInterface mRepositoryUpdateStateOfAppointmentListener;
 
-    public void setUpdateStateOfAppointmentInterface(RepositoryUpdateStateOfAppointmentInterface repositoryUpdateStateOfAppointmentInterface){
+    public void setUpdateStateOfAppointmentInterface(RepositoryUpdateStateOfAppointmentInterface
+                                                             repositoryUpdateStateOfAppointmentInterface){
         this.mRepositoryUpdateStateOfAppointmentListener = repositoryUpdateStateOfAppointmentInterface;
     }
 
@@ -305,7 +315,8 @@ public class Repository {
 
     private RepositoryUpdateFinishedPreQuestionsInterface mRepositoryUpdateFinishedPreQuestionsListener;
 
-    public void setUpdateFinishedPreQuestionsInterface(RepositoryUpdateFinishedPreQuestionsInterface repositoryUpdateFinishedPreQuestionsInterface){
+    public void setUpdateFinishedPreQuestionsInterface(RepositoryUpdateFinishedPreQuestionsInterface
+                                                               repositoryUpdateFinishedPreQuestionsInterface){
         this.mRepositoryUpdateFinishedPreQuestionsListener = repositoryUpdateFinishedPreQuestionsInterface;
     }
 
@@ -316,7 +327,8 @@ public class Repository {
 
     private RepositoryUploadChatMessageInterface mRepositoryUploadChatMessageListener;
 
-    public void setUploadChatMessageInterface(RepositoryUploadChatMessageInterface repositoryUploadChatMessageInterface){
+    public void setUploadChatMessageInterface(RepositoryUploadChatMessageInterface
+                                                      repositoryUploadChatMessageInterface){
         this.mRepositoryUploadChatMessageListener = repositoryUploadChatMessageInterface;
     }
 
@@ -331,7 +343,7 @@ public class Repository {
     private Repository(final Context context) {
         this.mContext = context;
         mAlarmManager = (AlarmManager) mContext.getSystemService(Context.ALARM_SERVICE);
-        addQuestions();
+//        addQuestions();
     }
 
     public void getAllPatients() {
@@ -398,7 +410,8 @@ public class Repository {
                             setCurrentAppointment(appointment);
                             cancelAppointmentNotificationByDate(appointment);
                             if (mRepositoryUpdateAppointmentListener != null) {
-                                mRepositoryUpdateAppointmentListener.onUpdateAppointmentSucceed(appointment.getId());
+                                mRepositoryUpdateAppointmentListener
+                                        .onUpdateAppointmentSucceed(appointment.getId());
                             }
                         } else {
                             final String error = Objects
@@ -422,7 +435,8 @@ public class Repository {
                         if (task.isSuccessful()) {
                             cancelAppointmentNotificationByDate(mCurrentAppointment);
                             if (mRepositoryDeleteAppointmentListener != null) {
-                                mRepositoryDeleteAppointmentListener.onDeleteAppointmentSucceed(mCurrentAppointment);
+                                mRepositoryDeleteAppointmentListener
+                                        .onDeleteAppointmentSucceed(mCurrentAppointment);
                             }
                         } else {
                             final String error = Objects
@@ -607,7 +621,8 @@ public class Repository {
                         if (value != null && value.exists()) {
                             final Appointment dbAppointment = value.toObject(Appointment.class);
                             if (mRepositoryGetAllPainPointsListener != null) {
-                                mRepositoryGetAllPainPointsListener.onGetAllPainPointsSucceed(dbAppointment.getPainPointsOfBodyPartMap());
+                                mRepositoryGetAllPainPointsListener
+                                        .onGetAllPainPointsSucceed(dbAppointment.getPainPointsOfBodyPartMap());
                                 appointment.setPainPointsOfBodyPartMap(dbAppointment.getPainPointsOfBodyPartMap());
                             }
                         } else {
@@ -751,7 +766,6 @@ public class Repository {
     }
 
     public void updateAnswersOfAppointment() {
-        Log.d(TAG, "updateAnswersOfAppointment: " + mCurrentAppointment.getAnswers());
         mCloudDB.collection(APPOINTMENTS)
                 .document(mCurrentAppointment.getId())
                 .update("answers", mCurrentAppointment.getAnswers())
@@ -760,7 +774,8 @@ public class Repository {
                     public void onComplete(@NonNull Task<Void> task) {
                         if (task.isSuccessful()) {
                             if (mRepositoryUpdateAnswersOfAppointmentListener != null) {
-                                mRepositoryUpdateAnswersOfAppointmentListener.onUpdateAnswersOfAppointmentSucceed(mCurrentAppointment);
+                                mRepositoryUpdateAnswersOfAppointmentListener
+                                        .onUpdateAnswersOfAppointmentSucceed(mCurrentAppointment);
                             }
                         } else {
                             Log.e(TAG, "onComplete: ", task.getException());
@@ -782,7 +797,8 @@ public class Repository {
                     public void onComplete(@NonNull Task<Void> task) {
                         if (task.isSuccessful()) {
                             if (mRepositoryUpdateAnswersOfFeelingsListener != null) {
-                                mRepositoryUpdateAnswersOfFeelingsListener.onUpdateAnswersOfFeelingsSucceed(mCurrentAppointment);
+                                mRepositoryUpdateAnswersOfFeelingsListener
+                                        .onUpdateAnswersOfFeelingsSucceed(mCurrentAppointment);
                             }
                         } else {
                             Log.e(TAG, "onComplete: ", task.getException());
@@ -853,7 +869,8 @@ public class Repository {
         mCloudDB.collection(APPOINTMENTS)
                 .whereIn("state", stateQuery)
                 .whereEqualTo(FieldPath.of("patient", "id"), patientId)
-                .orderBy("appointmentDate", Query.Direction.ASCENDING).limit(1).addSnapshotListener(new EventListener<QuerySnapshot>() {
+                .orderBy("appointmentDate", Query.Direction.ASCENDING).limit(1)
+                .addSnapshotListener(new EventListener<QuerySnapshot>() {
             @Override
             public void onEvent(@Nullable QuerySnapshot value, @Nullable FirebaseFirestoreException error) {
 
@@ -877,17 +894,20 @@ public class Repository {
 
     public void updateAppointmentState(AppointmentStateEnum appointmentStateEnum) {
         mCloudDB.collection(APPOINTMENTS).document(mCurrentAppointment.getId())
-                .update("state", appointmentStateEnum).addOnCompleteListener(new OnCompleteListener<Void>() {
+                .update("state", appointmentStateEnum)
+                .addOnCompleteListener(new OnCompleteListener<Void>() {
             @Override
             public void onComplete(@NonNull Task<Void> task) {
                 if (task.isSuccessful()) {
                     mCurrentAppointment.setState(appointmentStateEnum);
                     if (mRepositoryUpdateStateOfAppointmentListener != null) {
-                        mRepositoryUpdateStateOfAppointmentListener.onUpdateStateOfAppointmentSucceed(appointmentStateEnum);
+                        mRepositoryUpdateStateOfAppointmentListener
+                                .onUpdateStateOfAppointmentSucceed(appointmentStateEnum);
                     }
                 } else {
                     if (mRepositoryUpdateStateOfAppointmentListener != null) {
-                        mRepositoryUpdateStateOfAppointmentListener.onUpdateAnswersOfAppointmentFailed(task.getException().getMessage());
+                        mRepositoryUpdateStateOfAppointmentListener
+                                .onUpdateAnswersOfAppointmentFailed(task.getException().getMessage());
                     }
                 }
             }
@@ -930,33 +950,123 @@ public class Repository {
     public void addQuestions() {
         final List<Question> questions = new ArrayList<>();
 
-        questions.add(new Question("3", "I Want a Long Meeting",
+        questions.add(new Question("1", "I Want a Long Meeting",
                 QuestionTypeEnum.Binary, ViewModelEnum.Treaty));
-        questions.add(new Question("4", "I Want a Short Meeting",
+        questions.add(new Question("10", "I Want a Short Meeting",
                 QuestionTypeEnum.Binary, ViewModelEnum.Treaty));
-        questions.add(new Question("5", "I want another person to present with me during the meeting",
+        questions.add(new Question("11", "I Want Another Person to Be Present During the Meeting",
+                QuestionTypeEnum.Binary, ViewModelEnum.Treaty));
+        questions.add(new Question("12", "I Am Under Custody",
                 QuestionTypeEnum.Binary, ViewModelEnum.Treaty));
 
-        questions.add(new Question("6", "document 17",
+        questions.add(new Question("13", "Document 17",
                 QuestionTypeEnum.Binary, ViewModelEnum.Bureaucracy));
-        questions.add(new Question("7", "Appointment summery",
+        questions.add(new Question("14", "Document 17 Extension",
                 QuestionTypeEnum.Binary, ViewModelEnum.Bureaucracy));
-        questions.add(new Question("8", "Prescriptions",
+        questions.add(new Question("15", "Appointment Summery",
+                QuestionTypeEnum.Binary, ViewModelEnum.Bureaucracy));
+        questions.add(new Question("16", "Prescriptions",
+                QuestionTypeEnum.Binary, ViewModelEnum.Bureaucracy));
+        questions.add(new Question("17", "Document for Social Security",
+                QuestionTypeEnum.Binary, ViewModelEnum.Bureaucracy));
+        questions.add(new Question("18", "Document for Family Doctor",
+                QuestionTypeEnum.Binary, ViewModelEnum.Bureaucracy));
+        questions.add(new Question("19", "Document for Rehabilitation Committee",
+                QuestionTypeEnum.Binary, ViewModelEnum.Bureaucracy));
+        questions.add(new Question("2", "Document for Occupational Physician",
+                QuestionTypeEnum.Binary, ViewModelEnum.Bureaucracy));
+        questions.add(new Question("20", "Request for Psychological Treatment",
+                QuestionTypeEnum.Binary, ViewModelEnum.Bureaucracy));
+        questions.add(new Question("21", "Document for a Social Worker",
+                QuestionTypeEnum.Binary, ViewModelEnum.Bureaucracy));
+        questions.add(new Question("22", "Other",
                 QuestionTypeEnum.Binary, ViewModelEnum.Bureaucracy));
 
-        questions.add(new Question("9", "I feel suicide",
+        questions.add(new Question("23", "I Have One of These Symptoms: Fever, Sore Throat, Loss of Taste or Smell, Dry Cough, Muscle pain.",
+                QuestionTypeEnum.Binary, ViewModelEnum.CovidQuestions));
+        questions.add(new Question("24", "I Am Diagnosed with COVID-19",
+                QuestionTypeEnum.Binary, ViewModelEnum.CovidQuestions));
+        questions.add(new Question("25", "One or More of My Household Members Have Been Diagnosed with COVID-19",
+                QuestionTypeEnum.Binary, ViewModelEnum.CovidQuestions));
+        questions.add(new Question("26", "Does Any of Your Relatives Has Been Diagnosed with COVID-19?",
+                QuestionTypeEnum.Open, ViewModelEnum.CovidQuestions));
+        questions.add(new Question("27", "Were You Diagnosed with COVID-19 in the Past? If Yes, When?",
+                QuestionTypeEnum.Open, ViewModelEnum.CovidQuestions));
+        questions.add(new Question("28", "Have You Experienced Any Emotional Suffering Due to COVID-19?",
+                QuestionTypeEnum.Open, ViewModelEnum.CovidQuestions));
+        questions.add(new Question("29", "Have You Experienced Any Physical Suffering Due to COVID-19?",
+                QuestionTypeEnum.Open, ViewModelEnum.CovidQuestions));
+        questions.add(new Question("3", "Have You Experienced Any Emotional Suffering Due to COVID-19? (While Not being Diagnosed Yourself)",
+                QuestionTypeEnum.Open, ViewModelEnum.CovidQuestions));
+        questions.add(new Question("30", "Have You Experienced Any Physical Suffering Due to COVID-19? (While Not being Diagnosed Yourself)",
+                QuestionTypeEnum.Open, ViewModelEnum.CovidQuestions));
+
+        questions.add(new Question("31", "I Feel Suicidal",
                 QuestionTypeEnum.Binary, ViewModelEnum.SanityCheck));
-        questions.add(new Question("10", "I feel aggressive",
+        questions.add(new Question("32", "I Feel Aggressive",
                 QuestionTypeEnum.Binary, ViewModelEnum.SanityCheck));
-        questions.add(new Question("11", "I hear voices",
+        questions.add(new Question("33", "I Hear Voices",
                 QuestionTypeEnum.Binary, ViewModelEnum.SanityCheck));
-        questions.add(new Question("12", "I feel strong physical pain",
+        questions.add(new Question("34", "I Feel Strong Physical Pain",
                 QuestionTypeEnum.Binary, ViewModelEnum.SanityCheck));
 
-        questions.add(new Question("1", "I had an accident recently",
+        questions.add(new Question("35", "I Had an Accident Recently",
                 QuestionTypeEnum.Binary, ViewModelEnum.Statement));
-        questions.add(new Question("2", "I have been hospitalized recently",
+        questions.add(new Question("36", "I Have been Hospitalized Recently",
                 QuestionTypeEnum.Binary, ViewModelEnum.Statement));
+
+        questions.add(new Question("37", "Are You Getting Any Mental Help Nowadays? If You Are, By Whom and When Was Your Last Appointment? (Psychiatrist/Social Worker/Psychologist)",
+                QuestionTypeEnum.Open, ViewModelEnum.SocialQuestions));
+        questions.add(new Question("38", "Rank Your Distress Level on a Scale of 1 to 10:",
+                QuestionTypeEnum.Slider, ViewModelEnum.SocialQuestions));
+        questions.add(new Question("39", "Rank Your Daily Functioning on a Scale of 1 to 10:",
+                QuestionTypeEnum.Slider, ViewModelEnum.SocialQuestions));
+        questions.add(new Question("4", "Do You Have Anyone Around to Support You?",
+                QuestionTypeEnum.Open, ViewModelEnum.SocialQuestions));
+        questions.add(new Question("40", "Does Anyone Take Advantage of You or Hurts You?",
+                QuestionTypeEnum.Open, ViewModelEnum.SocialQuestions));
+
+        questions.add(new Question("41", "What is Your Height?",
+                QuestionTypeEnum.Number, ViewModelEnum.HabitsQuestions));
+        questions.add(new Question("42", "What is Your Weight?",
+                QuestionTypeEnum.Number, ViewModelEnum.HabitsQuestions));
+        questions.add(new Question("43", "Were There Any Recent Changes In Your Weight, Diet or Physical Activity?",
+                QuestionTypeEnum.Open, ViewModelEnum.HabitsQuestions));
+        questions.add(new Question("44", "Has Your Appetite been Decreased or Increased?",
+                QuestionTypeEnum.Open, ViewModelEnum.HabitsQuestions));
+        questions.add(new Question("45", "Do You Have Any Sleeping Issues?",
+                QuestionTypeEnum.Open, ViewModelEnum.HabitsQuestions));
+
+        questions.add(new Question("46", "I Experience Bad Mood",
+                QuestionTypeEnum.Binary, ViewModelEnum.MentalQuestions));
+        questions.add(new Question("47", "I Experience Uplifting Mood",
+                QuestionTypeEnum.Binary, ViewModelEnum.MentalQuestions));
+        questions.add(new Question("48", "I Experience Anxiety",
+                QuestionTypeEnum.Binary, ViewModelEnum.MentalQuestions));
+        questions.add(new Question("49", "I Experience Suspiciousness",
+                QuestionTypeEnum.Binary, ViewModelEnum.MentalQuestions));
+        questions.add(new Question("5", "I Experience Stress",
+                QuestionTypeEnum.Binary, ViewModelEnum.MentalQuestions));
+        questions.add(new Question("50", "I Have Peculiar Thoughts",
+                QuestionTypeEnum.Binary, ViewModelEnum.MentalQuestions));
+        questions.add(new Question("51", "I Experience Strange Sensation",
+                QuestionTypeEnum.Binary, ViewModelEnum.MentalQuestions));
+        questions.add(new Question("52", "I Experience Anger",
+                QuestionTypeEnum.Binary, ViewModelEnum.MentalQuestions));
+        questions.add(new Question("53", "I Have Aggressive Thoughts",
+                QuestionTypeEnum.Binary, ViewModelEnum.MentalQuestions));
+        questions.add(new Question("54", "I Have Suicidal Thoughts",
+                QuestionTypeEnum.Binary, ViewModelEnum.MentalQuestions));
+        questions.add(new Question("55", "I Experience Concentration Issues",
+                QuestionTypeEnum.Binary, ViewModelEnum.MentalQuestions));
+        questions.add(new Question("56", "I Experience Memory Issues",
+                QuestionTypeEnum.Binary, ViewModelEnum.MentalQuestions));
+        questions.add(new Question("57", "I Experience Decrease in My Vision",
+                QuestionTypeEnum.Binary, ViewModelEnum.MentalQuestions));
+        questions.add(new Question("58", "I Experience Decrease in My Hearing",
+                QuestionTypeEnum.Binary, ViewModelEnum.MentalQuestions));
+        questions.add(new Question("59", "I Experience Walking Difficulties",
+                QuestionTypeEnum.Binary, ViewModelEnum.MentalQuestions));
 
         for (Question question : questions) {
             mCloudDB.collection(QUESTIONS)

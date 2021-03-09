@@ -25,6 +25,7 @@ public class WelcomeFragment extends Fragment {
 
     private final String TAG = "WelcomeFragment";
 
+
     public interface WelcomeFragmentInterface {
         void onTherapistBtnClicked();
         void onPatientBtnClicked();

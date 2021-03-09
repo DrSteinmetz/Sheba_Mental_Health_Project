@@ -16,8 +16,6 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.RadioButton;
-import android.widget.RadioGroup;
 
 import com.example.sheba_mental_health_project.R;
 import com.example.sheba_mental_health_project.model.Appointment;
@@ -25,30 +23,30 @@ import com.example.sheba_mental_health_project.model.Question;
 import com.example.sheba_mental_health_project.model.QuestionsAdapter;
 import com.example.sheba_mental_health_project.model.ViewModelFactory;
 import com.example.sheba_mental_health_project.model.enums.ViewModelEnum;
-import com.example.sheba_mental_health_project.viewmodel.TreatyViewModel;
+import com.example.sheba_mental_health_project.viewmodel.HabitsQuestionsViewModel;
 import com.google.android.material.button.MaterialButton;
 
 import java.util.List;
 
-public class TreatyFragment extends Fragment {
+public class HabitsQuestionsFragment extends Fragment {
 
-    private TreatyViewModel mViewModel;
+    private HabitsQuestionsViewModel mViewModel;
 
     private RecyclerView mRecyclerView;
 
     private QuestionsAdapter mQuestionsAdapter;
 
-    private final String TAG = "TreatyFragment";
+    private final String TAG = "HabitsQuestionsFragment";
 
 
-    public interface TreatyFragmentInterface {
-        void onContinueFromTreaty();
+    public interface HabitsQuestionsFragmentInterface {
+        void onContinueFromHabitsQuestions();
     }
 
-    private TreatyFragmentInterface listener;
+    private HabitsQuestionsFragmentInterface listener;
 
-    public static TreatyFragment newInstance() {
-        return new TreatyFragment();
+    public static HabitsQuestionsFragment newInstance() {
+        return new HabitsQuestionsFragment();
     }
 
     @Override
@@ -56,9 +54,9 @@ public class TreatyFragment extends Fragment {
         super.onAttach(context);
 
         try {
-            listener = (TreatyFragmentInterface) context;
+            listener = (HabitsQuestionsFragmentInterface) context;
         } catch (Exception ex) {
-            throw new ClassCastException("The Activity Must Implements TreatyFragmentInterface listener!");
+            throw new ClassCastException("The Activity Must Implements HabitsQuestionsFragmentInterface listener!");
         }
     }
 
@@ -67,7 +65,7 @@ public class TreatyFragment extends Fragment {
         super.onCreate(savedInstanceState);
 
         mViewModel = new ViewModelProvider(this, new ViewModelFactory(getContext(),
-                ViewModelEnum.Treaty)).get(TreatyViewModel.class);
+                ViewModelEnum.HabitsQuestions)).get(HabitsQuestionsViewModel.class);
 
         final Observer<List<Question>> onGetQuestionsOfPageSucceed = new Observer<List<Question>>() {
             @Override
@@ -89,7 +87,7 @@ public class TreatyFragment extends Fragment {
             @Override
             public void onChanged(Appointment appointment) {
                 if (listener != null) {
-                    listener.onContinueFromTreaty();
+                    listener.onContinueFromHabitsQuestions();
                 }
             }
         };
@@ -110,43 +108,26 @@ public class TreatyFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
-        final View rootView = inflater.inflate(R.layout.treaty_fragment, container, false);
+        final View rootView = inflater.inflate(R.layout.habits_questions_fragment, container, false);
 
         mViewModel.attachSetGetQuestionsOfPageListener();
         mViewModel.attachSetUpdateAnswersOfAppointmentListener();
 
-        final RadioGroup meetingTimePrefRg = rootView.findViewById(R.id.meeting_time_pref_rg);
         mRecyclerView = rootView.findViewById(R.id.questions_recycler);
         final MaterialButton continueBtn = rootView.findViewById(R.id.continue_btn);
 
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         mRecyclerView.setHasFixedSize(true);
 
-        /**<------ Questions Initialization ------>*/
-        for (int i = 0; i < meetingTimePrefRg.getChildCount(); i++) {
-            final RadioButton radioButton = (RadioButton) meetingTimePrefRg.getChildAt(i);
-            radioButton.setChecked(mViewModel.isQuestionChecked(radioButton.getTag().toString()));
-        }
-
-        meetingTimePrefRg.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(RadioGroup group, int checkedId) {
-                for (int i = 0; i < group.getChildCount(); i++) {
-                    final RadioButton radioButton = (RadioButton) group.getChildAt(i);
-                    mViewModel.updateRadioGroupAnswers(radioButton.isChecked(),
-                            radioButton.getTag().toString());
-                }
-            }
-        });
-
         continueBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                // TODO: Add loading dialog
                 mViewModel.updateAnswersOfAppointment();
             }
         });
 
-        mViewModel.getQuestions(ViewModelEnum.Treaty);
+        mViewModel.getQuestions(ViewModelEnum.HabitsQuestions);
 
         return rootView;
     }

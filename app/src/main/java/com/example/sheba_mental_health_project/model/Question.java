@@ -1,5 +1,7 @@
 package com.example.sheba_mental_health_project.model;
 
+import androidx.annotation.Nullable;
+
 import com.example.sheba_mental_health_project.model.enums.QuestionTypeEnum;
 import com.example.sheba_mental_health_project.model.enums.ViewModelEnum;
 
@@ -13,6 +15,10 @@ public class Question implements Serializable {
     private ViewModelEnum mPage;
 
     public Question() {}
+
+    public Question(String mId) {
+        this.mId = mId;
+    }
 
     public Question(final String mId, final String mQuestion,
                     final QuestionTypeEnum mQuestionType, final ViewModelEnum mPage) {
@@ -52,5 +58,14 @@ public class Question implements Serializable {
 
     public void setPage(ViewModelEnum page) {
         this.mPage = page;
+    }
+
+    @Override
+    public boolean equals(@Nullable Object obj) {
+        if (obj instanceof Question) {
+            final Question otherQuestion = (Question) obj;
+            return otherQuestion.getId().equals(this.mId);
+        }
+        return false;
     }
 }

@@ -7,8 +7,11 @@ import androidx.lifecycle.ViewModel;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.example.sheba_mental_health_project.model.enums.ViewModelEnum;
-import com.example.sheba_mental_health_project.view.therapist.HistoryFragment;
+import com.example.sheba_mental_health_project.viewmodel.MentalQuestionsViewModel;
+import com.example.sheba_mental_health_project.viewmodel.HabitsQuestionsViewModel;
+import com.example.sheba_mental_health_project.viewmodel.SocialQuestionsViewModel;
 import com.example.sheba_mental_health_project.viewmodel.HistoryViewModel;
+import com.example.sheba_mental_health_project.viewmodel.Covid19QuestionsViewModel;
 import com.example.sheba_mental_health_project.viewmodel.TherapistPhysicalStateViewModel;
 import com.example.sheba_mental_health_project.viewmodel.AppointmentLoungeViewModel;
 import com.example.sheba_mental_health_project.viewmodel.AppointmentPatientViewModel;
@@ -130,6 +133,11 @@ public class ViewModelFactory implements ViewModelProvider.Factory {
                     objectToReturn = (T) new BureaucracyViewModel(mContext);
                 }
                 break;
+            case CovidQuestions:
+                if (modelClass.isAssignableFrom(Covid19QuestionsViewModel.class)) {
+                    objectToReturn = (T) new Covid19QuestionsViewModel(mContext);
+                }
+                break;
             case SanityCheck:
                 if (modelClass.isAssignableFrom(SanityCheckViewModel.class)) {
                     objectToReturn = (T) new SanityCheckViewModel(mContext);
@@ -138,6 +146,21 @@ public class ViewModelFactory implements ViewModelProvider.Factory {
             case Statement:
                 if (modelClass.isAssignableFrom(StatementViewModel.class)) {
                     objectToReturn = (T) new StatementViewModel(mContext);
+                }
+                break;
+            case SocialQuestions:
+                if (modelClass.isAssignableFrom(SocialQuestionsViewModel.class)) {
+                    objectToReturn = (T) new SocialQuestionsViewModel(mContext);
+                }
+                break;
+            case HabitsQuestions:
+                if (modelClass.isAssignableFrom(HabitsQuestionsViewModel.class)) {
+                    objectToReturn = (T) new HabitsQuestionsViewModel(mContext);
+                }
+                break;
+            case MentalQuestions:
+                if (modelClass.isAssignableFrom(MentalQuestionsViewModel.class)) {
+                    objectToReturn = (T) new MentalQuestionsViewModel(mContext);
                 }
                 break;
             case MainTherapist:

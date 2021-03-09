@@ -24,6 +24,7 @@ public class BureaucracyViewModel extends ViewModel {
 
     private final String TAG = "BureaucracyViewModel";
 
+
     public BureaucracyViewModel(final Context context) {
         mRepository = Repository.getInstance(context);
     }
