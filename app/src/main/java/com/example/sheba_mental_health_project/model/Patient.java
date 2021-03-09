@@ -6,7 +6,7 @@ public class Patient extends User {
 
     public Patient() {super();}
 
-    public Patient(String mId, String mEmail, String mFirstName, String mLastName) {
-        super(mId, mEmail, mFirstName, mLastName);
+    public Patient(String id, String email, String firstName, String lastName) {
+        super(id, email, firstName, lastName);
     }
 }

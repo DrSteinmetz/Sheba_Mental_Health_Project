@@ -69,21 +69,6 @@ public class MainPatientFragment extends Fragment {
         final Observer<List<Appointment>> onGetMyAppointmentsSucceed = new Observer<List<Appointment>>() {
             @Override
             public void onChanged(List<Appointment> appointments) {
-                /*if (mAppointmentAdapter == null) {
-                    mAppointmentAdapter = new PatientAppointmentsAdapter(requireContext(), mViewModel.getAppointments());
-                    mAppointmentAdapter.setAppointmentListener(new PatientAppointmentsAdapter.AppointmentListener() {
-                        @Override
-                        public void onAppointmentClicked(int position, View view) {
-                            if (listener != null) {
-                                mViewModel.setCurrentAppointment(appointments.get(position));
-                                listener.onPatientAppointmentClicked();
-                            }
-                        }
-                    });
-                    mRecyclerView.setAdapter(mAppointmentAdapter);
-                } else {
-                    mAppointmentAdapter.notifyDataSetChanged();
-                }*/
                 mAppointmentAdapter = new PatientAppointmentsAdapter(requireContext(), mViewModel.getAppointments());
                 mAppointmentAdapter.setAppointmentListener(new PatientAppointmentsAdapter.AppointmentListener() {
                     @Override

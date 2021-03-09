@@ -10,7 +10,7 @@ public class Therapist extends User {
         super();
     }
 
-    public Therapist(String mId, String mEmail, String mFirstName, String mLastName) {
-        super(mId, mEmail, mFirstName, mLastName);
+    public Therapist(String id, String email, String firstName, String lastName) {
+        super(id, email, firstName, lastName);
     }
 }

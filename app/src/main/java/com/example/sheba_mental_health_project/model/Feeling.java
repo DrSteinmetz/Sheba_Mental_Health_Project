@@ -10,33 +10,33 @@ public class Feeling implements Serializable {
 
     public Feeling() {}
 
-    public Feeling(String mId, int mImageId, String mName) {
-        this.mId = mId;
-        this.mImageId = mImageId;
-        this.mName = mName;
+    public Feeling(String id, int imageId, String name) {
+        this.mId = id;
+        this.mImageId = imageId;
+        this.mName = name;
     }
 
     public String getId() {
         return mId;
     }
 
-    public void setId(String Id) {
-        this.mId = Id;
+    public void setId(String id) {
+        this.mId = id;
     }
 
     public int getImageId() {
         return mImageId;
     }
 
-    public void setImageId(int ImageId) {
-        this.mImageId = ImageId;
+    public void setImageId(int imageId) {
+        this.mImageId = imageId;
     }
 
     public String getName() {
         return mName;
     }
 
-    public void setName(String Name) {
-        this.mName = Name;
+    public void setName(String name) {
+        this.mName = name;
     }
 }

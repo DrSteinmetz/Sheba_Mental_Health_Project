@@ -12,6 +12,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
 import com.example.sheba_mental_health_project.R;
+import com.example.sheba_mental_health_project.model.Answer;
 import com.example.sheba_mental_health_project.model.Appointment;
 import com.example.sheba_mental_health_project.model.ChatMessage;
 import com.example.sheba_mental_health_project.model.Feeling;
@@ -502,7 +503,13 @@ public class Repository {
                         if (error == null && value != null) {
                             final List<Appointment> appointments = new ArrayList<>();
                             for (DocumentSnapshot document : value.getDocuments()) {
+                                List<Answer> answerList = (List<Answer>) document.get("answers");
                                 final Appointment appointment = document.toObject(Appointment.class);
+                                if (answerList != null && !answerList.isEmpty()) {
+                                    appointment.getAnswers().clear();
+                                    appointment.getAnswers().addAll(answerList);
+                                    Log.d(TAG, "oron onEvent: " + appointment.getAnswers());
+                                }
                                 appointments.add(appointment);
                                 setAppointmentNotificationByDate(appointment, true);
                             }
@@ -526,6 +533,15 @@ public class Repository {
                         }
                     }
                 });
+    }
+
+    public Appointment getCurrentAppointment() {
+        return mCurrentAppointment;
+    }
+
+    public void setCurrentAppointment(Appointment currentAppointment) {
+        this.mCurrentAppointment = currentAppointment;
+        Log.d(TAG, "oron setCurrentAppointment: " + currentAppointment.getAnswers());
     }
 
     public void setPainPoints(final BodyPartEnum bodyPart, final PainPoint painPoint) {
@@ -594,14 +610,6 @@ public class Repository {
                         }
                     }
                 });
-    }
-
-    public Appointment getCurrentAppointment() {
-        return mCurrentAppointment;
-    }
-
-    public void setCurrentAppointment(Appointment mCurrentAppointment) {
-        this.mCurrentAppointment = mCurrentAppointment;
     }
 
     public List<PainPoint> getSpecificPainPointsList(final BodyPartEnum bodyPartEnum) {

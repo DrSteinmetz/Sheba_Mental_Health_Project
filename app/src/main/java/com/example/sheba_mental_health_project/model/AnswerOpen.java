@@ -6,20 +6,28 @@ public class AnswerOpen extends Answer {
 
     public AnswerOpen() {}
 
-    public AnswerOpen(String mId) {
-        super(mId);
+    public AnswerOpen(String id) {
+        super(id);
     }
 
-    public AnswerOpen(String mId, String mAnswer) {
-        super(mId);
-        this.mAnswer = mAnswer;
+    public AnswerOpen(String id, String answer) {
+        super(id);
+        this.mAnswer = answer;
     }
 
     public String getAnswer() {
         return mAnswer;
     }
 
-    public void setAnswer(String mAnswer) {
-        this.mAnswer = mAnswer;
+    public void setAnswer(String answer) {
+        this.mAnswer = answer;
+    }
+
+    @Override
+    public String toString() {
+        return "AnswerOpen{" +
+                "ID: " + getId() +
+                "Answer: '" + mAnswer + '\'' +
+                '}';
     }
 }

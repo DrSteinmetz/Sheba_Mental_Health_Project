@@ -196,7 +196,7 @@ public class QuestionsAdapter extends RecyclerView.Adapter<QuestionsAdapter.Ques
     @Override
     public void onBindViewHolder(@NonNull QuestionsViewHolder holder, int position) {
         final Question question = mQuestions.get(position);
-
+        Log.d(TAG, "oron onBindViewHolder: " + mAnswers);
         if (question != null) {
             final String questionText = question.getQuestion();
             final Answer answer;
@@ -207,6 +207,9 @@ public class QuestionsAdapter extends RecyclerView.Adapter<QuestionsAdapter.Ques
             } else {
                 answer = null;
             }
+
+            Log.d(TAG, "oron onBindViewHolder: " + answer);
+            Log.d(TAG, "oron onBindViewHolder: " + question.getId());
 
             switch (getItemViewType(position)) {
                 case BINARY_TYPE:

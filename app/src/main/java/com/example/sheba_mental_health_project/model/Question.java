@@ -16,16 +16,16 @@ public class Question implements Serializable {
 
     public Question() {}
 
-    public Question(String mId) {
-        this.mId = mId;
+    public Question(String id) {
+        this.mId = id;
     }
 
-    public Question(final String mId, final String mQuestion,
-                    final QuestionTypeEnum mQuestionType, final ViewModelEnum mPage) {
-        this.mId = mId;
-        this.mQuestion = mQuestion;
-        this.mQuestionType = mQuestionType;
-        this.mPage = mPage;
+    public Question(final String id, final String question,
+                    final QuestionTypeEnum questionType, final ViewModelEnum page) {
+        this.mId = id;
+        this.mQuestion = question;
+        this.mQuestionType = questionType;
+        this.mPage = page;
     }
 
     public String getId() {

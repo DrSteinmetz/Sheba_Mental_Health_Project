@@ -13,43 +13,43 @@ public abstract class User implements Serializable {
 
     public User() {}
 
-    public User(String mId, String mEmail, String mFirstName, String mLastName) {
-        this.mId = mId;
-        this.mEmail = mEmail;
-        this.mFirstName = mFirstName;
-        this.mLastName = mLastName;
+    public User(String id, String email, String firstName, String lastName) {
+        this.mId = id;
+        this.mEmail = email;
+        this.mFirstName = firstName;
+        this.mLastName = lastName;
     }
 
     public String getId() {
         return mId;
     }
 
-    public void setId(String mId) {
-        this.mId = mId;
+    public void setId(String id) {
+        this.mId = id;
     }
 
     public String getEmail() {
         return mEmail;
     }
 
-    public void setEmail(String mEmail) {
-        this.mEmail = mEmail;
+    public void setEmail(String email) {
+        this.mEmail = email;
     }
 
     public String getFirstName() {
         return mFirstName;
     }
 
-    public void setFirstName(String mFirstName) {
-        this.mFirstName = mFirstName;
+    public void setFirstName(String firstName) {
+        this.mFirstName = firstName;
     }
 
     public String getLastName() {
         return mLastName;
     }
 
-    public void setLastName(String mLastName) {
-        this.mLastName = mLastName;
+    public void setLastName(String lastName) {
+        this.mLastName = lastName;
     }
 
     public String getFullName() {
