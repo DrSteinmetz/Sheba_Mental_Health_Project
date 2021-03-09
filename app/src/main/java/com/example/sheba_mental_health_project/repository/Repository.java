@@ -13,6 +13,8 @@ import androidx.annotation.Nullable;
 
 import com.example.sheba_mental_health_project.R;
 import com.example.sheba_mental_health_project.model.Answer;
+import com.example.sheba_mental_health_project.model.AnswerBinary;
+import com.example.sheba_mental_health_project.model.AnswerOpen;
 import com.example.sheba_mental_health_project.model.Appointment;
 import com.example.sheba_mental_health_project.model.ChatMessage;
 import com.example.sheba_mental_health_project.model.Feeling;
@@ -41,6 +43,7 @@ import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -467,7 +470,9 @@ public class Repository {
                         if (error == null && value != null) {
                             final List<Appointment> appointments = new ArrayList<>();
                             for (DocumentSnapshot document : value.getDocuments()) {
+                                List<Map<String,Object>> answersMapList = (List<Map<String,Object>>) document.get("answers");
                                 final Appointment appointment = document.toObject(Appointment.class);
+                                mappingAnswerObject(answersMapList,appointment);
                                 appointments.add(appointment);
                                 setAppointmentNotificationByDate(appointment, false);
                             }
@@ -503,13 +508,9 @@ public class Repository {
                         if (error == null && value != null) {
                             final List<Appointment> appointments = new ArrayList<>();
                             for (DocumentSnapshot document : value.getDocuments()) {
-                                List<Answer> answerList = (List<Answer>) document.get("answers");
+                                List<Map<String,Object>> answersMapList = (List<Map<String,Object>>) document.get("answers");
                                 final Appointment appointment = document.toObject(Appointment.class);
-                                if (answerList != null && !answerList.isEmpty()) {
-                                    appointment.getAnswers().clear();
-                                    appointment.getAnswers().addAll(answerList);
-                                    Log.d(TAG, "oron onEvent: " + appointment.getAnswers());
-                                }
+                                mappingAnswerObject(answersMapList,appointment);
                                 appointments.add(appointment);
                                 setAppointmentNotificationByDate(appointment, true);
                             }
@@ -533,6 +534,25 @@ public class Repository {
                         }
                     }
                 });
+    }
+
+    private void mappingAnswerObject(List<Map<String,Object>> answersMapList,Appointment appointment){
+        if (answersMapList != null && !answersMapList.isEmpty()) {
+            //        Log.d(TAG, "oron matan: "+(answersMapList.get(0).get("answer")).getClass() );
+            appointment.getAnswers().clear();
+            for(Map<String,Object> map: answersMapList){
+                Object answer = map.get("answer");
+                String id =(String) map.get("id");
+                if(answer instanceof Boolean){
+                    appointment.getAnswers().add(new AnswerBinary(id,(Boolean)answer));
+                }
+                else {
+                    appointment.getAnswers().add(new AnswerOpen(id,(String)answer));
+                }
+            }
+            //  appointment.getAnswers().addAll(answerList);
+            Log.d(TAG, "oron onEvent: " + appointment.getAnswers());
+        }
     }
 
     public Appointment getCurrentAppointment() {
