@@ -3,8 +3,63 @@
 
     <string name="yes">Yes</string>
     <string name="no">No</string>
-
     <string name="choose">Choose…</string>
+    <string name="delete">Delete</string>
+    <string name="edit">Edit</string>
+    <string name="continue_txt">Continue</string>
+    <string name="finish">Finish</string>
+    <string name="save">Save</string>
+    <string name="leave_note">Leave a Note</string>
+    <string name="leave_note_info">The Therapist will See Your Messages Only When the Meeting Begins</string>
+    <string name="pick_date">Pick Date</string>
+    <string name="pick_time">Pick Time</string>
+    <string name="character">Character</string>
+    <string name="feelings">Feelings</string>
+    <string name="appointments_date">Appointment\'s Date</string>
+    <string name="edit_appointment_title">Edit Appointment With</string>
+    <string name="pain_point_deletion_prompt">Are You Sure You Want To Permanently Delete This Point?</string>
+    <string name="pain_point_deleted_prompt">Point Deleted Successfully!</string>
+    <string name="appointment_deletion_prompt">Are You Sure You Want to Permanently Delete This Appointment?</string>
+    <string name="appointment_added_prompt">Appointment Added Successfully!</string>
+    <string name="appointment_updated_prompt">Appointment Updated Successfully!</string>
+    <string name="appointment_deleted_prompt">Appointment Deleted Successfully!</string>
+    <string name="search_patient">Search Patient</string>
+    <string name="patient_not_found">Patient Not Found</string>
+    <string name="patient_found_prompt">Patient Found:</string>
+    <string name="patient_history">Patient History</string>
+    <string name="appointments_history">Appointments History</string>
+    <string name="undo">Undo</string>
+    <string name="answer_et_hint">Type Your Answer Here</string>
+    <string name="long_meeting_prompt">I Want a Long Meeting</string>
+    <string name="short_meeting_prompt">I Want a Short Meeting</string>
+    <string name="another_person_prompt">I Want Another Person to Be Present with Me During the Meeting</string>
+    <string name="pre_meeting_char_frag_title">What Would You Like to Share?</string>
+    <string name="pre_meeting_char_frag_sub_title">Click the Character</string>
+    <string name="start_meeting">Start Meeting</string>
+    <string name="start_meeting_title">Start Meeting?</string>
+    <string name="start_meeting_prompt">Meeting That Started Can Not Be Canceled. Are You Sure You Want to Start This Meeting?</string>
+    <string name="statement_frag_title_tv">Choose Phrases Which You Relate to:</string>
+    <string name="questions_warning_frag_title_tv">In The Next Pages You will Be Presented to a Series of Questions.\n\nPlease Try to Answer as Many as You Can In Order For the Therapist to Understand Better Your Needs.</string>
+
+    <string name="physical_state">Physical State</string>
+    <string name="empty_pain_points_list_prompt">No Physical State Details to Show…</string>
+    <string name="empty_history_list_prompt">This Patient Has No Previous Appointments…</string>
+    <string name="appointment_prompt">Appointment:</string>
+    <string name="patient_prompt">Patient:</string>
+    <string name="therapist_prompt">Therapist:</string>
+    <string name="date_prompt">Date:</string>
+    <string name="time_prompt">Time:</string>
+
+    <string name="pain_location_tv">Pain Location:</string>
+    <string name="pain_strength_tv">Pain Strength:</string>
+    <string name="pain_type_tv">Pain Type:</string>
+    <string name="pain_frequency_tv">Pain Frequency:</string>
+    <string name="other_feelings_tv">Other Feelings:</string>
+    <string name="description_tv">Description:</string>
+
+    <string name="mental_state">Mental State</string>
+    <string name="feeling_strength_tv">Feeling Strength:</string>
+
     <!-- Pain Types -->
     <string name="sharp">Sharp</string>
     <string name="dim">Dim</string>
@@ -55,9 +110,17 @@
 
     <!-- Pre Questions Fragment strings -->
     <string name="hello">Hello</string>
-    <string name="pre_questions_tv_2">We are here for you.</string>
-    <string name="pre_questions_tv_3">Before your meeting with Dr.</string>
-    <string name="pre_questions_tv_4">we will start with a few questions</string>
+    <string name="pre_questions_tv_2">We Are Here For You.</string>
+    <string name="pre_questions_tv_3">Before Your Meeting With Dr.</string>
+    <string name="pre_questions_tv_4">We Will Start With a Few Questions</string>
+
+    <string name="lounge_text_1">Your Meeting With Dr.</string>
+    <string name="lounge_text_2">Has Not Started Yet.\n\nPlease Enter the Meeting on the Scheduled Time.</string>
+
+    <!-- Notification -->
+    <string name="appointment_notif_title_patient">Meeting With Dr.</string>
+    <string name="appointment_notif_title_therapist">Meeting With</string>
+    <string name="appointment_notif_body">You Have a Meeting in a Few Minutes</string>
 
     <!-- Errors -->
     <string name="empty_email">You must enter an Email!</string>
@@ -68,5 +131,159 @@
     <string name="empty_last_name">You must enter a Last Name!</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+
+    <!-- Settings -->
+    <string name="notifications">Notifications</string>
+    <string name="notifications_permission">Notifications Permission</string>
+    <string name="enabled">Enabled</string>
+    <string name="disabled">Disabled</string>
+    <string name="about">About</string>
+
+    <!-- Pain Points Locations -->
+    <string name="scalp">Scalp</string>
+    <string name="forehead">Forehead</string>
+    <string name="nose">Nose</string>
+    <string name="right_eye">Right Eye</string>
+    <string name="left_eye">Left Eye</string>
+    <string name="right_ear">Right Ear</string>
+    <string name="left_ear">Left Ear</string>
+    <string name="mouth">Mouth</string>
+    <string name="pharynx">Pharynx</string>
+    <string name="tongue">Tongue</string>
+    <string name="palate">Palate</string>
+    <string name="teeth">Teeth</string>
+    <string name="lips">Lips</string>
+    <string name="neck">Neck</string>
+    <string name="nape">Nape</string>
+    <string name="right_shoulder">Right Shoulder</string>
+    <string name="left_shoulder">Left Shoulder</string>
+    <string name="right_arm">Right Arm</string>
+    <string name="left_arm">Left Arm</string>
+    <string name="right_elbow">Right Elbow</string>
+    <string name="left_elbow">Left Elbow</string>
+    <string name="right_forearm">Right Forearm</string>
+    <string name="left_forearm">Left Forearm</string>
+    <string name="right_wrist">Right Wrist</string>
+    <string name="left_wrist">Left Wrist</string>
+    <string name="right_palm">Right Palm</string>
+    <string name="left_palm">Left Palm</string>
+    <string name="right_fingers">Right Fingers</string>
+    <string name="left_fingers">Left Fingers</string>
+    <string name="upper_back">Upper Back</string>
+    <string name="lower_back">Lower Back</string>
+    <string name="upper_right_abdomen">Upper Right Abdomen</string>
+    <string name="upper_left_abdomen">Upper Left Abdomen</string>
+    <string name="navel">Navel</string>
+    <string name="lower_right_abdomen">Lower Right Abdomen</string>
+    <string name="lower_left_abdomen">Lower Left Abdomen</string>
+    <string name="chest">Chest</string>
+    <string name="breast">Breast</string>
+    <string name="right_thigh">Right Thigh</string>
+    <string name="left_thigh">Left Thigh</string>
+    <string name="right_knee">Right Knee</string>
+    <string name="left_knee">Left Knee</string>
+    <string name="right_shin">Right Shin</string>
+    <string name="left_shin">Left Shin</string>
+    <string name="right_ankle">Right Ankle</string>
+    <string name="left_ankle">Left Ankle</string>
+    <string name="right_foot">Right Foot</string>
+    <string name="left_foot">Left Foot</string>
+    <string name="right_toes">Right Toes</string>
+    <string name="left_toes">Left Toes</string>
+    <string name="anus">Anus</string>
+    <string name="vagina">Vagina</string>
+    <string name="penis">Penis</string>
+    <string name="testicles">Testicles</string>
+    <string name="private_part">Private Part</string>
+
+    <string name="large_text" translatable="false">
+        "Material is the metaphor.\n\n"
+
+        "A material metaphor is the unifying theory of a rationalized space and a system of motion."
+        "The material is grounded in tactile reality, inspired by the study of paper and ink, yet "
+        "technologically advanced and open to imagination and magic.\n"
+        "Surfaces and edges of the material provide visual cues that are grounded in reality. The "
+        "use of familiar tactile attributes helps users quickly understand affordances. Yet the "
+        "flexibility of the material creates new affordances that supercede those in the physical "
+        "world, without breaking the rules of physics.\n"
+        "The fundamentals of light, surface, and movement are key to conveying how objects move, "
+        "interact, and exist in space and in relation to each other. Realistic lighting shows "
+        "seams, divides space, and indicates moving parts.\n\n"
+
+        "Bold, graphic, intentional.\n\n"
+
+        "The foundational elements of print based design typography, grids, space, scale, color, "
+        "and use of imagery guide visual treatments. These elements do far more than please the "
+        "eye. They create hierarchy, meaning, and focus. Deliberate color choices, edge to edge "
+        "imagery, large scale typography, and intentional white space create a bold and graphic "
+        "interface that immerse the user in the experience.\n"
+        "An emphasis on user actions makes core functionality immediately apparent and provides "
+        "waypoints for the user.\n\n"
+
+        "Motion provides meaning.\n\n"
+
+        "Motion respects and reinforces the user as the prime mover. Primary user actions are "
+        "inflection points that initiate motion, transforming the whole design.\n"
+        "All action takes place in a single environment. Objects are presented to the user without "
+        "breaking the continuity of experience even as they transform and reorganize.\n"
+        "Motion is meaningful and appropriate, serving to focus attention and maintain continuity. "
+        "Feedback is subtle yet clear. Transitions are efficient yet coherent.\n\n"
+
+        "3D world.\n\n"
+
+        "The material environment is a 3D space, which means all objects have x, y, and z "
+        "dimensions. The z-axis is perpendicularly aligned to the plane of the display, with the "
+        "positive z-axis extending towards the viewer. Every sheet of material occupies a single "
+        "position along the z-axis and has a standard 1dp thickness.\n"
+        "On the web, the z-axis is used for layering and not for perspective. The 3D world is "
+        "emulated by manipulating the y-axis.\n\n"
+
+        "Light and shadow.\n\n"
+
+        "Within the material environment, virtual lights illuminate the scene. Key lights create "
+        "directional shadows, while ambient light creates soft shadows from all angles.\n"
+        "Shadows in the material environment are cast by these two light sources. In Android "
+        "development, shadows occur when light sources are blocked by sheets of material at "
+        "various positions along the z-axis. On the web, shadows are depicted by manipulating the "
+        "y-axis only. The following example shows the card with a height of 6dp.\n\n"
+
+        "Resting elevation.\n\n"
+
+        "All material objects, regardless of size, have a resting elevation, or default elevation "
+        "that does not change. If an object changes elevation, it should return to its resting "
+        "elevation as soon as possible.\n\n"
+
+        "Component elevations.\n\n"
+
+        "The resting elevation for a component type is consistent across apps (e.g., FAB elevation "
+        "does not vary from 6dp in one app to 16dp in another app).\n"
+        "Components may have different resting elevations across platforms, depending on the depth "
+        "of the environment (e.g., TV has a greater depth than mobile or desktop).\n\n"
+
+        "Responsive elevation and dynamic elevation offsets.\n\n"
+
+        "Some component types have responsive elevation, meaning they change elevation in response "
+        "to user input (e.g., normal, focused, and pressed) or system events. These elevation "
+        "changes are consistently implemented using dynamic elevation offsets.\n"
+        "Dynamic elevation offsets are the goal elevation that a component moves towards, relative "
+        "to the component’s resting state. They ensure that elevation changes are consistent "
+        "across actions and component types. For example, all components that lift on press have "
+        "the same elevation change relative to their resting elevation.\n"
+        "Once the input event is completed or cancelled, the component will return to its resting "
+        "elevation.\n\n"
+
+        "Avoiding elevation interference.\n\n"
+
+        "Components with responsive elevations may encounter other components as they move between "
+        "their resting elevations and dynamic elevation offsets. Because material cannot pass "
+        "through other material, components avoid interfering with one another any number of ways, "
+        "whether on a per component basis or using the entire app layout.\n"
+        "On a component level, components can move or be removed before they cause interference. "
+        "For example, a floating action button (FAB) can disappear or move off screen before a "
+        "user picks up a card, or it can move if a snackbar appears.\n"
+        "On the layout level, design your app layout to minimize opportunities for interference. "
+        "For example, position the FAB to one side of stream of a cards so the FAB won’t interfere "
+        "when a user tries to pick up one of cards.\n\n"
+    </string>
 
 </resources>

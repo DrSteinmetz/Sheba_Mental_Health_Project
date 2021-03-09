@@ -15,8 +15,6 @@ import java.util.List;
 
 public class GenitalsViewModel extends ViewModel {
 
-    private final String TAG = "GenitalsViewModel";
-
     private final Repository mRepository;
 
     private PainPoint mPainPoint = new PainPoint();
@@ -24,6 +22,12 @@ public class GenitalsViewModel extends ViewModel {
 
     private MutableLiveData<PainPoint> mSetPainPointsSucceed;
     private MutableLiveData<String> mSetPainPointsFailed;
+
+    private MutableLiveData<PainPoint> mDeletePainPointSucceed;
+    private MutableLiveData<String> mDeletePainPointFailed;
+
+    private final String TAG = "GenitalsViewModel";
+
 
     public GenitalsViewModel(final Context context) {
         mRepository = Repository.getInstance(context);
@@ -64,6 +68,38 @@ public class GenitalsViewModel extends ViewModel {
         });
     }
 
+    public MutableLiveData<PainPoint> getDeletePainPointSucceed() {
+        if (mDeletePainPointSucceed == null) {
+            mDeletePainPointSucceed = new MutableLiveData<>();
+            attachDeletePainPointListener();
+        }
+        return mDeletePainPointSucceed;
+    }
+
+    public MutableLiveData<String> getDeletePainPointFailed() {
+        if (mDeletePainPointFailed == null) {
+            mDeletePainPointFailed = new MutableLiveData<>();
+            attachDeletePainPointListener();
+        }
+        return mDeletePainPointFailed;
+    }
+
+    private void attachDeletePainPointListener() {
+        mRepository.setDeletePainPointInterface(new Repository.RepositoryDeletePainPointInterface() {
+            @Override
+            public void onDeletePainPointSucceed(PainPoint painPoint) {
+                mPainPointsMap.remove(painPoint.getPainLocation());
+
+                mDeletePainPointSucceed.setValue(painPoint);
+            }
+
+            @Override
+            public void onDeletePainPointFailed(String error) {
+                mDeletePainPointFailed.setValue(error);
+            }
+        });
+    }
+
 
     public PainPoint getPainPoint() {
         return mPainPoint;
@@ -83,5 +119,9 @@ public class GenitalsViewModel extends ViewModel {
 
     public void setPainPointsInDB() {
         mRepository.setPainPoints(BodyPartEnum.Genitals, mPainPoint);
+    }
+
+    public void deletePainPoint() {
+        mRepository.deletePainPoint(BodyPartEnum.Genitals, mPainPoint);
     }
 }

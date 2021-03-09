@@ -20,6 +20,7 @@ public class MainActivityViewModel extends ViewModel {
 
     private final String TAG = "MainActivityViewModel";
 
+
     public MainActivityViewModel(final Context context) {
         mRepository = Repository.getInstance(context);
         mAuthRepository = AuthRepository.getInstance(context);

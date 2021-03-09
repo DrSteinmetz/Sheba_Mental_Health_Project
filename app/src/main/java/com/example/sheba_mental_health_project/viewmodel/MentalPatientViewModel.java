@@ -23,11 +23,12 @@ public class MentalPatientViewModel extends ViewModel {
     private MutableLiveData<Appointment> mUpdateFeelingsAnswersSucceed;
     private MutableLiveData<String> mUpdateFeelingsAnswersFailed;
 
+    private final String TAG = "MentalPatientViewModel";
+
 
     public MentalPatientViewModel(final Context context) {
         mRepository = Repository.getInstance(context);
     }
-
 
 
     public MutableLiveData<List<Feeling>> getGetPatientFeelingSucceed() {
@@ -45,7 +46,6 @@ public class MentalPatientViewModel extends ViewModel {
         }
         return mGetPatientFeelingsFailed;
     }
-
 
     public void attachSetGetPatientFeelingsListener() {
         mRepository.setGetPatientFeelingsInterface(new Repository.RepositoryGetPatientFeelingsInterface() {
@@ -90,6 +90,7 @@ public class MentalPatientViewModel extends ViewModel {
             }
         });
     }
+
 
     public void updateAnswersOfFeelings() {
         mRepository.updateAnswersOfFeelings();

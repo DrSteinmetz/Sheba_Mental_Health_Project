@@ -5,7 +5,7 @@
     android:layout_height="wrap_content"
     android:layout_margin="20dp"
     android:padding="20dp"
-    tools:context=".view.LeftOrRightDialogFragment">
+    tools:context=".view.character.LeftOrRightDialogFragment">
 
     <TextView
         android:id="@+id/title_tv"

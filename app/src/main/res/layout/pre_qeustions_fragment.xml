@@ -6,7 +6,7 @@
     android:background="@color/white"
     android:focusable="true"
     android:clickable="true"
-    tools:context=".view.PreQuestionsFragment">
+    tools:context=".view.patient.PreQuestionsFragment">
 
     <RelativeLayout
         android:layout_width="match_parent"

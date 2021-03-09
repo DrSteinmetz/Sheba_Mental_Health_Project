@@ -17,15 +17,25 @@ public class Appointment implements Serializable {
     private Date mAppointmentDate;
     private Therapist mTherapist;
     private Patient mPatient;
-   // private MentalState mPatientMentalState;
-//    private PhysicalState mPatientPhysicalState;
     private Map<String, List<PainPoint>> mPainPointsOfBodyPartMap = new HashMap<>();
-    private List<String> mAnswers = new ArrayList<>();
+    private List<Answer> mAnswers = new ArrayList<>();
     private Map<String, Integer> mFeelingsAnswersMap = new HashMap<>();
     private AppointmentStateEnum mState;
     private boolean mIsFinishedPreQuestions = false;
 
     public Appointment() {}
+
+    public Appointment(final Appointment appointment) {
+        this.mId = appointment.mId;
+        this.mAppointmentDate = appointment.mAppointmentDate;
+        this.mTherapist = appointment.mTherapist;
+        this.mPatient = appointment.mPatient;
+        this.mPainPointsOfBodyPartMap = appointment.mPainPointsOfBodyPartMap;
+        this.mAnswers = appointment.mAnswers;
+        this.mFeelingsAnswersMap = appointment.mFeelingsAnswersMap;
+        this.mState = appointment.mState;
+        this.mIsFinishedPreQuestions = appointment.mIsFinishedPreQuestions;
+    }
 
     public Appointment(Date appointmentDate, Therapist therapist, Patient patient) {
         this.mAppointmentDate = appointmentDate;
@@ -52,55 +62,47 @@ public class Appointment implements Serializable {
         return mAppointmentDate;
     }
 
-    public void setAppointmentDate(Date mAppointmentDate) {
-        this.mAppointmentDate = mAppointmentDate;
+    public void setAppointmentDate(Date appointmentDate) {
+        this.mAppointmentDate = appointmentDate;
     }
 
     public Therapist getTherapist() {
         return mTherapist;
     }
 
-    public void setTherapist(Therapist mTherapist) {
-        this.mTherapist = mTherapist;
+    public void setTherapist(Therapist therapist) {
+        this.mTherapist = therapist;
     }
 
     public Patient getPatient() {
         return mPatient;
     }
 
-    public void setPatient(Patient mPatient) {
-        this.mPatient = mPatient;
+    public void setPatient(Patient patient) {
+        this.mPatient = patient;
     }
-
-   /* public MentalState getPatientMentalState() {
-        return mPatientMentalState;
-    }
-
-    public void setPatientMentalState(MentalState mPatientMentalState) {
-        this.mPatientMentalState = mPatientMentalState;
-    }*/
 
     public Map<String, List<PainPoint>> getPainPointsOfBodyPartMap() {
         return mPainPointsOfBodyPartMap;
     }
 
-    public void setPainPointsOfBodyPartMap(Map<String, List<PainPoint>> mPainPointsOfBodyPartMap) {
-        this.mPainPointsOfBodyPartMap = mPainPointsOfBodyPartMap;
+    public void setPainPointsOfBodyPartMap(Map<String, List<PainPoint>> painPointsOfBodyPartMap) {
+        this.mPainPointsOfBodyPartMap = painPointsOfBodyPartMap;
     }
 
-    public List<String> getAnswers() {
+    public List<Answer> getAnswers() {
         return mAnswers;
     }
 
-    public Set<String> answersAsSetGetter() {
+    public Set<Answer> answersAsSetGetter() {
         return new HashSet<>(mAnswers);
     }
 
-    public void setAnswers(List<String> answers) {
+    public void setAnswers(List<Answer> answers) {
         this.mAnswers = answers;
     }
 
-    public void answersAsSetSetter(Set<String> answers) {
+    public void answersAsSetSetter(Set<Answer> answers) {
         this.mAnswers = new ArrayList<>(answers);
     }
 
@@ -115,8 +117,8 @@ public class Appointment implements Serializable {
         return mState.name();
     }*/
 
-    public void setState(AppointmentStateEnum mState) {
-        this.mState = mState;
+    public void setState(AppointmentStateEnum state) {
+        this.mState = state;
     }
 
     /*public void setState(String state) {
@@ -131,8 +133,8 @@ public class Appointment implements Serializable {
         return mFeelingsAnswersMap;
     }
 
-    public void setFeelingsAnswersMap(Map<String, Integer> FeelingsAnswersMap) {
-        this.mFeelingsAnswersMap = FeelingsAnswersMap;
+    public void setFeelingsAnswersMap(Map<String, Integer> feelingsAnswersMap) {
+        this.mFeelingsAnswersMap = feelingsAnswersMap;
     }
 
     public boolean getIsFinishedPreQuestions() {
@@ -146,12 +148,15 @@ public class Appointment implements Serializable {
     @Override
     public String toString() {
         return "Appointment{" +
-                "mAppointmentDate=" + mAppointmentDate +
+                "mId='" + mId + '\'' +
+                ", mAppointmentDate=" + mAppointmentDate +
                 ", mTherapist=" + mTherapist +
                 ", mPatient=" + mPatient +
-               // ", mPatientMentalState=" + mPatientMentalState +
                 ", mPainPointsOfBodyPartMap=" + mPainPointsOfBodyPartMap +
-                ", mState=" + mState.name() +
+                ", mAnswers=" + mAnswers +
+                ", mFeelingsAnswersMap=" + mFeelingsAnswersMap +
+                ", mState=" + mState +
+                ", mIsFinishedPreQuestions=" + mIsFinishedPreQuestions +
                 '}';
     }
 }

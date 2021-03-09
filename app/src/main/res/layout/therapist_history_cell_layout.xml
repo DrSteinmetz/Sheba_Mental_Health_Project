@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    app:cardUseCompatPadding="true"
+    app:cardElevation="10dp"
+    app:cardCornerRadius="10dp"
+    app:cardPreventCornerOverlap="false"
+    android:id="@+id/card_layout">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:padding="15dp">
+
+        <TextView
+            android:id="@+id/patient_name_title_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="@string/therapist_prompt"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            android:textColor="@color/black"
+            android:textAllCaps="false" />
+        <TextView
+            android:id="@+id/patient_name_tv"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_toEndOf="@id/patient_name_title_tv"
+            android:layout_marginStart="5dp"
+            android:gravity="start"
+            android:text="Omer Adam"
+            android:textSize="20sp"
+            android:textColor="@color/black"
+            android:textAllCaps="false" />
+
+        <TextView
+            android:id="@+id/date_title_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/patient_name_tv"
+            android:gravity="center"
+            android:text="@string/date_prompt"
+            android:textStyle="bold"
+            android:textSize="20sp"
+            android:textColor="@color/black"
+            android:textAllCaps="false"
+            android:layout_marginTop="5dp"/>
+        <TextView
+            android:id="@+id/date_tv"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/patient_name_tv"
+            android:layout_toEndOf="@id/date_title_tv"
+            android:layout_marginStart="5dp"
+            android:gravity="start"
+            android:text="20/12/2020"
+            android:textSize="20sp"
+            android:textColor="@color/black"
+            android:textAllCaps="false"
+            android:layout_marginTop="5dp"/>
+
+        <TextView
+            android:id="@+id/time_title_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/date_tv"
+            android:gravity="center"
+            android:text="@string/time_prompt"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            android:textColor="@color/black"
+            android:textAllCaps="false"
+            android:layout_marginTop="5dp"/>
+        <TextView
+            android:id="@+id/time_tv"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/date_tv"
+            android:layout_toEndOf="@id/time_title_tv"
+            android:layout_marginStart="5dp"
+            android:gravity="start"
+            android:text="16:43"
+            android:textSize="20sp"
+            android:textColor="@color/black"
+            android:textAllCaps="false"
+            android:layout_marginTop="5dp"/>
+
+    </RelativeLayout>
+
+</androidx.cardview.widget.CardView>

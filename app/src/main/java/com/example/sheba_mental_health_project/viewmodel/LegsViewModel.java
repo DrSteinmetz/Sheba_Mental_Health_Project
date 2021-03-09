@@ -15,7 +15,7 @@ import java.util.List;
 
 public class LegsViewModel extends ViewModel {
 
-    private Repository mRepository;
+    private final Repository mRepository;
 
     private PainPoint mPainPoint = new PainPoint();
     private EnumMap<PainLocationEnum, PainPoint> mPainPointsMap = new EnumMap<>(PainLocationEnum.class);
@@ -23,7 +23,11 @@ public class LegsViewModel extends ViewModel {
     private MutableLiveData<PainPoint> mSetPainPointsSucceed;
     private MutableLiveData<String> mSetPainPointsFailed;
 
+    private MutableLiveData<PainPoint> mDeletePainPointSucceed;
+    private MutableLiveData<String> mDeletePainPointFailed;
+
     private final String TAG = "LegsViewModel";
+
 
     public LegsViewModel(final Context context) {
         mRepository = Repository.getInstance(context);
@@ -64,6 +68,38 @@ public class LegsViewModel extends ViewModel {
         });
     }
 
+    public MutableLiveData<PainPoint> getDeletePainPointSucceed() {
+        if (mDeletePainPointSucceed == null) {
+            mDeletePainPointSucceed = new MutableLiveData<>();
+            attachDeletePainPointListener();
+        }
+        return mDeletePainPointSucceed;
+    }
+
+    public MutableLiveData<String> getDeletePainPointFailed() {
+        if (mDeletePainPointFailed == null) {
+            mDeletePainPointFailed = new MutableLiveData<>();
+            attachDeletePainPointListener();
+        }
+        return mDeletePainPointFailed;
+    }
+
+    private void attachDeletePainPointListener() {
+        mRepository.setDeletePainPointInterface(new Repository.RepositoryDeletePainPointInterface() {
+            @Override
+            public void onDeletePainPointSucceed(PainPoint painPoint) {
+                mPainPointsMap.remove(painPoint.getPainLocation());
+                mDeletePainPointSucceed.setValue(painPoint);
+            }
+
+            @Override
+            public void onDeletePainPointFailed(String error) {
+                mDeletePainPointFailed.setValue(error);
+            }
+        });
+    }
+
+
     public PainPoint getPainPoint() {
         return mPainPoint;
     }
@@ -84,5 +120,7 @@ public class LegsViewModel extends ViewModel {
         mRepository.setPainPoints(BodyPartEnum.Legs, mPainPoint);
     }
 
-
+    public void deletePainPoint() {
+        mRepository.deletePainPoint(BodyPartEnum.Legs, mPainPoint);
+    }
 }

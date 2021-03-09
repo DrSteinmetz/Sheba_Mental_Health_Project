@@ -10,7 +10,6 @@ import com.example.sheba_mental_health_project.model.Question;
 import com.example.sheba_mental_health_project.model.enums.ViewModelEnum;
 import com.example.sheba_mental_health_project.repository.Repository;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class SanityCheckViewModel extends ViewModel {
@@ -24,6 +23,7 @@ public class SanityCheckViewModel extends ViewModel {
     private MutableLiveData<String> mUpdateAnswersOfAppointmentFailed;
 
     private final String TAG = "SanityCheckViewModel";
+
 
     public SanityCheckViewModel(final Context context) {
         mRepository = Repository.getInstance(context);
@@ -95,7 +95,7 @@ public class SanityCheckViewModel extends ViewModel {
     }
 
     public void getQuestions(final ViewModelEnum page) {
-        mRepository.getQuestions(page);
+        mRepository.getQuestionsByPage(page);
     }
 
     public void updateAnswersOfAppointment() {

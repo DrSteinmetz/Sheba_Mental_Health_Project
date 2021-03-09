@@ -12,9 +12,9 @@ public class ChatMessage implements Comparable<ChatMessage> {
 
     public ChatMessage() {}
 
-    public ChatMessage(final String mContent, final String mRecipientEmail) {
-        this.mContent = mContent;
-        this.mRecipientEmail = mRecipientEmail;
+    public ChatMessage(final String content, final String recipientEmail) {
+        this.mContent = content;
+        this.mRecipientEmail = recipientEmail;
         this.mTime = new Date();
     }
 

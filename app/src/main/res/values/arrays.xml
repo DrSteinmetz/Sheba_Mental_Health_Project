@@ -86,4 +86,97 @@
         <item>@string/getting_worse</item>
         <item>@string/getting_better</item>
     </string-array>
+
+    <!-- Very important: Keep this array values the same order as PainLocationEnum -->
+    <string-array name="pain_points">
+        <item>@string/scalp</item>
+        <item>@string/forehead</item>
+        <item>@string/nose</item>
+        <item>@string/right_eye</item>
+        <item>@string/left_eye</item>
+        <item>@string/right_ear</item>
+        <item>@string/left_ear</item>
+        <item>@string/mouth</item>
+        <item>@string/pharynx</item>
+        <item>@string/tongue</item>
+        <item>@string/palate</item>
+        <item>@string/teeth</item>
+        <item>@string/lips</item>
+        <item>@string/neck</item>
+        <item>@string/nape</item>
+        <item>@string/right_shoulder</item>
+        <item>@string/left_shoulder</item>
+        <item>@string/right_arm</item>
+        <item>@string/left_arm</item>
+        <item>@string/right_elbow</item>
+        <item>@string/left_elbow</item>
+        <item>@string/right_forearm</item>
+        <item>@string/left_forearm</item>
+        <item>@string/right_wrist</item>
+        <item>@string/left_wrist</item>
+        <item>@string/right_palm</item>
+        <item>@string/left_palm</item>
+        <item>@string/right_fingers</item>
+        <item>@string/left_fingers</item>
+        <item>@string/upper_back</item>
+        <item>@string/lower_back</item>
+        <item>@string/upper_right_abdomen</item>
+        <item>@string/upper_left_abdomen</item>
+        <item>@string/navel</item>
+        <item>@string/lower_right_abdomen</item>
+        <item>@string/lower_left_abdomen</item>
+        <item>@string/chest</item>
+        <item>@string/right_thigh</item>
+        <item>@string/left_thigh</item>
+        <item>@string/right_knee</item>
+        <item>@string/left_knee</item>
+        <item>@string/right_shin</item>
+        <item>@string/left_shin</item>
+        <item>@string/right_ankle</item>
+        <item>@string/left_ankle</item>
+        <item>@string/right_foot</item>
+        <item>@string/left_foot</item>
+        <item>@string/right_toes</item>
+        <item>@string/left_toes</item>
+        <item>@string/anus</item>
+        <item>@string/private_part</item>
+    </string-array>
+
+    <!-- Very important: Keep this array values the same order as PainTypeEnum -->
+    <string-array name="pain_types">
+        <item>@string/sharp</item>
+        <item>@string/dim</item>
+        <item>@string/pressing</item>
+        <item>@string/burning</item>
+        <item>@string/no_pain</item>
+    </string-array>
+
+    <!-- Very important: Keep this array values the same order as PainFrequencyEnum -->
+    <string-array name="pain_frequencies">
+        <item>@string/wavy</item>
+        <item>@string/static_pain</item>
+        <item>@string/getting_worse</item>
+        <item>@string/getting_better</item>
+    </string-array>
+
+    <!-- Very important: Keep this array values the same order as PainOtherFeelingsEnum -->
+    <string-array name="other_feelings">
+        <item>@string/bleeding</item>
+        <item>@string/itching</item>
+        <item>@string/sting</item>
+        <item>@string/strange</item>
+        <item>@string/numb</item>
+        <item>@string/color_change</item>
+        <item>@string/dryness</item>
+        <item>@string/tears_excess</item>
+        <item>@string/constipation</item>
+        <item>@string/diarrhea</item>
+        <item>@string/heartburn</item>
+        <item>@string/drooling</item>
+        <item>@string/urinary_retention</item>
+        <item>@string/frequent_urinary</item>
+        <item>@string/urgent_urinary</item>
+        <item>@string/other</item>
+    </string-array>
+
 </resources>

@@ -8,7 +8,7 @@
     android:clickable="true"
     android:padding="20dp"
     android:layoutDirection="ltr"
-    tools:context=".view.CharacterFragment">
+    tools:context=".view.character.CharacterFragment">
 
     <ImageView
         android:id="@+id/character_iv"
@@ -29,10 +29,12 @@
         android:orientation="horizontal">
 
         <LinearLayout
+            android:id="@+id/character_left_layout"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:background="@drawable/ic_character_left"
+            android:visibility="visible"
             android:orientation="vertical">
 
             <Space
@@ -72,7 +74,7 @@
                             android:layout_weight="1"
                             android:padding="2dp"
                             android:src="@drawable/ic_red_pain_point"
-                            android:visibility="visible"
+                            android:visibility="invisible"
                             android:scaleType="fitCenter" />
                     </LinearLayout>
 
@@ -91,7 +93,7 @@
                             android:layout_weight="1"
                             android:padding="2dp"
                             android:src="@drawable/ic_red_pain_point"
-                            android:visibility="visible"
+                            android:visibility="invisible"
                             android:scaleType="fitCenter" />
                     </LinearLayout>
 
@@ -111,7 +113,7 @@
                             android:layout_weight="1"
                             android:padding="3dp"
                             android:src="@drawable/ic_red_pain_point"
-                            android:visibility="visible"
+                            android:visibility="invisible"
                             android:scaleType="fitCenter" />
                     </LinearLayout>
 
@@ -130,7 +132,7 @@
                             android:layout_weight="3"
                             android:padding="3dp"
                             android:src="@drawable/ic_red_pain_point"
-                            android:visibility="visible"
+                            android:visibility="invisible"
                             android:scaleType="fitCenter" />
                         <Space
                             android:layout_width="0dp"
@@ -153,7 +155,7 @@
                             android:layout_weight="3"
                             android:padding="1dp"
                             android:src="@drawable/ic_red_pain_point"
-                            android:visibility="visible"
+                            android:visibility="invisible"
                             android:scaleType="fitCenter" />
                         <Space
                             android:layout_width="0dp"
@@ -176,7 +178,7 @@
                             android:layout_height="match_parent"
                             android:layout_weight="1"
                             android:src="@drawable/ic_red_pain_point"
-                            android:visibility="visible"
+                            android:visibility="invisible"
                             android:scaleType="fitCenter" />
                         <Space
                             android:layout_width="0dp"
@@ -199,7 +201,7 @@
                             android:layout_weight="3"
                             android:padding="2dp"
                             android:src="@drawable/ic_red_pain_point"
-                            android:visibility="visible"
+                            android:visibility="invisible"
                             android:scaleType="fitCenter" />
                         <Space
                             android:layout_width="0dp"
@@ -224,10 +226,12 @@
         </LinearLayout>
 
         <LinearLayout
+            android:id="@+id/character_center_layout"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1.1"
             android:background="@drawable/ic_character_center"
+            android:visibility="visible"
             android:orientation="vertical">
 
             <RelativeLayout
@@ -246,7 +250,7 @@
                         android:layout_height="0dp"
                         android:layout_weight="1"
                         android:src="@drawable/ic_red_pain_point"
-                        android:visibility="visible"
+                        android:visibility="invisible"
                         android:scaleType="fitCenter" />
 
                     <ImageView
@@ -255,7 +259,7 @@
                         android:layout_height="0dp"
                         android:layout_weight="1"
                         android:src="@drawable/ic_red_pain_point"
-                        android:visibility="visible"
+                        android:visibility="invisible"
                         android:scaleType="fitCenter" />
 
                     <LinearLayout
@@ -273,7 +277,7 @@
                             android:layout_height="match_parent"
                             android:layout_weight="1"
                             android:src="@drawable/ic_red_pain_point"
-                            android:visibility="visible"
+                            android:visibility="invisible"
                             android:scaleType="fitCenter" />
                         <ImageView
                             android:id="@+id/left_eye_iv"
@@ -281,7 +285,7 @@
                             android:layout_height="match_parent"
                             android:layout_weight="1"
                             android:src="@drawable/ic_red_pain_point"
-                            android:visibility="visible"
+                            android:visibility="invisible"
                             android:scaleType="fitCenter" />
                         <Space
                             android:layout_width="0dp"
@@ -293,7 +297,7 @@
                             android:layout_height="match_parent"
                             android:layout_weight="1"
                             android:src="@drawable/ic_red_pain_point"
-                            android:visibility="visible"
+                            android:visibility="invisible"
                             android:scaleType="fitCenter" />
                         <ImageView
                             android:id="@+id/right_ear_iv"
@@ -301,7 +305,7 @@
                             android:layout_height="match_parent"
                             android:layout_weight="1"
                             android:src="@drawable/ic_red_pain_point"
-                            android:visibility="visible"
+                            android:visibility="invisible"
                             android:scaleType="fitCenter" />
                         <Space
                             android:layout_width="0dp"
@@ -315,7 +319,7 @@
                         android:layout_height="0dp"
                         android:layout_weight="0.5"
                         android:src="@drawable/ic_red_pain_point"
-                        android:visibility="visible"
+                        android:visibility="invisible"
                         android:scaleType="fitCenter" />
 
                     <ImageView
@@ -324,7 +328,7 @@
                         android:layout_height="0dp"
                         android:layout_weight="0.5"
                         android:src="@drawable/ic_red_pain_point"
-                        android:visibility="visible"
+                        android:visibility="invisible"
                         android:scaleType="fitCenter" />
 
                     <ImageView
@@ -333,7 +337,7 @@
                         android:layout_height="0dp"
                         android:layout_weight="1"
                         android:src="@drawable/ic_red_pain_point"
-                        android:visibility="visible"
+                        android:visibility="invisible"
                         android:scaleType="fitCenter" />
 
                 </LinearLayout>
@@ -363,7 +367,7 @@
                         android:layout_weight="4"
                         android:padding="10dp"
                         android:src="@drawable/ic_red_pain_point"
-                        android:visibility="visible"
+                        android:visibility="invisible"
                         android:scaleType="fitCenter" />
 
                     <LinearLayout
@@ -378,7 +382,7 @@
                             android:layout_height="match_parent"
                             android:layout_weight="1"
                             android:src="@drawable/ic_red_pain_point"
-                            android:visibility="visible"
+                            android:visibility="invisible"
                             android:scaleType="fitCenter" />
 
                         <ImageView
@@ -387,7 +391,7 @@
                             android:layout_height="match_parent"
                             android:layout_weight="1"
                             android:src="@drawable/ic_red_pain_point"
-                            android:visibility="visible"
+                            android:visibility="invisible"
                             android:scaleType="fitCenter" />
 
                     </LinearLayout>
@@ -398,7 +402,7 @@
                         android:layout_height="0dp"
                         android:layout_weight="1"
                         android:src="@drawable/ic_red_pain_point"
-                        android:visibility="visible"
+                        android:visibility="invisible"
                         android:scaleType="fitCenter" />
 
                     <LinearLayout
@@ -413,7 +417,7 @@
                             android:layout_height="match_parent"
                             android:layout_weight="1"
                             android:src="@drawable/ic_red_pain_point"
-                            android:visibility="visible"
+                            android:visibility="invisible"
                             android:scaleType="fitCenter" />
 
                         <ImageView
@@ -422,7 +426,7 @@
                             android:layout_height="match_parent"
                             android:layout_weight="1"
                             android:src="@drawable/ic_red_pain_point"
-                            android:visibility="visible"
+                            android:visibility="invisible"
                             android:scaleType="fitCenter" />
 
                     </LinearLayout>
@@ -447,7 +451,7 @@
                     android:layout_height="match_parent"
                     android:padding="10dp"
                     android:src="@drawable/ic_red_pain_point"
-                    android:visibility="visible"
+                    android:visibility="invisible"
                     android:scaleType="fitCenter" />
                 <View
                     android:id="@+id/genitals_v"
@@ -479,7 +483,7 @@
                             android:layout_weight="1"
                             android:padding="2dp"
                             android:src="@drawable/ic_red_pain_point"
-                            android:visibility="visible"
+                            android:visibility="invisible"
                             android:scaleType="fitCenter" />
 
                         <ImageView
@@ -489,7 +493,7 @@
                             android:layout_weight="1"
                             android:padding="2dp"
                             android:src="@drawable/ic_red_pain_point"
-                            android:visibility="visible"
+                            android:visibility="invisible"
                             android:scaleType="fitCenter" />
 
                     </LinearLayout>
@@ -507,7 +511,7 @@
                             android:layout_weight="1"
                             android:padding="2dp"
                             android:src="@drawable/ic_red_pain_point"
-                            android:visibility="visible"
+                            android:visibility="invisible"
                             android:scaleType="fitCenter" />
 
                         <ImageView
@@ -517,7 +521,7 @@
                             android:layout_weight="1"
                             android:padding="2dp"
                             android:src="@drawable/ic_red_pain_point"
-                            android:visibility="visible"
+                            android:visibility="invisible"
                             android:scaleType="fitCenter" />
 
                     </LinearLayout>
@@ -535,7 +539,7 @@
                             android:layout_weight="1"
                             android:padding="2dp"
                             android:src="@drawable/ic_red_pain_point"
-                            android:visibility="visible"
+                            android:visibility="invisible"
                             android:scaleType="fitCenter" />
 
                         <ImageView
@@ -545,7 +549,7 @@
                             android:layout_weight="1"
                             android:padding="2dp"
                             android:src="@drawable/ic_red_pain_point"
-                            android:visibility="visible"
+                            android:visibility="invisible"
                             android:scaleType="fitCenter" />
 
                     </LinearLayout>
@@ -563,7 +567,7 @@
                             android:layout_weight="1"
                             android:padding="2dp"
                             android:src="@drawable/ic_red_pain_point"
-                            android:visibility="visible"
+                            android:visibility="invisible"
                             android:scaleType="fitCenter" />
 
                         <ImageView
@@ -573,7 +577,7 @@
                             android:layout_weight="1"
                             android:padding="2dp"
                             android:src="@drawable/ic_red_pain_point"
-                            android:visibility="visible"
+                            android:visibility="invisible"
                             android:scaleType="fitCenter" />
 
                     </LinearLayout>
@@ -591,7 +595,7 @@
                             android:layout_weight="1"
                             android:padding="2dp"
                             android:src="@drawable/ic_red_pain_point"
-                            android:visibility="visible"
+                            android:visibility="invisible"
                             android:scaleType="fitCenter" />
 
                         <Space
@@ -606,7 +610,7 @@
                             android:layout_weight="1"
                             android:padding="2dp"
                             android:src="@drawable/ic_red_pain_point"
-                            android:visibility="visible"
+                            android:visibility="invisible"
                             android:scaleType="fitCenter" />
 
                     </LinearLayout>
@@ -624,10 +628,12 @@
         </LinearLayout>
 
         <LinearLayout
+            android:id="@+id/character_right_layout"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:background="@drawable/ic_character_right"
+            android:visibility="visible"
             android:orientation="vertical">
 
             <Space
@@ -663,7 +669,7 @@
                             android:layout_weight="1"
                             android:padding="3dp"
                             android:src="@drawable/ic_red_pain_point"
-                            android:visibility="visible"
+                            android:visibility="invisible"
                             android:scaleType="fitCenter" />
                         <Space
                             android:layout_width="0dp"
@@ -682,7 +688,7 @@
                             android:layout_weight="1"
                             android:padding="2dp"
                             android:src="@drawable/ic_red_pain_point"
-                            android:visibility="visible"
+                            android:visibility="invisible"
                             android:scaleType="fitCenter" />
                         <Space
                             android:layout_width="0dp"
@@ -702,7 +708,7 @@
                             android:layout_weight="1"
                             android:padding="3dp"
                             android:src="@drawable/ic_red_pain_point"
-                            android:visibility="visible"
+                            android:visibility="invisible"
                             android:scaleType="fitCenter" />
                         <Space
                             android:layout_width="0dp"
@@ -725,7 +731,7 @@
                             android:layout_weight="3"
                             android:padding="3dp"
                             android:src="@drawable/ic_red_pain_point"
-                            android:visibility="visible"
+                            android:visibility="invisible"
                             android:scaleType="fitCenter" />
                         <Space
                             android:layout_width="0dp"
@@ -748,7 +754,7 @@
                             android:layout_weight="3"
                             android:padding="1dp"
                             android:src="@drawable/ic_red_pain_point"
-                            android:visibility="visible"
+                            android:visibility="invisible"
                             android:scaleType="fitCenter" />
                         <Space
                             android:layout_width="0dp"
@@ -771,7 +777,7 @@
                             android:layout_height="match_parent"
                             android:layout_weight="1"
                             android:src="@drawable/ic_red_pain_point"
-                            android:visibility="visible"
+                            android:visibility="invisible"
                             android:scaleType="fitCenter" />
                         <Space
                             android:layout_width="0dp"
@@ -794,7 +800,7 @@
                             android:layout_weight="3"
                             android:padding="2dp"
                             android:src="@drawable/ic_red_pain_point"
-                            android:visibility="visible"
+                            android:visibility="invisible"
                             android:scaleType="fitCenter" />
                         <Space
                             android:layout_width="0dp"

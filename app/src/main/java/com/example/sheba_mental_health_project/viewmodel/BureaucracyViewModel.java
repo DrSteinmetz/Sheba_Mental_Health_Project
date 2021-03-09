@@ -24,6 +24,7 @@ public class BureaucracyViewModel extends ViewModel {
 
     private final String TAG = "BureaucracyViewModel";
 
+
     public BureaucracyViewModel(final Context context) {
         mRepository = Repository.getInstance(context);
     }
@@ -94,7 +95,7 @@ public class BureaucracyViewModel extends ViewModel {
     }
 
     public void getQuestions(final ViewModelEnum page) {
-        mRepository.getQuestions(page);
+        mRepository.getQuestionsByPage(page);
     }
 
     public void updateAnswersOfAppointment() {

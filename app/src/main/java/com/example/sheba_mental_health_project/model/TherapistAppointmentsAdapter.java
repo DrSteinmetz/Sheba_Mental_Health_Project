@@ -47,10 +47,10 @@ public class TherapistAppointmentsAdapter extends RecyclerView.Adapter<Therapist
 
     public class AppointmentViewHolder extends RecyclerView.ViewHolder {
 
-        final private CardView cardLayout;
-        final private TextView nameTv;
-        final private TextView dateTv;
-        final private TextView timeTv;
+        private final CardView cardLayout;
+        private final TextView nameTv;
+        private final TextView dateTv;
+        private final TextView timeTv;
 
         public AppointmentViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -59,7 +59,6 @@ public class TherapistAppointmentsAdapter extends RecyclerView.Adapter<Therapist
             nameTv = itemView.findViewById(R.id.patient_name_tv);
             dateTv = itemView.findViewById(R.id.date_tv);
             timeTv = itemView.findViewById(R.id.time_tv);
-
 
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -84,8 +83,7 @@ public class TherapistAppointmentsAdapter extends RecyclerView.Adapter<Therapist
     public void onBindViewHolder(@NonNull AppointmentViewHolder holder, int position) {
         final Appointment appointment = mAppointments.get(position);
 
-        final String patientName = appointment.getPatient().getFirstName() +
-                " " + appointment.getPatient().getLastName();
+        final String patientName = appointment.getPatient().getFullName();
         holder.nameTv.setText(patientName);
 
         final String date = ddMMYYYY.format(appointment.getAppointmentDate());

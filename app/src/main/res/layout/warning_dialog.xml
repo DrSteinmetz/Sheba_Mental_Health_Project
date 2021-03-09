@@ -10,25 +10,39 @@
         android:id="@+id/cardView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:cardCornerRadius="5dp"
-        app:cardUseCompatPadding="true">
+        app:cardCornerRadius="10dp"
+        android:elevation="10dp"
+        app:cardUseCompatPadding="true"
+        app:cardPreventCornerOverlap="false">
 
         <RelativeLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:padding="15dp">
 
+            <TextView
+                android:id="@+id/title_warning_tv"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="10dp"
+                android:gravity="center"
+                android:layout_marginHorizontal="10dp"
+                android:textSize="20sp"
+                android:textColor="#555555"
+                android:textStyle="bold"
+                android:textAllCaps="false" />
+
             <RelativeLayout
                 android:id="@+id/content_layout"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:gravity="center"
-                android:orientation="horizontal">
+                android:layout_below="@id/title_warning_tv"
+                android:gravity="center">
 
                 <ImageView
                     android:id="@+id/image_iv"
-                    android:layout_width="80dp"
-                    android:layout_height="80dp"
+                    android:layout_width="60dp"
+                    android:layout_height="60dp"
                     android:layout_centerVertical="true"
                     android:layout_marginHorizontal="10dp"
                     app:tint="@color/red"
@@ -43,11 +57,11 @@
                     android:layout_toEndOf="@id/image_iv"
                     android:gravity="center"
                     android:layout_marginHorizontal="10dp"
-                    android:text="Are you sure you want to delete this?"
-                    android:textSize="20sp" />
+                    android:textSize="20sp"
+                    android:textColor="#555555"
+                    android:textAllCaps="false" />
 
             </RelativeLayout>
-
 
             <LinearLayout
                 android:id="@+id/buttons_layout"

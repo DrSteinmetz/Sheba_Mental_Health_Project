@@ -5,18 +5,17 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
-import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.util.Log;
-import android.view.WindowManager;
-import android.widget.FrameLayout;
 
 import com.example.sheba_mental_health_project.R;
 import com.example.sheba_mental_health_project.model.ViewModelFactory;
 import com.example.sheba_mental_health_project.model.enums.ViewModelEnum;
+import com.example.sheba_mental_health_project.view.patient.PatientLoginFragment;
+import com.example.sheba_mental_health_project.view.therapist.TherapistLoginFragment;
 import com.example.sheba_mental_health_project.viewmodel.WelcomeViewModel;
 
 public class WelcomeActivity extends AppCompatActivity
@@ -81,11 +80,6 @@ public class WelcomeActivity extends AppCompatActivity
 
     @Override
     public void onTherapistBtnClicked() {
-        /*getSupportFragmentManager().beginTransaction()
-                .replace(R.id.container, CharacterFragment.newInstance(), "Character_Fragment")
-                .addToBackStack(null)
-                .commit();*/
-
         getSupportFragmentManager().beginTransaction()
                 .replace(R.id.container, TherapistLoginFragment.newInstance(), THERAPIST_LOGIN_FRAG)
                 .addToBackStack(null)
@@ -113,7 +107,6 @@ public class WelcomeActivity extends AppCompatActivity
     private void startMainActivity(final boolean isTherapist) {
         final Intent intent = new Intent(WelcomeActivity.this, MainActivity.class);
         mSharedPreferences.edit().putBoolean(IS_THERAPIST, isTherapist).commit();
-//        intent.putExtra(IS_THERAPIST, isTherapist);
         startActivity(intent);
         finish();
     }

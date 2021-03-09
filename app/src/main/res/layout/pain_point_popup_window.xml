@@ -1,0 +1,160 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:animateLayoutChanges="true"
+    android:background="@drawable/pain_point_popup_window_shape"
+    android:padding="10dp">
+
+    <TextView
+        android:id="@+id/pain_location_title_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="start"
+        android:text="@string/pain_location_tv"
+        android:textSize="16sp"
+        android:textColor="@color/black"
+        android:textStyle="bold"
+        android:textAllCaps="false" />
+    <TextView
+        android:id="@+id/pain_location_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@id/pain_location_title_tv"
+        android:layout_toEndOf="@id/pain_location_title_tv"
+        android:layout_marginStart="5dp"
+        android:gravity="start"
+        android:text="Nose"
+        android:textSize="16sp"
+        android:textColor="@color/black"
+        android:textAllCaps="false" />
+
+    <TextView
+        android:id="@+id/pain_strength_title_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/pain_location_title_tv"
+        android:layout_marginTop="5dp"
+        android:gravity="start"
+        android:text="@string/pain_strength_tv"
+        android:textSize="16sp"
+        android:textColor="@color/black"
+        android:textStyle="bold"
+        android:textAllCaps="false" />
+    <TextView
+        android:id="@+id/pain_strength_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_toEndOf="@id/pain_strength_title_tv"
+        android:layout_alignBaseline="@id/pain_strength_title_tv"
+        android:layout_marginStart="5dp"
+        android:gravity="start"
+        android:text="0"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        android:textColor="@color/black"
+        android:textAllCaps="false" />
+
+    <TextView
+        android:id="@+id/pain_type_title_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/pain_strength_title_tv"
+        android:layout_marginTop="5dp"
+        android:gravity="start"
+        android:text="@string/pain_type_tv"
+        android:textSize="16sp"
+        android:textColor="@color/black"
+        android:textStyle="bold"
+        android:textAllCaps="false" />
+    <TextView
+        android:id="@+id/pain_type_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_toEndOf="@id/pain_type_title_tv"
+        android:layout_alignBaseline="@id/pain_type_title_tv"
+        android:layout_marginStart="5dp"
+        android:gravity="start"
+        android:text="Sharp"
+        android:textSize="16sp"
+        android:textColor="@color/black"
+        android:textAllCaps="false" />
+
+    <TextView
+        android:id="@+id/pain_frequency_title_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/pain_type_title_tv"
+        android:layout_marginTop="5dp"
+        android:gravity="start"
+        android:text="@string/pain_frequency_tv"
+        android:textSize="16sp"
+        android:textColor="@color/black"
+        android:textStyle="bold"
+        android:textAllCaps="false" />
+    <TextView
+        android:id="@+id/pain_frequency_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_toEndOf="@id/pain_frequency_title_tv"
+        android:layout_alignBaseline="@id/pain_frequency_title_tv"
+        android:layout_marginStart="5dp"
+        android:gravity="start"
+        android:text="Static"
+        android:textSize="16sp"
+        android:textColor="@color/black"
+        android:textAllCaps="false" />
+
+    <TextView
+        android:id="@+id/other_feelings_title_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/pain_frequency_title_tv"
+        android:layout_marginTop="5dp"
+        android:gravity="start"
+        android:text="@string/other_feelings_tv"
+        android:textSize="16sp"
+        android:textColor="@color/black"
+        android:textStyle="bold"
+        android:textAllCaps="false" />
+    <TextView
+        android:id="@+id/other_feelings_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_toEndOf="@id/other_feelings_title_tv"
+        android:layout_alignBaseline="@id/other_feelings_title_tv"
+        android:layout_marginStart="5dp"
+        android:gravity="start"
+        android:text="Sting"
+        android:textSize="16sp"
+        android:textColor="@color/black"
+        android:textAllCaps="false" />
+
+    <TextView
+        android:id="@+id/description_title_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/other_feelings_title_tv"
+        android:layout_marginTop="5dp"
+        android:gravity="start"
+        android:text="@string/description_tv"
+        android:textSize="16sp"
+        android:textColor="@color/black"
+        android:textStyle="bold"
+        android:textAllCaps="false" />
+    <TextView
+        android:id="@+id/description_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_toEndOf="@id/description_title_tv"
+        android:layout_alignBaseline="@id/description_title_tv"
+        android:layout_marginStart="5dp"
+        android:gravity="start"
+        android:maxLines="2"
+        android:ellipsize="end"
+        android:text="Auch"
+        android:textSize="16sp"
+        android:textColor="@color/black"
+        android:textAllCaps="false" />
+
+</RelativeLayout>

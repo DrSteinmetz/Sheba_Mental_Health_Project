@@ -23,6 +23,9 @@ public class CenterOfMassViewModel extends ViewModel {
     private MutableLiveData<PainPoint> mSetPainPointsSucceed;
     private MutableLiveData<String> mSetPainPointsFailed;
 
+    private MutableLiveData<PainPoint> mDeletePainPointSucceed;
+    private MutableLiveData<String> mDeletePainPointFailed;
+
     private final String TAG = "CenterOfMassViewModel";
 
     public CenterOfMassViewModel(final Context context) {
@@ -64,6 +67,37 @@ public class CenterOfMassViewModel extends ViewModel {
         });
     }
 
+    public MutableLiveData<PainPoint> getDeletePainPointSucceed() {
+        if (mDeletePainPointSucceed == null) {
+            mDeletePainPointSucceed = new MutableLiveData<>();
+            attachDeletePainPointListener();
+        }
+        return mDeletePainPointSucceed;
+    }
+
+    public MutableLiveData<String> getDeletePainPointFailed() {
+        if (mDeletePainPointFailed == null) {
+            mDeletePainPointFailed = new MutableLiveData<>();
+            attachDeletePainPointListener();
+        }
+        return mDeletePainPointFailed;
+    }
+
+    private void attachDeletePainPointListener() {
+        mRepository.setDeletePainPointInterface(new Repository.RepositoryDeletePainPointInterface() {
+            @Override
+            public void onDeletePainPointSucceed(PainPoint painPoint) {
+                mPainPointsMap.remove(painPoint.getPainLocation());
+                mDeletePainPointSucceed.setValue(painPoint);
+            }
+
+            @Override
+            public void onDeletePainPointFailed(String error) {
+                mDeletePainPointFailed.setValue(error);
+            }
+        });
+    }
+
 
     public PainPoint getPainPoint() {
         return mPainPoint;
@@ -84,4 +118,9 @@ public class CenterOfMassViewModel extends ViewModel {
     public void setPainPointsInDB() {
         mRepository.setPainPoints(BodyPartEnum.CenterOfMass, mPainPoint);
     }
+
+    public void deletePainPoint() {
+        mRepository.deletePainPoint(BodyPartEnum.CenterOfMass, mPainPoint);
+    }
+
 }
