@@ -41,7 +41,7 @@ public class BureaucracyFragment extends Fragment {
 
 
     public interface BureaucracyFragmentInterface {
-        void onContinueToSanityCheck();
+        void onContinueFromBureaucracy();
     }
 
     private BureaucracyFragmentInterface listener;
@@ -71,15 +71,6 @@ public class BureaucracyFragment extends Fragment {
         final Observer<List<Question>> onGetQuestionsOfPageSucceed = new Observer<List<Question>>() {
             @Override
             public void onChanged(List<Question> questions) {
-                /*if (mQuestionsAdapter == null) {
-                    Log.d(TAG, "qwe onChanged: " + questions.size());
-                    mQuestionsAdapter = new QuestionsAdapter(getContext(), questions,
-                            mViewModel.getCurrentAppointment().getAnswers());
-                    mRecyclerView.setAdapter(mQuestionsAdapter);
-                } else {
-                    mQuestionsAdapter.notifyDataSetChanged();
-                }*/
-                Log.d(TAG, "qwe onChanged: " + questions.size());
                 mQuestionsAdapter = new QuestionsAdapter(getContext(), questions,
                         mViewModel.getCurrentAppointment().getAnswers());
                 mRecyclerView.setAdapter(mQuestionsAdapter);
@@ -97,7 +88,7 @@ public class BureaucracyFragment extends Fragment {
             @Override
             public void onChanged(Appointment appointment) {
                 if (listener != null) {
-                    listener.onContinueToSanityCheck();
+                    listener.onContinueFromBureaucracy();
                 }
             }
         };

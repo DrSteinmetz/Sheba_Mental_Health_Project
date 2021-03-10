@@ -31,6 +31,7 @@ import com.google.android.material.datepicker.MaterialDatePicker;
 import com.google.android.material.datepicker.MaterialPickerOnPositiveButtonClickListener;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.textfield.MaterialAutoCompleteTextView;
+import com.google.android.material.textfield.TextInputLayout;
 import com.google.android.material.textview.MaterialTextView;
 
 import java.text.SimpleDateFormat;
@@ -46,13 +47,12 @@ public class AddAppointmentFragment extends Fragment {
     private ArrayAdapter<String> mPatientsEmailsAdapter;
 
     private MaterialAutoCompleteTextView mPatientEmailAutoTV;
-    private MaterialTextView mDateAutoTV;
-    private MaterialTextView mTimeAutoTV;
-    private TextView patientFoundTv;
-    private TextView patientNameTv;
-    private ImageButton searchBtn;
-   // private TextView mDateTv;
-   // private TextView mTimeTv;
+    private ImageButton mSearchBtn;
+    private MaterialTextView mDateTV;
+    private MaterialTextView mTimeTV;
+    private TextView mPatientFoundTv;
+    private TextView mPatientNameTv;
+    private MaterialButton mCreateAppointmentBtn;
 
     private final String DATE_PICKER = "date_picker";
 
@@ -91,6 +91,13 @@ public class AddAppointmentFragment extends Fragment {
             @Override
             public void onChanged(String appointmentId) {
                 mPatientEmailAutoTV.setText("");
+                mPatientFoundTv.setVisibility(View.INVISIBLE);
+                mPatientNameTv.setVisibility(View.INVISIBLE);
+                mDateTV.setVisibility(View.INVISIBLE);
+                mTimeTV.setVisibility(View.INVISIBLE);
+                mDateTV.setText("");
+                mTimeTV.setText("");
+                mCreateAppointmentBtn.setVisibility(View.INVISIBLE);
                 mViewModel.resetDateFields();
 
                 Snackbar.make(getView(), getString(R.string.appointment_added_prompt),
@@ -118,46 +125,41 @@ public class AddAppointmentFragment extends Fragment {
         final View rootView = inflater.inflate(R.layout.add_appointment_fragment, container, false);
 
         mPatientEmailAutoTV = rootView.findViewById(R.id.patient_email_auto_tv);
-       // final MaterialButton dateBtn = rootView.findViewById(R.id.date_dialog_btn);
-       // mDateTv = rootView.findViewById(R.id.date_tv);
-       // final MaterialButton timeBtn = rootView.findViewById(R.id.time_dialog_btn);
-       // mTimeTv = rootView.findViewById(R.id.time_tv);
-        mDateAutoTV = rootView.findViewById(R.id.date_dialog_btn);
-        mTimeAutoTV = rootView.findViewById(R.id.time_dialog_btn);
-        patientFoundTv = rootView.findViewById(R.id.patient_found_title);
-        patientNameTv = rootView.findViewById(R.id.patient_name);
-        searchBtn = rootView.findViewById(R.id.search_btn);
-        final MaterialButton createAppointmentBtn = rootView.findViewById(R.id.create_btn);
+        final TextInputLayout dateLayout = rootView.findViewById(R.id.date_layout);
+        mDateTV = rootView.findViewById(R.id.date_dialog_btn);
+        final TextInputLayout timeLayout = rootView.findViewById(R.id.time_layout);
+        mTimeTV = rootView.findViewById(R.id.time_dialog_btn);
+        mPatientFoundTv = rootView.findViewById(R.id.patient_found_title);
+        mPatientNameTv = rootView.findViewById(R.id.patient_name);
+        mSearchBtn = rootView.findViewById(R.id.search_btn);
+        mCreateAppointmentBtn = rootView.findViewById(R.id.create_btn);
 
         mPatientEmailAutoTV.setThreshold(1);
         mPatientEmailAutoTV.setTextColor(Color.BLACK);
 
-        //mDateTv.setVisibility(View.GONE);
-       // mTimeTv.setVisibility(View.GONE);
-
         // TODO: Add loading animation.
         mViewModel.getAllPatients();
 
-        searchBtn.setOnClickListener(new View.OnClickListener() {
+        mSearchBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 final String patientEmail = mPatientEmailAutoTV.getText().toString();
                 Patient patient = mViewModel.getPatientByEmail(patientEmail);
-                patientFoundTv.setVisibility(View.VISIBLE);
+                mPatientFoundTv.setVisibility(View.VISIBLE);
                 if (patient == null) {
-                    patientFoundTv.setText(getString(R.string.patient_not_found));
-                    patientNameTv.setVisibility(View.INVISIBLE);
-                    mDateAutoTV.setVisibility(View.INVISIBLE);
-                    mTimeAutoTV.setVisibility(View.INVISIBLE);
-                    createAppointmentBtn.setVisibility(View.INVISIBLE);
+                    mPatientFoundTv.setText(getString(R.string.patient_not_found));
+                    mPatientNameTv.setVisibility(View.INVISIBLE);
+                    mDateTV.setVisibility(View.INVISIBLE);
+                    mTimeTV.setVisibility(View.INVISIBLE);
+                    mCreateAppointmentBtn.setVisibility(View.INVISIBLE);
 
                 } else {
-                    patientNameTv.setVisibility(View.VISIBLE);
-                    patientFoundTv.setText(getString(R.string.patient_found_prompt));
-                    patientNameTv.setText(patient.getFullName());
-                    mDateAutoTV.setVisibility(View.VISIBLE);
-                    mTimeAutoTV.setVisibility(View.VISIBLE);
-                    createAppointmentBtn.setVisibility(View.VISIBLE);
+                    mPatientNameTv.setVisibility(View.VISIBLE);
+                    mPatientFoundTv.setText(getString(R.string.patient_found_prompt));
+                    mPatientNameTv.setText(patient.getFullName());
+                    mDateTV.setVisibility(View.VISIBLE);
+                    mTimeTV.setVisibility(View.VISIBLE);
+                    mCreateAppointmentBtn.setVisibility(View.VISIBLE);
                 }
             }
         });
@@ -174,7 +176,7 @@ public class AddAppointmentFragment extends Fragment {
         final Date today00 = new Date(calendar.getTimeInMillis());
         calendar.setTime(today);
 
-        mDateAutoTV.setOnClickListener(new View.OnClickListener() {
+        mDateTV.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 final CalendarConstraints.Builder constraintBuilder = new CalendarConstraints.Builder();
@@ -196,17 +198,16 @@ public class AddAppointmentFragment extends Fragment {
                         calendar.setTimeInMillis(selectedTime);
                         calendar.set(Calendar.HOUR_OF_DAY, hourOfDay);
                         calendar.set(Calendar.MINUTE, minute);
-                        mDateAutoTV.setText(ddMMyyyy.format(calendar.getTime()));
-                        //mDateTv.setVisibility(View.VISIBLE);
-                        //mDateTv.setText(ddMMyyyy.format(calendar.getTime()));
-
+                        mDateTV.setText(ddMMyyyy.format(calendar.getTime()));
+                        dateLayout.setError(null);
+                        mDateTV.setError(null);
                     }
                 });
             }
         });
 
         // TODO: Fix the TimePicker
-        mTimeAutoTV.setOnClickListener(new View.OnClickListener() {
+        mTimeTV.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
@@ -218,9 +219,9 @@ public class AddAppointmentFragment extends Fragment {
                                 mViewModel.setMinutes(minute);
                                 calendar.set(Calendar.HOUR_OF_DAY, hourOfDay);
                                 calendar.set(Calendar.MINUTE, minute);
-                                //mTimeTv.setVisibility(View.VISIBLE);
-                                //mTimeTv.setText(HHmm.format(calendar.getTime()));
-                                mTimeAutoTV.setText(HHmm.format(calendar.getTime()));
+                                mTimeTV.setText(HHmm.format(calendar.getTime()));
+                                timeLayout.setError(null);
+                                mTimeTV.setError(null);
                             }
                         }, calendar.get(Calendar.HOUR_OF_DAY), calendar.get(Calendar.MINUTE),
                         true);
@@ -229,38 +230,37 @@ public class AddAppointmentFragment extends Fragment {
                             calendar.get(Calendar.MINUTE));
                 }
                 timePickerDlg.show();
-
-                /*final TimePickerDialog timePickerDialog = new TimePickerDialog(requireContext(),
-                        android.R.style.Theme_Holo_Dialog, new TimePickerDialog.OnTimeSetListener() {
-                    @Override
-                    public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
-                        mViewModel.setHourOfDay(hourOfDay);
-                        mViewModel.setMinutes(minute);
-                        calendar.set(Calendar.HOUR_OF_DAY, hourOfDay);
-                        calendar.set(Calendar.MINUTE, minute);
-                    }
-                }, calendar.get(Calendar.HOUR_OF_DAY), calendar.get(Calendar.MINUTE), true);
-                timePickerDialog.show();*/
             }
         });
 
-        createAppointmentBtn.setOnClickListener(new View.OnClickListener() {
+        mCreateAppointmentBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 final String patientEmail = mPatientEmailAutoTV.getText().toString();
-                patientFoundTv.setVisibility(View.INVISIBLE);
-                patientNameTv.setVisibility(View.INVISIBLE);
-                mDateAutoTV.setVisibility(View.INVISIBLE);
-                mTimeAutoTV.setVisibility(View.INVISIBLE);
-                mDateAutoTV.setText("");
-                mTimeAutoTV.setText("");
-                createAppointmentBtn.setVisibility(View.INVISIBLE);
 
                 if (validateFields(patientEmail)) {
                     mViewModel.addAppointment(patientEmail);
                 } else {
-                    //TODO: show error messages
-                    Log.d(TAG, "onClick: " + generateErrorMessage(patientEmail));
+                    if (patientEmail.isEmpty() ||
+                            !mViewModel.getPatientsEmails().contains(patientEmail)) {
+                        final String error = patientEmail.isEmpty() ?
+                                getString(R.string.please_enter_patient_email) :
+                                getString(R.string.patient_does_not_exist);
+                        mPatientEmailAutoTV.setError(error);
+                    } else {
+                        if (mViewModel.getChosenDate() == -1) {
+                            final String error = getString(R.string.please_pick_a_date);
+                            dateLayout.setError(error);
+                            mDateTV.setError(error);
+                        }
+
+                        if (mViewModel.getHourOfDay() == -1 || mViewModel.getMinutes() == -1) {
+                            final String error = getString(R.string.please_pick_a_time);
+                            timeLayout.setError(error);
+                            mTimeTV.setError(error);
+                        }
+                    }
+
                 }
             }
         });
@@ -275,16 +275,18 @@ public class AddAppointmentFragment extends Fragment {
     }
 
     private String generateErrorMessage(final String patientEmail) {
-        String errorMessage;
+        final String errorMessage;
+
         if (patientEmail.isEmpty()) {
-            errorMessage = "Please enter Patient email";
+            errorMessage = getString(R.string.please_enter_patient_email);
         } else if (mViewModel.getChosenDate() == -1) {
-            errorMessage = "Please Pick a date";
+            errorMessage = getString(R.string.please_pick_a_date);
         } else if (mViewModel.getHourOfDay() == -1 || mViewModel.getMinutes() == -1) {
-            errorMessage = "Please Pick a time";
+            errorMessage = getString(R.string.please_pick_a_time);
         } else {
-            errorMessage = "Patient Doesn't Exist";
+            errorMessage = getString(R.string.patient_does_not_exist);
         }
+
         return errorMessage;
     }
 }

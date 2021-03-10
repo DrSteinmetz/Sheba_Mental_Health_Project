@@ -6,7 +6,12 @@ import android.util.Log;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
+import com.example.sheba_mental_health_project.model.Answer;
+import com.example.sheba_mental_health_project.model.AnswerBinary;
+import com.example.sheba_mental_health_project.model.AnswerOpen;
 import com.example.sheba_mental_health_project.model.Appointment;
+import com.example.sheba_mental_health_project.model.Question;
+import com.example.sheba_mental_health_project.model.enums.ViewModelEnum;
 import com.example.sheba_mental_health_project.repository.Repository;
 
 import java.util.ArrayList;
@@ -16,16 +21,52 @@ public class TreatyViewModel extends ViewModel {
 
     private final Repository mRepository;
 
-    private final List<String> mAnswers;
+    private final List<Answer> mAnswers;
+
+    private MutableLiveData<List<Question>> mGetQuestionsOfPageSucceed;
+    private MutableLiveData<String> mGetQuestionsOfPageFailed;
 
     private MutableLiveData<Appointment> mUpdateAnswersOfAppointmentSucceed;
     private MutableLiveData<String> mUpdateAnswersOfAppointmentFailed;
 
     private final String TAG = "TreatyViewModel";
 
+
     public TreatyViewModel(final Context context) {
         mRepository = Repository.getInstance(context);
         mAnswers = mRepository.getCurrentAppointment().getAnswers();
+    }
+
+    public MutableLiveData<List<Question>> getGetQuestionsOfPageSucceed() {
+        if (mGetQuestionsOfPageSucceed == null) {
+            mGetQuestionsOfPageSucceed = new MutableLiveData<>();
+            attachSetGetQuestionsOfPageListener();
+        }
+        return mGetQuestionsOfPageSucceed;
+    }
+
+    public MutableLiveData<String> getGetQuestionsOfPageFailed() {
+        if (mGetQuestionsOfPageFailed == null) {
+            mGetQuestionsOfPageFailed = new MutableLiveData<>();
+            attachSetGetQuestionsOfPageListener();
+        }
+        return mGetQuestionsOfPageFailed;
+    }
+
+    public void attachSetGetQuestionsOfPageListener() {
+        mRepository.setGetQuestionsOfPageInterface(new Repository.RepositoryGetQuestionsOfPageInterface() {
+            @Override
+            public void onGetQuestionsOfPageSucceed(List<Question> questions) {
+                questions.remove(new Question("1"));
+                questions.remove(new Question("10"));
+                mGetQuestionsOfPageSucceed.setValue(questions);
+            }
+
+            @Override
+            public void onGetQuestionsOfPageFailed(String error) {
+                mGetQuestionsOfPageFailed.setValue(error);
+            }
+        });
     }
 
     public MutableLiveData<Appointment> getUpdateAnswersOfAppointmentSucceed() {
@@ -59,23 +100,29 @@ public class TreatyViewModel extends ViewModel {
     }
 
 
-    public boolean isQuestionChecked(final String id) {
-        return mAnswers.contains(id);
+    public Appointment getCurrentAppointment() {
+        return mRepository.getCurrentAppointment();
     }
 
-    public void updateAnswers(final boolean isChecked, final String id) {
+    public void getQuestions(final ViewModelEnum page) {
+        mRepository.getQuestionsByPage(page);
+    }
+
+    public boolean isQuestionChecked(final String id) {
+        return mAnswers.contains(new Answer(id));
+    }
+
+    public void updateRadioGroupAnswers(final boolean isChecked, final String id) {
         if (isChecked) {
-            if (!mAnswers.contains(id)) {
-                mAnswers.add(id);
-                Log.d(TAG, "qwe onCheckedChanged: Added, Size: " + mAnswers.size());
+            if (!mAnswers.contains(new Answer(id))) {
+                mAnswers.add(new AnswerBinary(id));
             }
         } else {
-            mAnswers.remove(id);
-            Log.d(TAG, "qwe onCheckedChanged: Removed");
+            mAnswers.remove(new Answer(id));
         }
     }
 
-    public void updateAnswerInCloud() {
+    public void updateAnswersOfAppointment() {
         mRepository.updateAnswersOfAppointment();
     }
 }

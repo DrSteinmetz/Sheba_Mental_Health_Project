@@ -14,7 +14,7 @@ import java.util.List;
 
 public class StatementViewModel extends ViewModel {
 
-    private Repository mRepository;
+    private final Repository mRepository;
 
     private MutableLiveData<List<Question>> mGetQuestionsOfPageSucceed;
     private MutableLiveData<String> mGetQuestionsOfPageFailed;
@@ -23,6 +23,7 @@ public class StatementViewModel extends ViewModel {
     private MutableLiveData<String> mUpdateAnswersOfAppointmentFailed;
 
     private final String TAG = "StatementViewModel";
+
 
     public StatementViewModel(final Context context) {
         mRepository = Repository.getInstance(context);
@@ -44,7 +45,7 @@ public class StatementViewModel extends ViewModel {
         return mGetQuestionsOfPageFailed;
     }
 
-    private void attachSetGetQuestionsOfPageListener() {
+    public void attachSetGetQuestionsOfPageListener() {
         mRepository.setGetQuestionsOfPageInterface(new Repository.RepositoryGetQuestionsOfPageInterface() {
             @Override
             public void onGetQuestionsOfPageSucceed(List<Question> questions) {
@@ -94,7 +95,7 @@ public class StatementViewModel extends ViewModel {
     }
 
     public void getQuestions(final ViewModelEnum page) {
-        mRepository.getQuestions(page);
+        mRepository.getQuestionsByPage(page);
     }
 
     public void updateAnswersOfAppointment() {

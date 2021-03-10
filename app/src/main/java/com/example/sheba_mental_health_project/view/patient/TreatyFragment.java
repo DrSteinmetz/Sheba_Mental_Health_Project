@@ -9,32 +9,40 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.CompoundButton;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 
 import com.example.sheba_mental_health_project.R;
 import com.example.sheba_mental_health_project.model.Appointment;
+import com.example.sheba_mental_health_project.model.Question;
+import com.example.sheba_mental_health_project.model.QuestionsAdapter;
 import com.example.sheba_mental_health_project.model.ViewModelFactory;
 import com.example.sheba_mental_health_project.model.enums.ViewModelEnum;
 import com.example.sheba_mental_health_project.viewmodel.TreatyViewModel;
 import com.google.android.material.button.MaterialButton;
-import com.google.android.material.checkbox.MaterialCheckBox;
+
+import java.util.List;
 
 public class TreatyFragment extends Fragment {
 
     private TreatyViewModel mViewModel;
 
+    private RecyclerView mRecyclerView;
+
+    private QuestionsAdapter mQuestionsAdapter;
+
     private final String TAG = "TreatyFragment";
 
 
     public interface TreatyFragmentInterface {
-        void onContinueToBureaucracy();
+        void onContinueFromTreaty();
     }
 
     private TreatyFragmentInterface listener;
@@ -61,11 +69,27 @@ public class TreatyFragment extends Fragment {
         mViewModel = new ViewModelProvider(this, new ViewModelFactory(getContext(),
                 ViewModelEnum.Treaty)).get(TreatyViewModel.class);
 
+        final Observer<List<Question>> onGetQuestionsOfPageSucceed = new Observer<List<Question>>() {
+            @Override
+            public void onChanged(List<Question> questions) {
+                mQuestionsAdapter = new QuestionsAdapter(getContext(), questions,
+                        mViewModel.getCurrentAppointment().getAnswers());
+                mRecyclerView.setAdapter(mQuestionsAdapter);
+            }
+        };
+
+        final Observer<String> onGetQuestionsOfPageFailed = new Observer<String>() {
+            @Override
+            public void onChanged(String error) {
+                Log.w(TAG, "onChanged: " + error);
+            }
+        };
+
         final Observer<Appointment> onUpdateAnswersOfAppointmentSucceed = new Observer<Appointment>() {
             @Override
             public void onChanged(Appointment appointment) {
                 if (listener != null) {
-                    listener.onContinueToBureaucracy();
+                    listener.onContinueFromTreaty();
                 }
             }
         };
@@ -77,6 +101,8 @@ public class TreatyFragment extends Fragment {
             }
         };
 
+        mViewModel.getGetQuestionsOfPageSucceed().observe(this, onGetQuestionsOfPageSucceed);
+        mViewModel.getGetQuestionsOfPageFailed().observe(this, onGetQuestionsOfPageFailed);
         mViewModel.getUpdateAnswersOfAppointmentSucceed().observe(this, onUpdateAnswersOfAppointmentSucceed);
         mViewModel.getUpdateAnswersOfAppointmentFailed().observe(this, onUpdateAnswersOfAppointmentFailed);
     }
@@ -86,46 +112,41 @@ public class TreatyFragment extends Fragment {
                              @Nullable Bundle savedInstanceState) {
         final View rootView = inflater.inflate(R.layout.treaty_fragment, container, false);
 
+        mViewModel.attachSetGetQuestionsOfPageListener();
+        mViewModel.attachSetUpdateAnswersOfAppointmentListener();
+
         final RadioGroup meetingTimePrefRg = rootView.findViewById(R.id.meeting_time_pref_rg);
-        final MaterialCheckBox anotherPersonCb = rootView.findViewById(R.id.another_person_cb);
+        mRecyclerView = rootView.findViewById(R.id.questions_recycler);
         final MaterialButton continueBtn = rootView.findViewById(R.id.continue_btn);
 
-        mViewModel.attachSetUpdateAnswersOfAppointmentListener();
+        mRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+        mRecyclerView.setHasFixedSize(true);
 
         /**<------ Questions Initialization ------>*/
         for (int i = 0; i < meetingTimePrefRg.getChildCount(); i++) {
             final RadioButton radioButton = (RadioButton) meetingTimePrefRg.getChildAt(i);
             radioButton.setChecked(mViewModel.isQuestionChecked(radioButton.getTag().toString()));
         }
-        anotherPersonCb.setChecked(mViewModel.isQuestionChecked(anotherPersonCb.getTag().toString()));
-
 
         meetingTimePrefRg.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(RadioGroup group, int checkedId) {
                 for (int i = 0; i < group.getChildCount(); i++) {
                     final RadioButton radioButton = (RadioButton) group.getChildAt(i);
-                    mViewModel.updateAnswers(radioButton.isChecked(),
+                    mViewModel.updateRadioGroupAnswers(radioButton.isChecked(),
                             radioButton.getTag().toString());
                 }
-            }
-        });
-
-        anotherPersonCb.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                mViewModel.updateAnswers(isChecked, anotherPersonCb.getTag().toString());
             }
         });
 
         continueBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (listener != null) {
-                    mViewModel.updateAnswerInCloud();
-                }
+                mViewModel.updateAnswersOfAppointment();
             }
         });
+
+        mViewModel.getQuestions(ViewModelEnum.Treaty);
 
         return rootView;
     }

@@ -1,9 +1,11 @@
 package com.example.sheba_mental_health_project.view.character;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewTreeObserver;
@@ -14,6 +16,7 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.widget.PopupMenu;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
@@ -223,8 +226,13 @@ public class CharacterFragment extends Fragment {
         mLocationToIvMap.put(PainLocationEnum.LeftEar, rootView.findViewById(R.id.right_ear_iv));
         mLocationToIvMap.put(PainLocationEnum.LeftEye, rootView.findViewById(R.id.right_eye_iv));
         mLocationToIvMap.put(PainLocationEnum.Nose, rootView.findViewById(R.id.nose_iv));
-        mLocationToIvMap.put(PainLocationEnum.Mouth, rootView.findViewById(R.id.mouth_iv));
         mLocationToIvMap.put(PainLocationEnum.Neck, rootView.findViewById(R.id.neck_iv));
+        mLocationToIvMap.put(PainLocationEnum.Mouth, rootView.findViewById(R.id.mouth_iv));
+        mLocationToIvMap.put(PainLocationEnum.Pharynx, rootView.findViewById(R.id.mouth_iv));
+        mLocationToIvMap.put(PainLocationEnum.Lips, rootView.findViewById(R.id.mouth_iv));
+        mLocationToIvMap.put(PainLocationEnum.Palate, rootView.findViewById(R.id.mouth_iv));
+        mLocationToIvMap.put(PainLocationEnum.Teeth, rootView.findViewById(R.id.mouth_iv));
+        mLocationToIvMap.put(PainLocationEnum.Tongue, rootView.findViewById(R.id.mouth_iv));
 
         /** Center of Mass */
         mLocationToIvMap.put(PainLocationEnum.Chest, rootView.findViewById(R.id.chest_iv));
@@ -271,72 +279,150 @@ public class CharacterFragment extends Fragment {
     private void initializePainPointsPopupWindow() {
         for (Map.Entry<PainLocationEnum, ImageView> entry : mLocationToIvMap.entrySet()) {
             if (mViewModel.getPainPointsMap().containsKey(entry.getKey())) {
-                final ImageView iv = entry.getValue();
-                final PainPoint painPoint = mViewModel.getPainPointsMap().get(entry.getKey());
+                if (entry.getKey().equals(PainLocationEnum.Mouth) ||
+                        entry.getKey().equals(PainLocationEnum.Pharynx) ||
+                        entry.getKey().equals(PainLocationEnum.Lips) ||
+                        entry.getKey().equals(PainLocationEnum.Palate) ||
+                        entry.getKey().equals(PainLocationEnum.Teeth) ||
+                        entry.getKey().equals(PainLocationEnum.Tongue)) {
 
-                final PopupWindow painPointWindow;
-                final LayoutInflater inflater = getLayoutInflater();
-                final View view = inflater.inflate(R.layout.pain_point_popup_window, null);
+                    if (entry.getKey().equals(PainLocationEnum.Mouth)) {
+                        entry.getValue().setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                final PopupMenu mouthPopupMenu = new PopupMenu(getContext(), entry.getValue());
+                                mouthPopupMenu.inflate(R.menu.mouth_menu);
+                                mouthPopupMenu.getMenu().findItem(R.id.pharynx_action)
+                                        .setVisible(mViewModel.getPainPointsMap().containsKey(PainLocationEnum.Pharynx));
+                                mouthPopupMenu.getMenu().findItem(R.id.lips_action)
+                                        .setVisible(mViewModel.getPainPointsMap().containsKey(PainLocationEnum.Lips));
+                                mouthPopupMenu.getMenu().findItem(R.id.palate_action)
+                                        .setVisible(mViewModel.getPainPointsMap().containsKey(PainLocationEnum.Palate));
+                                mouthPopupMenu.getMenu().findItem(R.id.teeth_action)
+                                        .setVisible(mViewModel.getPainPointsMap().containsKey(PainLocationEnum.Teeth));
+                                mouthPopupMenu.getMenu().findItem(R.id.tongue_action)
+                                        .setVisible(mViewModel.getPainPointsMap().containsKey(PainLocationEnum.Tongue));
 
-                final TextView painLocationTv = view.findViewById(R.id.pain_location_tv);
-                final TextView painStrengthTv = view.findViewById(R.id.pain_strength_tv);
-                final TextView painTypeTitleTv = view.findViewById(R.id.pain_type_title_tv);
-                final TextView painTypeTv = view.findViewById(R.id.pain_type_tv);
-                final TextView painFrequencyTitleTv = view.findViewById(R.id.pain_frequency_title_tv);
-                final TextView painFrequencyTv = view.findViewById(R.id.pain_frequency_tv);
-                final TextView otherFeelingTitleTv = view.findViewById(R.id.other_feelings_title_tv);
-                final TextView otherFeelingTv = view.findViewById(R.id.other_feelings_tv);
-                final TextView descriptionTitleTv = view.findViewById(R.id.description_title_tv);
-                final TextView descriptionTv = view.findViewById(R.id.description_tv);
+                                mouthPopupMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+                                    @SuppressLint("NonConstantResourceId")
+                                    @Override
+                                    public boolean onMenuItemClick(MenuItem item) {
 
-                painLocationTv.setText(painPoint.getPainPointLocationLocalString(getContext()));
+                                        final PainLocationEnum painLocationEnum;
 
-                painStrengthTv.setText(painPoint.getPainStrength() + "");
-                painStrengthTv.setTextColor(painPoint.getColor());
+                                        switch (item.getItemId()) {
+                                            case R.id.pharynx_action:
+                                                painLocationEnum = PainLocationEnum.Pharynx;
+                                                break;
+                                            case R.id.lips_action:
+                                                painLocationEnum = PainLocationEnum.Lips;
+                                                break;
+                                            case R.id.palate_action:
+                                                painLocationEnum = PainLocationEnum.Palate;
+                                                break;
+                                            case R.id.teeth_action:
+                                                painLocationEnum = PainLocationEnum.Teeth;
+                                                break;
+                                            case R.id.tongue_action:
+                                                painLocationEnum = PainLocationEnum.Tongue;
+                                                break;
+                                            default:
+                                                painLocationEnum = null;
+                                                break;
+                                        }
 
-                final String painTypeTxt = painPoint.getPainPointTypeLocalString(getContext());
-                painTypeTv.setText(painTypeTxt);
-                painTypeTv.setVisibility(painTypeTxt.isEmpty() ? View.GONE : View.VISIBLE);
-                painTypeTitleTv.setVisibility(painTypeTv.getVisibility());
+                                        final PopupWindow painPointWindow = createPainPointPopUpWindow(painLocationEnum);
+                                        if (mPreviousPopupWindow != null && mPreviousPopupWindow.isShowing()) {
+                                            mPreviousPopupWindow.dismiss();
+                                        }
+                                        mPreviousPopupWindow = painPointWindow;
+                                        painPointWindow.showAsDropDown(v);
 
-                final String painFrequencyTxt = painPoint.getPainPointFrequencyLocalString(getContext());
-                painFrequencyTv.setText(painFrequencyTxt);
-                painFrequencyTv.setVisibility(painFrequencyTxt.isEmpty() ? View.GONE : View.VISIBLE);
-                painFrequencyTitleTv.setVisibility(painFrequencyTv.getVisibility());
+                                        return false;
+                                    }
+                                });
 
-                final String otherFeelingTxt = painPoint.getOtherFeelingLocalString(getContext());
-                otherFeelingTv.setText(otherFeelingTxt);
-                otherFeelingTv.setVisibility(otherFeelingTxt.isEmpty() ? View.GONE : View.VISIBLE);
-                otherFeelingTitleTv.setVisibility(otherFeelingTv.getVisibility());
-
-                final String descriptionTxt = painPoint.getDescription().isEmpty() ? ""
-                        : painPoint.getDescription();
-                descriptionTv.setText(descriptionTxt);
-                descriptionTv.setVisibility(descriptionTxt.isEmpty() ? View.GONE : View.VISIBLE);
-                descriptionTitleTv.setVisibility(descriptionTv.getVisibility());
-
-                painPointWindow = new PopupWindow(view, RelativeLayout.LayoutParams.WRAP_CONTENT,
-                        RelativeLayout.LayoutParams.WRAP_CONTENT, true);
-
-                painPointWindow.getContentView().setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        painPointWindow.dismiss();
+                                entry.getValue().setOnClickListener(new View.OnClickListener() {
+                                    @Override
+                                    public void onClick(View v) {
+                                        mouthPopupMenu.show();
+                                    }
+                                });
+                            }
+                        });
                     }
-                });
-
-                iv.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        if (mPreviousPopupWindow != null && mPreviousPopupWindow.isShowing()) {
-                            mPreviousPopupWindow.dismiss();
+                } else {
+                    entry.getValue().setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            final PopupWindow painPointWindow = createPainPointPopUpWindow(entry.getKey());
+                            if (mPreviousPopupWindow != null && mPreviousPopupWindow.isShowing()) {
+                                mPreviousPopupWindow.dismiss();
+                            }
+                            mPreviousPopupWindow = painPointWindow;
+                            painPointWindow.showAsDropDown(v);
                         }
-                        mPreviousPopupWindow = painPointWindow;
-                        painPointWindow.showAsDropDown(v);
-                    }
-                });
+                    });
+                }
             }
         }
+    }
+
+    private PopupWindow createPainPointPopUpWindow(final PainLocationEnum painLocationEnum) {
+        final PainPoint painPoint = mViewModel.getPainPointsMap().get(painLocationEnum);
+
+        final PopupWindow painPointWindow;
+        final LayoutInflater inflater = getLayoutInflater();
+        final View view = inflater.inflate(R.layout.pain_point_popup_window, null);
+
+        final TextView painLocationTv = view.findViewById(R.id.pain_location_tv);
+        final TextView painStrengthTv = view.findViewById(R.id.pain_strength_tv);
+        final TextView painTypeTitleTv = view.findViewById(R.id.pain_type_title_tv);
+        final TextView painTypeTv = view.findViewById(R.id.pain_type_tv);
+        final TextView painFrequencyTitleTv = view.findViewById(R.id.pain_frequency_title_tv);
+        final TextView painFrequencyTv = view.findViewById(R.id.pain_frequency_tv);
+        final TextView otherFeelingTitleTv = view.findViewById(R.id.other_feelings_title_tv);
+        final TextView otherFeelingTv = view.findViewById(R.id.other_feelings_tv);
+        final TextView descriptionTitleTv = view.findViewById(R.id.description_title_tv);
+        final TextView descriptionTv = view.findViewById(R.id.description_tv);
+
+        painLocationTv.setText(painPoint.getPainPointLocationLocalString(getContext()));
+
+        painStrengthTv.setText(painPoint.getPainStrength() + "");
+        painStrengthTv.setTextColor(painPoint.getColor());
+
+        final String painTypeTxt = painPoint.getPainPointTypeLocalString(getContext());
+        painTypeTv.setText(painTypeTxt);
+        painTypeTv.setVisibility(painTypeTxt.isEmpty() ? View.GONE : View.VISIBLE);
+        painTypeTitleTv.setVisibility(painTypeTv.getVisibility());
+
+        final String painFrequencyTxt = painPoint.getPainPointFrequencyLocalString(getContext());
+        painFrequencyTv.setText(painFrequencyTxt);
+        painFrequencyTv.setVisibility(painFrequencyTxt.isEmpty() ? View.GONE : View.VISIBLE);
+        painFrequencyTitleTv.setVisibility(painFrequencyTv.getVisibility());
+
+        final String otherFeelingTxt = painPoint.getOtherFeelingLocalString(getContext());
+        otherFeelingTv.setText(otherFeelingTxt);
+        otherFeelingTv.setVisibility(otherFeelingTxt.isEmpty() ? View.GONE : View.VISIBLE);
+        otherFeelingTitleTv.setVisibility(otherFeelingTv.getVisibility());
+
+        final String descriptionTxt = painPoint.getDescription().isEmpty() ? ""
+                : painPoint.getDescription();
+        descriptionTv.setText(descriptionTxt);
+        descriptionTv.setVisibility(descriptionTxt.isEmpty() ? View.GONE : View.VISIBLE);
+        descriptionTitleTv.setVisibility(descriptionTv.getVisibility());
+
+        painPointWindow = new PopupWindow(view, RelativeLayout.LayoutParams.WRAP_CONTENT,
+                RelativeLayout.LayoutParams.WRAP_CONTENT, true);
+
+        painPointWindow.getContentView().setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                painPointWindow.dismiss();
+            }
+        });
+
+        return painPointWindow;
     }
 
     private void showPainPoints() {

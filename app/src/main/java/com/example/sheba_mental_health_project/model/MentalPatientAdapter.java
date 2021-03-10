@@ -3,18 +3,17 @@ package com.example.sheba_mental_health_project.model;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.graphics.drawable.Drawable;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.SeekBar;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.sheba_mental_health_project.R;
+import com.google.android.material.slider.Slider;
 
 import java.util.List;
 import java.util.Map;
@@ -38,29 +37,24 @@ public class MentalPatientAdapter extends RecyclerView.Adapter<MentalPatientAdap
 
     public class MentalPatientViewHolder extends RecyclerView.ViewHolder {
 
-        final private TextView feelingNameTV;
-        final private ImageView feelingIv;
-        final private SeekBar seekBar;
+        private final TextView feelingNameTV;
+        private final ImageView feelingIv;
+        private final Slider slider;
 
         public MentalPatientViewHolder(@NonNull View itemView) {
             super(itemView);
 
             feelingNameTV = itemView.findViewById(R.id.feeling_tv);
             feelingIv = itemView.findViewById(R.id.feeling_iv);
-            seekBar = itemView.findViewById(R.id.seek_bar);
+            slider = itemView.findViewById(R.id.slider);
 
-
-            seekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+            slider.addOnSliderTouchListener(new Slider.OnSliderTouchListener() {
                 @Override
-                public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {}
-
-                @Override
-                public void onStartTrackingTouch(SeekBar seekBar) {}
+                public void onStartTrackingTouch(@NonNull Slider slider) {}
 
                 @Override
-                public void onStopTrackingTouch(SeekBar seekBar) {
-                    mAnswers.put(mFeelings.get(getAdapterPosition()).getId(), seekBar.getProgress());
-                    Log.d(TAG, "asd onProgressChanged: " + mFeelings.get(getAdapterPosition()).getId());
+                public void onStopTrackingTouch(@NonNull Slider slider) {
+                    mAnswers.put(mFeelings.get(getAdapterPosition()).getId(), (int) slider.getValue());
                 }
             });
         }
@@ -82,9 +76,9 @@ public class MentalPatientAdapter extends RecyclerView.Adapter<MentalPatientAdap
         holder.feelingNameTV.setText(feeling.getName());
         setImageByFeelingId(feeling.getId(), holder.feelingIv);
         if (mAnswers.containsKey(feeling.getId())) {
-            holder.seekBar.setProgress(mAnswers.get(feeling.getId()));
+            holder.slider.setValue(mAnswers.get(feeling.getId()));
         } else {
-            holder.seekBar.setProgress(0);
+            holder.slider.setValue(0);
         }
     }
 
@@ -95,7 +89,7 @@ public class MentalPatientAdapter extends RecyclerView.Adapter<MentalPatientAdap
 
     @SuppressLint("UseCompatLoadingForDrawables")
     private void setImageByFeelingId(final String id, final ImageView imageView) {
-        Drawable drawable;
+        final Drawable drawable;
 
         switch (id) {
             case "1":
@@ -127,6 +121,15 @@ public class MentalPatientAdapter extends RecyclerView.Adapter<MentalPatientAdap
                 break;
             case "10":
                 drawable = mContext.getResources().getDrawable(R.drawable.tension, null);
+                break;
+            case "11":
+                drawable = mContext.getResources().getDrawable(R.drawable.happiness, null);
+                break;
+            case "40":
+                drawable = mContext.getResources().getDrawable(R.drawable.uplift, null);
+                break;
+            case "70":
+                drawable = mContext.getResources().getDrawable(R.drawable.peace, null);
                 break;
             default:
                 drawable = mContext.getResources().getDrawable(R.drawable.ic_head, null);

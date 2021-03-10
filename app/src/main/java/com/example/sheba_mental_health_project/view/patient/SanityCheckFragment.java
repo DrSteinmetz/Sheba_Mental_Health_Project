@@ -40,7 +40,7 @@ public class SanityCheckFragment extends Fragment {
 
 
     public interface SanityCheckFragmentInterface {
-        void onContinueToStatement();
+        void onContinueFromSanityCheck();
     }
 
     private SanityCheckFragmentInterface listener;
@@ -70,15 +70,6 @@ public class SanityCheckFragment extends Fragment {
         final Observer<List<Question>> onGetQuestionsOfPageSucceed = new Observer<List<Question>>() {
             @Override
             public void onChanged(List<Question> questions) {
-                /*if (mQuestionsAdapter == null) {
-                    Log.d(TAG, "qwe onChanged: " + questions.size());
-                    mQuestionsAdapter = new QuestionsAdapter(getContext(), questions,
-                            mViewModel.getCurrentAppointment().getAnswers());
-                    mRecyclerView.setAdapter(mQuestionsAdapter);
-                } else {
-                    mQuestionsAdapter.notifyDataSetChanged();
-                }*/
-                Log.d(TAG, "qwe onChanged: " + questions.size());
                 mQuestionsAdapter = new QuestionsAdapter(getContext(), questions,
                         mViewModel.getCurrentAppointment().getAnswers());
                 mRecyclerView.setAdapter(mQuestionsAdapter);
@@ -96,7 +87,7 @@ public class SanityCheckFragment extends Fragment {
             @Override
             public void onChanged(Appointment appointment) {
                 if (listener != null) {
-                    listener.onContinueToStatement();
+                    listener.onContinueFromSanityCheck();
                 }
             }
         };
@@ -119,14 +110,14 @@ public class SanityCheckFragment extends Fragment {
                              @Nullable Bundle savedInstanceState) {
         final View rootView = inflater.inflate(R.layout.sanity_check_fragment, container, false);
 
+        mViewModel.attachSetGetQuestionsOfPageListener();
+        mViewModel.attachSetUpdateAnswersOfAppointmentListener();
+
         mRecyclerView = rootView.findViewById(R.id.questions_recycler);
         final MaterialButton continueBtn = rootView.findViewById(R.id.continue_btn);
 
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         mRecyclerView.setHasFixedSize(true);
-
-        mViewModel.attachSetGetQuestionsOfPageListener();
-        mViewModel.attachSetUpdateAnswersOfAppointmentListener();
 
         continueBtn.setOnClickListener(new View.OnClickListener() {
             @Override

@@ -80,11 +80,6 @@ public class WelcomeActivity extends AppCompatActivity
 
     @Override
     public void onTherapistBtnClicked() {
-        /*getSupportFragmentManager().beginTransaction()
-                .replace(R.id.container, CharacterFragment.newInstance(), "Character_Fragment")
-                .addToBackStack(null)
-                .commit();*/
-
         getSupportFragmentManager().beginTransaction()
                 .replace(R.id.container, TherapistLoginFragment.newInstance(), THERAPIST_LOGIN_FRAG)
                 .addToBackStack(null)
@@ -112,7 +107,6 @@ public class WelcomeActivity extends AppCompatActivity
     private void startMainActivity(final boolean isTherapist) {
         final Intent intent = new Intent(WelcomeActivity.this, MainActivity.class);
         mSharedPreferences.edit().putBoolean(IS_THERAPIST, isTherapist).commit();
-//        intent.putExtra(IS_THERAPIST, isTherapist);
         startActivity(intent);
         finish();
     }

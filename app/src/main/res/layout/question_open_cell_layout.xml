@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    app:cardUseCompatPadding="false"
+    app:cardElevation="0dp"
+    app:cardCornerRadius="0dp"
+    app:cardPreventCornerOverlap="false"
+    android:id="@+id/card_layout">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingVertical="15dp"
+            android:paddingHorizontal="25dp"
+            android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/question_tv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Question Text"
+                    android:textSize="20sp"
+                    android:textColor="@color/black" />
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/answer_layout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:hint="@string/answer_et_hint"
+                    app:boxStrokeColor="@color/light_gray"
+                    app:boxStrokeWidth="1.2dp"
+                    app:boxCornerRadiusBottomEnd="0dp"
+                    app:boxCornerRadiusBottomStart="0dp"
+                    app:boxCornerRadiusTopEnd="0dp"
+                    app:boxCornerRadiusTopStart="0dp"
+                    app:hintTextColor="@color/light_blue"
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/answer_et"
+                            android:gravity="start"
+                            android:padding="10dp"
+                            android:inputType="text"
+                            style="@style/textInputEditText" />
+                </com.google.android.material.textfield.TextInputLayout>
+
+        </LinearLayout>
+
+</androidx.cardview.widget.CardView>

@@ -15,7 +15,7 @@ public class PhysicalState implements Serializable {
         return mPainPoints;
     }
 
-    public void setPainPoints(List<PainPoint> mPainPoints) {
-        this.mPainPoints = mPainPoints;
+    public void setPainPoints(List<PainPoint> painPoints) {
+        this.mPainPoints = painPoints;
     }
 }

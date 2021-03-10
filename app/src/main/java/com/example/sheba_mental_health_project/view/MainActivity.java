@@ -23,6 +23,7 @@ import com.example.sheba_mental_health_project.R;
 import com.example.sheba_mental_health_project.model.Appointment;
 import com.example.sheba_mental_health_project.model.Patient;
 import com.example.sheba_mental_health_project.model.ViewModelFactory;
+import com.example.sheba_mental_health_project.model.enums.AppointmentStateEnum;
 import com.example.sheba_mental_health_project.model.enums.ViewModelEnum;
 import com.example.sheba_mental_health_project.view.character.CenterOfMassFragment;
 import com.example.sheba_mental_health_project.view.character.CharacterFragment;
@@ -34,13 +35,18 @@ import com.example.sheba_mental_health_project.view.character.RightArmFragment;
 import com.example.sheba_mental_health_project.view.patient.AppointmentLoungeFragment;
 import com.example.sheba_mental_health_project.view.patient.AppointmentPatientFragment;
 import com.example.sheba_mental_health_project.view.patient.BureaucracyFragment;
+import com.example.sheba_mental_health_project.view.patient.Covid19QuestionsFragment;
+import com.example.sheba_mental_health_project.view.patient.HabitsQuestionsFragment;
 import com.example.sheba_mental_health_project.view.patient.MainPatientFragment;
 import com.example.sheba_mental_health_project.view.patient.MentalPatientFragment;
+import com.example.sheba_mental_health_project.view.patient.MentalQuestionsFragment;
 import com.example.sheba_mental_health_project.view.patient.NotesFragment;
 import com.example.sheba_mental_health_project.view.patient.PhysicalPatientFragment;
 import com.example.sheba_mental_health_project.view.patient.PreMeetingCharacterFragment;
 import com.example.sheba_mental_health_project.view.patient.PreQuestionsFragment;
+import com.example.sheba_mental_health_project.view.patient.QuestionsWarningFragment;
 import com.example.sheba_mental_health_project.view.patient.SanityCheckFragment;
+import com.example.sheba_mental_health_project.view.patient.SocialQuestionsFragment;
 import com.example.sheba_mental_health_project.view.patient.StatementFragment;
 import com.example.sheba_mental_health_project.view.patient.TreatyFragment;
 import com.example.sheba_mental_health_project.view.therapist.AddAppointmentFragment;
@@ -48,6 +54,7 @@ import com.example.sheba_mental_health_project.view.therapist.AddPatientFragment
 import com.example.sheba_mental_health_project.view.therapist.AppointmentTherapistFragment;
 import com.example.sheba_mental_health_project.view.therapist.HistoryAppointmentFragment;
 import com.example.sheba_mental_health_project.view.therapist.HistoryFragment;
+import com.example.sheba_mental_health_project.view.therapist.InquiryFragment;
 import com.example.sheba_mental_health_project.view.therapist.MainTherapistFragment;
 import com.example.sheba_mental_health_project.view.therapist.SearchPatientFragment;
 import com.example.sheba_mental_health_project.view.therapist.StartMeetingFragment;
@@ -63,8 +70,13 @@ public class MainActivity extends AppCompatActivity
         PreQuestionsFragment.PreQuestionsFragmentInterface,
         TreatyFragment.TreatyFragmentInterface,
         BureaucracyFragment.BureaucracyFragmentInterface,
+        Covid19QuestionsFragment.Covid19QuestionsFragmentInterface,
         SanityCheckFragment.SanityCheckFragmentInterface,
+        QuestionsWarningFragment.QuestionsWarningFragmentInterface,
         StatementFragment.StatementFragmentInterface,
+        SocialQuestionsFragment.SocialQuestionsFragmentInterface,
+        HabitsQuestionsFragment.HabitsQuestionsFragmentInterface,
+        MentalQuestionsFragment.MentalQuestionsFragmentInterface,
         MainPatientFragment.MainPatientInterface,
         CharacterFragment.CharacterFragmentInterface,
         StartMeetingFragment.StartMeetingTherapistInterface,
@@ -93,14 +105,20 @@ public class MainActivity extends AppCompatActivity
     private final String APPOINTMENT_THERAPIST_FRAG = "Appointment_Therapist_Fragment";
     private final String THERAPIST_MENTAL_STATE_FRAG = "Therapist_Mental_State_Fragment";
     private final String THERAPIST_PHYSICAL_STATE_FRAG = "Therapist_Physical_State_Fragment";
+    private final String INQUIRY_FRAG = "Inquiry_Fragment";
     private final String HISTORY_FRAG = "History_Fragment";
     private final String HISTORY_APPOINTMENT_FRAG = "History_Appointment_Fragment";
 
     private final String PRE_QUESTIONS_FRAG = "Pre_Questions_Fragment";
     private final String TREATY_FRAG = "Treaty_Fragment";
     private final String BUREAUCRACY_FRAG = "Bureaucracy_Fragment";
+    private final String COVID19_QUESTIONS_FRAG = "Covid-19_Questions_Fragment";
     private final String SANITY_CHECK_FRAG = "Sanity_Check_Fragment";
+    private final String QUESTIONS_WARNING_FRAG = "Questions_Warning_Fragment";
     private final String STATEMENT_FRAG = "Statement_Fragment";
+    private final String SOCIAL_QUESTIONS_FRAG = "Social_Questions_Fragment";
+    private final String HABITS_QUESTIONS_FRAG = "Habits_Questions_Fragment";
+    private final String MENTAL_QUESTIONS_FRAG = "Mental_Questions_Fragment";
     private final String CATEGORY_FRAG = "Category_Fragment";
     private final String PRE_MEETING_CHARACTER_FRAG = "Pre_Meeting_Character_Frag";
     private final String NOTES_FRAG = "Notes_Fragment";
@@ -120,11 +138,10 @@ public class MainActivity extends AppCompatActivity
     private final String GENITALS_FRAG = "Genitals_Fragment";
     private final String LEGS_FRAG = "Legs_Fragment";
 
-
     private final String IS_THERAPIST = "is_therapist";
 
-
     private final String TAG = "MainActivity";
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -155,7 +172,7 @@ public class MainActivity extends AppCompatActivity
         final SharedPreferences sharedPreferences = PreferenceManager
                 .getDefaultSharedPreferences(this);
         mViewModel.setIsTherapist(sharedPreferences.getBoolean(IS_THERAPIST, false));
-//        final boolean isTherapist = getIntent().getBooleanExtra(IS_THERAPIST, false);
+
         mNavigationView.getMenu().clear();
         mNavigationView.inflateMenu(mViewModel.isTherapist() ?
                 R.menu.therapist_drawer_menu : R.menu.patient_drawer_menu);
@@ -189,14 +206,16 @@ public class MainActivity extends AppCompatActivity
 
     @Override
     public void onDrawerOpened(@NonNull View drawerView) {
-        final boolean isInAppointment = isInAppointment();
-
-        mNavigationView.getMenu().findItem(R.id.chat_action).setVisible(isInAppointment);
+        mNavigationView.getMenu().findItem(R.id.inquiry_action).setVisible(isInquiryShown());
         mNavigationView.invalidate();
     }
 
-    public boolean isInAppointment() {
-        boolean isInAppointment = true;
+    public boolean isInquiryShown() {
+
+        boolean isInAppointment = false;
+        boolean isAppointmentBegun = false;
+        boolean isFinishedPreQuestions = false;
+
         final Fragment mainTherapistFrag = getSupportFragmentManager()
                 .findFragmentByTag(MAIN_THERAPIST_FRAG);
         final Fragment mainPatientFrag = getSupportFragmentManager()
@@ -212,7 +231,14 @@ public class MainActivity extends AppCompatActivity
             }
         }
 
-        return isInAppointment;
+        if (mViewModel.getCurrentAppointment() != null) {
+            isAppointmentBegun = mViewModel.getCurrentAppointment()
+                    .getState().equals(AppointmentStateEnum.Ongoing);
+
+            isFinishedPreQuestions = mViewModel.getCurrentAppointment().getIsFinishedPreQuestions();
+        }
+
+        return isInAppointment && isAppointmentBegun && isFinishedPreQuestions;
     }
 
     @Override
@@ -230,21 +256,22 @@ public class MainActivity extends AppCompatActivity
         switch (item.getItemId()) {
             case R.id.search_patient_action:
                 getSupportFragmentManager().beginTransaction()
-                        .replace(R.id.container, SearchPatientFragment.newInstance(), SEARCH_PATIENT_FRAG)
+                        .replace(R.id.container, SearchPatientFragment.newInstance(),
+                                SEARCH_PATIENT_FRAG)
                         .addToBackStack(null)
                         .commit();
                 mDrawerLayout.closeDrawers();
                 break;
             case R.id.add_patient_action:
                 getSupportFragmentManager().beginTransaction()
-                        .replace(R.id.container, AddPatientFragment.newInstance(), ADD_PATIENT_FRAG)
+                        .replace(R.id.container, AddPatientFragment.newInstance(),
+                                ADD_PATIENT_FRAG)
                         .addToBackStack(null)
                         .commit();
-
                 mDrawerLayout.closeDrawers();
                 break;
-            case R.id.chat_action:
-                onChatClicked();
+            case R.id.inquiry_action:
+                onMoveToPreQuestions();
                 mDrawerLayout.closeDrawers();
                 break;
             case R.id.settings_action:
@@ -293,7 +320,7 @@ public class MainActivity extends AppCompatActivity
     }
 
     @Override
-    public void onContinueToTreaty() {
+    public void onContinueFromPreQuestions() {
         getSupportFragmentManager().beginTransaction()
                 //TODO: add enter and exit animations
                 .replace(R.id.container, TreatyFragment.newInstance(), TREATY_FRAG)
@@ -302,7 +329,7 @@ public class MainActivity extends AppCompatActivity
     }
 
     @Override
-    public void onContinueToBureaucracy() {
+    public void onContinueFromTreaty() {
         getSupportFragmentManager().beginTransaction()
                 //TODO: add enter and exit animations
                 .replace(R.id.container, BureaucracyFragment.newInstance(), BUREAUCRACY_FRAG)
@@ -311,7 +338,16 @@ public class MainActivity extends AppCompatActivity
     }
 
     @Override
-    public void onContinueToSanityCheck() {
+    public void onContinueFromBureaucracy() {
+        getSupportFragmentManager().beginTransaction()
+                //TODO: add enter and exit animations
+                .replace(R.id.container, Covid19QuestionsFragment.newInstance(), COVID19_QUESTIONS_FRAG)
+                .addToBackStack(null)
+                .commit();
+    }
+
+    @Override
+    public void onContinueFromCovid19Questions() {
         getSupportFragmentManager().beginTransaction()
                 //TODO: add enter and exit animations
                 .replace(R.id.container, SanityCheckFragment.newInstance(), SANITY_CHECK_FRAG)
@@ -320,7 +356,16 @@ public class MainActivity extends AppCompatActivity
     }
 
     @Override
-    public void onContinueToStatement() {
+    public void onContinueFromSanityCheck() {
+        getSupportFragmentManager().beginTransaction()
+                //TODO: add enter and exit animations
+                .replace(R.id.container, QuestionsWarningFragment.newInstance(), QUESTIONS_WARNING_FRAG)
+                .addToBackStack(null)
+                .commit();
+    }
+
+    @Override
+    public void onContinueFromQuestionsWarning() {
         getSupportFragmentManager().beginTransaction()
                 //TODO: add enter and exit animations
                 .replace(R.id.container, StatementFragment.newInstance(), STATEMENT_FRAG)
@@ -329,7 +374,31 @@ public class MainActivity extends AppCompatActivity
     }
 
     @Override
-    public void onContinueToCategoryQuestions() {
+    public void onContinueFromStatement() {
+        getSupportFragmentManager().beginTransaction()
+                .replace(R.id.container, SocialQuestionsFragment.newInstance(), SOCIAL_QUESTIONS_FRAG)
+                .addToBackStack(null)
+                .commit();
+    }
+
+    @Override
+    public void onContinueFromSocialQuestions() {
+        getSupportFragmentManager().beginTransaction()
+                .replace(R.id.container, HabitsQuestionsFragment.newInstance(), HABITS_QUESTIONS_FRAG)
+                .addToBackStack(null)
+                .commit();
+    }
+
+    @Override
+    public void onContinueFromHabitsQuestions() {
+        getSupportFragmentManager().beginTransaction()
+                .replace(R.id.container, MentalQuestionsFragment.newInstance(), MENTAL_QUESTIONS_FRAG)
+                .addToBackStack(null)
+                .commit();
+    }
+
+    @Override
+    public void onContinueFromMentalQuestions() {
         getSupportFragmentManager().beginTransaction()
                 .add(R.id.container, PreMeetingCharacterFragment.newInstance(), PRE_MEETING_CHARACTER_FRAG)
                 .addToBackStack(null)
@@ -467,6 +536,14 @@ public class MainActivity extends AppCompatActivity
     public void onPhysicalStateClicked() {
         getSupportFragmentManager().beginTransaction()
                 .add(R.id.container, TherapistPhysicalStateFragment.newInstance(), THERAPIST_PHYSICAL_STATE_FRAG)
+                .addToBackStack(null)
+                .commit();
+    }
+
+    @Override
+    public void onInquiryClicked() {
+        getSupportFragmentManager().beginTransaction()
+                .add(R.id.container, InquiryFragment.newInstance(), INQUIRY_FRAG)
                 .addToBackStack(null)
                 .commit();
     }

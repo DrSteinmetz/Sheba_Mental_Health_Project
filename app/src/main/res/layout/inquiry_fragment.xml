@@ -1,0 +1,256 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:focusable="true"
+    android:clickable="true"
+    android:background="@color/white"
+    tools:context=".view.therapist.InquiryFragment">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="20dp"
+        android:animateLayoutChanges="true"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/title_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:layout_marginBottom="30dp"
+            android:text="@string/inquiry"
+            android:textSize="25sp"
+            android:textColor="@color/black"
+            android:textAllCaps="false" />
+
+        <RelativeLayout
+            android:id="@+id/expectations_title_layout"
+            style="@style/inquiryLayoutStyle"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_toStartOf="@+id/expectations_arrow_iv"
+                android:text="@string/meeting_expectations"
+                android:textSize="25sp"
+                android:textColor="@color/black"
+                android:textAllCaps="false" />
+
+            <ImageView
+                android:id="@+id/expectations_arrow_iv"
+                android:layout_alignParentEnd="true"
+                style="@style/inquiryImageViewStyle" />
+
+        </RelativeLayout>
+        <RelativeLayout
+            android:id="@+id/expectations_recycler_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:visibility="gone">
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/expectations_recycler_view"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+        </RelativeLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:paddingVertical="3dp"
+            android:background="@color/light_gray" />
+
+        <RelativeLayout
+            android:id="@+id/covid_title_layout"
+            style="@style/inquiryLayoutStyle"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_toStartOf="@+id/covid_arrow_iv"
+                android:text="@string/covid"
+                android:textSize="25sp"
+                android:textColor="@color/black"
+                android:textAllCaps="false" />
+
+            <ImageView
+                android:id="@+id/covid_arrow_iv"
+                android:layout_alignParentEnd="true"
+                style="@style/inquiryImageViewStyle" />
+
+        </RelativeLayout>
+        <RelativeLayout
+            android:id="@+id/covid_recycler_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:visibility="gone">
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/covid_recycler_view"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+        </RelativeLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:paddingVertical="3dp"
+            android:background="@color/light_gray" />
+
+        <RelativeLayout
+            android:id="@+id/statement_title_layout"
+            style="@style/inquiryLayoutStyle"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_toStartOf="@+id/statement_arrow_iv"
+                android:text="@string/statements"
+                android:textSize="25sp"
+                android:textColor="@color/black"
+                android:textAllCaps="false" />
+
+            <ImageView
+                android:id="@+id/statement_arrow_iv"
+                android:layout_alignParentEnd="true"
+                style="@style/inquiryImageViewStyle" />
+
+        </RelativeLayout>
+        <RelativeLayout
+            android:id="@+id/statement_recycler_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:visibility="gone">
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/statement_recycler_view"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+        </RelativeLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:paddingVertical="3dp"
+            android:background="@color/light_gray" />
+
+        <RelativeLayout
+            android:id="@+id/social_title_layout"
+            style="@style/inquiryLayoutStyle"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_toStartOf="@+id/social_arrow_iv"
+                android:text="@string/social_Status"
+                android:textSize="25sp"
+                android:textColor="@color/black"
+                android:textAllCaps="false" />
+
+            <ImageView
+                android:id="@+id/social_arrow_iv"
+                android:layout_alignParentEnd="true"
+                style="@style/inquiryImageViewStyle" />
+
+        </RelativeLayout>
+        <RelativeLayout
+            android:id="@+id/social_recycler_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:visibility="gone">
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/social_recycler_view"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+        </RelativeLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:paddingVertical="3dp"
+            android:background="@color/light_gray" />
+
+        <RelativeLayout
+            android:id="@+id/habits_title_layout"
+            style="@style/inquiryLayoutStyle"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_toStartOf="@+id/habits_arrow_iv"
+                android:text="@string/habits_title"
+                android:textSize="25sp"
+                android:textColor="@color/black"
+                android:textAllCaps="false" />
+
+            <ImageView
+                android:id="@+id/habits_arrow_iv"
+                android:layout_alignParentEnd="true"
+                style="@style/inquiryImageViewStyle" />
+
+        </RelativeLayout>
+        <RelativeLayout
+            android:id="@+id/habits_recycler_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:visibility="gone">
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/habits_recycler_view"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+        </RelativeLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:paddingVertical="3dp"
+            android:background="@color/light_gray" />
+
+        <RelativeLayout
+            android:id="@+id/mental_title_layout"
+            style="@style/inquiryLayoutStyle"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_toStartOf="@+id/mental_arrow_iv"
+                android:text="@string/mental_functioning"
+                android:textSize="25sp"
+                android:textColor="@color/black"
+                android:textAllCaps="false" />
+
+            <!--android:id="@+id/mental_arrow_iv"-->
+            <ImageView
+                android:id="@+id/mental_arrow_iv"
+                android:layout_alignParentEnd="true"
+                style="@style/inquiryImageViewStyle" />
+
+        </RelativeLayout>
+        <RelativeLayout
+            android:id="@+id/mental_recycler_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:visibility="gone">
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/mental_recycler_view"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+        </RelativeLayout>
+
+    </LinearLayout>
+
+</ScrollView>

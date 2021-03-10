@@ -24,8 +24,8 @@ public class PainPoint implements Serializable {
 
     public PainPoint() {}
 
-    public PainPoint(PainLocationEnum mPainLocation) {
-        this.mPainLocation = mPainLocation;
+    public PainPoint(PainLocationEnum painLocation) {
+        this.mPainLocation = painLocation;
     }
 
     public PainPoint(int painStrength, PainLocationEnum location,
@@ -50,8 +50,8 @@ public class PainPoint implements Serializable {
         return mPainStrength;
     }
 
-    public void setPainStrength(int mPainStrength) {
-        this.mPainStrength = mPainStrength;
+    public void setPainStrength(int painStrength) {
+        this.mPainStrength = painStrength;
     }
 
     public PainLocationEnum getPainLocation() {
@@ -63,8 +63,8 @@ public class PainPoint implements Serializable {
         return painPoints[getPainLocation().ordinal()];
     }
 
-    public void setPainLocation(PainLocationEnum mPainLocation) {
-        this.mPainLocation = mPainLocation;
+    public void setPainLocation(PainLocationEnum painLocation) {
+        this.mPainLocation = painLocation;
     }
 
     public PainTypeEnum getPainType() {
@@ -76,8 +76,8 @@ public class PainPoint implements Serializable {
         return (getPainType() != null ? painTypes[getPainType().ordinal()] : "");
     }
 
-    public void setPainType(PainTypeEnum mPainType) {
-        this.mPainType = mPainType;
+    public void setPainType(PainTypeEnum painType) {
+        this.mPainType = painType;
     }
 
     public PainFrequencyEnum getFrequency() {
@@ -89,8 +89,8 @@ public class PainPoint implements Serializable {
         return (getFrequency() != null ? painFrequencies[getFrequency().ordinal()] : "");
     }
 
-    public void setFrequency(PainFrequencyEnum mFrequency) {
-        this.mFrequency = mFrequency;
+    public void setFrequency(PainFrequencyEnum frequency) {
+        this.mFrequency = frequency;
     }
 
     public PainOtherFeelingsEnum getOtherFeeling() {
@@ -102,8 +102,8 @@ public class PainPoint implements Serializable {
         return (getOtherFeeling() != null ? otherFeelings[getOtherFeeling().ordinal()] : "");
     }
 
-    public void setOtherFeeling(PainOtherFeelingsEnum mOtherFeeling) {
-        this.mOtherFeeling = mOtherFeeling;
+    public void setOtherFeeling(PainOtherFeelingsEnum otherFeeling) {
+        this.mOtherFeeling = otherFeeling;
     }
 
     public String getDescription() {
@@ -118,8 +118,8 @@ public class PainPoint implements Serializable {
         return mColor;
     }
 
-    public void setColor(int mColor) {
-        this.mColor = mColor;
+    public void setColor(int color) {
+        this.mColor = color;
     }
 
     @Override

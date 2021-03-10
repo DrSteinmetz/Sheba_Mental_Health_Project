@@ -28,7 +28,7 @@ public class PreQuestionsFragment extends Fragment {
 
 
     public interface PreQuestionsFragmentInterface {
-        void onContinueToTreaty();
+        void onContinueFromPreQuestions();
     }
 
     private PreQuestionsFragmentInterface listener;
@@ -77,7 +77,7 @@ public class PreQuestionsFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 if (listener != null) {
-                    listener.onContinueToTreaty();
+                    listener.onContinueFromPreQuestions();
                 }
             }
         });

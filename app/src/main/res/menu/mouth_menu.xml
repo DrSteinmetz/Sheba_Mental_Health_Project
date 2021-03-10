@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item android:id="@+id/pharynx_action"
+        android:title="@string/pharynx" />
+
+    <item android:id="@+id/lips_action"
+        android:title="@string/lips" />
+
+    <item android:id="@+id/palate_action"
+        android:title="@string/palate" />
+
+    <item android:id="@+id/teeth_action"
+        android:title="@string/teeth" />
+
+    <item android:id="@+id/tongue_action"
+        android:title="@string/tongue" />
+
+</menu>

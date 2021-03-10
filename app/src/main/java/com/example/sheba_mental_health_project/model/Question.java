@@ -1,5 +1,8 @@
 package com.example.sheba_mental_health_project.model;
 
+import androidx.annotation.Nullable;
+
+import com.example.sheba_mental_health_project.model.enums.QuestionTypeEnum;
 import com.example.sheba_mental_health_project.model.enums.ViewModelEnum;
 
 import java.io.Serializable;
@@ -8,14 +11,21 @@ public class Question implements Serializable {
 
     private String mId;
     private String mQuestion;
+    private QuestionTypeEnum mQuestionType;
     private ViewModelEnum mPage;
 
     public Question() {}
 
-    public Question(final String mId, final String mQuestion, final ViewModelEnum mPage) {
-        this.mId = mId;
-        this.mQuestion = mQuestion;
-        this.mPage = mPage;
+    public Question(String id) {
+        this.mId = id;
+    }
+
+    public Question(final String id, final String question,
+                    final QuestionTypeEnum questionType, final ViewModelEnum page) {
+        this.mId = id;
+        this.mQuestion = question;
+        this.mQuestionType = questionType;
+        this.mPage = page;
     }
 
     public String getId() {
@@ -34,11 +44,28 @@ public class Question implements Serializable {
         this.mQuestion = question;
     }
 
+    public QuestionTypeEnum getQuestionType() {
+        return mQuestionType;
+    }
+
+    public void setQuestionType(QuestionTypeEnum questionType) {
+        this.mQuestionType = questionType;
+    }
+
     public ViewModelEnum getPage() {
         return mPage;
     }
 
     public void setPage(ViewModelEnum page) {
         this.mPage = page;
+    }
+
+    @Override
+    public boolean equals(@Nullable Object obj) {
+        if (obj instanceof Question) {
+            final Question otherQuestion = (Question) obj;
+            return otherQuestion.getId().equals(this.mId);
+        }
+        return false;
     }
 }
