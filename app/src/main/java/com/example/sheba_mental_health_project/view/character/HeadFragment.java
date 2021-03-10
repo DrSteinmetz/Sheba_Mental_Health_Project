@@ -397,7 +397,9 @@ public class HeadFragment extends Fragment
 
     private void onPainPointViewClicked(final ImageView view, final PainLocationEnum painLocationEnum) {
         if (mSelectedIv != null && mSelectedIv == view) {
-            return;
+            if (mSelectedIv.getId() != R.id.mouth_iv) {
+                return;
+            }
         }
 
         if (getChildFragmentManager().getBackStackEntryCount() <= 1) {
@@ -464,11 +466,12 @@ public class HeadFragment extends Fragment
     @Override
     public void onContinueToStrengthBtnClicked(PainLocationEnum painLocationEnum,
                                                EnumMap<PainLocationEnum, PainPoint> painPointsMouthMap) {
-        mViewModel.getPainPoint().setPainLocation(painLocationEnum);
         if (painPointsMouthMap.containsKey(painLocationEnum)) {
+            mViewModel.getPainPoint().setPainLocation(painLocationEnum);
             openPainStrengthFragment(painPointsMouthMap.get(painLocationEnum).getPainStrength());
             deletePainPointFab.show();
         } else {
+            mViewModel.setPainPoint(new PainPoint(painLocationEnum));
             openPainStrengthFragment(0);
         }
     }

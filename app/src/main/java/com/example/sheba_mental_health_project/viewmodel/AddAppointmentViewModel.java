@@ -18,7 +18,7 @@ import java.util.Objects;
 
 public class AddAppointmentViewModel extends ViewModel {
 
-    private Repository mRepository;
+    private final Repository mRepository;
 
     private MutableLiveData<List<Patient>> mGetAllPatientsSucceed;
     private MutableLiveData<String> mGetAllPatientsFailed;
@@ -26,14 +26,14 @@ public class AddAppointmentViewModel extends ViewModel {
     private  MutableLiveData<String> mAddAppointmentSucceed;
     private  MutableLiveData<String> mAddAppointmentFailed;
 
-
     private final List<String> mPatientsEmails = new ArrayList<>();
 
-    private long mChosenDate=-1;
-    private int mHourOfDay=-1;
-    private int mMinutes=-1;
+    private long mChosenDate = -1;
+    private int mHourOfDay = -1;
+    private int mMinutes = -1;
 
     private final String TAG = "AddAppointmentViewModel";
+
 
     public AddAppointmentViewModel(final Context context) {
         mRepository = Repository.getInstance(context);
@@ -161,13 +161,12 @@ public class AddAppointmentViewModel extends ViewModel {
         mChosenDate = mHourOfDay = mMinutes = -1;
     }
 
-    public Patient getPatientByEmail(final String patientEmail){
-
+    public Patient getPatientByEmail(final String patientEmail) {
         final int patientIndex = mPatientsEmails.indexOf(patientEmail);
-        if( patientIndex != -1){
+
+        if (patientIndex != -1) {
             return Objects.requireNonNull(mGetAllPatientsSucceed.getValue()).get(patientIndex);
-        }
-        else{
+        } else {
             return null;
         }
     }

@@ -114,13 +114,15 @@ public class MouthSubFragment extends Fragment {
 
 
     public interface MouthSubFragmentInterface {
-        void onContinueToStrengthBtnClicked(PainLocationEnum painLocationEnum, EnumMap<PainLocationEnum, PainPoint> mPainPointsMouthMap);
+        void onContinueToStrengthBtnClicked(PainLocationEnum painLocationEnum,
+                                            EnumMap<PainLocationEnum, PainPoint> mPainPointsMouthMap);
         void onSelectedPainPointColor(int color);
     }
 
     private MouthSubFragmentInterface listener;
 
-    public static MouthSubFragment newInstance(EnumMap<PainLocationEnum, PainPoint> mPainPointsMouthMap , final BodyPartEnum fragmentName) {
+    public static MouthSubFragment newInstance(EnumMap<PainLocationEnum, PainPoint> mPainPointsMouthMap,
+                                               final BodyPartEnum fragmentName) {
         MouthSubFragment fragment = new MouthSubFragment();
         Bundle args = new Bundle();
         args.putSerializable("mouth_pain_points", mPainPointsMouthMap);
@@ -167,12 +169,12 @@ public class MouthSubFragment extends Fragment {
             mPainPointsMouthMap  = (EnumMap<PainLocationEnum, PainPoint> ) getArguments()
                     .getSerializable("mouth_pain_points");
 
-            if (mPainPointsMouthMap.containsKey(PainLocationEnum.Pharynx)){
+            if (mPainPointsMouthMap.containsKey(PainLocationEnum.Pharynx)) {
                 final int color = mPainPointsMouthMap.get(PainLocationEnum.Pharynx).getColor();
                 listener.onSelectedPainPointColor(color);
             }
 
-            if (mPainPointsMouthMap.containsKey(PainLocationEnum.Pharynx)){
+            if (mPainPointsMouthMap.containsKey(PainLocationEnum.Pharynx)) {
                 final PainPoint painPoint = mPainPointsMouthMap.get(PainLocationEnum.Pharynx);
                 final int color = painPoint.getColor();
                 final Drawable wrappedDrawable = setMouthPainPointsColor(color, R.drawable.ic_pharynx);
@@ -180,7 +182,7 @@ public class MouthSubFragment extends Fragment {
                         null, wrappedDrawable);
             }
 
-            if (mPainPointsMouthMap.containsKey(PainLocationEnum.Teeth)){
+            if (mPainPointsMouthMap.containsKey(PainLocationEnum.Teeth)) {
                 final PainPoint painPoint = mPainPointsMouthMap.get(PainLocationEnum.Teeth);
                 final int color = painPoint.getColor();
                 final Drawable wrappedDrawable = setMouthPainPointsColor(color, R.drawable.ic_teeth);
@@ -188,7 +190,7 @@ public class MouthSubFragment extends Fragment {
                         null, wrappedDrawable);
             }
 
-            if (mPainPointsMouthMap.containsKey(PainLocationEnum.Lips)){
+            if (mPainPointsMouthMap.containsKey(PainLocationEnum.Lips)) {
                 final PainPoint painPoint = mPainPointsMouthMap.get(PainLocationEnum.Lips);
                 final int color = painPoint.getColor();
                 final Drawable wrappedDrawable = setMouthPainPointsColor(color, R.drawable.ic_lips);

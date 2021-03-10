@@ -38,6 +38,7 @@ public class AppointmentTherapistFragment extends Fragment {
         void onChatClicked();
         void onMentalStateClicked();
         void onPhysicalStateClicked();
+        void onInquiryClicked();
     }
 
     private AppointmentTherapistInterface listener;
@@ -107,6 +108,15 @@ public class AppointmentTherapistFragment extends Fragment {
             public void onClick(View v) {
                 if (listener != null) {
                     listener.onPhysicalStateClicked();
+                }
+            }
+        });
+
+        inquiryBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (listener != null) {
+                    listener.onInquiryClicked();
                 }
             }
         });

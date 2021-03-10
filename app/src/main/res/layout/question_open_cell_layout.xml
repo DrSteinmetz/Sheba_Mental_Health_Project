@@ -12,14 +12,14 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:padding="10dp"
+            android:paddingVertical="15dp"
+            android:paddingHorizontal="25dp"
             android:orientation="vertical">
 
                 <TextView
                     android:id="@+id/question_tv"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="30dp"
                     android:text="Question Text"
                     android:textSize="20sp"
                     android:textColor="@color/black" />
@@ -28,7 +28,7 @@
                     android:id="@+id/answer_layout"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="40dp"
+                    android:layout_marginTop="10dp"
                     android:hint="@string/answer_et_hint"
                     app:boxStrokeColor="@color/light_gray"
                     app:boxStrokeWidth="1.2dp"
@@ -41,6 +41,7 @@
                         <com.google.android.material.textfield.TextInputEditText
                             android:id="@+id/answer_et"
                             android:gravity="start"
+                            android:padding="10dp"
                             android:inputType="text"
                             style="@style/textInputEditText" />
                 </com.google.android.material.textfield.TextInputLayout>

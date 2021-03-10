@@ -21,6 +21,7 @@ public enum ViewModelEnum {
     TherapistMentalState,
     TherapistMentalGeneric,
     AppointmentTherapist,
+    Inquiry,
     SearchPatient,
     History,
     StartMeeting,

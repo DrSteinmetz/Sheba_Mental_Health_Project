@@ -89,7 +89,7 @@ public class MentalPatientAdapter extends RecyclerView.Adapter<MentalPatientAdap
 
     @SuppressLint("UseCompatLoadingForDrawables")
     private void setImageByFeelingId(final String id, final ImageView imageView) {
-        Drawable drawable;
+        final Drawable drawable;
 
         switch (id) {
             case "1":
@@ -121,6 +121,15 @@ public class MentalPatientAdapter extends RecyclerView.Adapter<MentalPatientAdap
                 break;
             case "10":
                 drawable = mContext.getResources().getDrawable(R.drawable.tension, null);
+                break;
+            case "11":
+                drawable = mContext.getResources().getDrawable(R.drawable.happiness, null);
+                break;
+            case "40":
+                drawable = mContext.getResources().getDrawable(R.drawable.uplift, null);
+                break;
+            case "70":
+                drawable = mContext.getResources().getDrawable(R.drawable.peace, null);
                 break;
             default:
                 drawable = mContext.getResources().getDrawable(R.drawable.ic_head, null);

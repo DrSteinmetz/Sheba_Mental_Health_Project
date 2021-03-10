@@ -347,7 +347,7 @@ public class Repository {
     private Repository(final Context context) {
         this.mContext = context;
         mAlarmManager = (AlarmManager) mContext.getSystemService(Context.ALARM_SERVICE);
-//        addQuestions();
+        addFeelings();
     }
 
     public void getAllPatients() {
@@ -470,7 +470,8 @@ public class Repository {
                         if (error == null && value != null) {
                             final List<Appointment> appointments = new ArrayList<>();
                             for (DocumentSnapshot document : value.getDocuments()) {
-                                List<Map<String,Object>> answersMapList = (List<Map<String,Object>>) document.get("answers");
+                                List<Map<String, Object>> answersMapList =
+                                        (List<Map<String, Object>>) document.get("answers");
                                 final Appointment appointment = document.toObject(Appointment.class);
                                 mappingAnswerObject(answersMapList,appointment);
                                 appointments.add(appointment);
@@ -508,7 +509,8 @@ public class Repository {
                         if (error == null && value != null) {
                             final List<Appointment> appointments = new ArrayList<>();
                             for (DocumentSnapshot document : value.getDocuments()) {
-                                List<Map<String,Object>> answersMapList = (List<Map<String,Object>>) document.get("answers");
+                                List<Map<String, Object>> answersMapList =
+                                        (List<Map<String, Object>>) document.get("answers");
                                 final Appointment appointment = document.toObject(Appointment.class);
                                 mappingAnswerObject(answersMapList,appointment);
                                 appointments.add(appointment);
@@ -536,22 +538,18 @@ public class Repository {
                 });
     }
 
-    private void mappingAnswerObject(List<Map<String,Object>> answersMapList,Appointment appointment){
+    private void mappingAnswerObject(final List<Map<String, Object>> answersMapList, final Appointment appointment) {
         if (answersMapList != null && !answersMapList.isEmpty()) {
-            //        Log.d(TAG, "oron matan: "+(answersMapList.get(0).get("answer")).getClass() );
             appointment.getAnswers().clear();
-            for(Map<String,Object> map: answersMapList){
-                Object answer = map.get("answer");
-                String id =(String) map.get("id");
-                if(answer instanceof Boolean){
-                    appointment.getAnswers().add(new AnswerBinary(id,(Boolean)answer));
-                }
-                else {
-                    appointment.getAnswers().add(new AnswerOpen(id,(String)answer));
+            for(Map<String, Object> map : answersMapList){
+                final Object answer = map.get("answer");
+                final String id = (String) map.get("id");
+                if (answer instanceof Boolean) {
+                    appointment.getAnswers().add(new AnswerBinary(id, (Boolean) answer));
+                } else {
+                    appointment.getAnswers().add(new AnswerOpen(id, (String) answer));
                 }
             }
-            //  appointment.getAnswers().addAll(answerList);
-            Log.d(TAG, "oron onEvent: " + appointment.getAnswers());
         }
     }
 
@@ -561,7 +559,6 @@ public class Repository {
 
     public void setCurrentAppointment(Appointment currentAppointment) {
         this.mCurrentAppointment = currentAppointment;
-        Log.d(TAG, "oron setCurrentAppointment: " + currentAppointment.getAnswers());
     }
 
     public void setPainPoints(final BodyPartEnum bodyPart, final PainPoint painPoint) {
@@ -741,6 +738,36 @@ public class Repository {
                 .document(language)
                 .collection("ENGLISH_QUESTIONS")
                 .whereEqualTo("page", page.name())
+                .get()
+                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                        if (task.isSuccessful()) {
+                            for (QueryDocumentSnapshot document : Objects.requireNonNull(task.getResult())) {
+                                questions.add(document.toObject(Question.class));
+                            }
+                            if (mRepositoryGetQuestionsOfPageListener != null) {
+                                mRepositoryGetQuestionsOfPageListener.onGetQuestionsOfPageSucceed(questions);
+                            }
+                        } else {
+                            Log.w(TAG, "onComplete: ", task.getException());
+                            if (mRepositoryGetQuestionsOfPageListener != null) {
+                                mRepositoryGetQuestionsOfPageListener.onGetQuestionsOfPageFailed(Objects.
+                                        requireNonNull(task.getException()).getMessage());
+                            }
+                        }
+                    }
+                });
+    }
+
+    public void getAllQuestions() {
+        final String language = Locale.getDefault().getLanguage(); // 'he' 'en'
+
+        final List<Question> questions = new ArrayList<>();
+
+        mCloudDB.collection(QUESTIONS)
+                .document(language)
+                .collection("ENGLISH_QUESTIONS")
                 .get()
                 .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                     @Override
@@ -1109,15 +1136,18 @@ public class Repository {
         final List<Feeling> feelings = new ArrayList<>();
 
         feelings.add(new Feeling("1", R.drawable.fear, "Fear"));
+        feelings.add(new Feeling("10", R.drawable.tension, "Tension"));
+        feelings.add(new Feeling("11", R.drawable.happiness, "Happiness"));
         feelings.add(new Feeling("2", R.drawable.sadness, "Sadness"));
         feelings.add(new Feeling("3", R.drawable.anger, "Anger"));
         feelings.add(new Feeling("4", R.drawable.anxiety, "Anxiety"));
+        feelings.add(new Feeling("40", R.drawable.uplift, "Uplift"));
         feelings.add(new Feeling("5", R.drawable.depression, "Depression"));
         feelings.add(new Feeling("6", R.drawable.disturbed, "Disturbed"));
         feelings.add(new Feeling("7", R.drawable.embarrassment, "Embarrassment"));
+        feelings.add(new Feeling("70", R.drawable.peace, "Peace"));
         feelings.add(new Feeling("8", R.drawable.confussion, "Confusion"));
         feelings.add(new Feeling("9", R.drawable.aggressive, "Aggressive"));
-        feelings.add(new Feeling("10", R.drawable.tension, "Tension"));
 
         for (Feeling feeling : feelings) {
             mCloudDB.collection(FEELINGS)

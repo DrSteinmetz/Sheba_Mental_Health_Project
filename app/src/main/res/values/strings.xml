@@ -23,11 +23,21 @@
     <string name="appointment_added_prompt">Appointment Added Successfully!</string>
     <string name="appointment_updated_prompt">Appointment Updated Successfully!</string>
     <string name="appointment_deleted_prompt">Appointment Deleted Successfully!</string>
+    <string name="create_appointment">Create Appointment</string>
     <string name="search_patient">Search Patient</string>
+    <string name="patient_email">Patient Email</string>
     <string name="patient_not_found">Patient Not Found</string>
     <string name="patient_found_prompt">Patient Found:</string>
+    <string name="invite_patient">Invite Patient</string>
     <string name="patient_history">Patient History</string>
     <string name="appointments_history">Appointments History</string>
+    <string name="inquiry">Inquiry</string>
+    <string name="meeting_expectations">Meeting Expectations</string>
+    <string name="covid">COVID-19</string>
+    <string name="habits_title">Weight, Height, Habits</string>
+    <string name="social_Status">Social Status</string>
+    <string name="statements">Statements</string>
+    <string name="mental_functioning">Mental Functioning</string>
     <string name="undo">Undo</string>
     <string name="answer_et_hint">Type Your Answer Here</string>
     <string name="long_meeting_prompt">I Want a Long Meeting</string>
@@ -123,16 +133,19 @@
     <string name="appointment_notif_body">You Have a Meeting in a Few Minutes</string>
 
     <!-- Errors -->
-    <string name="empty_email">You must enter an Email!</string>
-    <string name="invalid_email">Invalid email</string>
-    <string name="empty_password">You must enter a Password!</string>
-    <string name="invalid_password">Password must include at least 8 characters</string>
-    <string name="empty_first_name">You must enter a First Name!</string>
-    <string name="empty_last_name">You must enter a Last Name!</string>
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="empty_email">You Must Enter an Email!</string>
+    <string name="invalid_email">Invalid Email</string>
+    <string name="empty_password">You Must Enter a Password!</string>
+    <string name="invalid_password">Password Must Include at Least 8 Characters</string>
+    <string name="empty_first_name">You Must Enter a First Name!</string>
+    <string name="empty_last_name">You Must Enter a Last Name!</string>
+    <string name="please_enter_patient_email">Please Enter Patient Email</string>
+    <string name="please_pick_a_date">Please Pick a Date</string>
+    <string name="please_pick_a_time">Please Pick a Time</string>
+    <string name="patient_does_not_exist">Patient Does not Exist</string>
 
     <!-- Settings -->
+    <string name="settings">Settings</string>
     <string name="notifications">Notifications</string>
     <string name="notifications_permission">Notifications Permission</string>
     <string name="enabled">Enabled</string>

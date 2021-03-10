@@ -23,6 +23,7 @@ import com.example.sheba_mental_health_project.R;
 import com.example.sheba_mental_health_project.model.Appointment;
 import com.example.sheba_mental_health_project.model.Patient;
 import com.example.sheba_mental_health_project.model.ViewModelFactory;
+import com.example.sheba_mental_health_project.model.enums.AppointmentStateEnum;
 import com.example.sheba_mental_health_project.model.enums.ViewModelEnum;
 import com.example.sheba_mental_health_project.view.character.CenterOfMassFragment;
 import com.example.sheba_mental_health_project.view.character.CharacterFragment;
@@ -53,6 +54,7 @@ import com.example.sheba_mental_health_project.view.therapist.AddPatientFragment
 import com.example.sheba_mental_health_project.view.therapist.AppointmentTherapistFragment;
 import com.example.sheba_mental_health_project.view.therapist.HistoryAppointmentFragment;
 import com.example.sheba_mental_health_project.view.therapist.HistoryFragment;
+import com.example.sheba_mental_health_project.view.therapist.InquiryFragment;
 import com.example.sheba_mental_health_project.view.therapist.MainTherapistFragment;
 import com.example.sheba_mental_health_project.view.therapist.SearchPatientFragment;
 import com.example.sheba_mental_health_project.view.therapist.StartMeetingFragment;
@@ -103,6 +105,7 @@ public class MainActivity extends AppCompatActivity
     private final String APPOINTMENT_THERAPIST_FRAG = "Appointment_Therapist_Fragment";
     private final String THERAPIST_MENTAL_STATE_FRAG = "Therapist_Mental_State_Fragment";
     private final String THERAPIST_PHYSICAL_STATE_FRAG = "Therapist_Physical_State_Fragment";
+    private final String INQUIRY_FRAG = "Inquiry_Fragment";
     private final String HISTORY_FRAG = "History_Fragment";
     private final String HISTORY_APPOINTMENT_FRAG = "History_Appointment_Fragment";
 
@@ -169,7 +172,7 @@ public class MainActivity extends AppCompatActivity
         final SharedPreferences sharedPreferences = PreferenceManager
                 .getDefaultSharedPreferences(this);
         mViewModel.setIsTherapist(sharedPreferences.getBoolean(IS_THERAPIST, false));
-//        final boolean isTherapist = getIntent().getBooleanExtra(IS_THERAPIST, false);
+
         mNavigationView.getMenu().clear();
         mNavigationView.inflateMenu(mViewModel.isTherapist() ?
                 R.menu.therapist_drawer_menu : R.menu.patient_drawer_menu);
@@ -203,14 +206,16 @@ public class MainActivity extends AppCompatActivity
 
     @Override
     public void onDrawerOpened(@NonNull View drawerView) {
-        final boolean isInAppointment = isInAppointment();
-
-        mNavigationView.getMenu().findItem(R.id.chat_action).setVisible(isInAppointment);
+        mNavigationView.getMenu().findItem(R.id.inquiry_action).setVisible(isInquiryShown());
         mNavigationView.invalidate();
     }
 
-    public boolean isInAppointment() {
-        boolean isInAppointment = true;
+    public boolean isInquiryShown() {
+
+        boolean isInAppointment = false;
+        boolean isAppointmentBegun = false;
+        boolean isFinishedPreQuestions = false;
+
         final Fragment mainTherapistFrag = getSupportFragmentManager()
                 .findFragmentByTag(MAIN_THERAPIST_FRAG);
         final Fragment mainPatientFrag = getSupportFragmentManager()
@@ -226,7 +231,14 @@ public class MainActivity extends AppCompatActivity
             }
         }
 
-        return isInAppointment;
+        if (mViewModel.getCurrentAppointment() != null) {
+            isAppointmentBegun = mViewModel.getCurrentAppointment()
+                    .getState().equals(AppointmentStateEnum.Ongoing);
+
+            isFinishedPreQuestions = mViewModel.getCurrentAppointment().getIsFinishedPreQuestions();
+        }
+
+        return isInAppointment && isAppointmentBegun && isFinishedPreQuestions;
     }
 
     @Override
@@ -244,21 +256,22 @@ public class MainActivity extends AppCompatActivity
         switch (item.getItemId()) {
             case R.id.search_patient_action:
                 getSupportFragmentManager().beginTransaction()
-                        .replace(R.id.container, SearchPatientFragment.newInstance(), SEARCH_PATIENT_FRAG)
+                        .replace(R.id.container, SearchPatientFragment.newInstance(),
+                                SEARCH_PATIENT_FRAG)
                         .addToBackStack(null)
                         .commit();
                 mDrawerLayout.closeDrawers();
                 break;
             case R.id.add_patient_action:
                 getSupportFragmentManager().beginTransaction()
-                        .replace(R.id.container, AddPatientFragment.newInstance(), ADD_PATIENT_FRAG)
+                        .replace(R.id.container, AddPatientFragment.newInstance(),
+                                ADD_PATIENT_FRAG)
                         .addToBackStack(null)
                         .commit();
-
                 mDrawerLayout.closeDrawers();
                 break;
-            case R.id.chat_action:
-                onChatClicked();
+            case R.id.inquiry_action:
+                onMoveToPreQuestions();
                 mDrawerLayout.closeDrawers();
                 break;
             case R.id.settings_action:
@@ -523,6 +536,14 @@ public class MainActivity extends AppCompatActivity
     public void onPhysicalStateClicked() {
         getSupportFragmentManager().beginTransaction()
                 .add(R.id.container, TherapistPhysicalStateFragment.newInstance(), THERAPIST_PHYSICAL_STATE_FRAG)
+                .addToBackStack(null)
+                .commit();
+    }
+
+    @Override
+    public void onInquiryClicked() {
+        getSupportFragmentManager().beginTransaction()
+                .add(R.id.container, InquiryFragment.newInstance(), INQUIRY_FRAG)
                 .addToBackStack(null)
                 .commit();
     }

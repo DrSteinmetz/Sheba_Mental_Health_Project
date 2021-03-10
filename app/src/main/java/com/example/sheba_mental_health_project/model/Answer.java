@@ -1,7 +1,5 @@
 package com.example.sheba_mental_health_project.model;
 
-import android.util.Log;
-
 import androidx.annotation.Nullable;
 
 import java.io.Serializable;
@@ -26,10 +24,8 @@ public class Answer implements Serializable {
 
     @Override
     public boolean equals(@Nullable Object obj) {
-        Log.d("Answer Object", "oron equals: " + obj.getClass());
         if (obj instanceof Answer) {
             final Answer otherAnswer = (Answer) obj;
-            Log.d("Answer Object", "oron equals: other.id: " + otherAnswer.getId() + " this.id: " + this.mId);
             return otherAnswer.getId().equals(this.mId);
         }
         return false;
