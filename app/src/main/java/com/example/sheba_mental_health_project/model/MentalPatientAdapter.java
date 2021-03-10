@@ -114,7 +114,7 @@ public class MentalPatientAdapter extends RecyclerView.Adapter<MentalPatientAdap
                 drawable = mContext.getResources().getDrawable(R.drawable.embarrassment, null);
                 break;
             case "8":
-                drawable = mContext.getResources().getDrawable(R.drawable.confussion, null);
+                drawable = mContext.getResources().getDrawable(R.drawable.confusion, null);
                 break;
             case "9":
                 drawable = mContext.getResources().getDrawable(R.drawable.aggressive, null);

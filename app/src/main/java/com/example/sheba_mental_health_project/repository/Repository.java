@@ -12,7 +12,6 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
 import com.example.sheba_mental_health_project.R;
-import com.example.sheba_mental_health_project.model.Answer;
 import com.example.sheba_mental_health_project.model.AnswerBinary;
 import com.example.sheba_mental_health_project.model.AnswerOpen;
 import com.example.sheba_mental_health_project.model.Appointment;
@@ -43,7 +42,6 @@ import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -347,7 +345,6 @@ public class Repository {
     private Repository(final Context context) {
         this.mContext = context;
         mAlarmManager = (AlarmManager) mContext.getSystemService(Context.ALARM_SERVICE);
-        addFeelings();
     }
 
     public void getAllPatients() {
@@ -1146,7 +1143,7 @@ public class Repository {
         feelings.add(new Feeling("6", R.drawable.disturbed, "Disturbed"));
         feelings.add(new Feeling("7", R.drawable.embarrassment, "Embarrassment"));
         feelings.add(new Feeling("70", R.drawable.peace, "Peace"));
-        feelings.add(new Feeling("8", R.drawable.confussion, "Confusion"));
+        feelings.add(new Feeling("8", R.drawable.confusion, "Confusion"));
         feelings.add(new Feeling("9", R.drawable.aggressive, "Aggressive"));
 
         for (Feeling feeling : feelings) {
