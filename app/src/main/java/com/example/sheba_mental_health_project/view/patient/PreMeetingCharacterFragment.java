@@ -64,7 +64,7 @@ public class PreMeetingCharacterFragment extends Fragment {
             @Override
             public void onChanged(Boolean aBoolean) {
                 if (listener != null) {
-                    if (mViewModel.getCurrentAppointment().getState() == AppointmentStateEnum.Ongoing) {
+                    if (mViewModel.getCurrentAppointment().getState() == AppointmentStateEnum.OnGoing) {
                         listener.onMoveToAppointmentPatient();
                     } else {
                         listener.onMoveToAppointmentLounge();

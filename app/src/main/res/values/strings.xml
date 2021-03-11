@@ -50,15 +50,46 @@
     <string name="start_meeting_prompt">Meeting That Started Can Not Be Canceled. Are You Sure You Want to Start This Meeting?</string>
     <string name="statement_frag_title_tv">Choose Phrases Which You Relate to:</string>
     <string name="questions_warning_frag_title_tv">In The Next Pages You will Be Presented to a Series of Questions.\n\nPlease Try to Answer as Many as You Can In Order For the Therapist to Understand Better Your Needs.</string>
+    <string name="share_your_feelings">Share Your Feelings</string>
+    <string name="chat_with_therapist">Chat with Therapist</string>
+    <string name="what_would_you_like_to_share">What Would You Like to Share?</string>
+    <string name="do_you_feel_pain">Do You Feel Pain?</string>
+    <string name="select_body_part">Select Body Part</string>
+    <string name="home_screen">Home Screen</string>
+    <string name="describe_your_issues_here">Describe Your Issues Here…</string>
+    <string name="other_pain_point_selection_warning_title">Change Point?</string>
+    <string name="other_pain_point_selection_warning">Are You Sure You Want to Select Other Point?</string>
+    <string name="choose_pain_area">Choose Pain Area</string>
+    <string name="left_right_dlg_title">I Meant to Choose:</string>
+    <string name="left_right_dlg_only_one_rb">Only One Side</string>
+    <string name="left_right_dlg_both_rb">Both</string>
 
+    <string name="add_document">Add a Document</string>
+    <string name="things_i_need_today_prompt">Things I Need Today:</string>
+    <string name="my_meetings">My Meetings</string>
     <string name="physical_state">Physical State</string>
     <string name="empty_pain_points_list_prompt">No Physical State Details to Show…</string>
     <string name="empty_history_list_prompt">This Patient Has No Previous Appointments…</string>
+    <string name="appointment">Appointment</string>
     <string name="appointment_prompt">Appointment:</string>
+    <string name="patient">Patient</string>
     <string name="patient_prompt">Patient:</string>
+    <string name="therapist">Therapist</string>
     <string name="therapist_prompt">Therapist:</string>
     <string name="date_prompt">Date:</string>
     <string name="time_prompt">Time:</string>
+    <string name="upcoming">Upcoming</string>
+    <string name="upcoming_meetings_prompt">Upcoming Meetings:</string>
+    <string name="begin">Begin</string>
+    <string name="enter">Enter</string>
+    <string name="enter_message">Enter Message</string>
+    <string name="end_meeting">End Meeting</string>
+    <string name="end_meeting_question">End Meeting?</string>
+    <string name="end_meeting_msg">Pressing OK will End This Meeting for You and for the Patient</string>
+    <string name="last_meeting_date_prompt">Last Meeting Date:</string>
+    <string name="last_meeting_therapist_name_prompt">Last Meeting Therapist:</string>
+    <string name="back_to_appointments">Back to Appointments</string>
+    <string name="edit_answers">Edit Answers</string>
 
     <string name="pain_location_tv">Pain Location:</string>
     <string name="pain_strength_tv">Pain Strength:</string>
@@ -67,6 +98,7 @@
     <string name="other_feelings_tv">Other Feelings:</string>
     <string name="description_tv">Description:</string>
 
+    <string name="chat">Chat</string>
     <string name="mental_state">Mental State</string>
     <string name="feeling_strength_tv">Feeling Strength:</string>
 
@@ -108,7 +140,11 @@
     <string name="logout">Logout</string>
 
     <!-- Login and Registration strings -->
+    <string name="add_new_patient">Add New Patient</string>
     <string name="email">Email</string>
+    <string name="first_name">First Name</string>
+    <string name="last_name">Last Name</string>
+    <string name="add">Add</string>
     <string name="password">Password</string>
     <string name="action_sign_in">Sign in or register</string>
     <string name="action_sign_in_short">Sign in</string>
@@ -116,7 +152,7 @@
     <string name="welcome_patient">Welcome Patient!</string>
     <string name="welcome_therapist">Welcome Therapist!</string>
     <string name="login_failed">Login Failed</string>
-    <string name="title_activity_login">LoginActivity</string>
+    <string name="login">Login</string>
 
     <!-- Pre Questions Fragment strings -->
     <string name="hello">Hello</string>

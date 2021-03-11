@@ -12,7 +12,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginVertical="10dp"
-        android:text="I Meant To Choose:"
+        android:text="@string/left_right_dlg_title"
         android:textSize="25sp"
         android:textColor="@color/black"
         android:textAllCaps="false" />
@@ -30,7 +30,7 @@
             android:layout_marginEnd="10dp"
             android:padding="10dp"
             android:checked="true"
-            android:text="Only The Chosen One"
+            android:text="@string/left_right_dlg_only_one_rb"
             android:textSize="20sp"
             android:textColor="@color/black" />
 
@@ -40,7 +40,7 @@
             android:layout_height="wrap_content"
             android:layout_marginEnd="10dp"
             android:padding="10dp"
-            android:text="Both"
+            android:text="@string/left_right_dlg_both_rb"
             android:textSize="20sp"
             android:textColor="@color/black" />
 
@@ -54,7 +54,7 @@
         android:layout_centerHorizontal="true"
         android:layout_marginTop="10dp"
         android:layout_marginHorizontal="15dp"
-        android:text="OK"
+        android:text="@string/continue_txt"
         android:textSize="20sp"
         android:textColor="@color/white"
         android:textStyle="bold"

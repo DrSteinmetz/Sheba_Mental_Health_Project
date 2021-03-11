@@ -19,7 +19,7 @@
             android:layout_width="wrap_content"
             android:layout_height="0dp"
             android:layout_weight="0.5"
-            android:text="Login"
+            android:text="@string/login"
             android:textSize="30sp"
             android:textColor="@color/black"
             android:textAllCaps="false" />
@@ -38,13 +38,13 @@
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/therapist_btn"
-            android:text="Therapist"
+            android:text="@string/therapist"
             style="@style/blue_btn"
             android:layout_marginBottom="5dp"/>
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/patient_btn"
-            android:text="Patient"
+            android:text="@string/patient"
             style="@style/blue_btn"/>
 
     </LinearLayout>

@@ -15,7 +15,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginVertical="10dp"
-        android:text="Things I need today:"
+        android:text="@string/things_i_need_today_prompt"
         android:textSize="20sp"
         android:textColor="@color/black"
         android:textAllCaps="false" />
@@ -36,7 +36,7 @@
         android:layout_marginTop="30dp"
         app:drawableStartCompat="@drawable/ic_round_add_white_24"
         app:drawableTint="@color/black"
-        android:text="Add a Document"
+        android:text="@string/add_document"
         android:textSize="20sp"
         android:textColor="@color/black"
         android:textAllCaps="false" />
@@ -46,7 +46,7 @@
         android:layout_centerHorizontal="true"
         android:layout_alignParentBottom="true"
         android:layout_marginTop="30dp"
-        android:text="Continue"
+        android:text="@string/continue_txt"
         style="@style/blue_btn" />
 
 </RelativeLayout>

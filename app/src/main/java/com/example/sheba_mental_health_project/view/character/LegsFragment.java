@@ -354,7 +354,8 @@ public class LegsFragment extends Fragment implements PainStrengthSubFragment.Pa
             onPainPointClicked(view, painLocationEnum);
         } else {
             WarningDialog warningDialog = new WarningDialog(requireContext());
-            warningDialog.setPromptText("Are you sure you want to select another point?");
+            warningDialog.setTitleWarningText(getString(R.string.other_pain_point_selection_warning_title));
+            warningDialog.setPromptText(getString(R.string.other_pain_point_selection_warning));
             warningDialog.setOnActionListener(new WarningDialog.WarningDialogActionInterface() {
                 @Override
                 public void onYesBtnClicked() {

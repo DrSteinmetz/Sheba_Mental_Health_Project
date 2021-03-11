@@ -72,7 +72,7 @@
             android:layout_centerHorizontal="true"
             android:layout_marginTop="40dp"
             android:layout_below="@id/password_et_layout"
-            android:text="Login"
+            android:text="@string/login"
             style="@style/blue_btn" />
 
     </RelativeLayout>

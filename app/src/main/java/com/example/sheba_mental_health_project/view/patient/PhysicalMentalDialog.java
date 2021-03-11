@@ -73,5 +73,4 @@ public class PhysicalMentalDialog extends Dialog {
         getWindow().setLayout(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
         getWindow().setGravity(Gravity.CENTER);
     }
-
 }

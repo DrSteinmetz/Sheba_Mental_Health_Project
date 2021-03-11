@@ -79,7 +79,7 @@
                 android:layout_gravity="center"
                 android:layout_marginHorizontal="15dp"
                 android:layout_weight="1"
-                android:hint="Enter Message"
+                android:hint="@string/enter_message"
                 android:maxLines="6"
                 android:padding="10dp"
                 android:background="@drawable/chat_et_shape" />

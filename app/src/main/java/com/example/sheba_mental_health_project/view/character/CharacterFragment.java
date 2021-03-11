@@ -48,6 +48,8 @@ public class CharacterFragment extends Fragment {
     private boolean mIsClickable;
     private boolean mIsPainPointClickable;
 
+    private ViewGroup mContainer;
+
     private final String TAG = "CharacterFragment";
 
 
@@ -123,6 +125,7 @@ public class CharacterFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
+        mContainer = container;
         final View rootView = inflater.inflate(R.layout.character_fragment, container, false);
 
         final View headView = rootView.findViewById(R.id.head_v);

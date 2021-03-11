@@ -69,7 +69,7 @@ public class PreQuestionsFragment extends Fragment {
                 " " + mViewModel.getPatientFirstName();
         patientNameTv.setText(patientNameTvString);
 
-        final String therapistNameTvString = getString(R.string.pre_questions_tv_3) +
+        final String therapistNameTvString = getString(R.string.pre_questions_tv_3) + " " +
                 mViewModel.getTherapistFullName() + " " + getString(R.string.pre_questions_tv_4);
         therapistNameTv.setText(therapistNameTvString);
 

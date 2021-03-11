@@ -1,5 +1,6 @@
 package com.example.sheba_mental_health_project.view.therapist;
 
+import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
 import android.content.Context;
@@ -9,6 +10,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -27,7 +29,7 @@ public class AppointmentTherapistFragment extends Fragment {
 
     private AppointmentTherapistViewModel mViewModel;
 
-    private final String TAG = "AppointmentTherapistFragment";
+    private final String TAG = "AppointmentTherapist";
 
 
     public static AppointmentTherapistFragment newInstance() {
@@ -39,6 +41,7 @@ public class AppointmentTherapistFragment extends Fragment {
         void onMentalStateClicked();
         void onPhysicalStateClicked();
         void onInquiryClicked();
+        void onEndMeetingBtnClicked();
     }
 
     private AppointmentTherapistInterface listener;
@@ -66,6 +69,25 @@ public class AppointmentTherapistFragment extends Fragment {
                         CharacterFragment.newInstance(mViewModel.getCurrentAppointment(),
                                 false, true))
                 .commit();
+
+        final Observer<AppointmentStateEnum> onUpdateAppointmentStateSucceed = new Observer<AppointmentStateEnum>() {
+            @Override
+            public void onChanged(AppointmentStateEnum appointmentStateEnum) {
+                if (listener != null) {
+                    listener.onEndMeetingBtnClicked();
+                }
+            }
+        };
+
+        final Observer<String> onUpdateAppointmentStateFailed = new Observer<String>() {
+            @Override
+            public void onChanged(String error) {
+                Log.e(TAG, "onChanged: " + error);
+            }
+        };
+
+        mViewModel.getUpdateAppointmentStateSucceed().observe(this, onUpdateAppointmentStateSucceed);
+        mViewModel.getUpdateAppointmentStateFailed().observe(this, onUpdateAppointmentStateFailed);
     }
 
     @Override
@@ -125,8 +147,9 @@ public class AppointmentTherapistFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 final WarningDialog warningDialog = new WarningDialog(requireContext());
-                warningDialog.setTitleWarningText("End Meeting?");
-                warningDialog.setPromptText("pressing ok will end this meeting for you and for the patient");
+                
+                warningDialog.setTitleWarningText(getString(R.string.end_meeting_question));
+                warningDialog.setPromptText(getString(R.string.end_meeting_msg));
                 warningDialog.setOnActionListener(new WarningDialog.WarningDialogActionInterface() {
                     @Override
                     public void onYesBtnClicked() {
@@ -134,9 +157,7 @@ public class AppointmentTherapistFragment extends Fragment {
                     }
 
                     @Override
-                    public void onNoBtnClicked() {
-                        warningDialog.dismiss();
-                    }
+                    public void onNoBtnClicked() {}
                 });
                 warningDialog.show();
             }

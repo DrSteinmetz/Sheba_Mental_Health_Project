@@ -6,7 +6,6 @@ import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
 import com.example.sheba_mental_health_project.model.Appointment;
-import com.example.sheba_mental_health_project.model.Patient;
 import com.example.sheba_mental_health_project.model.enums.AppointmentStateEnum;
 import com.example.sheba_mental_health_project.repository.Repository;
 import com.google.firebase.auth.FirebaseAuth;
@@ -72,7 +71,7 @@ public class MainPatientViewModel extends ViewModel {
 
         final List<AppointmentStateEnum> stateQuery = new ArrayList<>();
         stateQuery.add(AppointmentStateEnum.PreMeeting);
-        stateQuery.add(AppointmentStateEnum.Ongoing);
+        stateQuery.add(AppointmentStateEnum.OnGoing);
 
         mRepository.getAppointmentsOfSpecificPatient(id, stateQuery);
     }
