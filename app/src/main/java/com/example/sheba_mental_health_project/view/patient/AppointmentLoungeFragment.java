@@ -80,7 +80,7 @@ public class AppointmentLoungeFragment extends Fragment {
 
         final String text = getString(R.string.hello) + ' ' +
                 appointment.getPatient().getFirstName() + ",\n" +
-                getString(R.string.lounge_text_1) + appointment.getTherapist().getLastName() +
+                getString(R.string.lounge_text_1) + " " + appointment.getTherapist().getLastName() +
                 ' ' + getString(R.string.lounge_text_2);
         mainTv.setText(text);
 

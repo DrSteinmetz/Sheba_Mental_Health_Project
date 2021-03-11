@@ -206,8 +206,10 @@ public class MainActivity extends AppCompatActivity
 
     @Override
     public void onDrawerOpened(@NonNull View drawerView) {
-        mNavigationView.getMenu().findItem(R.id.inquiry_action).setVisible(isInquiryShown());
-        mNavigationView.invalidate();
+        if (!mViewModel.isTherapist()) {
+            mNavigationView.getMenu().findItem(R.id.inquiry_action).setVisible(isInquiryShown());
+            mNavigationView.invalidate();
+        }
     }
 
     public boolean isInquiryShown() {
@@ -233,7 +235,7 @@ public class MainActivity extends AppCompatActivity
 
         if (mViewModel.getCurrentAppointment() != null) {
             isAppointmentBegun = mViewModel.getCurrentAppointment()
-                    .getState().equals(AppointmentStateEnum.Ongoing);
+                    .getState().equals(AppointmentStateEnum.OnGoing);
 
             isFinishedPreQuestions = mViewModel.getCurrentAppointment().getIsFinishedPreQuestions();
         }
@@ -423,11 +425,13 @@ public class MainActivity extends AppCompatActivity
 
     @Override
     public void onMoveToAppointmentPatient() {
+        onBackToAppointmentsBtnClicked();
         onEnterAppointment();
     }
 
     @Override
     public void onMoveToAppointmentLounge() {
+        onBackToAppointmentsBtnClicked();
         getSupportFragmentManager().beginTransaction()
                 .replace(R.id.container, AppointmentLoungeFragment.newInstance(), APPOINTMENT_LOUNGE_FRAG)
                 .addToBackStack(null)
@@ -545,6 +549,15 @@ public class MainActivity extends AppCompatActivity
         getSupportFragmentManager().beginTransaction()
                 .add(R.id.container, InquiryFragment.newInstance(), INQUIRY_FRAG)
                 .addToBackStack(null)
+                .commit();
+    }
+
+    @Override
+    public void onEndMeetingBtnClicked() {
+        getSupportFragmentManager().popBackStack(null,
+                FragmentManager.POP_BACK_STACK_INCLUSIVE);
+        getSupportFragmentManager().beginTransaction()
+                .replace(R.id.container, MainTherapistFragment.newInstance(), MAIN_THERAPIST_FRAG)
                 .commit();
     }
 

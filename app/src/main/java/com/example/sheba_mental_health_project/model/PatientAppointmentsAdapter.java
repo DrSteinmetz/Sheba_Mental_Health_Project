@@ -1,8 +1,6 @@
 package com.example.sheba_mental_health_project.model;
 
 import android.content.Context;
-import android.graphics.Color;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,12 +9,10 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
-import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.sheba_mental_health_project.R;
 import com.example.sheba_mental_health_project.model.enums.AppointmentStateEnum;
-import com.google.android.material.button.MaterialButton;
 
 import java.text.SimpleDateFormat;
 import java.util.List;
@@ -103,14 +99,14 @@ public class PatientAppointmentsAdapter extends RecyclerView.Adapter<PatientAppo
         final String time = HHmm.format(appointment.getAppointmentDate());
         holder.timeTv.setText(time);
 
-        if (appointment.getState() == AppointmentStateEnum.Ongoing) {
+        if (appointment.getState() == AppointmentStateEnum.OnGoing) {
             holder.cellIv.setImageResource(R.drawable.ic_enter);
-            holder.cellStatusIv.setText("Enter");
-            holder.cellStatusIv.setTextColor(Color.parseColor("#33cccc"));
+            holder.cellStatusIv.setText(mContext.getString(R.string.enter));
+            holder.cellStatusIv.setTextColor(mContext.getColor(R.color.light_blue));
         } else {
             holder.cellIv.setImageResource(R.drawable.ic_clock);
-            holder.cellStatusIv.setText("Upcoming");
-            holder.cellStatusIv.setTextColor(Color.parseColor("#888888"));
+            holder.cellStatusIv.setText(mContext.getString(R.string.upcoming));
+            holder.cellStatusIv.setTextColor(mContext.getColor(R.color.light_gray));
         }
     }
 

@@ -17,7 +17,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:gravity="center"
-        android:text="Choose pain area:"
+        android:text="@string/choose_pain_area"
         android:textSize="20sp"
         android:textColor="@color/black"
         android:textAllCaps="false"
@@ -41,7 +41,7 @@
                     android:background="@drawable/mouth_card_background"
                     android:button="@null"
                     android:padding="10dp"
-                    android:text="pharynx"
+                    android:text="@string/pharynx"
                     android:drawableBottom="@drawable/ic_white_point"
                     android:textAlignment="center"
                     android:textColor="@color/black"/>
@@ -55,7 +55,7 @@
                     android:drawableBottom="@drawable/ic_white_point"
                     android:button="@null"
                     android:padding="10dp"
-                    android:text="lips"
+                    android:text="@string/lips"
                     android:textAlignment="center"
                     android:textColor="@color/black" />
 
@@ -68,7 +68,7 @@
                     android:button="@null"
                     android:drawableBottom="@drawable/ic_white_point"
                     android:padding="10dp"
-                    android:text="palate"
+                    android:text="@string/palate"
                     android:textAlignment="center"
                     android:textColor="@color/black" />
 
@@ -90,7 +90,7 @@
                     android:padding="10dp"
                     android:layout_width="100dp"
                     android:layout_height="75dp"
-                    android:text="teeth"
+                    android:text="@string/teeth"
                     android:drawableBottom="@drawable/ic_white_point"
                     android:button="@null"
                     android:textAlignment="center"
@@ -103,7 +103,7 @@
                     android:padding="10dp"
                     android:layout_width="100dp"
                     android:layout_height="75dp"
-                    android:text="tongue"
+                    android:text="@string/tongue"
                     android:drawableBottom="@drawable/ic_white_point"
                     android:button="@null"
                     android:textAlignment="center"
@@ -120,7 +120,7 @@
         android:layout_centerHorizontal="true"
         android:layout_marginTop="30dp"
         android:layout_below="@id/mouth_Rg2"
-        android:text="Continue"
+        android:text="@string/continue_txt"
         android:padding="10dp"
         android:textSize="20sp"
         android:textStyle="bold"

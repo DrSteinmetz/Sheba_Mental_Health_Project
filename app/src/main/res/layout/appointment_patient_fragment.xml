@@ -35,7 +35,7 @@
                     android:layout_margin="5dp"
                     android:textSize="20sp"
                     android:textColor="@color/black"
-                    android:text="Appointment"/>
+                    android:text="@string/appointment_prompt" />
 
                 <TextView
                     android:id="@+id/date_tv"
@@ -62,7 +62,7 @@
         <com.google.android.material.button.MaterialButton
             android:id="@+id/feeling_btn"
             android:layout_centerHorizontal="true"
-            android:text="Share your feelings"
+            android:text="@string/share_your_feelings"
             android:textSize="17sp"
             style="@style/blue_btn"
             android:layout_width="250dp"
@@ -72,7 +72,7 @@
             android:id="@+id/chat_btn"
             android:layout_centerHorizontal="true"
             android:layout_alignParentBottom="true"
-            android:text="Chat with therapist"
+            android:text="@string/chat_with_therapist"
             android:textSize="17sp"
             android:layout_width="250dp"
             style="@style/blue_btn"

@@ -91,7 +91,7 @@ public class NotificationsReceiver extends BroadcastReceiver {
         mNotification = builder.build();
 
         final String notificationSubject = isPatient ?
-                context.getString(R.string.appointment_notif_title_patient) +
+                context.getString(R.string.appointment_notif_title_patient) + " " +
                         appointment.getTherapist().getLastName() :
                 context.getString(R.string.appointment_notif_title_therapist) + ' ' +
                         appointment.getPatient().getFullName();

@@ -37,7 +37,7 @@
                     android:textSize="20sp"
                     android:textStyle="bold"
                     android:textColor="@color/black"
-                    android:text="Appointment:"/>
+                    android:text="@string/appointment_prompt" />
                 <TextView
                     android:id="@+id/patient_name_tv"
                     android:layout_width="wrap_content"
@@ -61,7 +61,7 @@
                     android:layout_height="wrap_content"
                     android:layout_margin="5dp"
                     android:textSize="20sp"
-                    android:text="Therapist:" />
+                    android:text="@string/therapist_prompt" />
                 <TextView
                     android:id="@+id/therapist_name_tv"
                     android:layout_width="wrap_content"
@@ -92,48 +92,48 @@
                         android:id="@+id/chat_btn"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="Chat"
+                        android:text="@string/chat"
                         style="?android:attr/borderlessButtonStyle"
                         android:textSize="12sp"
-                        android:textColor="#888888"
+                        android:textColor="@color/light_gray"
                         android:drawableTop="@drawable/ic_chat_icon"
-                        app:backgroundTint="#ffffff"
+                        app:backgroundTint="@color/white"
                         android:textAllCaps="false" />
 
                     <com.google.android.material.button.MaterialButton
                         android:id="@+id/mental_btn"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="Mental state"
+                        android:text="@string/mental_state"
                         style="?android:attr/borderlessButtonStyle"
                         android:textSize="12sp"
-                        android:textColor="#888888"
+                        android:textColor="@color/light_gray"
                         android:drawableTop="@drawable/ic_mental_icon"
-                        app:backgroundTint="#ffffff"
+                        app:backgroundTint="@color/white"
                         android:textAllCaps="false" />
 
                     <com.google.android.material.button.MaterialButton
                         android:id="@+id/physical_btn"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="Physical state"
+                        android:text="@string/physical_state"
                         style="?android:attr/borderlessButtonStyle"
                         android:textSize="12sp"
-                        android:textColor="#888888"
+                        android:textColor="@color/light_gray"
                         android:drawableTop="@drawable/ic_physical_icon"
-                        app:backgroundTint="#ffffff"
+                        app:backgroundTint="@color/white"
                         android:textAllCaps="false" />
 
                     <com.google.android.material.button.MaterialButton
                         android:id="@+id/inquiry_btn"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="Inquiry"
+                        android:text="@string/inquiry"
                         style="?android:attr/borderlessButtonStyle"
                         android:textSize="12sp"
-                        android:textColor="#888888"
+                        android:textColor="@color/light_gray"
                         android:drawableTop="@drawable/ic_question_icon"
-                        app:backgroundTint="#ffffff"
+                        app:backgroundTint="@color/white"
                         android:textAllCaps="false" />
 
 
@@ -159,8 +159,8 @@
             android:layout_height="wrap_content"
             android:layout_centerHorizontal="true"
             android:layout_alignParentBottom="true"
-            android:text="End Meeting"
-            app:backgroundTint="#888888"
+            android:text="@string/end_meeting"
+            app:backgroundTint="@color/light_gray"
             app:cornerRadius="0dp"
             android:textAllCaps="false" />
 

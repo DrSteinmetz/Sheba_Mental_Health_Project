@@ -36,22 +36,24 @@ public class TherapistPhysicalStateAdapter extends RecyclerView.Adapter<Therapis
 
     public class TherapistPhysicalStateViewHolder extends RecyclerView.ViewHolder {
 
-        final private TextView painLocationTv;
-        final private TextView painTypeTv;
-        final private TextView otherFeelingsTv;
-        final private TextView painFrequencyTv;
-        final private TextView descriptionTv;
-        final private ColorSeekBar painStrengthSb;
+        private final TextView painLocationTv;
+        private final ColorSeekBar painStrengthSb;
+        private final TextView painStrengthValueTv;
+        private final TextView painTypeTv;
+        private final TextView otherFeelingsTv;
+        private final TextView painFrequencyTv;
+        private final TextView descriptionTv;
 
         public TherapistPhysicalStateViewHolder(@NonNull View itemView) {
             super(itemView);
 
             painLocationTv = itemView.findViewById(R.id.pain_location_tv);
+            painStrengthSb = itemView.findViewById(R.id.pain_strength_sb);
+            painStrengthValueTv = itemView.findViewById(R.id.pain_strength_value_tv);
             painTypeTv = itemView.findViewById(R.id.pain_type_tv);
             otherFeelingsTv = itemView.findViewById(R.id.other_feelings_tv);
             painFrequencyTv = itemView.findViewById(R.id.feeling_frequency_tv);
             descriptionTv = itemView.findViewById(R.id.description_tv);
-            painStrengthSb = itemView.findViewById(R.id.pain_strength_sb);
 
             painStrengthSb.setOnTouchListener(new View.OnTouchListener() {
                 @Override
@@ -76,31 +78,35 @@ public class TherapistPhysicalStateAdapter extends RecyclerView.Adapter<Therapis
     public void onBindViewHolder(@NonNull TherapistPhysicalStateViewHolder holder, int position) {
 
         final PainPoint painPoint = mPainPoints.get(position);
-        holder.painStrengthSb.setColorBarPosition(painPoint.getPainStrength());
 
-        if (painPoint.getPainLocation() != null) {
-            final String painLocation = painPoint.getPainLocation().name();
-            holder.painLocationTv.setText(painLocation);
-        }
+        if (painPoint != null) {
+            holder.painStrengthSb.setColorBarPosition(painPoint.getPainStrength());
+            holder.painStrengthValueTv.setText(painPoint.getPainStrength() + "");
 
-        if (painPoint.getPainType() != null) {
-            final String painType = painPoint.getPainType().name();
-            holder.painTypeTv.setText(painType);
-        }
+            if (painPoint.getPainLocation() != null) {
+                final String painLocation = painPoint.getPainPointLocationLocalString(mContext);
+                holder.painLocationTv.setText(painLocation);
+            }
 
-        if (painPoint.getOtherFeeling() != null) {
-            final String otherFeelings = painPoint.getOtherFeeling().name();
-            holder.otherFeelingsTv.setText(otherFeelings);
-        }
+            if (painPoint.getPainType() != null) {
+                final String painType = painPoint.getPainPointTypeLocalString(mContext);
+                holder.painTypeTv.setText(painType);
+            }
 
-        if (painPoint.getFrequency() != null) {
-            final String painFrequency = painPoint.getFrequency().name();
-            holder.painFrequencyTv.setText(painFrequency);
-        }
+            if (painPoint.getOtherFeeling() != null) {
+                final String otherFeelings = painPoint.getOtherFeelingLocalString(mContext);
+                holder.otherFeelingsTv.setText(otherFeelings);
+            }
 
-        if (painPoint.getDescription() != null) {
-            final String description = painPoint.getDescription();
-            holder.descriptionTv.setText(description);
+            if (painPoint.getFrequency() != null) {
+                final String painFrequency = painPoint.getPainPointFrequencyLocalString(mContext);
+                holder.painFrequencyTv.setText(painFrequency);
+            }
+
+            if (painPoint.getDescription() != null) {
+                final String description = painPoint.getDescription();
+                holder.descriptionTv.setText(description);
+            }
         }
     }
 

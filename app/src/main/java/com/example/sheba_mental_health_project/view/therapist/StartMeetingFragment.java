@@ -79,7 +79,7 @@ public class StartMeetingFragment extends Fragment
         final Observer<Appointment> onAppointmentSucceedObserver = new Observer<Appointment>() {
             @Override
             public void onChanged(Appointment appointment) {
-                final SimpleDateFormat simpleDateFormat = new SimpleDateFormat("HH:mm | dd/MM");
+                final SimpleDateFormat simpleDateFormat = new SimpleDateFormat("HH:mm | dd.MM");
 
                 mPatientNameTv.setText(appointment.getPatient().getFullName());
                 mTherapistNameTv.setText(appointment.getTherapist().getFullName());
@@ -215,7 +215,7 @@ public class StartMeetingFragment extends Fragment
                 warningDialog.setOnActionListener(new WarningDialog.WarningDialogActionInterface() {
                     @Override
                     public void onYesBtnClicked() {
-                        mViewModel.updateState(AppointmentStateEnum.Ongoing);
+                        mViewModel.updateState(AppointmentStateEnum.OnGoing);
                     }
 
                     @Override

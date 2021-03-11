@@ -1,0 +1,249 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">מפת הנפש שיבא</string>
+
+    <string name="yes">כן</string>
+    <string name="no">לא</string>
+    <string name="choose">בחרו…</string>
+    <string name="delete">מחיקה</string>
+    <string name="edit">עריכה</string>
+    <string name="continue_txt">הבא</string>
+    <string name="finish">סיום</string>
+    <string name="save">שמירה</string>
+    <string name="leave_note">השאירו הודעה</string>
+    <string name="leave_note_info">המטפל יראה את הודעתך רק בתחילת הפגישה</string>
+    <string name="pick_date">בחירת תאריך</string>
+    <string name="pick_time">בחירת שעה</string>
+    <string name="character">דמות</string>
+    <string name="feelings">תחושות</string>
+    <string name="appointments_date">מועד הפגישה</string>
+    <string name="edit_appointment_title">עריכת הפגישה עם</string>
+    <string name="pain_point_deletion_prompt">האם ברצונך למחוק נקודה זו לצמיתות?</string>
+    <string name="pain_point_deleted_prompt">הנקודה נמחקה בהצלחה!</string>
+    <string name="appointment_deletion_prompt">האם ברצונך למחוק פגישה זו לצמיתות?</string>
+    <string name="appointment_added_prompt">הפגישה נמחקה הצלחה!</string>
+    <string name="appointment_updated_prompt">הפגישה עודכנה בהצלחה!</string>
+    <string name="appointment_deleted_prompt">הפגישה נמחקה בהצלחה!</string>
+    <string name="create_appointment">צור פגישה</string>
+    <string name="search_patient">חפש מטופל</string>
+    <string name="patient_email">אי-מייל של המטופל</string>
+    <string name="patient_not_found">המטופל לא נמצא</string>
+    <string name="patient_found_prompt">המטופל נמצא:</string>
+    <string name="invite_patient">הזמנת המטופל</string>
+    <string name="patient_history">היסטוריית המטופל</string>
+    <string name="appointments_history">היסטוריית פגישות</string>
+    <string name="inquiry">תשאול ראשוני</string>
+    <string name="meeting_expectations">ציפיות מהפגישה</string>
+    <string name="covid">נגיף הקורונה</string>
+    <string name="habits_title">משקל, גובה, הרגלים</string>
+    <string name="social_Status">מצב סוציאלי</string>
+    <string name="statements">הצהרות</string>
+    <string name="mental_functioning">תפקוד מנטלי</string>
+    <string name="undo">ביטול</string>
+    <string name="answer_et_hint">השיבו כאן</string>
+    <string name="long_meeting_prompt">אעדיף פגישה ארוכה</string>
+    <string name="short_meeting_prompt">אעדיף פגישה קצרה</string>
+    <string name="another_person_prompt">אעדיף שאדם נוסף ילווה אותי במהלך הפגישה</string>
+    <string name="pre_meeting_char_frag_title">מה ברצונך לשתף?</string>
+    <string name="pre_meeting_char_frag_sub_title">לחצו על הדמות</string>
+    <string name="start_meeting">התחלת פגישה</string>
+    <string name="start_meeting_title">להתחיל פגישה?</string>
+    <string name="start_meeting_prompt">אין באפשרותך לבטל פגישה שהחלה. האם להתחיל את הפגישה?</string>
+    <string name="statement_frag_title_tv">סמנ/י משפטים נכונים לגביך:</string>
+    <string name="questions_warning_frag_title_tv">בעמודים הבאים תוצג לפניכם סדרת שאלות.\n\nאנא ענו על כמה שיותר שאלות בכדי שהמטפל יוכל להבין את מצבכם בצורה הטובה ביותר.</string>
+    <string name="share_your_feelings">שתפ/י את תחושותיך</string>
+    <string name="chat_with_therapist">שיחה עם המטפל</string>
+    <string name="what_would_you_like_to_share">מה ברצונך לשתף?</string>
+    <string name="do_you_feel_pain">האם הינך מרגיש/ה כאב?</string>
+    <string name="select_body_part">בחר/י מקום בגוף</string>
+    <string name="home_screen">מסך הבית</string>
+    <string name="describe_your_issues_here">פרט/י כאן על תחושותיך…</string>
+    <string name="other_pain_point_selection_warning_title">להחליף נקודה?</string>
+    <string name="other_pain_point_selection_warning">האם את/ה בטוח/ה כי ברצונך להחליף נקודה?</string>
+    <string name="choose_pain_area">בחר/י איזור כאב</string>
+    <string name="left_right_dlg_title">התכוונתי לבחור:</string>
+    <string name="left_right_dlg_only_one_rb">רק צד אחד</string>
+    <string name="left_right_dlg_both_rb">את שניהם</string>
+
+    <string name="add_document">הוספת מסמך</string>
+    <string name="things_i_need_today_prompt">מהמפגש היום אני זקוק ל:</string>
+    <string name="my_meetings">הפגישות שלי</string>
+    <string name="physical_state">מצב פיזי</string>
+    <string name="empty_pain_points_list_prompt">לא קיים פירוט על המצב הפיזי…</string>
+    <string name="empty_history_list_prompt">למטופל זה אין פגישות קודמות…</string>
+    <string name="appointment">פגישה</string>
+    <string name="appointment_prompt">פגישה:</string>
+    <string name="patient">מטופל</string>
+    <string name="patient_prompt">מטופל:</string>
+    <string name="therapist">מטפל</string>
+    <string name="therapist_prompt">מטפל:</string>
+    <string name="date_prompt">תאריך:</string>
+    <string name="time_prompt">שעה:</string>
+    <string name="upcoming">טרם החלה</string>
+    <string name="upcoming_meetings_prompt">הפגישות הבאות:</string>
+    <string name="begin">התחל/י</string>
+    <string name="enter">הכנס/י</string>
+    <string name="enter_message">הקלידו הודעה</string>
+    <string name="end_meeting">סיום פגישה</string>
+    <string name="end_meeting_question">סיום פגישה?</string>
+    <string name="end_meeting_msg">לחיצה על \"אישור\" תסיים פגישה זו עבורך ועבור המטופל</string>
+    <string name="last_meeting_date_prompt">תאריך פגישה אחרונה:</string>
+    <string name="last_meeting_therapist_name_prompt">מטפל בפגישה אחרונה:</string>
+    <string name="back_to_appointments">חזרה לפגישות</string>
+    <string name="edit_answers">ערוך תשובות</string>
+
+    <string name="pain_location_tv">מיקום הכאב:</string>
+    <string name="pain_strength_tv">עוצמת הכאב:</string>
+    <string name="pain_type_tv">סוג הכאב:</string>
+    <string name="pain_frequency_tv">תדירות הכאב:</string>
+    <string name="other_feelings_tv">תחושות אחרות:</string>
+    <string name="description_tv">פירוט:</string>
+
+    <string name="chat">צ\'אט</string>
+    <string name="mental_state">מצב נפשי</string>
+    <string name="feeling_strength_tv">עוצמת התחושה:</string>
+
+    <!-- Pain Types -->
+    <string name="sharp">חד</string>
+    <string name="dim">עמום</string>
+    <string name="pressing">לוחץ</string>
+    <string name="burning">צורב</string>
+    <string name="no_pain">לא כואב</string>
+
+    <!-- Other Feeling -->
+    <string name="bleeding">דימום</string>
+    <string name="itching">גרד</string>
+    <string name="sting">עקצוץ</string>
+    <string name="strange">תחושה מוזרה</string>
+    <string name="numb">היעדר תחושה</string>
+    <string name="color_change">שינוי צבע</string>
+    <string name="dryness">יובש</string>
+    <string name="tears_excess">עודף דמעות</string>
+    <string name="constipation">עצירות</string>
+    <string name="diarrhea">שלשולים</string>
+    <string name="heartburn">צרבת</string>
+    <string name="drooling">ריור</string>
+    <string name="urinary_retention">עצירת שתן</string>
+    <string name="frequent_urinary">תכיפות במתן שתן</string>
+    <string name="urgent_urinary">דחיפות במתן שתן</string>
+    <string name="other">אחר</string>
+
+    <!-- Frequency -->
+    <string name="wavy">גלי</string>
+    <string name="static_pain">קבוע</string>
+    <string name="getting_worse">הולך ומחמיר</string>
+    <string name="getting_better">הולך ומשתפר</string>
+
+    <!-- Therapist Drawer Menu -->
+    <string name="add_patient_action">הוספת מטופל</string>
+
+    <!-- Patient Drawer Menu -->
+    <string name="logout">התנתקות</string>
+
+    <!-- Login and Registration strings -->
+    <string name="add_new_patient">הוספת מטופל חדש</string>
+    <string name="email">אי-מייל</string>
+    <string name="first_name">שם פרטי</string>
+    <string name="last_name">שם משפחה</string>
+    <string name="add">הוספה</string>
+    <string name="password">סיסמא</string>
+    <string name="action_sign_in">התחברות או הרשמה</string>
+    <string name="action_sign_in_short">התחברות</string>
+    <string name="welcome">ברוכים הבאים!</string>
+    <string name="welcome_patient">ברוכים הבאים מטופל!</string>
+    <string name="welcome_therapist">ברוכים הבאים מטפל!</string>
+    <string name="login_failed">התחברות נכשלה</string>
+    <string name="login">התחברות</string>
+
+    <!-- Pre Questions Fragment strings -->
+    <string name="hello">שלום</string>
+    <string name="pre_questions_tv_2">אנחנו כאן בשבילך.</string>
+    <string name="pre_questions_tv_3">לפני פגישתך עם ד\"ר</string>
+    <string name="pre_questions_tv_4">נתחיל במספר שאלות</string>
+
+    <string name="lounge_text_1">פגישתך עם ד\"ר</string>
+    <string name="lounge_text_2">לא החלה עדיין.\n\nאנא כנס/י לפגישה במועד שנקבע עבורך.</string>
+
+    <!-- Notification -->
+    <string name="appointment_notif_title_patient">פגישה עם ד\"ר</string>
+    <string name="appointment_notif_title_therapist">פגישה עם</string>
+    <string name="appointment_notif_body">פגישתך עומדת להתחיל בקרוב</string>
+
+    <!-- Errors -->
+    <string name="empty_email">עליך להזין אי-מייל!</string>
+    <string name="invalid_email">אי-מייל לא תקין</string>
+    <string name="empty_password">עליך להזין סיסמא!</string>
+    <string name="invalid_password">הסיסמא חייבת להכיל 8 תווים לפחות</string>
+    <string name="empty_first_name">עליך להזין שם פרטי!</string>
+    <string name="empty_last_name">עליך להזין שם משפחה!</string>
+    <string name="please_enter_patient_email">אנא הזינו אי-מייל של משתמש</string>
+    <string name="please_pick_a_date">אנא בחרו תאריך</string>
+    <string name="please_pick_a_time">אנא בחרו שעה</string>
+    <string name="patient_does_not_exist">המטופל לא קיים</string>
+
+    <!-- Settings -->
+    <string name="settings">הגדרות</string>
+    <string name="notifications">התראות</string>
+    <string name="notifications_permission">הרשאת התראות</string>
+    <string name="enabled">פועל</string>
+    <string name="disabled">כבוי</string>
+    <string name="about">אודות</string>
+
+    <!-- Pain Points Locations -->
+    <string name="scalp">קרקפת</string>
+    <string name="forehead">מצח</string>
+    <string name="nose">אף</string>
+    <string name="right_eye">עין ימין</string>
+    <string name="left_eye">עין שמאל</string>
+    <string name="right_ear">אוזן ימין</string>
+    <string name="left_ear">אוזן שמאל</string>
+    <string name="mouth">פה</string>
+    <string name="pharynx">לע</string>
+    <string name="tongue">לשון</string>
+    <string name="palate">חך</string>
+    <string name="teeth">שיניים</string>
+    <string name="lips">שפתיים</string>
+    <string name="neck">צוואר</string>
+    <string name="nape">עורף</string>
+    <string name="right_shoulder">כתף ימין</string>
+    <string name="left_shoulder">כתף שמאל</string>
+    <string name="right_arm">זרוע ימין</string>
+    <string name="left_arm">זרוע שמאל</string>
+    <string name="right_elbow">מרפק ימין</string>
+    <string name="left_elbow">מרפק שמאל</string>
+    <string name="right_forearm">אמה ימנית</string>
+    <string name="left_forearm">אמה שמאלית</string>
+    <string name="right_wrist">שורש כף יד ימין</string>
+    <string name="left_wrist">שורש כף יד שמאל</string>
+    <string name="right_palm">כף יד ימין</string>
+    <string name="left_palm">כף יד שמאל</string>
+    <string name="right_fingers">אצבעות יד ימין</string>
+    <string name="left_fingers">אצבעות יד שמאל</string>
+    <string name="upper_back">גב עליון</string>
+    <string name="lower_back">גב תחתון</string>
+    <string name="upper_right_abdomen">בטן ימנית עליונה</string>
+    <string name="upper_left_abdomen">בטן שמאלית עליונה</string>
+    <string name="navel">טבור</string>
+    <string name="lower_right_abdomen">בטן ימנית חתתונה</string>
+    <string name="lower_left_abdomen">בטן שמאלית תחתונה</string>
+    <string name="chest">חזה</string>
+    <string name="breast">שדיים</string>
+    <string name="right_thigh">ירך ימין</string>
+    <string name="left_thigh">ירך שמאל</string>
+    <string name="right_knee">ברך ימין</string>
+    <string name="left_knee">ברך שמאל</string>
+    <string name="right_shin">שוק ימין</string>
+    <string name="left_shin">שוק שמאל</string>
+    <string name="right_ankle">קרסול ימין</string>
+    <string name="left_ankle">קרסול שמאל</string>
+    <string name="right_foot">כף רגל ימין</string>
+    <string name="left_foot">כף רגיל שמאל</string>
+    <string name="right_toes">אצבעות רגל ימין</string>
+    <string name="left_toes">אצבעות רגל שמאל</string>
+    <string name="anus">פי הטבעת</string>
+    <string name="vagina">Vagina</string>
+    <string name="penis">Penis</string>
+    <string name="testicles">Testicles</string>
+    <string name="private_part">איזור מוצנע</string>
+
+</resources>

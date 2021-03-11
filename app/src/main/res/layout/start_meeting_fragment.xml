@@ -27,7 +27,7 @@
                 android:textStyle="bold"
                 android:layout_margin="5dp"
                 android:textSize="25sp"
-                android:text="patient name"/>
+                android:text="patient name" />
 
             <LinearLayout
                 android:id="@+id/date_linear"
@@ -40,7 +40,7 @@
                     android:layout_height="wrap_content"
                     android:layout_margin="5dp"
                     android:textSize="20sp"
-                    android:text="last meeting date:"/>
+                    android:text="@string/last_meeting_date_prompt" />
                 <TextView
                     android:id="@+id/last_meeting_date_tv"
                     android:layout_width="wrap_content"
@@ -48,7 +48,7 @@
                     android:layout_margin="5dp"
                     android:textSize="20sp"
                     android:textStyle="bold"
-                    android:text="date"/>
+                    android:text="date" />
             </LinearLayout>
 
             <LinearLayout
@@ -62,7 +62,7 @@
                     android:layout_height="wrap_content"
                     android:layout_margin="5dp"
                     android:textSize="20sp"
-                    android:text="last meeting therapist name:" />
+                    android:text="@string/last_meeting_therapist_name_prompt" />
                 <TextView
                     android:id="@+id/last_therapist_name_tv"
                     android:layout_width="wrap_content"
@@ -87,8 +87,8 @@
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
             android:gravity="center"
-            android:text="No Previous Meetings"
-            android:textSize="50sp"
+            android:text="@string/empty_history_list_prompt"
+            android:textSize="35sp"
             android:textStyle="bold"
             android:visibility="gone" />
 
@@ -124,7 +124,7 @@
             android:layout_height="wrap_content"
             android:layout_centerHorizontal="true"
             android:layout_alignParentBottom="true"
-            android:text="Start Meeting"
+            android:text="@string/start_meeting"
             android:textAllCaps="false" />
 
     </RelativeLayout>

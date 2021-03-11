@@ -12,8 +12,7 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:padding="20dp"
-        >
+        android:padding="20dp">
 
         <TextView
             android:id="@+id/pain_location_tv"
@@ -29,11 +28,24 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@+id/pain_location_tv"
-            android:text="Pain strength:"
+            android:text="@string/pain_strength_tv"
             android:textSize="17sp"
             android:textColor="@color/black"
             android:textAllCaps="false"
-            android:layout_marginTop="10dp"/>
+            android:layout_marginTop="10dp" />
+
+        <TextView
+            android:id="@+id/pain_strength_value_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/pain_location_tv"
+            android:layout_toEndOf="@id/pain_strength_title_tv"
+            android:layout_marginTop="10dp"
+            android:layout_marginStart="10dp"
+            android:text="7"
+            android:textSize="17sp"
+            android:textColor="@color/dark_gray"
+            android:textAllCaps="false" />
 
         <com.rtugeek.android.colorseekbar.ColorSeekBar
             android:id="@+id/pain_strength_sb"
@@ -42,21 +54,18 @@
             android:layout_below="@id/pain_strength_title_tv"
             app:barHeight="7dp"
             app:maxPosition="10"
-            app:colorSeeds="@array/color_seek_bar"
-            />
-
-
+            app:colorSeeds="@array/color_seek_bar" />
 
         <TextView
             android:id="@+id/pain_type_title_tv"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@+id/pain_strength_sb"
-            android:text="Pain Type:"
+            android:text="@string/pain_type_tv"
             android:textSize="17sp"
             android:textColor="@color/black"
             android:textAllCaps="false"
-            android:layout_marginTop="5dp"/>
+            android:layout_marginTop="5dp" />
 
         <TextView
             android:id="@+id/pain_type_tv"
@@ -65,21 +74,21 @@
             android:layout_toEndOf="@+id/pain_type_title_tv"
             android:layout_below="@+id/pain_strength_sb"
             android:textSize="17sp"
-            android:textColor="#555555"
+            android:textColor="@color/dark_gray"
             android:textAllCaps="false"
             android:layout_marginTop="5dp"
-            android:layout_marginStart="5dp"/>
+            android:layout_marginStart="5dp" />
 
         <TextView
             android:id="@+id/other_feelings_title_tv"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@+id/pain_type_title_tv"
-            android:text="Other feelings:"
+            android:text="@string/other_feelings_tv"
             android:textSize="17sp"
             android:textColor="@color/black"
             android:textAllCaps="false"
-            android:layout_marginTop="5dp"/>
+            android:layout_marginTop="5dp" />
 
         <TextView
             android:id="@+id/other_feelings_tv"
@@ -88,21 +97,21 @@
             android:layout_toEndOf="@+id/other_feelings_title_tv"
             android:layout_below="@+id/pain_type_title_tv"
             android:textSize="17sp"
-            android:textColor="#555555"
+            android:textColor="@color/dark_gray"
             android:textAllCaps="false"
             android:layout_marginStart="5dp"
-            android:layout_marginTop="5dp"/>
+            android:layout_marginTop="5dp" />
 
         <TextView
             android:id="@+id/feeling_frequency_title_tv"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@+id/other_feelings_title_tv"
-            android:text="Feeling frequency:"
+            android:text="@string/pain_frequency_tv"
             android:textSize="17sp"
             android:textColor="@color/black"
             android:textAllCaps="false"
-            android:layout_marginTop="5dp"/>
+            android:layout_marginTop="5dp" />
 
         <TextView
             android:id="@+id/feeling_frequency_tv"
@@ -111,21 +120,21 @@
             android:layout_toEndOf="@+id/feeling_frequency_title_tv"
             android:layout_below="@+id/other_feelings_title_tv"
             android:textSize="17sp"
-            android:textColor="#555555"
+            android:textColor="@color/dark_gray"
             android:textAllCaps="false"
             android:layout_marginStart="5dp"
-            android:layout_marginTop="5dp"/>
+            android:layout_marginTop="5dp" />
 
         <TextView
             android:id="@+id/description_title_tv"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@+id/feeling_frequency_title_tv"
-            android:text="Description:"
+            android:text="@string/description_tv"
             android:textSize="17sp"
             android:textColor="@color/black"
             android:textAllCaps="false"
-            android:layout_marginTop="5dp"/>
+            android:layout_marginTop="5dp" />
 
         <TextView
             android:id="@+id/description_tv"
@@ -133,12 +142,9 @@
             android:layout_height="wrap_content"
             android:layout_below="@+id/description_title_tv"
             android:textSize="17sp"
-            android:textColor="#555555"
+            android:textColor="@color/dark_gray"
             android:textAllCaps="false"
-            android:layout_marginTop="5dp"
-            />
-
-
+            android:layout_marginTop="5dp" />
 
     </RelativeLayout>
 

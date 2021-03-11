@@ -60,6 +60,7 @@ public class Repository {
 
     private Appointment mCurrentAppointment;
 
+    private ListenerRegistration mLiveAppointmentListener;
     private ListenerRegistration mPatientAppointmentsListener;
     private ListenerRegistration mTherapistAppointmentsListener;
     private ListenerRegistration mGetAllPainPointsListener;
@@ -71,9 +72,9 @@ public class Repository {
     private final String APPOINTMENTS = "appointments";
     private final String QUESTIONS = "questions";
     private final String FEELINGS = "feelings";
+    private final String FEELINGS_LOCAL = "feelings_local";
     private final String CHAT = "chat";
-    private final String QUESTIONS_ENGLISH = "questions_english";
-    private final String QUESTIONS_HEBREW = "questions_hebrew";
+    private final String QUESTIONS_LOCAL = "questions_local";
 
     private final String TAG = "Repository";
 
@@ -456,7 +457,7 @@ public class Repository {
 
         final List<AppointmentStateEnum> stateQuery = new ArrayList<>();
         stateQuery.add(AppointmentStateEnum.PreMeeting);
-        stateQuery.add(AppointmentStateEnum.Ongoing);
+        stateQuery.add(AppointmentStateEnum.OnGoing);
 
         mTherapistAppointmentsListener = mCloudDB.collection(APPOINTMENTS)
                 .whereEqualTo(FieldPath.of("therapist", "id"), id)
@@ -727,13 +728,19 @@ public class Repository {
     }
 
     public void getQuestionsByPage(final ViewModelEnum page) {
-        final String language = Locale.getDefault().getLanguage(); // 'he' 'en'
+        String language = Locale.getDefault().getLanguage();
+        if (language.equals(new Locale("he").getLanguage())) {
+            language = "he";
+        }
+        if (language.equals(new Locale("en").getLanguage())) {
+            language = "en";
+        }
 
         final List<Question> questions = new ArrayList<>();
 
         mCloudDB.collection(QUESTIONS)
                 .document(language)
-                .collection("ENGLISH_QUESTIONS")
+                .collection(QUESTIONS_LOCAL)
                 .whereEqualTo("page", page.name())
                 .get()
                 .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
@@ -758,13 +765,19 @@ public class Repository {
     }
 
     public void getAllQuestions() {
-        final String language = Locale.getDefault().getLanguage(); // 'he' 'en'
+        String language = Locale.getDefault().getLanguage();
+        if (language.equals(new Locale("he").getLanguage())) {
+            language = "he";
+        }
+        if (language.equals(new Locale("en").getLanguage())) {
+            language = "en";
+        }
 
         final List<Question> questions = new ArrayList<>();
 
         mCloudDB.collection(QUESTIONS)
                 .document(language)
-                .collection("ENGLISH_QUESTIONS")
+                .collection(QUESTIONS_LOCAL)
                 .get()
                 .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                     @Override
@@ -788,13 +801,19 @@ public class Repository {
     }
 
     public void getFeelings() {
-        final String language = Locale.getDefault().getLanguage(); // 'he' 'en'
+        String language = Locale.getDefault().getLanguage();
+        if (language.equals(new Locale("he").getLanguage())) {
+            language = "he";
+        }
+        if (language.equals(new Locale("en").getLanguage())) {
+            language = "en";
+        }
 
         final List<Feeling> feelings = new ArrayList<>();
 
         mCloudDB.collection(FEELINGS)
                 .document(language)
-                .collection("ENGLISH_FEELINGS")
+                .collection(FEELINGS_LOCAL)
                 .get()
                 .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                     @Override
@@ -999,7 +1018,7 @@ public class Repository {
         mAlarmManager.cancel(pendingIntent);
     }
 
-    public void addQuestions() {
+    public void addQuestionsEnglish() {
         final List<Question> questions = new ArrayList<>();
 
         questions.add(new Question("1", "I Want a Long Meeting",
@@ -1008,65 +1027,65 @@ public class Repository {
                 QuestionTypeEnum.Binary, ViewModelEnum.Treaty));
         questions.add(new Question("11", "I Want Another Person to Be Present During the Meeting",
                 QuestionTypeEnum.Binary, ViewModelEnum.Treaty));
-        questions.add(new Question("12", "I Am Under Custody",
+
+        questions.add(new Question("12", "Document 17",
+                QuestionTypeEnum.Binary, ViewModelEnum.Bureaucracy));
+        questions.add(new Question("13", "Document 17 Extension",
+                QuestionTypeEnum.Binary, ViewModelEnum.Bureaucracy));
+        questions.add(new Question("14", "Appointment Summery",
+                QuestionTypeEnum.Binary, ViewModelEnum.Bureaucracy));
+        questions.add(new Question("15", "Prescriptions",
+                QuestionTypeEnum.Binary, ViewModelEnum.Bureaucracy));
+        questions.add(new Question("16", "Document for Social Security",
+                QuestionTypeEnum.Binary, ViewModelEnum.Bureaucracy));
+        questions.add(new Question("17", "Document for Family Doctor",
+                QuestionTypeEnum.Binary, ViewModelEnum.Bureaucracy));
+        questions.add(new Question("18", "Document for Rehabilitation Committee",
+                QuestionTypeEnum.Binary, ViewModelEnum.Bureaucracy));
+        questions.add(new Question("19", "Document for Occupational Physician",
+                QuestionTypeEnum.Binary, ViewModelEnum.Bureaucracy));
+        questions.add(new Question("2", "Request for Psychological Treatment",
+                QuestionTypeEnum.Binary, ViewModelEnum.Bureaucracy));
+        questions.add(new Question("20", "Document for a Social Worker",
+                QuestionTypeEnum.Binary, ViewModelEnum.Bureaucracy));
+        questions.add(new Question("21", "Other",
+                QuestionTypeEnum.Binary, ViewModelEnum.Bureaucracy));
+
+        questions.add(new Question("22", "I Have One of These Symptoms: Fever, Sore Throat, Loss of Taste or Smell, Dry Cough, Muscle pain.",
+                QuestionTypeEnum.Binary, ViewModelEnum.CovidQuestions));
+        questions.add(new Question("23", "I Am Diagnosed with COVID-19",
+                QuestionTypeEnum.Binary, ViewModelEnum.CovidQuestions));
+        questions.add(new Question("24", "One or More of My Household Members Have Been Diagnosed with COVID-19",
+                QuestionTypeEnum.Binary, ViewModelEnum.CovidQuestions));
+        questions.add(new Question("25", "Does Any of Your Relatives Has Been Diagnosed with COVID-19?",
+                QuestionTypeEnum.Open, ViewModelEnum.CovidQuestions));
+        questions.add(new Question("26", "Were You Diagnosed with COVID-19 in the Past? If Yes, When?",
+                QuestionTypeEnum.Open, ViewModelEnum.CovidQuestions));
+        questions.add(new Question("27", "Have You Experienced Any Emotional Suffering Due to COVID-19?",
+                QuestionTypeEnum.Open, ViewModelEnum.CovidQuestions));
+        questions.add(new Question("28", "Have You Experienced Any Physical Suffering Due to COVID-19?",
+                QuestionTypeEnum.Open, ViewModelEnum.CovidQuestions));
+        questions.add(new Question("29", "Have You Experienced Any Emotional Suffering Due to COVID-19? (While Not being Diagnosed Yourself)",
+                QuestionTypeEnum.Open, ViewModelEnum.CovidQuestions));
+        questions.add(new Question("3", "Have You Experienced Any Physical Suffering Due to COVID-19? (While Not being Diagnosed Yourself)",
+                QuestionTypeEnum.Open, ViewModelEnum.CovidQuestions));
+
+        questions.add(new Question("30", "I Feel Suicidal",
+                QuestionTypeEnum.Binary, ViewModelEnum.SanityCheck));
+        questions.add(new Question("31", "I Feel Aggressive",
+                QuestionTypeEnum.Binary, ViewModelEnum.SanityCheck));
+        questions.add(new Question("32", "I Hear Voices",
+                QuestionTypeEnum.Binary, ViewModelEnum.SanityCheck));
+        questions.add(new Question("33", "I Feel Strong Physical Pain",
+                QuestionTypeEnum.Binary, ViewModelEnum.SanityCheck));
+
+        questions.add(new Question("34", "I Had an Accident Recently",
+                QuestionTypeEnum.Binary, ViewModelEnum.Statement));
+        questions.add(new Question("35", "I Have been Hospitalized Recently",
+                QuestionTypeEnum.Binary, ViewModelEnum.Statement));
+
+        questions.add(new Question("36", "I Am Under Custody",
                 QuestionTypeEnum.Binary, ViewModelEnum.Treaty));
-
-        questions.add(new Question("13", "Document 17",
-                QuestionTypeEnum.Binary, ViewModelEnum.Bureaucracy));
-        questions.add(new Question("14", "Document 17 Extension",
-                QuestionTypeEnum.Binary, ViewModelEnum.Bureaucracy));
-        questions.add(new Question("15", "Appointment Summery",
-                QuestionTypeEnum.Binary, ViewModelEnum.Bureaucracy));
-        questions.add(new Question("16", "Prescriptions",
-                QuestionTypeEnum.Binary, ViewModelEnum.Bureaucracy));
-        questions.add(new Question("17", "Document for Social Security",
-                QuestionTypeEnum.Binary, ViewModelEnum.Bureaucracy));
-        questions.add(new Question("18", "Document for Family Doctor",
-                QuestionTypeEnum.Binary, ViewModelEnum.Bureaucracy));
-        questions.add(new Question("19", "Document for Rehabilitation Committee",
-                QuestionTypeEnum.Binary, ViewModelEnum.Bureaucracy));
-        questions.add(new Question("2", "Document for Occupational Physician",
-                QuestionTypeEnum.Binary, ViewModelEnum.Bureaucracy));
-        questions.add(new Question("20", "Request for Psychological Treatment",
-                QuestionTypeEnum.Binary, ViewModelEnum.Bureaucracy));
-        questions.add(new Question("21", "Document for a Social Worker",
-                QuestionTypeEnum.Binary, ViewModelEnum.Bureaucracy));
-        questions.add(new Question("22", "Other",
-                QuestionTypeEnum.Binary, ViewModelEnum.Bureaucracy));
-
-        questions.add(new Question("23", "I Have One of These Symptoms: Fever, Sore Throat, Loss of Taste or Smell, Dry Cough, Muscle pain.",
-                QuestionTypeEnum.Binary, ViewModelEnum.CovidQuestions));
-        questions.add(new Question("24", "I Am Diagnosed with COVID-19",
-                QuestionTypeEnum.Binary, ViewModelEnum.CovidQuestions));
-        questions.add(new Question("25", "One or More of My Household Members Have Been Diagnosed with COVID-19",
-                QuestionTypeEnum.Binary, ViewModelEnum.CovidQuestions));
-        questions.add(new Question("26", "Does Any of Your Relatives Has Been Diagnosed with COVID-19?",
-                QuestionTypeEnum.Open, ViewModelEnum.CovidQuestions));
-        questions.add(new Question("27", "Were You Diagnosed with COVID-19 in the Past? If Yes, When?",
-                QuestionTypeEnum.Open, ViewModelEnum.CovidQuestions));
-        questions.add(new Question("28", "Have You Experienced Any Emotional Suffering Due to COVID-19?",
-                QuestionTypeEnum.Open, ViewModelEnum.CovidQuestions));
-        questions.add(new Question("29", "Have You Experienced Any Physical Suffering Due to COVID-19?",
-                QuestionTypeEnum.Open, ViewModelEnum.CovidQuestions));
-        questions.add(new Question("3", "Have You Experienced Any Emotional Suffering Due to COVID-19? (While Not being Diagnosed Yourself)",
-                QuestionTypeEnum.Open, ViewModelEnum.CovidQuestions));
-        questions.add(new Question("30", "Have You Experienced Any Physical Suffering Due to COVID-19? (While Not being Diagnosed Yourself)",
-                QuestionTypeEnum.Open, ViewModelEnum.CovidQuestions));
-
-        questions.add(new Question("31", "I Feel Suicidal",
-                QuestionTypeEnum.Binary, ViewModelEnum.SanityCheck));
-        questions.add(new Question("32", "I Feel Aggressive",
-                QuestionTypeEnum.Binary, ViewModelEnum.SanityCheck));
-        questions.add(new Question("33", "I Hear Voices",
-                QuestionTypeEnum.Binary, ViewModelEnum.SanityCheck));
-        questions.add(new Question("34", "I Feel Strong Physical Pain",
-                QuestionTypeEnum.Binary, ViewModelEnum.SanityCheck));
-
-        questions.add(new Question("35", "I Had an Accident Recently",
-                QuestionTypeEnum.Binary, ViewModelEnum.Statement));
-        questions.add(new Question("36", "I Have been Hospitalized Recently",
-                QuestionTypeEnum.Binary, ViewModelEnum.Statement));
-
         questions.add(new Question("37", "Are You Getting Any Mental Help Nowadays? If You Are, By Whom and When Was Your Last Appointment? (Psychiatrist/Social Worker/Psychologist)",
                 QuestionTypeEnum.Open, ViewModelEnum.SocialQuestions));
         questions.add(new Question("38", "Rank Your Distress Level on a Scale of 1 to 10:",
@@ -1123,13 +1142,143 @@ public class Repository {
         for (Question question : questions) {
             mCloudDB.collection(QUESTIONS)
                     .document("en")
-                    .collection("ENGLISH_QUESTIONS")
+                    .collection(QUESTIONS_LOCAL)
                     .document(question.getId())
                     .set(question);
         }
     }
 
-    public void addFeelings() {
+    public void addQuestionsHebrew() {
+        final List<Question> questions = new ArrayList<>();
+
+        questions.add(new Question("1", "אעדיף פגישה ארוכה",
+                QuestionTypeEnum.Binary, ViewModelEnum.Treaty));
+        questions.add(new Question("10", "אעדיף פגישה קצרה",
+                QuestionTypeEnum.Binary, ViewModelEnum.Treaty));
+        questions.add(new Question("11", "אעדיף שאדם נוסף ילווה אותי במהלך הפגישה",
+                QuestionTypeEnum.Binary, ViewModelEnum.Treaty));
+
+        questions.add(new Question("12", "טופס 17",
+                QuestionTypeEnum.Binary, ViewModelEnum.Bureaucracy));
+        questions.add(new Question("13", "הארכה לטופס 17",
+                QuestionTypeEnum.Binary, ViewModelEnum.Bureaucracy));
+        questions.add(new Question("14", "סיכום פגישה",
+                QuestionTypeEnum.Binary, ViewModelEnum.Bureaucracy));
+        questions.add(new Question("15", "מרשמים",
+                QuestionTypeEnum.Binary, ViewModelEnum.Bureaucracy));
+        questions.add(new Question("16", "מכתב לביטוח לאומי",
+                QuestionTypeEnum.Binary, ViewModelEnum.Bureaucracy));
+        questions.add(new Question("17", "מכתב לרופא משפחה",
+                QuestionTypeEnum.Binary, ViewModelEnum.Bureaucracy));
+        questions.add(new Question("18", "מסמך לוועדת סל שיקום",
+                QuestionTypeEnum.Binary, ViewModelEnum.Bureaucracy));
+        questions.add(new Question("19", "מכתב לרופא תעסוקתי",
+                QuestionTypeEnum.Binary, ViewModelEnum.Bureaucracy));
+        questions.add(new Question("2", "בקשה לטיפול פסיכולוגי",
+                QuestionTypeEnum.Binary, ViewModelEnum.Bureaucracy));
+        questions.add(new Question("20", "מסמך לעובד סוציאלי",
+                QuestionTypeEnum.Binary, ViewModelEnum.Bureaucracy));
+        questions.add(new Question("21", "אחר",
+                QuestionTypeEnum.Binary, ViewModelEnum.Bureaucracy));
+
+        questions.add(new Question("22", "יש לי אחד מהתסמינים הבאים - חום גבוה, כאב גרון, אובדן חוש טעם, אובדן חודש ריח, שיעול, כאבי שרירים. ",
+                QuestionTypeEnum.Binary, ViewModelEnum.CovidQuestions));
+        questions.add(new Question("23", "אני מאובחן כיום כחולה קורונה",
+                QuestionTypeEnum.Binary, ViewModelEnum.CovidQuestions));
+        questions.add(new Question("24", "מישהו מבני ביתי כחולה כיום בקורונה",
+                QuestionTypeEnum.Binary, ViewModelEnum.CovidQuestions));
+        questions.add(new Question("25", "אם אחד מקרובי משפחתך חלה בקורונה?",
+                QuestionTypeEnum.Open, ViewModelEnum.CovidQuestions));
+        questions.add(new Question("26", "האם חלית בקורונה בעבר ואם כן מתי?",
+                QuestionTypeEnum.Open, ViewModelEnum.CovidQuestions));
+        questions.add(new Question("27", "האם בשל מגפת הקורונה נגרם לך סבל נפשי?",
+                QuestionTypeEnum.Open, ViewModelEnum.CovidQuestions));
+        questions.add(new Question("28", "האם בשל מחלת הקורונה נגרם לך סבל גופני?",
+                QuestionTypeEnum.Open, ViewModelEnum.CovidQuestions));
+        questions.add(new Question("29", "האם בשל מגפת הקורונה (גם אם לא חלית בעצמך) - נגרם לך סבל נפשי?",
+                QuestionTypeEnum.Open, ViewModelEnum.CovidQuestions));
+        questions.add(new Question("3", "האם בשל מגפת הקורונה (גם אם לא חלית בעצמך) - נגרם לך סבל גופני?",
+                QuestionTypeEnum.Open, ViewModelEnum.CovidQuestions));
+
+        questions.add(new Question("30", "אני מרגיש/ה אובדני/ת",
+                QuestionTypeEnum.Binary, ViewModelEnum.SanityCheck));
+        questions.add(new Question("31", "אני מרגיש/ה תוקפני/ת",
+                QuestionTypeEnum.Binary, ViewModelEnum.SanityCheck));
+        questions.add(new Question("32", "אני שומע/ת קולות",
+                QuestionTypeEnum.Binary, ViewModelEnum.SanityCheck));
+        questions.add(new Question("33", "אני מרגיש/ה כאב חזק",
+                QuestionTypeEnum.Binary, ViewModelEnum.SanityCheck));
+
+        questions.add(new Question("34", "עברתי תאונה לאחרונה",
+                QuestionTypeEnum.Binary, ViewModelEnum.Statement));
+        questions.add(new Question("35", "אושפזתי לאחרונה",
+                QuestionTypeEnum.Binary, ViewModelEnum.Statement));
+
+        questions.add(new Question("36", "יש עליי אפוטרופוסות",
+                QuestionTypeEnum.Binary, ViewModelEnum.SocialQuestions));
+        questions.add(new Question("37", "האם יש לך כיום מטפלים בתחום בריאות הנפש ואם כן מי הם ומתי נבדקת אצלם לאחרונה? (פסיכיאטר/עו\"ס/פסיכולוג)",
+                QuestionTypeEnum.Open, ViewModelEnum.SocialQuestions));
+        questions.add(new Question("38", "דרג/י את עוצמת מצוקתך מ-1 עד 10:",
+                QuestionTypeEnum.Slider, ViewModelEnum.SocialQuestions));
+        questions.add(new Question("39", "דרג/י את רמת התפקוד היומיומי שלך מ-1 עד 10:",
+                QuestionTypeEnum.Slider, ViewModelEnum.SocialQuestions));
+        questions.add(new Question("4", "האם יש מישהו תומך בסביבתך?",
+                QuestionTypeEnum.Open, ViewModelEnum.SocialQuestions));
+        questions.add(new Question("40", "האם מישהו מנצל אותך? פוגע בך?",
+                QuestionTypeEnum.Open, ViewModelEnum.SocialQuestions));
+
+        questions.add(new Question("41", "מה הגובה שלך?",
+                QuestionTypeEnum.Number, ViewModelEnum.HabitsQuestions));
+        questions.add(new Question("42", "מה המשקל שלך?",
+                QuestionTypeEnum.Number, ViewModelEnum.HabitsQuestions));
+        questions.add(new Question("43", "האם חלו לאחרונה שינויים במשקל, בתזונה או פעילות גופנית?",
+                QuestionTypeEnum.Open, ViewModelEnum.HabitsQuestions));
+        questions.add(new Question("44", "האם התאבון שלך ירד? עלה?",
+                QuestionTypeEnum.Open, ViewModelEnum.HabitsQuestions));
+        questions.add(new Question("45", "האם השינה שלך פגומה?",
+                QuestionTypeEnum.Open, ViewModelEnum.HabitsQuestions));
+
+        questions.add(new Question("46", "אני מרגיש/ה מצב רוח ירוד",
+                QuestionTypeEnum.Binary, ViewModelEnum.MentalQuestions));
+        questions.add(new Question("47", "אני מרגיש/ה מצב רוב מרומם",
+                QuestionTypeEnum.Binary, ViewModelEnum.MentalQuestions));
+        questions.add(new Question("48", "אני מרגיש/ה חרדה",
+                QuestionTypeEnum.Binary, ViewModelEnum.MentalQuestions));
+        questions.add(new Question("49", "אני מרגיש/ה חשדנות",
+                QuestionTypeEnum.Binary, ViewModelEnum.MentalQuestions));
+        questions.add(new Question("5", "אני מרגיש/ה מתח",
+                QuestionTypeEnum.Binary, ViewModelEnum.MentalQuestions));
+        questions.add(new Question("50", "יש לי מחשבות מוזרות",
+                QuestionTypeEnum.Binary, ViewModelEnum.MentalQuestions));
+        questions.add(new Question("51", "יש לי תחושות מוזרות",
+                QuestionTypeEnum.Binary, ViewModelEnum.MentalQuestions));
+        questions.add(new Question("52", "אני מרגיש/ה כעס",
+                QuestionTypeEnum.Binary, ViewModelEnum.MentalQuestions));
+        questions.add(new Question("53", "יש לי מחשבות תוקפניות",
+                QuestionTypeEnum.Binary, ViewModelEnum.MentalQuestions));
+        questions.add(new Question("54", "יש לי מחשבות אובדניות",
+                QuestionTypeEnum.Binary, ViewModelEnum.MentalQuestions));
+        questions.add(new Question("55", "יש לי פגיעה בריכוז",
+                QuestionTypeEnum.Binary, ViewModelEnum.MentalQuestions));
+        questions.add(new Question("56", "יש לי פגיעה בזיכרון",
+                QuestionTypeEnum.Binary, ViewModelEnum.MentalQuestions));
+        questions.add(new Question("57", "יש לי ירידה בראיה",
+                QuestionTypeEnum.Binary, ViewModelEnum.MentalQuestions));
+        questions.add(new Question("58", "יש לי ירידה בשמיעה",
+                QuestionTypeEnum.Binary, ViewModelEnum.MentalQuestions));
+        questions.add(new Question("59", "יש לי קושי בהליכה",
+                QuestionTypeEnum.Binary, ViewModelEnum.MentalQuestions));
+
+        for (Question question : questions) {
+            mCloudDB.collection(QUESTIONS)
+                    .document("he")
+                    .collection(QUESTIONS_LOCAL)
+                    .document(question.getId())
+                    .set(question);
+        }
+    }
+
+    public void addFeelingsEnglish() {
         final List<Feeling> feelings = new ArrayList<>();
 
         feelings.add(new Feeling("1", R.drawable.fear, "Fear"));
@@ -1149,7 +1298,33 @@ public class Repository {
         for (Feeling feeling : feelings) {
             mCloudDB.collection(FEELINGS)
                     .document("en")
-                    .collection("ENGLISH_FEELINGS")
+                    .collection(FEELINGS_LOCAL)
+                    .document(feeling.getId())
+                    .set(feeling);
+        }
+    }
+
+    public void addFeelingsHebrew() {
+        final List<Feeling> feelings = new ArrayList<>();
+
+        feelings.add(new Feeling("1", R.drawable.fear, "פחד"));
+        feelings.add(new Feeling("10", R.drawable.tension, "מתח"));
+        feelings.add(new Feeling("11", R.drawable.happiness, "שמחה"));
+        feelings.add(new Feeling("2", R.drawable.sadness, "עצב"));
+        feelings.add(new Feeling("3", R.drawable.anger, "כעס"));
+        feelings.add(new Feeling("4", R.drawable.anxiety, "חרדה"));
+        feelings.add(new Feeling("40", R.drawable.uplift, "מרומם"));
+        feelings.add(new Feeling("5", R.drawable.depression, "דיכאון"));
+        feelings.add(new Feeling("6", R.drawable.disturbed, "מוטרד"));
+        feelings.add(new Feeling("7", R.drawable.embarrassment, "מבוכה"));
+        feelings.add(new Feeling("70", R.drawable.peace, "שלווה"));
+        feelings.add(new Feeling("8", R.drawable.confusion, "בלבול"));
+        feelings.add(new Feeling("9", R.drawable.aggressive, "תוקפנות"));
+
+        for (Feeling feeling : feelings) {
+            mCloudDB.collection(FEELINGS)
+                    .document("he")
+                    .collection(FEELINGS_LOCAL)
                     .document(feeling.getId())
                     .set(feeling);
         }
