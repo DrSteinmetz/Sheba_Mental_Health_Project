@@ -193,10 +193,22 @@ public class Repository {
         void onGetLastAppointmentFailed(String error);
     }
 
-    private RepositoryGetLastAppointmentInterface mGetLastAppointmentInterface;
+    private RepositoryGetLastAppointmentInterface mRepositoryGetLastAppointmentInterface;
 
     public void setGetLastAppointmentInterface(RepositoryGetLastAppointmentInterface lastAppointmentInterface) {
-        this.mGetLastAppointmentInterface = lastAppointmentInterface;
+        this.mRepositoryGetLastAppointmentInterface = lastAppointmentInterface;
+    }
+
+    /*<------ Get Live Appointment ------>*/
+    public interface RepositoryGetLiveAppointmentInterface {
+        void onGetLiveAppointmentSucceed(Appointment appointment);
+        void onGetLiveAppointmentFailed(String error);
+    }
+
+    private RepositoryGetLiveAppointmentInterface mRepositoryGetLiveAppointmentInterface;
+
+    public void setGetLiveAppointmentInterface(RepositoryGetLiveAppointmentInterface repositoryGetLiveAppointmentInterface) {
+        this.mRepositoryGetLiveAppointmentInterface = repositoryGetLiveAppointmentInterface;
     }
 
     /*<------ Set Pain Points ------>*/
@@ -534,6 +546,36 @@ public class Repository {
                         }
                     }
                 });
+    }
+
+    public void getLiveAppointment() {
+        mLiveAppointmentListener = mCloudDB.collection(APPOINTMENTS)
+                .document(mCurrentAppointment.getId())
+                .addSnapshotListener(new EventListener<DocumentSnapshot>() {
+                    @Override
+                    public void onEvent(@Nullable DocumentSnapshot value,
+                                        @Nullable FirebaseFirestoreException error) {
+                        if (error == null && value != null) {
+                            final Appointment appointment = value.toObject(Appointment.class);
+                            if (mRepositoryGetLiveAppointmentInterface != null) {
+                                mRepositoryGetLiveAppointmentInterface
+                                        .onGetLiveAppointmentSucceed(appointment);
+                            }
+                        } else if (error != null) {
+                            Log.e(TAG, "onEvent: ", error);
+                            if (mRepositoryGetLiveAppointmentInterface != null) {
+                                mRepositoryGetLiveAppointmentInterface
+                                        .onGetLiveAppointmentFailed(error.getMessage());
+                            }
+                        } else {
+                            Log.e(TAG, "onEvent: " + "SOMETHING WENT WRONG: null firebase error");
+                        }
+                    }
+                });
+    }
+
+    public void removeLiveAppointmentListener() {
+        mLiveAppointmentListener.remove();
     }
 
     private void mappingAnswerObject(final List<Map<String, Object>> answersMapList, final Appointment appointment) {
@@ -947,16 +989,16 @@ public class Repository {
 
                 if(value != null && !value.isEmpty()){
                     Appointment appointment = value.getDocuments().get(0).toObject(Appointment.class);
-                    if (mGetLastAppointmentInterface != null) {
-                        mGetLastAppointmentInterface.onGetLastAppointmentSucceed(appointment);
+                    if (mRepositoryGetLastAppointmentInterface != null) {
+                        mRepositoryGetLastAppointmentInterface.onGetLastAppointmentSucceed(appointment);
                     }
                 }
                 else {
-                    if (mGetLastAppointmentInterface != null) {
+                    if (mRepositoryGetLastAppointmentInterface != null) {
                         if(error!=null)
-                            mGetLastAppointmentInterface.onGetLastAppointmentFailed(error.getMessage());
+                            mRepositoryGetLastAppointmentInterface.onGetLastAppointmentFailed(error.getMessage());
                         else
-                            mGetLastAppointmentInterface.onGetLastAppointmentFailed("No Appointment found");
+                            mRepositoryGetLastAppointmentInterface.onGetLastAppointmentFailed("No Appointment found");
                     }
                 }
             }

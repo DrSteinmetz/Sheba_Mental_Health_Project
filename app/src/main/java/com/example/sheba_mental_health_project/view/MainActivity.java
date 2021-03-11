@@ -510,6 +510,22 @@ public class MainActivity extends AppCompatActivity
                 .commit();
     }
 
+    @Override
+    public void onMeetingEnded() {
+        final WarningDialog warningDialog = new WarningDialog(this);
+        warningDialog.setTitleWarningText("Your Meeting has Ended");
+        warningDialog.setPromptText("The Therapist has Ended Your Meeting");
+        warningDialog.setOnActionListener(new WarningDialog.WarningDialogActionInterface() {
+            @Override
+            public void onYesBtnClicked() {}
+
+            @Override
+            public void onNoBtnClicked() {}
+        });
+        warningDialog.show();
+        onBackToAppointmentsBtnClicked();
+    }
+
     /**<------ Appointment Therapist ------>*/
     @Override
     public void onTherapistAppointmentClicked() {
