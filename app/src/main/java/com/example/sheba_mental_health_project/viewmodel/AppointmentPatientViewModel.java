@@ -60,6 +60,12 @@ public class AppointmentPatientViewModel extends ViewModel {
     }
 
     public void getLiveAppointment() {
-        mRepository.getLiveAppointment();
+        if (getCurrentAppointment() != null) {
+            mRepository.getLiveAppointmentState();
+        }
+    }
+
+    public void removeLiveAppointmentListener() {
+        mRepository.removeLiveAppointmentListener();
     }
 }

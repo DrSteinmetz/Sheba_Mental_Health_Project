@@ -32,7 +32,8 @@ public class AppointmentPatientFragment extends Fragment {
 
     private AppointmentPatientViewModel mViewModel;
 
-    private final SimpleDateFormat ddMMYYYY = new SimpleDateFormat("dd.MM.yyyy", Locale.getDefault());
+    private final SimpleDateFormat ddMMYYYY = new SimpleDateFormat("dd.MM.yyyy",
+            Locale.getDefault());
 
     private final String TAG = "AppointmentPatientFrag";
 
@@ -85,7 +86,7 @@ public class AppointmentPatientFragment extends Fragment {
         final Observer<Appointment> onGetLiveAppointmentSucceed = new Observer<Appointment>() {
             @Override
             public void onChanged(Appointment appointment) {
-                if (appointment.getState() != AppointmentStateEnum.OnGoing) {
+                if (appointment.getState() == AppointmentStateEnum.Ended) {
                     if (listener != null) {
                         listener.onMeetingEnded();
                     }
@@ -147,5 +148,14 @@ public class AppointmentPatientFragment extends Fragment {
         mViewModel.getLiveAppointment();
 
         return rootView;
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+
+        if (mViewModel != null) {
+            mViewModel.removeLiveAppointmentListener();
+        }
     }
 }

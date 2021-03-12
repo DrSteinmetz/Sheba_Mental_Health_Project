@@ -548,7 +548,7 @@ public class Repository {
                 });
     }
 
-    public void getLiveAppointment() {
+    public void getLiveAppointmentState() {
         mLiveAppointmentListener = mCloudDB.collection(APPOINTMENTS)
                 .document(mCurrentAppointment.getId())
                 .addSnapshotListener(new EventListener<DocumentSnapshot>() {
@@ -557,18 +557,21 @@ public class Repository {
                                         @Nullable FirebaseFirestoreException error) {
                         if (error == null && value != null) {
                             final Appointment appointment = value.toObject(Appointment.class);
+
                             if (mRepositoryGetLiveAppointmentInterface != null) {
                                 mRepositoryGetLiveAppointmentInterface
                                         .onGetLiveAppointmentSucceed(appointment);
                             }
                         } else if (error != null) {
                             Log.e(TAG, "onEvent: ", error);
+
                             if (mRepositoryGetLiveAppointmentInterface != null) {
                                 mRepositoryGetLiveAppointmentInterface
                                         .onGetLiveAppointmentFailed(error.getMessage());
                             }
                         } else {
-                            Log.e(TAG, "onEvent: " + "SOMETHING WENT WRONG: null firebase error");
+                            Log.e(TAG, "onEvent: " +
+                                    "SOMETHING WENT WRONG: null firebase error");
                         }
                     }
                 });

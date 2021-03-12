@@ -135,6 +135,7 @@ public class AnswersAdapter extends RecyclerView.Adapter<AnswersAdapter.AnswersV
                         sliderValueTv.setText(answerValue);
                         slider.setValue(Float.parseFloat(answerValue));
                     } else {
+                        sliderValueTv.setText("0");
                         slider.setValue(0);
                     }
                     break;
