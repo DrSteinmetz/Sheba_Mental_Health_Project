@@ -17,7 +17,7 @@
     <string name="character">דמות</string>
     <string name="feelings">תחושות</string>
     <string name="appointments_date">מועד הפגישה</string>
-    <string name="edit_appointment_title">עריכת הפגישה עם</string>
+    <string name="edit_appointment_title">עריכת פגישה</string>
     <string name="pain_point_deletion_prompt">האם ברצונך למחוק נקודה זו לצמיתות?</string>
     <string name="pain_point_deleted_prompt">הנקודה נמחקה בהצלחה!</string>
     <string name="appointment_deletion_prompt">האם ברצונך למחוק פגישה זו לצמיתות?</string>

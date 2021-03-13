@@ -16,7 +16,7 @@
     <string name="character">Character</string>
     <string name="feelings">Feelings</string>
     <string name="appointments_date">Appointment\'s Date</string>
-    <string name="edit_appointment_title">Edit Appointment With</string>
+    <string name="edit_appointment_title">Edit Appointment</string>
     <string name="pain_point_deletion_prompt">Are You Sure You Want To Permanently Delete This Point?</string>
     <string name="pain_point_deleted_prompt">Point Deleted Successfully!</string>
     <string name="appointment_deletion_prompt">Are You Sure You Want to Permanently Delete This Appointment?</string>

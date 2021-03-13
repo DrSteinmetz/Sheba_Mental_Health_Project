@@ -12,7 +12,7 @@
         android:layout_marginStart="8dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@id/message_body_tv"
-        app:tint="@color/design_default_color_secondary"
+        app:tint="#aadee9"
         android:src="@drawable/ic_message_received_corner" />
 
     <TextView
@@ -22,20 +22,24 @@
         android:layout_marginStart="10dp"
         android:layout_marginTop="4dp"
         android:background="@drawable/message_received_shape"
-        android:backgroundTint="@color/design_default_color_secondary"
+        android:backgroundTint="#aadee9"
         android:maxWidth="240dp"
         android:padding="8dp"
-        android:textSize="15sp"
-        android:textColor="@color/white"
+        android:textSize="20sp"
+
+        android:textColor="@color/black"
         app:layout_constraintStart_toStartOf="@id/message_corner"
         app:layout_constraintTop_toTopOf="parent" />
+
 
     <TextView
         android:id="@+id/message_time_tv"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="4dp"
-        android:paddingTop="11dp"
+        android:paddingTop="20dp"
+
+        android:textColor="@color/light_gray"
         app:layout_goneMarginStart="10dp"
         android:textSize="11sp"
         app:layout_constraintBottom_toBottomOf="@+id/message_body_tv"

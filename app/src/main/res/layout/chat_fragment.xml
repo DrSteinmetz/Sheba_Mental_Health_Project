@@ -16,6 +16,7 @@
 
         <com.google.android.material.appbar.MaterialToolbar
             android:layout_width="match_parent"
+            android:background="@color/light_gray"
             android:layout_height="wrap_content">
             <TextView
                 android:id="@+id/tool_bar_username"
@@ -24,8 +25,8 @@
                 android:layout_marginStart="10dp"
                 android:text="Username"
                 android:textSize="20sp"
-                android:textStyle="bold"
-                android:textColor="@color/black"
+
+                android:textColor="@color/white"
                 android:textAllCaps="false" />
         </com.google.android.material.appbar.MaterialToolbar>
 
@@ -65,6 +66,8 @@
 
         <LinearLayout
             android:id="@+id/layout_chatbox"
+            android:layout_marginBottom="20dp"
+            android:layout_marginTop="5dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@android:color/transparent"
@@ -93,7 +96,7 @@
                 android:padding="5dp"
                 android:scaleType="fitCenter"
                 android:src="@drawable/ic_round_send_24"
-                android:tint="@color/design_default_color_primary"
+                android:tint="@color/light_blue"
                 android:background="?attr/selectableItemBackground"
                 android:visibility="gone" />
 
