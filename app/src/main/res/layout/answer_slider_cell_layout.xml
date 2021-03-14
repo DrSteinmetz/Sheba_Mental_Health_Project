@@ -39,6 +39,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginHorizontal="10dp"
                     app:trackColorInactive="#CCCCCC"
+                    android:layoutDirection="ltr"
                     app:trackColorActive="@color/light_blue"
                     app:thumbColor="@color/light_blue"
                     android:enabled="false"

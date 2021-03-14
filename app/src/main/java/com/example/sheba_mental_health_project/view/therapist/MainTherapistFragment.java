@@ -22,6 +22,7 @@ import com.example.sheba_mental_health_project.R;
 import com.example.sheba_mental_health_project.model.Appointment;
 import com.example.sheba_mental_health_project.model.TherapistAppointmentsAdapter;
 import com.example.sheba_mental_health_project.model.ViewModelFactory;
+import com.example.sheba_mental_health_project.model.enums.AppointmentStateEnum;
 import com.example.sheba_mental_health_project.model.enums.ViewModelEnum;
 import com.example.sheba_mental_health_project.viewmodel.MainTherapistViewModel;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -41,6 +42,7 @@ public class MainTherapistFragment extends Fragment {
 
     public interface MainTherapistInterface {
         void onTherapistAppointmentClicked();
+        void onTherapistOnGoingAppointmentClicked();
         void onAddAppointClicked();
     }
 
@@ -82,8 +84,14 @@ public class MainTherapistFragment extends Fragment {
                 mAppointmentAdapter.setAppointmentListener(new TherapistAppointmentsAdapter.AppointmentListener() {
                     @Override
                     public void onAppointmentClicked(int position, View view) {
-                        mViewModel.setCurrentAppointment(appointments.get(position));
-                        listener.onTherapistAppointmentClicked();
+                        final Appointment appointment = appointments.get(position);
+                        mViewModel.setCurrentAppointment(appointment);
+                        if (appointment.getState().equals(AppointmentStateEnum.OnGoing)) {
+                            listener.onTherapistOnGoingAppointmentClicked();
+                        } else {
+                            listener.onTherapistAppointmentClicked();
+                        }
+
                     }
                 });
             }
