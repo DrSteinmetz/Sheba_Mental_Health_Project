@@ -7,7 +7,8 @@
     android:background="@color/white"
     android:focusable="true"
     android:clickable="true"
-    tools:context=".view.character.PainStrengthSubFragment">
+    tools:context=".view.character.PainStrengthSubFragment"
+    android:paddingHorizontal="30dp">
 
     <TextView
         android:id="@+id/pain_strength_tv"
@@ -17,7 +18,6 @@
         android:gravity="center"
         android:text="@string/pain_strength_tv"
         android:textSize="20sp"
-        android:textStyle="bold"
         android:textColor="@color/black"
         android:textAllCaps="false" />
     <com.rtugeek.android.colorseekbar.ColorSeekBar
@@ -27,19 +27,16 @@
         android:layout_below="@id/pain_strength_tv"
         app:barHeight="7dp"
         app:maxPosition="10"
-        app:colorSeeds="@array/color_seek_bar" />
+        app:colorSeeds="@array/color_seek_bar"
+        android:layout_marginTop="10dp"/>
 
     <com.google.android.material.button.MaterialButton
         android:id="@+id/continue_btn"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="30dp"
+        android:layout_marginTop="20dp"
         android:layout_below="@id/pain_strength_sb"
         android:text="@string/continue_txt"
-        android:textSize="30sp"
-        android:textStyle="bold"
-        android:textColor="@color/white"
-        android:textAllCaps="false" />
+        style="@style/blue_btn"
+         />
 
 </RelativeLayout>

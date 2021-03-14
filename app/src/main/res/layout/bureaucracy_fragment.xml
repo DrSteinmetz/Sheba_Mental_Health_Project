@@ -18,7 +18,8 @@
         android:text="@string/things_i_need_today_prompt"
         android:textSize="20sp"
         android:textColor="@color/black"
-        android:textAllCaps="false" />
+        android:textAllCaps="false"
+        android:textStyle="bold"/>
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/questions_recycler"

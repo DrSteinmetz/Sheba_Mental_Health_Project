@@ -13,7 +13,8 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:padding="20dp">
+        android:padding="20dp"
+        >
 
         <RelativeLayout
             android:id="@+id/appointment_relative"
@@ -21,7 +22,8 @@
             android:layout_height="wrap_content"
             android:layout_above="@id/back_btn"
             android:clickable="false"
-            android:focusable="false">
+            android:focusable="false"
+            android:padding="30dp">
 
             <LinearLayout
                 android:id="@+id/title_linear"
@@ -63,8 +65,7 @@
                     android:gravity="center"
                     android:text="Hi Yossi"
                     android:textColor="@color/light_gray"
-                    android:textSize="25sp"
-                    android:textStyle="bold"
+                    android:textSize="20sp"
                     android:textAllCaps="false" />
 
             </RelativeLayout>

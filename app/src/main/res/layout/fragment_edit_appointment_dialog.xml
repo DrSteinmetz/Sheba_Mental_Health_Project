@@ -3,7 +3,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    android:padding="20dp"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:padding="30dp"
     android:background="@color/white"
     tools:context=".view.therapist.EditAppointmentDialogFragment">
 
@@ -13,50 +14,97 @@
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
         android:text="@string/edit_appointment_title"
-        android:textSize="20sp"
-        android:textStyle="bold"
-        android:textColor="@color/dark_gray"
+        android:textSize="25sp"
+        android:layout_marginBottom="30dp"
+        android:textColor="@color/black"
         android:textAllCaps="false" />
 
+    <TextView
+        android:id="@+id/patient_title_tv"
+        android:layout_below="@+id/title_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="6dp"
+        android:layout_marginStart="10dp"
+        android:text="@string/patient_prompt"
+        android:textSize="20sp"
+        android:textColor="@color/black"
+        android:textAllCaps="false" />
     <TextView
         android:id="@+id/patient_name_tv"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@id/title_tv"
-        android:layout_centerHorizontal="true"
         android:layout_marginTop="6dp"
-        android:text="Matan"
+        android:layout_marginBottom="30dp"
+        android:layout_toEndOf="@+id/patient_title_tv"
+        android:layout_below="@+id/title_tv"
+        android:text="Matan Romanov"
         android:textSize="20sp"
-        android:textStyle="bold"
+        android:layout_marginStart="10dp"
         android:textColor="@color/dark_gray"
         android:textAllCaps="false" />
 
+
+
     <LinearLayout
+        android:id="@+id/date_time_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/patient_name_tv"
-        android:layout_above="@id/finish_btn"
-        android:gravity="center"
         android:orientation="vertical">
 
-        <com.google.android.material.textview.MaterialTextView
-            android:id="@+id/date_dialog_tv"
-            android:layout_width="wrap_content"
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:gravity="center"
-            android:hint="@string/pick_date"
-            android:textSize="20sp"
-            android:textColor="@color/dark_gray"
-            android:textAllCaps="false"
-            android:padding="15dp"
-            android:background="@drawable/text_view_border" />
+            android:layout_marginTop="10dp"
+            android:gravity="center">
+
+
+
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/date_dialog_tv"
+                android:layout_width="0dp"
+                android:layout_weight="5"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:hint="@string/pick_date"
+
+                android:textSize="20sp"
+                android:textColor="@color/dark_gray"
+                android:textAllCaps="false"
+                android:padding="15dp"
+                android:layout_marginStart="10dp"
+                android:background="@drawable/text_view_border" />
+
+            <ImageView
+
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                app:tint="@color/light_gray"
+                android:src="@drawable/ic_round_date_range_24"
+                android:layout_gravity="center_vertical"/>
+
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:gravity="center">
+
+
+
 
         <com.google.android.material.textview.MaterialTextView
             android:id="@+id/time_dialog_tv"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="50dp"
+            android:layout_weight="5"
+
             android:gravity="center"
+            android:layout_marginStart="10dp"
             android:hint="@string/pick_time"
             android:textSize="20sp"
             android:textColor="@color/dark_gray"
@@ -64,14 +112,27 @@
             android:padding="15dp"
             android:background="@drawable/text_view_border" />
 
+            <ImageView
+
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                app:tint="@color/light_gray"
+                android:src="@drawable/ic_round_access_time_24"
+                android:layout_gravity="center_vertical"/>
+        </LinearLayout>
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/finish_btn"
+            android:text="@string/finish"
+            style="@style/blue_btn"
+            android:layout_gravity="center"
+            android:layout_marginTop="40dp"/>
+
+
+
     </LinearLayout>
 
-    <com.google.android.material.button.MaterialButton
-        android:id="@+id/finish_btn"
-        android:layout_width="wrap_content"
-        android:layout_centerHorizontal="true"
-        android:layout_alignParentBottom="true"
-        android:text="@string/finish"
-        style="@style/blue_btn" />
+
 
 </RelativeLayout>

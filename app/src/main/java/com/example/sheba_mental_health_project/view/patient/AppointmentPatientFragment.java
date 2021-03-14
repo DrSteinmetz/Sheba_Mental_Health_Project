@@ -1,5 +1,6 @@
 package com.example.sheba_mental_health_project.view.patient;
 
+import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
 import android.content.Context;
@@ -9,6 +10,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,6 +19,7 @@ import android.widget.TextView;
 import com.example.sheba_mental_health_project.R;
 import com.example.sheba_mental_health_project.model.Appointment;
 import com.example.sheba_mental_health_project.model.ViewModelFactory;
+import com.example.sheba_mental_health_project.model.enums.AppointmentStateEnum;
 import com.example.sheba_mental_health_project.model.enums.ViewModelEnum;
 import com.example.sheba_mental_health_project.view.character.CharacterFragment;
 import com.example.sheba_mental_health_project.viewmodel.AppointmentPatientViewModel;
@@ -29,9 +32,10 @@ public class AppointmentPatientFragment extends Fragment {
 
     private AppointmentPatientViewModel mViewModel;
 
-    private final SimpleDateFormat ddMMYYYY = new SimpleDateFormat("dd.MM.yyyy", Locale.getDefault());
+    private final SimpleDateFormat ddMMYYYY = new SimpleDateFormat("dd.MM.yyyy",
+            Locale.getDefault());
 
-    private final String TAG = "AppointmentPatientFragment";
+    private final String TAG = "AppointmentPatientFrag";
 
 
     public static AppointmentPatientFragment newInstance(Appointment appointment) {
@@ -46,6 +50,7 @@ public class AppointmentPatientFragment extends Fragment {
         void onPhysicalClicked();
         void onMentalClicked();
         void onChatClicked();
+        void onMeetingEnded();
     }
 
     private AppointmentPatientFragment.AppointmentPatientInterface listener;
@@ -77,6 +82,27 @@ public class AppointmentPatientFragment extends Fragment {
                             false, true))
                     .commit();
         }
+
+        final Observer<Appointment> onGetLiveAppointmentSucceed = new Observer<Appointment>() {
+            @Override
+            public void onChanged(Appointment appointment) {
+                if (appointment.getState() == AppointmentStateEnum.Ended) {
+                    if (listener != null) {
+                        listener.onMeetingEnded();
+                    }
+                }
+            }
+        };
+
+        final Observer<String> onGetLiveAppointmentFailed = new Observer<String>() {
+            @Override
+            public void onChanged(String error) {
+                Log.e(TAG, "onChanged: " + error);
+            }
+        };
+
+        mViewModel.getGetLiveAppointmentSucceed().observe(this, onGetLiveAppointmentSucceed);
+        mViewModel.getGetLiveAppointmentFailed().observe(this, onGetLiveAppointmentFailed);
     }
 
     @Override
@@ -119,6 +145,17 @@ public class AppointmentPatientFragment extends Fragment {
             }
         });
 
+        mViewModel.getLiveAppointment();
+
         return rootView;
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+
+        if (mViewModel != null) {
+            mViewModel.removeLiveAppointmentListener();
+        }
     }
 }

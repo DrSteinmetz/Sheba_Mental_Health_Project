@@ -13,16 +13,24 @@
         android:layout_height="wrap_content"
         android:padding="20dp">
 
-        <ImageView
-            android:id="@+id/treaty_iv"
+        <TextView
+            android:id="@+id/title_tv"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:text="@string/meeting_expectations"
+            android:textSize="20sp"
+            android:textColor="@color/black"
+            android:textAllCaps="false"
+            android:textStyle="bold"
+            />
+
 
         <RadioGroup
+            android:layout_marginTop="10dp"
             android:id="@+id/meeting_time_pref_rg"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/treaty_iv">
+            android:layout_below="@id/title_tv">
 
             <com.google.android.material.radiobutton.MaterialRadioButton
                 android:id="@+id/short_meeting_rb"
@@ -32,7 +40,7 @@
                 android:padding="10dp"
                 android:tag="1"
                 android:text="@string/long_meeting_prompt"
-                android:textSize="20sp"
+                android:textSize="17sp"
                 android:textColor="@color/black" />
 
             <com.google.android.material.radiobutton.MaterialRadioButton
@@ -43,7 +51,7 @@
                 android:padding="10dp"
                 android:tag="10"
                 android:text="@string/short_meeting_prompt"
-                android:textSize="20sp"
+                android:textSize="17sp"
                 android:textColor="@color/black" />
 
         </RadioGroup>

@@ -7,7 +7,8 @@
     android:background="@color/white"
     android:focusable="true"
     android:clickable="true"
-    tools:context=".view.character.PainFrequencySubFragment">
+    tools:context=".view.character.PainFrequencySubFragment"
+    android:paddingHorizontal="30dp">
 
     <TextView
         android:id="@+id/pain_frequency_tv"
@@ -18,7 +19,6 @@
         android:gravity="center"
         android:text="@string/pain_frequency_tv"
         android:textSize="20sp"
-        android:textStyle="bold"
         android:textColor="@color/black"
         android:textAllCaps="false" />
 
@@ -47,22 +47,18 @@
             android:layout_alignParentEnd="true"
             android:layout_centerVertical="true"
             android:layout_marginHorizontal="5dp"
-            app:tint="@color/black"
+            app:tint="@color/light_blue"
             android:src="@drawable/ic_round_keyboard_arrow_down_24" />
 
     </RelativeLayout>
 
     <com.google.android.material.button.MaterialButton
         android:id="@+id/finish_btn"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="30dp"
         android:layout_below="@id/spinner_layout"
         android:text="@string/continue_txt"
-        android:textSize="30sp"
-        android:textStyle="bold"
-        android:textColor="@color/white"
-        android:textAllCaps="false" />
+        style="@style/blue_btn"
+         />
 
 </RelativeLayout>

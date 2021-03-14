@@ -43,16 +43,17 @@
             android:layout_toEndOf="@+id/feeling_strength_title_tv"
             android:text="0"
             android:textSize="17sp"
-            android:textColor="#555555"
+            android:textColor="@color/dark_gray"
             android:textAllCaps="false"
             android:layout_marginStart="5dp" />
 
         <androidx.appcompat.widget.AppCompatSeekBar
+            android:layoutDirection="ltr"
             android:id="@+id/feeling_strength_sb"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@id/feeling_strength_title_tv"
-            android:layout_marginTop="5dp"
+            android:layout_marginTop="15dp"
             android:max="10" />
 
     </RelativeLayout>

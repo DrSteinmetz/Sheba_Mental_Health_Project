@@ -408,14 +408,6 @@ public class MainActivity extends AppCompatActivity
     }
 
     @Override
-    public void onTherapistStartMeetingClicked() {
-        getSupportFragmentManager().beginTransaction()
-                .add(R.id.container, AppointmentTherapistFragment.newInstance(), APPOINTMENT_THERAPIST_FRAG)
-                .addToBackStack(null)
-                .commit();
-    }
-
-    @Override
     public void onLeaveNoteClicked() {
         getSupportFragmentManager().beginTransaction()
                 .add(android.R.id.content, NotesFragment.newInstance(), NOTES_FRAG)
@@ -438,6 +430,7 @@ public class MainActivity extends AppCompatActivity
                 .commit();
     }
 
+    /**<------ Patient Appointment ------>*/
     @Override
     public void onBackToAppointmentsBtnClicked() {
         getSupportFragmentManager().popBackStack(null,
@@ -452,6 +445,54 @@ public class MainActivity extends AppCompatActivity
         onBackToAppointmentsBtnClicked();
         onMoveToPreQuestions();
     }
+
+    @Override
+    public void onPhysicalClicked() {
+        getSupportFragmentManager().beginTransaction()
+                .replace(R.id.container, PhysicalPatientFragment.newInstance(), PHYSICAL_PATIENT_FRAG)
+                .addToBackStack(null)
+                .commit();
+    }
+
+    @Override
+    public void onMentalClicked() {
+        getSupportFragmentManager().beginTransaction()
+                .add(R.id.container, MentalPatientFragment.newInstance(), MENTAL_PATIENT_FRAG)
+                .addToBackStack(null)
+                .commit();
+    }
+
+    /**<------ Patient Physical ------>*/
+    @Override
+    public void onHomeBtnClicked() {
+        onBackPressed();
+    }
+
+    /**<------ Patient Mental ------>*/
+    @Override
+    public void onSaveFeelings() {
+        onBackPressed();
+    }
+
+    @Override
+    public void onMeetingEnded() {
+        // TODO: Make a new similar DialogFragment with 'OK' button only - "ConfirmationDialog"
+        //  and think of moving the LiveAppointment listener to here, that way we can also inform
+        //  the patient his meeting has been started !
+        final WarningDialog warningDialog = new WarningDialog(this);
+        warningDialog.setTitleWarningText("Your Meeting has Ended");
+        warningDialog.setPromptText("The Therapist has Ended Your Meeting");
+        warningDialog.setOnActionListener(new WarningDialog.WarningDialogActionInterface() {
+            @Override
+            public void onYesBtnClicked() {}
+
+            @Override
+            public void onNoBtnClicked() {}
+        });
+        warningDialog.show();
+        onBackToAppointmentsBtnClicked();
+    }
+
 
     /**<------ Character ------>*/
     @Override
@@ -510,12 +551,21 @@ public class MainActivity extends AppCompatActivity
                 .commit();
     }
 
+
     /**<------ Appointment Therapist ------>*/
     @Override
     public void onTherapistAppointmentClicked() {
         getSupportFragmentManager().beginTransaction()
                 //TODO: add enter and exit animations
                 .replace(R.id.container, StartMeetingFragment.newInstance(), START_MEETING_FRAG)
+                .addToBackStack(null)
+                .commit();
+    }
+
+    @Override
+    public void onTherapistStartMeetingClicked() {
+        getSupportFragmentManager().beginTransaction()
+                .add(R.id.container, AppointmentTherapistFragment.newInstance(), APPOINTMENT_THERAPIST_FRAG)
                 .addToBackStack(null)
                 .commit();
     }
@@ -577,34 +627,6 @@ public class MainActivity extends AppCompatActivity
                 .commit();
     }
 
-    /**<------ Physical Patient ------>*/
-    @Override
-    public void onHomeBtnClicked() {
-        onBackPressed();
-    }
-
-    /**<------ MentalPatient ------>*/
-    @Override
-    public void onSaveFeelings() {
-        onBackPressed();
-    }
-
-    /**<------ Appointment Patient ------>*/
-    @Override
-    public void onPhysicalClicked() {
-        getSupportFragmentManager().beginTransaction()
-                .replace(R.id.container, PhysicalPatientFragment.newInstance(), PHYSICAL_PATIENT_FRAG)
-                .addToBackStack(null)
-                .commit();
-    }
-
-    @Override
-    public void onMentalClicked() {
-        getSupportFragmentManager().beginTransaction()
-                .add(R.id.container, MentalPatientFragment.newInstance(), MENTAL_PATIENT_FRAG)
-                .addToBackStack(null)
-                .commit();
-    }
 
     @Override
     public void onBackPressed() {
@@ -638,6 +660,4 @@ public class MainActivity extends AppCompatActivity
             super.onBackPressed();
         }
     }
-
-
 }
