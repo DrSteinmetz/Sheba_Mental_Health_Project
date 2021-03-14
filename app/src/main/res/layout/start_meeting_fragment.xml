@@ -88,8 +88,8 @@
             android:layout_centerInParent="true"
             android:gravity="center"
             android:text="@string/empty_history_list_prompt"
-            android:textSize="35sp"
-            android:textStyle="bold"
+            android:textSize="25sp"
+            android:layout_margin="30dp"
             android:visibility="gone" />
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton
@@ -120,12 +120,12 @@
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/start_meeting_btn"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
             android:layout_centerHorizontal="true"
             android:layout_alignParentBottom="true"
             android:text="@string/start_meeting"
-            android:textAllCaps="false" />
+            style="@style/blue_btn"
+            android:textSize="20dp"
+             />
 
     </RelativeLayout>
 

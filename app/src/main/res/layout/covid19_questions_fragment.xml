@@ -8,12 +8,25 @@
     android:animateLayoutChanges="true"
     tools:context=".view.patient.Covid19QuestionsFragment">
 
+    <TextView
+        android:id="@+id/title_tv"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="20sp"
+        android:textColor="@color/black"
+        android:textAllCaps="false"
+        android:textStyle="bold"
+        android:text="@string/covid19"
+        />
+
     <androidx.recyclerview.widget.RecyclerView
+        android:layout_below="@id/title_tv"
         android:id="@+id/questions_recycler"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:scrollbarAlwaysDrawVerticalTrack="true"
-        android:layout_above="@id/continue_btn" />
+        android:layout_above="@id/continue_btn"
+        android:layout_marginTop="10dp"/>
 
     <com.google.android.material.button.MaterialButton
         android:id="@+id/continue_btn"

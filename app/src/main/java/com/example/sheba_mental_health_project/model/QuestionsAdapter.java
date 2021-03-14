@@ -169,19 +169,19 @@ public class QuestionsAdapter extends RecyclerView.Adapter<QuestionsAdapter.Ques
         switch (viewType) {
             case BINARY_TYPE:
                 view = LayoutInflater.from(parent.getContext())
-                        .inflate(R.layout.question_binary_cell_layout, null);
+                        .inflate(R.layout.question_binary_cell_layout, parent,false);
                 break;
             case SLIDER_TYPE:
                 view = LayoutInflater.from(parent.getContext())
-                        .inflate(R.layout.question_slider_cell_layout, null);
+                        .inflate(R.layout.question_slider_cell_layout, parent,false);
                 break;
             case NUMBER_TYPE:
                 view = LayoutInflater.from(parent.getContext())
-                        .inflate(R.layout.question_number_cell_layout, null);
+                        .inflate(R.layout.question_number_cell_layout, parent,false);
                 break;
             case OPEN_TYPE:
                 view = LayoutInflater.from(parent.getContext())
-                        .inflate(R.layout.question_open_cell_layout, null);
+                        .inflate(R.layout.question_open_cell_layout, parent,false);
                 break;
             default:
                 view = null;

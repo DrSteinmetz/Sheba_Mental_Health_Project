@@ -12,7 +12,7 @@
         android:layout_marginEnd="8dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="@id/message_body_tv"
-        app:tint="#e2e2e2"
+        app:tint="#6fdbdb"
         android:src="@drawable/ic_message_sent_corner" />
 
     <TextView
@@ -21,7 +21,7 @@
         android:layout_height="wrap_content"
         android:layout_marginEnd="10dp"
         android:background="@drawable/message_sent_shape"
-        android:backgroundTint="#e2e2e2"
+        android:backgroundTint="#6fdbdb"
         android:maxWidth="240dp"
         android:padding="8dp"
 

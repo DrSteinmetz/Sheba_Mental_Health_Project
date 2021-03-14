@@ -4,20 +4,29 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     app:cardUseCompatPadding="false"
-    app:cardElevation="0dp"
-    app:cardCornerRadius="0dp"
+    app:cardElevation="5dp"
+    app:cardCornerRadius="10dp"
     app:cardPreventCornerOverlap="false"
-    android:id="@+id/card_layout">
+    android:id="@+id/card_layout"
+    android:layout_margin="5dp"
+    >
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal"
+            android:padding="5dp">
 
         <com.google.android.material.checkbox.MaterialCheckBox
             android:id="@+id/question_cb"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginHorizontal="20dp"
             android:paddingVertical="10dp"
             android:text="Example"
-            android:textSize="20sp"
+            android:textSize="17sp"
             android:textColor="@color/black"
             android:textAllCaps="false" />
+
+        </LinearLayout>
 
 </androidx.cardview.widget.CardView>

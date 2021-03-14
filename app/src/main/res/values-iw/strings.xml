@@ -164,6 +164,10 @@
     <string name="lounge_text_1">פגישתך עם ד\"ר</string>
     <string name="lounge_text_2">לא החלה עדיין.\n\nאנא כנס/י לפגישה במועד שנקבע עבורך.</string>
 
+    <string name="meetings_expectations">ציפיות מהפגישה:</string>
+    <string name="covid19">וירוס קורונה:</string>
+    <string name="answer_questions_title">אנא השב על השאלות הבאות:</string>
+
     <!-- Notification -->
     <string name="appointment_notif_title_patient">פגישה עם ד\"ר</string>
     <string name="appointment_notif_title_therapist">פגישה עם</string>

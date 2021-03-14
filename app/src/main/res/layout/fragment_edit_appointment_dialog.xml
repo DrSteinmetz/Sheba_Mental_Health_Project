@@ -15,7 +15,7 @@
         android:layout_centerHorizontal="true"
         android:text="@string/edit_appointment_title"
         android:textSize="25sp"
-        android:layout_marginBottom="50dp"
+        android:layout_marginBottom="30dp"
         android:textColor="@color/black"
         android:textAllCaps="false" />
 
@@ -28,7 +28,6 @@
         android:layout_marginStart="10dp"
         android:text="@string/patient_prompt"
         android:textSize="20sp"
-
         android:textColor="@color/black"
         android:textAllCaps="false" />
     <TextView
@@ -37,8 +36,8 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="6dp"
         android:layout_marginBottom="30dp"
-        android:layout_below="@+id/patient_title_tv"
-
+        android:layout_toEndOf="@+id/patient_title_tv"
+        android:layout_below="@+id/title_tv"
         android:text="Matan Romanov"
         android:textSize="20sp"
         android:layout_marginStart="10dp"
@@ -48,10 +47,10 @@
 
 
     <LinearLayout
+        android:id="@+id/date_time_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/patient_name_tv"
-        android:layout_above="@id/finish_btn"
         android:orientation="vertical">
 
 
@@ -59,7 +58,7 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
+            android:layout_marginTop="10dp"
             android:gravity="center">
 
 
@@ -84,7 +83,7 @@
                 android:layout_width="0dp"
                 android:layout_weight="1"
                 android:layout_height="wrap_content"
-                app:tint="#aaaaaa"
+                app:tint="@color/light_gray"
                 android:src="@drawable/ic_round_date_range_24"
                 android:layout_gravity="center_vertical"/>
 
@@ -118,20 +117,22 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                app:tint="#aaaaaa"
+                app:tint="@color/light_gray"
                 android:src="@drawable/ic_round_access_time_24"
                 android:layout_gravity="center_vertical"/>
         </LinearLayout>
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/finish_btn"
+            android:text="@string/finish"
+            style="@style/blue_btn"
+            android:layout_gravity="center"
+            android:layout_marginTop="40dp"/>
 
 
 
     </LinearLayout>
 
-    <com.google.android.material.button.MaterialButton
-        android:id="@+id/finish_btn"
-        android:layout_centerHorizontal="true"
-        android:layout_alignParentBottom="true"
-        android:text="@string/finish"
-        style="@style/blue_btn" />
+
 
 </RelativeLayout>

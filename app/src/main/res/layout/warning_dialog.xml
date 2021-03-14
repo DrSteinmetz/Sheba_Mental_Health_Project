@@ -45,7 +45,7 @@
                     android:layout_height="60dp"
                     android:layout_centerVertical="true"
                     android:layout_marginHorizontal="10dp"
-                    app:tint="@color/red"
+                    app:tint="@color/dark_gray"
                     android:src="@drawable/ic_round_warning_24" />
 
                 <TextView
@@ -55,7 +55,6 @@
                     android:layout_centerVertical="true"
                     android:layout_marginTop="10dp"
                     android:layout_toEndOf="@id/image_iv"
-                    android:gravity="center"
                     android:layout_marginHorizontal="10dp"
                     android:textSize="20sp"
                     android:textColor="#555555"

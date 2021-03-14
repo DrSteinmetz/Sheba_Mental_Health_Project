@@ -12,7 +12,7 @@
         android:layout_marginStart="8dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@id/message_body_tv"
-        app:tint="#aadee9"
+        app:tint="#e2e2e2"
         android:src="@drawable/ic_message_received_corner" />
 
     <TextView
@@ -22,7 +22,7 @@
         android:layout_marginStart="10dp"
         android:layout_marginTop="4dp"
         android:background="@drawable/message_received_shape"
-        android:backgroundTint="#aadee9"
+        android:backgroundTint="#e2e2e2"
         android:maxWidth="240dp"
         android:padding="8dp"
         android:textSize="20sp"
