@@ -3,6 +3,7 @@ package com.example.sheba_mental_health_project.view.character;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.os.Bundle;
+import android.os.Handler;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
@@ -10,6 +11,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewTreeObserver;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.PopupWindow;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -17,6 +19,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.widget.PopupMenu;
+import androidx.fragment.app.DialogFragment;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
@@ -27,6 +30,7 @@ import com.example.sheba_mental_health_project.model.PainPoint;
 import com.example.sheba_mental_health_project.model.ViewModelFactory;
 import com.example.sheba_mental_health_project.model.enums.PainLocationEnum;
 import com.example.sheba_mental_health_project.model.enums.ViewModelEnum;
+import com.example.sheba_mental_health_project.view.LoadingDialogFragment;
 import com.example.sheba_mental_health_project.viewmodel.CharacterViewModel;
 
 import org.jetbrains.annotations.NotNull;
@@ -43,12 +47,14 @@ public class CharacterFragment extends Fragment {
 
     private ImageView mCharacterIv;
 
+    private LinearLayout mCharacterLeft;
+    private LinearLayout mCharacterCenter;
+    private LinearLayout mCharacterRight;
+
     private PopupWindow mPreviousPopupWindow;
 
     private boolean mIsClickable;
     private boolean mIsPainPointClickable;
-
-    private ViewGroup mContainer;
 
     private final String TAG = "CharacterFragment";
 
@@ -125,7 +131,6 @@ public class CharacterFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
-        mContainer = container;
         final View rootView = inflater.inflate(R.layout.character_fragment, container, false);
 
         final View headView = rootView.findViewById(R.id.head_v);
@@ -135,6 +140,9 @@ public class CharacterFragment extends Fragment {
         final View genitalsView = rootView.findViewById(R.id.genitals_v);
         final View legsView = rootView.findViewById(R.id.legs_v);
         mCharacterIv = rootView.findViewById(R.id.character_iv);
+        mCharacterLeft = rootView.findViewById(R.id.character_right_layout);
+        mCharacterCenter = rootView.findViewById(R.id.character_center_layout);
+        mCharacterRight = rootView.findViewById(R.id.character_left_layout);
 
         mViewModel.attachGetAllPainPointsListener();
 
@@ -152,6 +160,13 @@ public class CharacterFragment extends Fragment {
                 layoutParams.addRule(RelativeLayout.CENTER_IN_PARENT, RelativeLayout.TRUE);
 
                 mCharacterIv.setLayoutParams(layoutParams);
+            }
+        });
+
+        new Handler().post(new Runnable() {
+            @Override
+            public void run() {
+                showCharacter();
             }
         });
 
@@ -437,6 +452,20 @@ public class CharacterFragment extends Fragment {
             } else {
                 entry.getValue().setVisibility(View.INVISIBLE);
             }
+        }
+    }
+
+    private void showCharacter() {
+        if (mCharacterLeft != null) {
+            mCharacterLeft.setVisibility(View.VISIBLE);
+        }
+
+        if (mCharacterCenter != null) {
+            mCharacterCenter.setVisibility(View.VISIBLE);
+        }
+
+        if (mCharacterRight != null) {
+            mCharacterRight.setVisibility(View.VISIBLE);
         }
     }
 

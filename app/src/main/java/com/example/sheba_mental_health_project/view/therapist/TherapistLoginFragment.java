@@ -21,10 +21,15 @@ import com.example.sheba_mental_health_project.model.enums.ViewModelEnum;
 import com.example.sheba_mental_health_project.viewmodel.TherapistLoginViewModel;
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.textfield.TextInputEditText;
+import com.google.android.material.textview.MaterialTextView;
+
+import java.util.Objects;
 
 public class TherapistLoginFragment extends Fragment {
 
     private TherapistLoginViewModel mViewModel;
+
+    private MaterialTextView mErrorTv;
 
     private final String TAG = "TherapistLoginFragment";
 
@@ -70,7 +75,8 @@ public class TherapistLoginFragment extends Fragment {
         final Observer<String> loginObserverFailed = new Observer<String>() {
             @Override
             public void onChanged(@Nullable final String error) {
-                //  mErrorTv.setVisibility(View.VISIBLE);
+                mErrorTv.setText(error);
+                mErrorTv.setVisibility(View.VISIBLE);
                 Log.d(TAG, "onChanged: " + error);
             }
         };
@@ -86,13 +92,14 @@ public class TherapistLoginFragment extends Fragment {
 
         final TextInputEditText emailEt = rootView.findViewById(R.id.email_et);
         final TextInputEditText passwordEt = rootView.findViewById(R.id.password_et);
+        mErrorTv = rootView.findViewById(R.id.error_tv);
         final MaterialButton loginBtn = rootView.findViewById(R.id.login_btn);
 
         loginBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String email = emailEt.getText().toString();
-                String password = passwordEt.getText().toString();
+                String email = Objects.requireNonNull(emailEt.getText()).toString();
+                String password = Objects.requireNonNull(passwordEt.getText()).toString();
                 mViewModel.setEmail(email);
                 mViewModel.setPassword(password);
                 mViewModel.login();

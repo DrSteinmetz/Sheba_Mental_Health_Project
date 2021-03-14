@@ -34,7 +34,7 @@
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:background="@drawable/ic_character_left"
-            android:visibility="visible"
+            android:visibility="invisible"
             android:orientation="vertical">
 
             <Space
@@ -231,7 +231,7 @@
             android:layout_height="match_parent"
             android:layout_weight="1.1"
             android:background="@drawable/ic_character_center"
-            android:visibility="visible"
+            android:visibility="invisible"
             android:orientation="vertical">
 
             <RelativeLayout
@@ -633,7 +633,7 @@
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:background="@drawable/ic_character_right"
-            android:visibility="visible"
+            android:visibility="invisible"
             android:orientation="vertical">
 
             <Space

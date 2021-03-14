@@ -16,29 +16,25 @@ import androidx.annotation.NonNull;
 import com.example.sheba_mental_health_project.R;
 import com.google.android.material.button.MaterialButton;
 
-import java.util.Objects;
+public class ConfirmationDialog extends Dialog {
 
-public class WarningDialog extends Dialog {
-
-    private TextView mTitleWarningTv;
+    private TextView mTitleTv;
     private TextView mPromptTv;
 
-    private final String TAG = "WarningDialog";
+    private final String TAG = "ConfirmationDialog";
 
 
-    public interface WarningDialogActionInterface {
-        void onYesBtnClicked();
-
-        void onNoBtnClicked();
+    public interface ConfirmationDialogActionInterface {
+        void onOkBtnClicked();
     }
 
-    private WarningDialogActionInterface listener;
+    private ConfirmationDialogActionInterface listener;
 
-    public void setOnActionListener(WarningDialogActionInterface warningDialogActionInterface) {
+    public void setOnActionListener(ConfirmationDialogActionInterface warningDialogActionInterface) {
         this.listener = warningDialogActionInterface;
     }
 
-    public WarningDialog(@NonNull Context context) {
+    public ConfirmationDialog(@NonNull Context context) {
         super(context);
 
         initialize();
@@ -46,29 +42,18 @@ public class WarningDialog extends Dialog {
 
     private void initialize() {
         final View rootView = LayoutInflater.from(getContext())
-                .inflate(R.layout.warning_dialog, null);
+                .inflate(R.layout.confirmation_dialog, null);
 
-        mTitleWarningTv = rootView.findViewById(R.id.title_warning_tv);
+        mTitleTv = rootView.findViewById(R.id.title_tv);
         mPromptTv = rootView.findViewById(R.id.prompt_tv);
 
-        final MaterialButton yesBtn = rootView.findViewById(R.id.yes_btn);
-        final MaterialButton noBtn = rootView.findViewById(R.id.no_btn);
+        final MaterialButton okBtn = rootView.findViewById(R.id.ok_btn);
 
-        yesBtn.setOnClickListener(new View.OnClickListener() {
+        okBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (listener != null) {
-                    listener.onYesBtnClicked();
-                }
-                dismiss();
-            }
-        });
-
-        noBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (listener != null) {
-                    listener.onNoBtnClicked();
+                    listener.onOkBtnClicked();
                 }
                 dismiss();
             }
@@ -79,8 +64,8 @@ public class WarningDialog extends Dialog {
     }
 
     public void setTitleWarningText(final String title) {
-        if (mTitleWarningTv != null) {
-            mTitleWarningTv.setText(title);
+        if (mTitleTv != null) {
+            mTitleTv.setText(title);
         }
     }
 
@@ -94,7 +79,7 @@ public class WarningDialog extends Dialog {
     public void show() {
         super.show();
 
-        mTitleWarningTv.setVisibility(mTitleWarningTv.getText().toString().trim().isEmpty() ?
+        mTitleTv.setVisibility(mTitleTv.getText().toString().trim().isEmpty() ?
                 View.GONE : View.VISIBLE);
 
         final Window window = getWindow();

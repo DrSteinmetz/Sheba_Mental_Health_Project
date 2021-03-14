@@ -479,16 +479,9 @@ public class MainActivity extends AppCompatActivity
         // TODO: Make a new similar DialogFragment with 'OK' button only - "ConfirmationDialog"
         //  and think of moving the LiveAppointment listener to here, that way we can also inform
         //  the patient his meeting has been started !
-        final WarningDialog warningDialog = new WarningDialog(this);
+        final ConfirmationDialog warningDialog = new ConfirmationDialog(this);
         warningDialog.setTitleWarningText("Your Meeting has Ended");
         warningDialog.setPromptText("The Therapist has Ended Your Meeting");
-        warningDialog.setOnActionListener(new WarningDialog.WarningDialogActionInterface() {
-            @Override
-            public void onYesBtnClicked() {}
-
-            @Override
-            public void onNoBtnClicked() {}
-        });
         warningDialog.show();
         onBackToAppointmentsBtnClicked();
     }
@@ -565,8 +558,8 @@ public class MainActivity extends AppCompatActivity
     @Override
     public void onTherapistStartMeetingClicked() {
         getSupportFragmentManager().beginTransaction()
-                .add(R.id.container, AppointmentTherapistFragment.newInstance(), APPOINTMENT_THERAPIST_FRAG)
-                .addToBackStack(null)
+                .replace(R.id.container, AppointmentTherapistFragment.newInstance(), APPOINTMENT_THERAPIST_FRAG)
+//                .addToBackStack(null)
                 .commit();
     }
 
