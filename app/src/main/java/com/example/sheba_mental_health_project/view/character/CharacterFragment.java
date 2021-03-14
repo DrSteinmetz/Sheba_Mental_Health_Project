@@ -308,7 +308,7 @@ public class CharacterFragment extends Fragment {
                         entry.getValue().setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View v) {
-                                final PopupMenu mouthPopupMenu = new PopupMenu(getContext(), entry.getValue());
+                                final PopupMenu mouthPopupMenu = new PopupMenu(requireContext(), entry.getValue());
                                 mouthPopupMenu.inflate(R.menu.mouth_menu);
                                 mouthPopupMenu.getMenu().findItem(R.id.pharynx_action)
                                         .setVisible(mViewModel.getPainPointsMap().containsKey(PainLocationEnum.Pharynx));
@@ -404,22 +404,22 @@ public class CharacterFragment extends Fragment {
         final TextView descriptionTitleTv = view.findViewById(R.id.description_title_tv);
         final TextView descriptionTv = view.findViewById(R.id.description_tv);
 
-        painLocationTv.setText(painPoint.getPainPointLocationLocalString(getContext()));
+        painLocationTv.setText(painPoint.getPainPointLocationLocalString(requireContext()));
 
         painStrengthTv.setText(painPoint.getPainStrength() + "");
         painStrengthTv.setTextColor(painPoint.getColor());
 
-        final String painTypeTxt = painPoint.getPainPointTypeLocalString(getContext());
+        final String painTypeTxt = painPoint.getPainPointTypeLocalString(requireContext());
         painTypeTv.setText(painTypeTxt);
         painTypeTv.setVisibility(painTypeTxt.isEmpty() ? View.GONE : View.VISIBLE);
         painTypeTitleTv.setVisibility(painTypeTv.getVisibility());
 
-        final String painFrequencyTxt = painPoint.getPainPointFrequencyLocalString(getContext());
+        final String painFrequencyTxt = painPoint.getPainPointFrequencyLocalString(requireContext());
         painFrequencyTv.setText(painFrequencyTxt);
         painFrequencyTv.setVisibility(painFrequencyTxt.isEmpty() ? View.GONE : View.VISIBLE);
         painFrequencyTitleTv.setVisibility(painFrequencyTv.getVisibility());
 
-        final String otherFeelingTxt = painPoint.getOtherFeelingLocalString(getContext());
+        final String otherFeelingTxt = painPoint.getOtherFeelingLocalString(requireContext());
         otherFeelingTv.setText(otherFeelingTxt);
         otherFeelingTv.setVisibility(otherFeelingTxt.isEmpty() ? View.GONE : View.VISIBLE);
         otherFeelingTitleTv.setVisibility(otherFeelingTv.getVisibility());

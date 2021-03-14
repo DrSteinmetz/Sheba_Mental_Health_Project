@@ -24,6 +24,7 @@ import com.example.sheba_mental_health_project.model.enums.PainLocationEnum;
 import com.google.android.material.button.MaterialButton;
 
 import java.util.EnumMap;
+import java.util.Objects;
 
 public class MouthSubFragment extends Fragment {
 
@@ -170,7 +171,8 @@ public class MouthSubFragment extends Fragment {
                     .getSerializable("mouth_pain_points");
 
             if (mPainPointsMouthMap.containsKey(PainLocationEnum.Pharynx)) {
-                final int color = mPainPointsMouthMap.get(PainLocationEnum.Pharynx).getColor();
+                final int color = Objects
+                        .requireNonNull(mPainPointsMouthMap.get(PainLocationEnum.Pharynx)).getColor();
                 listener.onSelectedPainPointColor(color);
             }
 

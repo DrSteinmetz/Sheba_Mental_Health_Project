@@ -35,6 +35,7 @@ import com.google.android.material.snackbar.Snackbar;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.EnumMap;
+import java.util.Objects;
 
 public class HeadFragment extends Fragment
         implements PainStrengthSubFragment.PainStrengthSubFragmentInterface,
@@ -93,8 +94,8 @@ public class HeadFragment extends Fragment
             public void onChanged(PainPoint painPoint) {
                 getChildFragmentManager().popBackStack(SUB_FRAGS_STACK,
                         FragmentManager.POP_BACK_STACK_INCLUSIVE);
-                getActivity().onBackPressed();
-                getActivity().onBackPressed();
+                requireActivity().onBackPressed();
+                requireActivity().onBackPressed();
 
                 if (mIsBoth) {
                     switch (mViewModel.getPainPoint().getPainLocation()) {
@@ -283,7 +284,7 @@ public class HeadFragment extends Fragment
         deletePainPointFab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                final WarningDialog warningDialog = new WarningDialog(getContext());
+                final WarningDialog warningDialog = new WarningDialog(requireContext());
                 warningDialog.setPromptText(getString(R.string.pain_point_deletion_prompt));
                 warningDialog.setOnActionListener(new WarningDialog.WarningDialogActionInterface() {
                     @Override
@@ -368,7 +369,8 @@ public class HeadFragment extends Fragment
 
         if (view.getVisibility() == View.VISIBLE) {
             // Editing
-            mViewModel.setPainPoint(new PainPoint(mViewModel.getPainPointsMap().get(painLocationEnum)));
+            mViewModel.setPainPoint(new PainPoint(Objects
+                    .requireNonNull(mViewModel.getPainPointsMap().get(painLocationEnum))));
             final PainPoint painPoint = mViewModel.getPainPoint();
 
             if (painLocationEnum == PainLocationEnum.Mouth) {
@@ -468,7 +470,8 @@ public class HeadFragment extends Fragment
                                                EnumMap<PainLocationEnum, PainPoint> painPointsMouthMap) {
         if (painPointsMouthMap.containsKey(painLocationEnum)) {
             mViewModel.getPainPoint().setPainLocation(painLocationEnum);
-            openPainStrengthFragment(painPointsMouthMap.get(painLocationEnum).getPainStrength());
+            openPainStrengthFragment(Objects.requireNonNull(painPointsMouthMap
+                    .get(painLocationEnum)).getPainStrength());
             deletePainPointFab.show();
         } else {
             mViewModel.setPainPoint(new PainPoint(painLocationEnum));
@@ -496,7 +499,7 @@ public class HeadFragment extends Fragment
         mViewModel.getPainPoint().setPainType(painType);
 
         final PainPoint painPoint = mViewModel.getPainPoint();
-        final String otherFeeling = painPoint.getOtherFeelingLocalString(getContext());
+        final String otherFeeling = painPoint.getOtherFeelingLocalString(requireContext());
         getChildFragmentManager().beginTransaction()
                 .add(R.id.fragment_container,
                         OtherFeelingSubFragment.newInstance(otherFeeling,

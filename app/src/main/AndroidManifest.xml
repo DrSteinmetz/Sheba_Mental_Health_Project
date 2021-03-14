@@ -6,13 +6,15 @@
 
     <application
         android:allowBackup="true"
-        android:icon="@mipmap/ic_launcher"
+        android:icon="@drawable/ic_logo"
         android:label="@string/app_name"
-        android:roundIcon="@mipmap/ic_launcher_round"
+        android:roundIcon="@drawable/ic_logo"
         android:supportsRtl="true"
+        android:logo="@drawable/ic_logo"
         android:theme="@style/Theme.Sheba_Mental_Health_Project"
         android:windowSoftInputMode="stateHidden|adjustResize">
         <activity android:name=".view.WelcomeActivity"
+            android:logo="@drawable/ic_logo"
             android:screenOrientation="portrait"
             android:launchMode="singleTask">
             <intent-filter>
@@ -23,6 +25,7 @@
         </activity>
 
         <activity android:name=".view.MainActivity"
+            android:logo="@drawable/ic_logo"
             android:screenOrientation="portrait"
             android:launchMode="singleTask">
             <intent-filter>
@@ -32,14 +35,14 @@
 
         <receiver
             android:name=".model.NotificationsReceiver"
-            android:enabled="true"
-            android:logo="@drawable/ic_red_pain_point" />
+            android:logo="@drawable/ic_logo"
+            android:enabled="true" />
 
         <provider
             android:name="androidx.core.content.FileProvider"
             android:authorities="com.example.sheba_mental_health_project.provider"
             android:exported="false"
-            android:logo="@drawable/ic_red_pain_point"
+            android:logo="@drawable/ic_logo"
             android:grantUriPermissions="true">
             <meta-data
                 android:name="android.support.FILE_PROVIDER_PATHS"
