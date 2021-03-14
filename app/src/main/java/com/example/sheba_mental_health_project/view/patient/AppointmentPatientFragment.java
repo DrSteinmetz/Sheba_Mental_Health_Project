@@ -89,6 +89,7 @@ public class AppointmentPatientFragment extends Fragment {
                 if (appointment.getState() == AppointmentStateEnum.Ended) {
                     if (listener != null) {
                         listener.onMeetingEnded();
+                        listener = null;
                     }
                 }
             }

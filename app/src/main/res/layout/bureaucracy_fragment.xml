@@ -26,10 +26,10 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_below="@+id/title_tv"
-        android:layout_above="@id/add_document_tv"
+        android:layout_above="@id/continue_btn"
         android:scrollbarAlwaysDrawVerticalTrack="true" />
 
-    <TextView
+    <!--<TextView
         android:id="@+id/add_document_tv"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -40,7 +40,7 @@
         android:text="@string/add_document"
         android:textSize="20sp"
         android:textColor="@color/black"
-        android:textAllCaps="false" />
+        android:textAllCaps="false" />-->
 
     <com.google.android.material.button.MaterialButton
         android:id="@+id/continue_btn"

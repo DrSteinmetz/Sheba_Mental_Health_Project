@@ -78,7 +78,7 @@ public class AnswersAdapter extends RecyclerView.Adapter<AnswersAdapter.AnswersV
         switch (viewType) {
             case BINARY_TYPE:
                 view = LayoutInflater.from(parent.getContext())
-                        .inflate(R.layout.question_binary_cell_layout, null);
+                        .inflate(R.layout.answer_binary_cell_layout, null);
                 break;
             case SLIDER_TYPE:
                 view = LayoutInflater.from(parent.getContext())

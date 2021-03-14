@@ -358,6 +358,8 @@ public class Repository {
     private Repository(final Context context) {
         this.mContext = context;
         mAlarmManager = (AlarmManager) mContext.getSystemService(Context.ALARM_SERVICE);
+        addQuestionsEnglish();
+        addQuestionsHebrew();
     }
 
     public void getAllPatients() {
@@ -474,6 +476,7 @@ public class Repository {
         mTherapistAppointmentsListener = mCloudDB.collection(APPOINTMENTS)
                 .whereEqualTo(FieldPath.of("therapist", "id"), id)
                 .whereIn("state", stateQuery)
+                .orderBy("appointmentDate")
                 .addSnapshotListener(new EventListener<QuerySnapshot>() {
                     @Override
                     public void onEvent(@Nullable QuerySnapshot value, @Nullable FirebaseFirestoreException error) {
@@ -513,6 +516,7 @@ public class Repository {
         mPatientAppointmentsListener = mCloudDB.collection(APPOINTMENTS)
                 .whereEqualTo(FieldPath.of("patient", "id"), id)
                 .whereIn("state", stateQuery)
+                .orderBy("appointmentDate")
                 .addSnapshotListener(new EventListener<QuerySnapshot>() {
                     @Override
                     public void onEvent(@Nullable QuerySnapshot value, @Nullable FirebaseFirestoreException error) {
@@ -1128,6 +1132,18 @@ public class Repository {
                 QuestionTypeEnum.Binary, ViewModelEnum.Statement));
         questions.add(new Question("35", "I Have been Hospitalized Recently",
                 QuestionTypeEnum.Binary, ViewModelEnum.Statement));
+        questions.add(new Question("350", "There Has Been a Change In My Medicine Dosage",
+                QuestionTypeEnum.Binary, ViewModelEnum.Statement));
+        questions.add(new Question("351", "I Have Stopped Taking One of My Medicines",
+                QuestionTypeEnum.Binary, ViewModelEnum.Statement));
+        questions.add(new Question("352", "I Have a New Medical Diagnose",
+                QuestionTypeEnum.Binary, ViewModelEnum.Statement));
+        questions.add(new Question("353", "I was Injured Recently",
+                QuestionTypeEnum.Binary, ViewModelEnum.Statement));
+        questions.add(new Question("354", "I Am Currently During a Legal Proceeding",
+                QuestionTypeEnum.Binary, ViewModelEnum.Statement));
+        questions.add(new Question("355", "I Went to ER Recently",
+                QuestionTypeEnum.Binary, ViewModelEnum.Statement));
 
         questions.add(new Question("36", "I Am Under Custody",
                 QuestionTypeEnum.Binary, ViewModelEnum.Treaty));
@@ -1142,9 +1158,9 @@ public class Repository {
         questions.add(new Question("40", "Does Anyone Take Advantage of You or Hurts You?",
                 QuestionTypeEnum.Open, ViewModelEnum.SocialQuestions));
 
-        questions.add(new Question("41", "What is Your Height?",
+        questions.add(new Question("41", "What is Your Height? (Cm)",
                 QuestionTypeEnum.Number, ViewModelEnum.HabitsQuestions));
-        questions.add(new Question("42", "What is Your Weight?",
+        questions.add(new Question("42", "What is Your Weight? (Kg)",
                 QuestionTypeEnum.Number, ViewModelEnum.HabitsQuestions));
         questions.add(new Question("43", "Were There Any Recent Changes In Your Weight, Diet or Physical Activity?",
                 QuestionTypeEnum.Open, ViewModelEnum.HabitsQuestions));
@@ -1258,6 +1274,18 @@ public class Repository {
                 QuestionTypeEnum.Binary, ViewModelEnum.Statement));
         questions.add(new Question("35", "אושפזתי לאחרונה",
                 QuestionTypeEnum.Binary, ViewModelEnum.Statement));
+        questions.add(new Question("350", "חל שינוי במינון התרופות שלי",
+                QuestionTypeEnum.Binary, ViewModelEnum.Statement));
+        questions.add(new Question("351", "הפסקתי ליטול תרופה כלשהי",
+                QuestionTypeEnum.Binary, ViewModelEnum.Statement));
+        questions.add(new Question("352", "יש לי אבחון רפואי חדש",
+                QuestionTypeEnum.Binary, ViewModelEnum.Statement));
+        questions.add(new Question("353", "עברתי חבלה גופנית לאחרונה",
+                QuestionTypeEnum.Binary, ViewModelEnum.Statement));
+        questions.add(new Question("354", "אני נמצא כעת בהליך משפטי",
+                QuestionTypeEnum.Binary, ViewModelEnum.Statement));
+        questions.add(new Question("355", "פניתי למיון לאחרונה",
+                QuestionTypeEnum.Binary, ViewModelEnum.Statement));
 
         questions.add(new Question("36", "יש עליי אפוטרופוסות",
                 QuestionTypeEnum.Binary, ViewModelEnum.SocialQuestions));
@@ -1272,9 +1300,9 @@ public class Repository {
         questions.add(new Question("40", "האם מישהו מנצל אותך? פוגע בך?",
                 QuestionTypeEnum.Open, ViewModelEnum.SocialQuestions));
 
-        questions.add(new Question("41", "מה הגובה שלך?",
+        questions.add(new Question("41", "מה הגובה שלך? (ס\"מ)",
                 QuestionTypeEnum.Number, ViewModelEnum.HabitsQuestions));
-        questions.add(new Question("42", "מה המשקל שלך?",
+        questions.add(new Question("42", "מה המשקל שלך? (ק\"ג)",
                 QuestionTypeEnum.Number, ViewModelEnum.HabitsQuestions));
         questions.add(new Question("43", "האם חלו לאחרונה שינויים במשקל, בתזונה או פעילות גופנית?",
                 QuestionTypeEnum.Open, ViewModelEnum.HabitsQuestions));

@@ -1,6 +1,7 @@
 <resources>
     <string name="app_name">Sheba Mental Health Project</string>
 
+    <string name="ok">OK</string>
     <string name="yes">Yes</string>
     <string name="no">No</string>
     <string name="choose">Choose…</string>
@@ -153,6 +154,9 @@
     <string name="welcome_therapist">Welcome Therapist!</string>
     <string name="login_failed">Login Failed</string>
     <string name="login">Login</string>
+    <string name="login_error">Incorrect Email or Password</string>
+    <string name="login_error_patient">Access for Authorized Patients Only</string>
+    <string name="login_error_therapist">Access for Authorized Therapists Only</string>
 
     <!-- Pre Questions Fragment strings -->
     <string name="hello">Hello</string>
@@ -338,5 +342,7 @@
         "For example, position the FAB to one side of stream of a cards so the FAB won’t interfere "
         "when a user tries to pick up one of cards.\n\n"
     </string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 
 </resources>

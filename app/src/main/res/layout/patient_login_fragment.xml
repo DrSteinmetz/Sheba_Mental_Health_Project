@@ -42,8 +42,7 @@
                 android:id="@+id/email_et"
                 android:gravity="center"
                 android:inputType="textEmailAddress"
-                style="@style/textInputEditText"
-                />
+                style="@style/textInputEditText" />
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
@@ -65,17 +64,29 @@
                 android:id="@+id/password_et"
                 android:gravity="center"
                 android:inputType="textPassword"
-                style="@style/textInputEditText"
-               />
+                style="@style/textInputEditText" />
         </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/error_tv"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/password_et_layout"
+            android:layout_marginTop="20dp"
+            android:gravity="center"
+            android:visibility="gone"
+            android:text="ERROR"
+            android:textSize="18sp"
+            android:textColor="@color/design_default_color_error"
+            android:textAllCaps="false" />
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/login_btn"
             android:layout_centerHorizontal="true"
             android:layout_marginTop="40dp"
-            android:layout_below="@id/password_et_layout"
-            android:text="Login"
-            style="@style/blue_btn"/>
+            android:layout_below="@id/error_tv"
+            android:text="@string/login"
+            style="@style/blue_btn" />
 
     </RelativeLayout>
 

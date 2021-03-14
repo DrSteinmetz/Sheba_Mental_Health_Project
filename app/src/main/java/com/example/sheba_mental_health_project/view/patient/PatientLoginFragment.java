@@ -19,10 +19,13 @@ import com.example.sheba_mental_health_project.model.ViewModelFactory;
 import com.example.sheba_mental_health_project.viewmodel.PatientLoginViewModel;
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.textfield.TextInputEditText;
+import com.google.android.material.textview.MaterialTextView;
 
 public class PatientLoginFragment extends Fragment {
 
     private PatientLoginViewModel mViewModel;
+
+    private MaterialTextView mErrorTv;
 
     private final String TAG = "PatientLoginFragment";
 
@@ -68,7 +71,8 @@ public class PatientLoginFragment extends Fragment {
         final Observer<String> loginObserverFailed = new Observer<String>() {
             @Override
             public void onChanged(@Nullable final String error) {
-              //  mErrorTv.setVisibility(View.VISIBLE);
+                mErrorTv.setText(error);
+                mErrorTv.setVisibility(View.VISIBLE);
                 Log.d(TAG, "onChanged: " + error);
             }
         };
@@ -84,6 +88,7 @@ public class PatientLoginFragment extends Fragment {
 
         final TextInputEditText emailEt = rootView.findViewById(R.id.email_et);
         final TextInputEditText passwordEt = rootView.findViewById(R.id.password_et);
+        mErrorTv = rootView.findViewById(R.id.error_tv);
         final MaterialButton loginBtn = rootView.findViewById(R.id.login_btn);
 
         loginBtn.setOnClickListener(new View.OnClickListener() {

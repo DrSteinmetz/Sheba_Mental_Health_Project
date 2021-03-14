@@ -115,17 +115,12 @@ public class BureaucracyFragment extends Fragment {
         mViewModel.attachSetUpdateAnswersOfAppointmentListener();
 
         mRecyclerView = rootView.findViewById(R.id.questions_recycler);
-        final TextView addDocumentTv = rootView.findViewById(R.id.add_document_tv);
+//        final TextView addDocumentTv = rootView.findViewById(R.id.add_document_tv);
         final MaterialButton continueBtn = rootView.findViewById(R.id.continue_btn);
 
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         mRecyclerView.setHasFixedSize(true);
 
-        addDocumentTv.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-            }
-        });
 
         continueBtn.setOnClickListener(new View.OnClickListener() {
             @Override

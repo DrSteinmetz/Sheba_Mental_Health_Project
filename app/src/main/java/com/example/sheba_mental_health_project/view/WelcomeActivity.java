@@ -2,6 +2,7 @@ package com.example.sheba_mental_health_project.view;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.DialogFragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
@@ -31,6 +32,8 @@ public class WelcomeActivity extends AppCompatActivity
     private final String THERAPIST_LOGIN_FRAG = "Therapist_Login_Fragment";
     private final String PATIENT_LOGIN_FRAG = "Patient_Login_Fragment";
 
+    private final String LOADING_DLG_FRAG = "Loading_Dialog_Fragment";
+
     private final String IS_THERAPIST = "is_therapist";
 
     private final String TAG = "WelcomeActivity";
@@ -45,6 +48,9 @@ public class WelcomeActivity extends AppCompatActivity
                 ViewModelEnum.Welcome)).get(WelcomeViewModel.class);
 
         mSharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
+
+        final LoadingDialogFragment loadingDlg = LoadingDialogFragment.newInstance();
+        loadingDlg.setStyle(DialogFragment.STYLE_NO_FRAME, R.style.Theme_AppCompat_Light);
 
         final Observer<Void> loginObserverSuccess = new Observer<Void>() {
             @Override
@@ -69,6 +75,7 @@ public class WelcomeActivity extends AppCompatActivity
         mViewModel.getPatientLoginFailed().observe(this, loginObserverFailed);
 
         if (mViewModel.isAuthenticated()) {
+            loadingDlg.show(getSupportFragmentManager(), LOADING_DLG_FRAG);
             mViewModel.initializeLoggedInUser();
         }
 

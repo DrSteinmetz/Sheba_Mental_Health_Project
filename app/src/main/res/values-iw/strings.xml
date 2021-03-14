@@ -2,6 +2,7 @@
 <resources>
     <string name="app_name">מפת הנפש שיבא</string>
 
+    <string name="ok">אישור</string>
     <string name="yes">כן</string>
     <string name="no">לא</string>
     <string name="choose">בחרו…</string>
@@ -154,6 +155,9 @@
     <string name="welcome_therapist">ברוכים הבאים מטפל!</string>
     <string name="login_failed">התחברות נכשלה</string>
     <string name="login">התחברות</string>
+    <string name="login_error">אי-מייל או סיסמא שגויים</string>
+    <string name="login_error_patient">הכניסה למטופלים מורשים בלבד</string>
+    <string name="login_error_therapist">הכניסה למטפלים מורשים בלבד</string>
 
     <!-- Pre Questions Fragment strings -->
     <string name="hello">שלום</string>

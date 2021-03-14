@@ -6,6 +6,7 @@ import android.util.Log;
 
 import androidx.annotation.NonNull;
 
+import com.example.sheba_mental_health_project.R;
 import com.example.sheba_mental_health_project.model.Patient;
 import com.example.sheba_mental_health_project.model.Therapist;
 import com.example.sheba_mental_health_project.model.User;
@@ -104,10 +105,10 @@ public class AuthRepository {
                                 getPatientForLogin(user.getUid());
                             }
                         } else {
-                            final String error = Objects.requireNonNull(task.getException())
-                                    .getMessage();
+                            final String error = mContext.getString(R.string.login_error);
 
-                            Log.d(TAG, "onComplete: " + error);
+                            Log.e(TAG, "onComplete: " + Objects
+                                    .requireNonNull(task.getException()).getMessage());
                             if (mAuthRepoLoginPatientListener != null) {
                                 mAuthRepoLoginPatientListener.onPatientLoginFailed(error);
                             }
@@ -128,10 +129,10 @@ public class AuthRepository {
                                 getTherapistForLogin(user.getUid());
                             }
                         } else {
-                            final String error = Objects.requireNonNull(task.getException())
-                                    .getMessage();
+                            final String error = mContext.getString(R.string.login_error);
 
-                            Log.d(TAG, "onComplete: " + error);
+                            Log.e(TAG, "onComplete: " + Objects
+                                    .requireNonNull(task.getException()).getMessage());
                             if (mAuthRepoLoginTherapistListener != null) {
                                 mAuthRepoLoginTherapistListener.onTherapistLoginFailed(error);
                             }
@@ -155,7 +156,7 @@ public class AuthRepository {
                         mAuthRepoLoginPatientListener.onPatientLoginSucceed();
                     }
                 } else {
-                    final String error = "Patient Doesn't exists";
+                    final String error = mContext.getString(R.string.login_error_patient);
 
                     Log.d(TAG, "onSuccess: " + error);
                     if (mAuthRepoLoginPatientListener != null) {
@@ -187,7 +188,7 @@ public class AuthRepository {
                         mAuthRepoLoginTherapistListener.onTherapistLoginSucceed();
                     }
                 } else {
-                    final String error = "Therapist Doesn't exists";
+                    final String error = mContext.getString(R.string.login_error_therapist);
 
                     Log.d(TAG, "onSuccess: " + error);
                     if (mAuthRepoLoginTherapistListener != null) {
