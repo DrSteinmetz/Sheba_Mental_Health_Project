@@ -358,8 +358,6 @@ public class Repository {
     private Repository(final Context context) {
         this.mContext = context;
         mAlarmManager = (AlarmManager) mContext.getSystemService(Context.ALARM_SERVICE);
-        addQuestionsEnglish();
-        addQuestionsHebrew();
     }
 
     public void getAllPatients() {
