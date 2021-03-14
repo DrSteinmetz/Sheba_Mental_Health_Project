@@ -556,6 +556,14 @@ public class MainActivity extends AppCompatActivity
     }
 
     @Override
+    public void onTherapistOnGoingAppointmentClicked() {
+        getSupportFragmentManager().beginTransaction()
+                .replace(R.id.container, AppointmentTherapistFragment.newInstance(), APPOINTMENT_THERAPIST_FRAG)
+                .addToBackStack(null)
+                .commit();
+    }
+
+    @Override
     public void onTherapistStartMeetingClicked() {
         getSupportFragmentManager().beginTransaction()
                 .replace(R.id.container, AppointmentTherapistFragment.newInstance(), APPOINTMENT_THERAPIST_FRAG)
@@ -566,7 +574,7 @@ public class MainActivity extends AppCompatActivity
     @Override
     public void onAddAppointClicked() {
         getSupportFragmentManager().beginTransaction()
-                .add(R.id.container, AddAppointmentFragment.newInstance(), ADD_APPOINTMENT_FRAG)
+                .replace(R.id.container, AddAppointmentFragment.newInstance(), ADD_APPOINTMENT_FRAG)
                 .addToBackStack(null)
                 .commit();
     }

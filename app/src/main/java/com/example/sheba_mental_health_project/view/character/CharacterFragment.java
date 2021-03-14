@@ -245,12 +245,12 @@ public class CharacterFragment extends Fragment {
         mLocationToIvMap.put(PainLocationEnum.LeftEye, rootView.findViewById(R.id.right_eye_iv));
         mLocationToIvMap.put(PainLocationEnum.Nose, rootView.findViewById(R.id.nose_iv));
         mLocationToIvMap.put(PainLocationEnum.Neck, rootView.findViewById(R.id.neck_iv));
-        mLocationToIvMap.put(PainLocationEnum.Mouth, rootView.findViewById(R.id.mouth_iv));
         mLocationToIvMap.put(PainLocationEnum.Pharynx, rootView.findViewById(R.id.mouth_iv));
         mLocationToIvMap.put(PainLocationEnum.Lips, rootView.findViewById(R.id.mouth_iv));
         mLocationToIvMap.put(PainLocationEnum.Palate, rootView.findViewById(R.id.mouth_iv));
         mLocationToIvMap.put(PainLocationEnum.Teeth, rootView.findViewById(R.id.mouth_iv));
         mLocationToIvMap.put(PainLocationEnum.Tongue, rootView.findViewById(R.id.mouth_iv));
+        mLocationToIvMap.put(PainLocationEnum.Mouth, rootView.findViewById(R.id.mouth_iv));
 
         /** Center of Mass */
         mLocationToIvMap.put(PainLocationEnum.Chest, rootView.findViewById(R.id.chest_iv));
@@ -453,6 +453,15 @@ public class CharacterFragment extends Fragment {
                 entry.getValue().setVisibility(View.INVISIBLE);
             }
         }
+
+        if (mViewModel.getPainPointsMap().containsKey(PainLocationEnum.Mouth)){
+            final PainPoint painPoint = mViewModel.getPainPointsMap().get(PainLocationEnum.Mouth);
+            mLocationToIvMap.get(PainLocationEnum.Mouth).setColorFilter(painPoint.getColor());
+            mLocationToIvMap.get(PainLocationEnum.Mouth).setVisibility(View.VISIBLE);
+        } else {
+            mLocationToIvMap.get(PainLocationEnum.Mouth).setVisibility(View.INVISIBLE);
+        }
+
     }
 
     private void showCharacter() {

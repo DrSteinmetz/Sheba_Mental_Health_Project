@@ -22,7 +22,7 @@
     <string name="pain_point_deletion_prompt">האם ברצונך למחוק נקודה זו לצמיתות?</string>
     <string name="pain_point_deleted_prompt">הנקודה נמחקה בהצלחה!</string>
     <string name="appointment_deletion_prompt">האם ברצונך למחוק פגישה זו לצמיתות?</string>
-    <string name="appointment_added_prompt">הפגישה נמחקה הצלחה!</string>
+    <string name="appointment_added_prompt">הפגישה נוספה בהצלחה!</string>
     <string name="appointment_updated_prompt">הפגישה עודכנה בהצלחה!</string>
     <string name="appointment_deleted_prompt">הפגישה נמחקה בהצלחה!</string>
     <string name="create_appointment">צור פגישה</string>
