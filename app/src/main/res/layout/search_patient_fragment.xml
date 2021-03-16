@@ -1,110 +1,125 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="@color/white"
-    tools:context=".view.therapist.AddAppointmentFragment"
     android:padding="20dp"
     android:clickable="true"
     android:focusable="true"
-    android:layout_margin="20dp">
+    android:id="@+id/main_scroll_view"
+    tools:context=".view.therapist.AddAppointmentFragment">
 
-    <TextView
-        android:id="@+id/title_tv"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true"
-        android:gravity="center"
-        android:text="@string/search_patient"
-        android:textSize="25sp"
-        android:textColor="@color/black"
-        android:textAllCaps="false"
-        android:layout_marginBottom="30dp"/>
-
-    <LinearLayout
-        android:id="@+id/search_layout"
+    <RelativeLayout
+        android:id="@+id/main_content_layout"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/title_tv"
-        android:orientation="horizontal">
+        android:layout_height="wrap_content">
 
-     <com.google.android.material.textfield.TextInputLayout
-         android:layout_width="0dp"
-         android:layout_height="match_parent"
-         android:layout_weight="4"
-         app:boxStrokeColor="@color/light_gray"
-         app:boxStrokeWidth="1.2dp"
-         app:boxCornerRadiusBottomEnd="0dp"
-         app:boxCornerRadiusBottomStart="0dp"
-         app:boxCornerRadiusTopEnd="0dp"
-         app:boxCornerRadiusTopStart="0dp"
-         app:hintTextColor="@color/light_blue"
-         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
-         <com.google.android.material.textfield.MaterialAutoCompleteTextView
-             android:id="@+id/patient_email_auto_tv"
-             android:layout_width="match_parent"
-             android:layout_height="match_parent"
-             android:hint="@string/email"
-             android:textSize="20sp"
-             android:textColor="@color/black"
-             android:textAllCaps="false"
-             android:padding="10dp" />
-     </com.google.android.material.textfield.TextInputLayout>
+        <TextView
+            android:id="@+id/title_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:gravity="center"
+            android:text="@string/search_patient"
+            android:textSize="25sp"
+            android:textColor="@color/black"
+            android:textAllCaps="false"
+            android:layout_marginBottom="30dp" />
 
-        <Space
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="0.3" />
+        <LinearLayout
+            android:id="@+id/search_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/title_tv"
+            android:orientation="horizontal">
 
-        <ImageButton
-            android:id="@+id/search_btn"
+            <com.google.android.material.textfield.TextInputLayout
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="4"
+                app:boxStrokeColor="@color/light_gray"
+                app:boxStrokeWidth="1.2dp"
+                app:boxCornerRadiusBottomEnd="0dp"
+                app:boxCornerRadiusBottomStart="0dp"
+                app:boxCornerRadiusTopEnd="0dp"
+                app:boxCornerRadiusTopStart="0dp"
+                app:hintTextColor="@color/light_blue"
+                app:errorEnabled="true"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+
+                <com.google.android.material.textfield.MaterialAutoCompleteTextView
+                    android:id="@+id/patient_name_auto_tv"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:hint="@string/patient_name"
+                    android:textSize="20sp"
+                    android:textColor="@color/black"
+                    android:textAllCaps="false"
+                    android:padding="10dp" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <Space
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="0.3" />
+
+            <ImageButton
+                android:id="@+id/search_btn"
+                android:layout_marginTop="5dp"
+                android:layout_weight="1"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:src="@drawable/ic_baseline_search_24"
+                android:background="@color/light_blue" />
+
+        </LinearLayout>
+
+        <TextView
+            android:visibility="invisible"
+            android:id="@+id/patient_found_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/patient_found_prompt"
+            android:layout_below="@+id/search_layout"
+            android:layout_marginTop="20dp"
+            android:textSize="17sp"
+            android:layout_centerHorizontal="true" />
+
+        <TextView
+            android:id="@+id/patient_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/patient_found_title"
             android:layout_marginTop="5dp"
-            android:layout_weight="1"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:src="@drawable/ic_baseline_search_24"
-            android:background="@color/light_blue" />
+            android:visibility="invisible"
+            android:textSize="20sp"
+            android:textColor="@color/black"
+            android:layout_centerHorizontal="true" />
 
-    </LinearLayout>
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recycler_view"
+            android:layout_width="match_parent"
+            android:layout_height="250dp"
+            android:layout_below="@+id/patient_name" />
 
-    <TextView
-        android:visibility="invisible"
-        android:id="@+id/patient_found_title"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/patient_found_prompt"
-        android:layout_below="@+id/search_layout"
-        android:layout_marginTop="20dp"
-        android:textSize="17sp"
-        android:layout_centerHorizontal="true" />
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/patient_history_btn"
+            android:layout_below="@+id/recycler_view"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="50dp"
+            android:layout_centerHorizontal="true"
+            android:visibility="invisible"
+            android:text="@string/patient_history"
+            android:padding="10dp"
+            app:backgroundTint="@color/light_gray"
+            android:textSize="20sp"
+            app:cornerRadius="0dp"
+            android:layout_marginBottom="15dp"
+            android:textAllCaps="false" />
 
-    <TextView
-        android:visibility="invisible"
-        android:id="@+id/patient_name"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/patient_found_title"
-        android:layout_marginTop="5dp"
-        android:textSize="20sp"
-        android:textColor="@color/black"
-        android:layout_centerHorizontal="true" />
+    </RelativeLayout>
 
-    <com.google.android.material.button.MaterialButton
-        android:id="@+id/patient_history_btn"
-        android:visibility="invisible"
-        android:layout_below="@+id/patient_name"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="100dp"
-        android:layout_centerHorizontal="true"
-        android:text="@string/patient_history"
-        android:padding="10dp"
-        app:backgroundTint="@color/light_gray"
-        android:textSize="20sp"
-        app:cornerRadius="0dp"
-        android:layout_marginBottom="15dp"
-        android:textAllCaps="false" />
-
-</RelativeLayout>
+</ScrollView>

@@ -3,6 +3,8 @@ package com.example.sheba_mental_health_project.view.therapist;
 import android.app.TimePickerDialog;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -17,7 +19,10 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.sheba_mental_health_project.model.PatientsAdapter;
 import com.example.sheba_mental_health_project.R;
 import com.example.sheba_mental_health_project.model.Patient;
 import com.example.sheba_mental_health_project.model.RangeTimePickerDialog;
@@ -44,10 +49,12 @@ public class AddAppointmentFragment extends Fragment {
 
     private AddAppointmentViewModel mViewModel;
 
-    private ArrayAdapter<String> mPatientsEmailsAdapter;
+    private ArrayAdapter<String> mPatientsNamesAdapter;
 
-    private MaterialAutoCompleteTextView mPatientEmailAutoTV;
-    private ImageButton mSearchBtn;
+    private RecyclerView mRecyclerView;
+    private PatientsAdapter mAdapter;
+
+    private MaterialAutoCompleteTextView mPatientNameAutoTV;
     private MaterialTextView mDateTV;
     private MaterialTextView mTimeTV;
     private TextView mPatientFoundTv;
@@ -73,10 +80,41 @@ public class AddAppointmentFragment extends Fragment {
         final Observer<List<Patient>> onGetAllPatientsSucceed = new Observer<List<Patient>>() {
             @Override
             public void onChanged(List<Patient> patients) {
-                mPatientsEmailsAdapter = new ArrayAdapter<>(requireContext(),
-                        android.R.layout.select_dialog_item, mViewModel.getPatientsEmails());
-                mPatientEmailAutoTV.setAdapter(mPatientsEmailsAdapter);
-                Log.d(TAG, "onChanged: " + mViewModel.getPatientsEmails().size());
+                mPatientsNamesAdapter = new ArrayAdapter<>(requireContext(),
+                        android.R.layout.select_dialog_item, mViewModel.getPatientsNames());
+                mPatientNameAutoTV.setAdapter(mPatientsNamesAdapter);
+
+                mAdapter = new PatientsAdapter(requireContext(), patients);
+                mAdapter.setPatientsAdapterListener(new PatientsAdapter.PatientsAdapterInterface() {
+                    @Override
+                    public void onPatientClicked(Patient patient) {
+                        mViewModel.setPatient(patient);
+
+                        mPatientFoundTv.setVisibility(View.VISIBLE);
+                        if (patient == null) {
+                            mPatientFoundTv.setText(getString(R.string.patient_not_found));
+                            mPatientNameTv.setVisibility(View.INVISIBLE);
+                            mDateTV.setVisibility(View.INVISIBLE);
+                            mTimeTV.setVisibility(View.INVISIBLE);
+                            mCreateAppointmentBtn.setVisibility(View.INVISIBLE);
+                        } else {
+                            mPatientNameTv.setVisibility(View.VISIBLE);
+                            mPatientFoundTv.setText(getString(R.string.patient_found_prompt));
+                            mPatientNameTv.setText(patient.getFullName());
+                            mDateTV.setVisibility(View.VISIBLE);
+                            mTimeTV.setVisibility(View.VISIBLE);
+                            mCreateAppointmentBtn.setVisibility(View.VISIBLE);
+                        }
+                    }
+
+                    @Override
+                    public void onEmptyResults() {
+                        mPatientNameAutoTV.setError(getString(R.string.patient_does_not_exist));
+                    }
+                });
+                mRecyclerView.setAdapter(mAdapter);
+
+                Log.d(TAG, "onChanged: " + mViewModel.getPatientsNames().size());
             }
         };
 
@@ -90,7 +128,7 @@ public class AddAppointmentFragment extends Fragment {
         final Observer<String> onAddAppointmentSucceed = new Observer<String>() {
             @Override
             public void onChanged(String appointmentId) {
-                mPatientEmailAutoTV.setText("");
+                mPatientNameAutoTV.setText("");
                 mPatientFoundTv.setVisibility(View.INVISIBLE);
                 mPatientNameTv.setVisibility(View.INVISIBLE);
                 mDateTV.setVisibility(View.INVISIBLE);
@@ -100,7 +138,7 @@ public class AddAppointmentFragment extends Fragment {
                 mCreateAppointmentBtn.setVisibility(View.INVISIBLE);
                 mViewModel.resetDateFields();
 
-                Snackbar.make(getView(), getString(R.string.appointment_added_prompt),
+                Snackbar.make(requireView(), getString(R.string.appointment_added_prompt),
                         Snackbar.LENGTH_LONG).show();
             }
         };
@@ -124,42 +162,38 @@ public class AddAppointmentFragment extends Fragment {
                              @Nullable Bundle savedInstanceState) {
         final View rootView = inflater.inflate(R.layout.add_appointment_fragment, container, false);
 
-        mPatientEmailAutoTV = rootView.findViewById(R.id.patient_email_auto_tv);
+        mPatientNameAutoTV = rootView.findViewById(R.id.patient_name_auto_tv);
+        mRecyclerView = rootView.findViewById(R.id.recycler_view);
         final TextInputLayout dateLayout = rootView.findViewById(R.id.date_layout);
         mDateTV = rootView.findViewById(R.id.date_dialog_btn);
         final TextInputLayout timeLayout = rootView.findViewById(R.id.time_layout);
         mTimeTV = rootView.findViewById(R.id.time_dialog_btn);
         mPatientFoundTv = rootView.findViewById(R.id.patient_found_title);
         mPatientNameTv = rootView.findViewById(R.id.patient_name);
-        mSearchBtn = rootView.findViewById(R.id.search_btn);
+        final ImageButton searchBtn = rootView.findViewById(R.id.search_btn);
         mCreateAppointmentBtn = rootView.findViewById(R.id.create_btn);
 
-        mPatientEmailAutoTV.setThreshold(1);
-        mPatientEmailAutoTV.setTextColor(Color.BLACK);
+        mRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+        mRecyclerView.setHasFixedSize(true);
+
+        mPatientNameAutoTV.setThreshold(1);
+        mPatientNameAutoTV.setTextColor(Color.BLACK);
 
         // TODO: Add loading animation.
         mViewModel.getAllPatients();
 
-        mSearchBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                final String patientEmail = mPatientEmailAutoTV.getText().toString();
-                Patient patient = mViewModel.getPatientByEmail(patientEmail);
-                mPatientFoundTv.setVisibility(View.VISIBLE);
-                if (patient == null) {
-                    mPatientFoundTv.setText(getString(R.string.patient_not_found));
-                    mPatientNameTv.setVisibility(View.INVISIBLE);
-                    mDateTV.setVisibility(View.INVISIBLE);
-                    mTimeTV.setVisibility(View.INVISIBLE);
-                    mCreateAppointmentBtn.setVisibility(View.INVISIBLE);
 
-                } else {
-                    mPatientNameTv.setVisibility(View.VISIBLE);
-                    mPatientFoundTv.setText(getString(R.string.patient_found_prompt));
-                    mPatientNameTv.setText(patient.getFullName());
-                    mDateTV.setVisibility(View.VISIBLE);
-                    mTimeTV.setVisibility(View.VISIBLE);
-                    mCreateAppointmentBtn.setVisibility(View.VISIBLE);
+        mPatientNameAutoTV.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {}
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                if (mAdapter != null) {
+                    mAdapter.getFilter().filter(s);
                 }
             }
         });
@@ -236,29 +270,21 @@ public class AddAppointmentFragment extends Fragment {
         mCreateAppointmentBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                final String patientEmail = mPatientEmailAutoTV.getText().toString();
+                final String patientEmail = mViewModel.getPatient().getEmail();
 
                 if (validateFields(patientEmail)) {
-                    mViewModel.addAppointment(patientEmail);
+                    mViewModel.addAppointment();
                 } else {
-                    if (patientEmail.isEmpty() ||
-                            !mViewModel.getPatientsEmails().contains(patientEmail)) {
-                        final String error = patientEmail.isEmpty() ?
-                                getString(R.string.please_enter_patient_email) :
-                                getString(R.string.patient_does_not_exist);
-                        mPatientEmailAutoTV.setError(error);
-                    } else {
-                        if (mViewModel.getChosenDate() == -1) {
-                            final String error = getString(R.string.please_pick_a_date);
-                            dateLayout.setError(error);
-                            mDateTV.setError(error);
-                        }
+                    if (mViewModel.getChosenDate() == -1) {
+                        final String error = getString(R.string.please_pick_a_date);
+                        dateLayout.setError(error);
+                        mDateTV.setError(error);
+                    }
 
-                        if (mViewModel.getHourOfDay() == -1 || mViewModel.getMinutes() == -1) {
-                            final String error = getString(R.string.please_pick_a_time);
-                            timeLayout.setError(error);
-                            mTimeTV.setError(error);
-                        }
+                    if (mViewModel.getHourOfDay() == -1 || mViewModel.getMinutes() == -1) {
+                        final String error = getString(R.string.please_pick_a_time);
+                        timeLayout.setError(error);
+                        mTimeTV.setError(error);
                     }
 
                 }
@@ -270,8 +296,7 @@ public class AddAppointmentFragment extends Fragment {
 
     private boolean validateFields(final String patientEmail) {
         return !patientEmail.isEmpty() && mViewModel.getChosenDate() != -1 &&
-                mViewModel.getHourOfDay() != -1 && mViewModel.getMinutes() != -1 &&
-                mViewModel.getPatientsEmails().contains(patientEmail);
+                mViewModel.getHourOfDay() != -1 && mViewModel.getMinutes() != -1;
     }
 
     private String generateErrorMessage(final String patientEmail) {

@@ -12,6 +12,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
 import com.example.sheba_mental_health_project.R;
+import com.example.sheba_mental_health_project.model.Answer;
 import com.example.sheba_mental_health_project.model.AnswerBinary;
 import com.example.sheba_mental_health_project.model.AnswerOpen;
 import com.example.sheba_mental_health_project.model.Appointment;
@@ -42,10 +43,12 @@ import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.Objects;
+import java.util.Set;
 
 public class Repository {
 
@@ -65,6 +68,7 @@ public class Repository {
     private ListenerRegistration mTherapistAppointmentsListener;
     private ListenerRegistration mGetAllPainPointsListener;
     private ListenerRegistration mGetAllPainPointsPhysicalListener;
+    private ListenerRegistration mGetLiveAnswersListener;
     private ListenerRegistration mGetFeelingsAnswersListener;
 
     private final String PATIENTS = "patients";
@@ -251,6 +255,19 @@ public class Repository {
         this.mRepositoryGetQuestionsOfPageListener = repositoryGetQuestionsOfPageInterface;
     }
 
+    /*<------ Get Live Answers ------>*/
+    public interface RepositoryGetLiveAnswersInterface {
+        void onGetLiveAnswersSucceed(List<Answer> answers);
+
+        void onGetLiveAnswersFailed(String error);
+    }
+
+    private RepositoryGetLiveAnswersInterface mRepositoryGetLiveAnswersListener;
+
+    public void setGetLiveAnswersInterface(RepositoryGetLiveAnswersInterface repositoryGetLiveAnswersInterface) {
+        this.mRepositoryGetLiveAnswersListener = repositoryGetLiveAnswersInterface;
+    }
+
     /*<------ Get Feelings Answers ------>*/
     public interface RepositoryGetFeelingsAnswersInterface {
         void onGetFeelingsAnswersSucceed(Map<String, Integer> feelingsAnswers);
@@ -385,6 +402,42 @@ public class Repository {
                 });
     }
 
+    public void getPatientsOfSpecificTherapist() {
+        final Set<Patient> patients = new HashSet<>();
+
+        final String therapistId = AuthRepository.getInstance(mContext).getUser().getId();
+
+        mCloudDB.collection(APPOINTMENTS)
+                .whereEqualTo(FieldPath.of("therapist", "id"), therapistId)
+                .get()
+                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                        if (task.isSuccessful()) {
+                            for (QueryDocumentSnapshot document : Objects.requireNonNull(task
+                                    .getResult())) {
+                                final Appointment appointment = document.toObject(Appointment.class);
+                                final Patient patient = appointment.getPatient();
+                                patients.add(patient);
+                            }
+
+                            if (mRepositoryGetAllPatientsListener != null) {
+                                mRepositoryGetAllPatientsListener
+                                        .onGetAllPatientsSucceed(new ArrayList<>(patients));
+                            }
+                        } else {
+                            final String error = Objects.requireNonNull(task.getException())
+                                    .getMessage();
+                            Log.wtf(TAG, "onComplete: ", task.getException());
+
+                            if (mRepositoryGetAllPatientsListener != null) {
+                                mRepositoryGetAllPatientsListener.onGetAllPatientsFailed(error);
+                            }
+                        }
+                    }
+                });
+    }
+
     public void addAppointment(final Appointment appointment) {
         final String id = mCloudDB.collection(APPOINTMENTS).document().getId();
         appointment.setId(id);
@@ -484,7 +537,7 @@ public class Repository {
                                 List<Map<String, Object>> answersMapList =
                                         (List<Map<String, Object>>) document.get("answers");
                                 final Appointment appointment = document.toObject(Appointment.class);
-                                mappingAnswerObject(answersMapList,appointment);
+                                mappingAnswerObject(answersMapList, appointment);
                                 appointments.add(appointment);
                                 setAppointmentNotificationByDate(appointment, false);
                             }
@@ -524,7 +577,7 @@ public class Repository {
                                 List<Map<String, Object>> answersMapList =
                                         (List<Map<String, Object>>) document.get("answers");
                                 final Appointment appointment = document.toObject(Appointment.class);
-                                mappingAnswerObject(answersMapList,appointment);
+                                mappingAnswerObject(answersMapList, appointment);
                                 appointments.add(appointment);
                                 setAppointmentNotificationByDate(appointment, true);
                             }
@@ -583,14 +636,17 @@ public class Repository {
         mLiveAppointmentListener.remove();
     }
 
-    private void mappingAnswerObject(final List<Map<String, Object>> answersMapList, final Appointment appointment) {
+    private void mappingAnswerObject(final List<Map<String, Object>> answersMapList,
+                                     final Appointment appointment) {
         if (answersMapList != null && !answersMapList.isEmpty()) {
             appointment.getAnswers().clear();
             for(Map<String, Object> map : answersMapList){
                 final Object answer = map.get("answer");
                 final String id = (String) map.get("id");
                 if (answer instanceof Boolean) {
-                    appointment.getAnswers().add(new AnswerBinary(id, (Boolean) answer));
+                    final String answerDetails = (String) map.get("answerDetails");
+                    appointment.getAnswers().add(new AnswerBinary(id, (Boolean) answer,
+                            answerDetails));
                 } else {
                     appointment.getAnswers().add(new AnswerOpen(id, (String) answer));
                 }
@@ -845,6 +901,43 @@ public class Repository {
                         }
                     }
                 });
+    }
+
+    public void getLiveAnswersOfAppointment(final String appointmentId) {
+        mGetLiveAnswersListener = mCloudDB.collection(APPOINTMENTS)
+                .document(appointmentId)
+                .addSnapshotListener(new EventListener<DocumentSnapshot>() {
+                    @Override
+                    public void onEvent(@Nullable DocumentSnapshot value,
+                                        @Nullable FirebaseFirestoreException error) {
+                        if (value != null && value.exists()) {
+                            final Appointment dbAppointment = value.toObject(Appointment.class);
+                            List<Map<String, Object>> answersMapList =
+                                    (List<Map<String, Object>>) value.get("answers");
+                            mappingAnswerObject(answersMapList, dbAppointment);
+
+                            if (dbAppointment != null) {
+                                if (mRepositoryGetLiveAnswersListener != null) {
+                                    mRepositoryGetLiveAnswersListener
+                                            .onGetLiveAnswersSucceed(dbAppointment.getAnswers());
+                                }
+                            }
+                        } else if (error != null) {
+                            Log.w(TAG, "onEvent: ", error);
+
+                            if (mRepositoryGetLiveAnswersListener != null) {
+                                mRepositoryGetLiveAnswersListener
+                                        .onGetLiveAnswersFailed(error.getMessage());
+                            }
+                        } else {
+                            Log.w(TAG, "onEvent: NULL FIREBASE ERROR");
+                        }
+                    }
+                });
+    }
+
+    public void removeLiveAnswersListener() {
+        mGetLiveAnswersListener.remove();
     }
 
     public void getFeelings() {

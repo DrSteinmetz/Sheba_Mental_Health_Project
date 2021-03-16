@@ -17,6 +17,7 @@ import com.example.sheba_mental_health_project.R;
 import com.google.android.material.checkbox.MaterialCheckBox;
 import com.google.android.material.slider.Slider;
 import com.google.android.material.textfield.TextInputEditText;
+import com.google.android.material.textfield.TextInputLayout;
 
 import java.util.List;
 
@@ -45,6 +46,8 @@ public class QuestionsAdapter extends RecyclerView.Adapter<QuestionsAdapter.Ques
     public class QuestionsViewHolder extends RecyclerView.ViewHolder {
 
         private MaterialCheckBox binaryQuestionCb;
+        private TextInputLayout binaryQuestionLayout;
+        private TextInputEditText binaryQuestionEt;
         private TextView sliderTv;
         private Slider sliderQuestion;
         private TextView numberTv;
@@ -73,11 +76,14 @@ public class QuestionsAdapter extends RecyclerView.Adapter<QuestionsAdapter.Ques
 
         private void initializeBinaryQuestion(final View itemView) {
             binaryQuestionCb = itemView.findViewById(R.id.question_cb);
+            binaryQuestionLayout = itemView.findViewById(R.id.answer_layout);
+            binaryQuestionEt = itemView.findViewById(R.id.answer_et);
 
             binaryQuestionCb.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
                 @Override
                 public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                     final String questionId = mQuestions.get(getAdapterPosition()).getId();
+
                     if (isChecked) {
                         if (!mAnswers.contains(new Answer(questionId))) {
                             mAnswers.add(new AnswerBinary(questionId));
@@ -85,6 +91,24 @@ public class QuestionsAdapter extends RecyclerView.Adapter<QuestionsAdapter.Ques
                     } else {
                         mAnswers.remove(new Answer(questionId));
                     }
+
+                    binaryQuestionLayout.setVisibility(isChecked ? View.VISIBLE : View.GONE);
+                }
+            });
+
+            binaryQuestionEt.addTextChangedListener(new TextWatcher() {
+                @Override
+                public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
+
+                @Override
+                public void onTextChanged(CharSequence s, int start, int before, int count) {}
+
+                @Override
+                public void afterTextChanged(Editable s) {
+                    final String answerDetails = s.toString().trim();
+                    final String questionId = mQuestions.get(getAdapterPosition()).getId();
+                    final int answerIndex = mAnswers.indexOf(new Answer(questionId));
+                    ((AnswerBinary) mAnswers.get(answerIndex)).setAnswerDetails(answerDetails);
                 }
             });
         }
@@ -212,6 +236,14 @@ public class QuestionsAdapter extends RecyclerView.Adapter<QuestionsAdapter.Ques
 
                     cb.setText(questionText);
                     cb.setChecked(answer != null);
+
+                    if (answer != null) {
+                        final String answerDetails = ((AnswerBinary) answer).getAnswerDetails();
+                        holder.binaryQuestionEt.setText(answerDetails);
+                        holder.binaryQuestionLayout.setVisibility(View.VISIBLE);
+                    } else {
+                        holder.binaryQuestionLayout.setVisibility(View.GONE);
+                    }
                     break;
                 case SLIDER_TYPE:
                     final TextView sliderTv = holder.sliderTv;

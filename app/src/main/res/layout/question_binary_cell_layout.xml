@@ -8,24 +8,47 @@
     app:cardCornerRadius="10dp"
     app:cardPreventCornerOverlap="false"
     android:id="@+id/card_layout"
-    android:layout_margin="5dp"
-    >
+    android:layout_margin="5dp">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:orientation="horizontal"
-            android:padding="5dp">
+            android:padding="5dp"
+            android:orientation="vertical">
 
-        <com.google.android.material.checkbox.MaterialCheckBox
-            android:id="@+id/question_cb"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:paddingVertical="10dp"
-            android:text="Example"
-            android:textSize="17sp"
-            android:textColor="@color/black"
-            android:textAllCaps="false" />
+                <com.google.android.material.checkbox.MaterialCheckBox
+                    android:id="@+id/question_cb"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:paddingVertical="10dp"
+                    android:text="Example"
+                    android:textSize="17sp"
+                    android:textColor="@color/black"
+                    android:textAllCaps="false" />
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/answer_layout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:hint="@string/details_et_hint"
+                    app:boxStrokeColor="@color/light_gray"
+                    app:boxStrokeWidth="1.2dp"
+                    app:boxCornerRadiusBottomEnd="0dp"
+                    app:boxCornerRadiusBottomStart="0dp"
+                    app:boxCornerRadiusTopEnd="0dp"
+                    app:boxCornerRadiusTopStart="0dp"
+                    app:hintTextColor="@color/light_blue"
+                    android:visibility="gone"
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/answer_et"
+                            android:gravity="start"
+                            android:padding="10dp"
+                            android:inputType="text"
+                            style="@style/textInputEditText"
+                            android:textSize="17sp"/>
+                </com.google.android.material.textfield.TextInputLayout>
 
         </LinearLayout>
 

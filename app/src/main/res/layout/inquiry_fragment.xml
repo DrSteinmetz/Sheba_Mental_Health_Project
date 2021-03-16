@@ -39,7 +39,7 @@
                 android:layout_centerVertical="true"
                 android:layout_toStartOf="@+id/expectations_arrow_iv"
                 android:text="@string/meeting_expectations"
-                android:textSize="25sp"
+                android:textSize="20sp"
                 android:textColor="@color/black"
                 android:textAllCaps="false" />
 
@@ -64,6 +64,7 @@
             android:layout_width="match_parent"
             android:layout_height="1dp"
             android:paddingVertical="3dp"
+            android:layout_marginVertical="5dp"
             android:background="@color/light_gray" />
 
         <RelativeLayout
@@ -77,7 +78,7 @@
                 android:layout_centerVertical="true"
                 android:layout_toStartOf="@+id/covid_arrow_iv"
                 android:text="@string/covid"
-                android:textSize="25sp"
+                android:textSize="20sp"
                 android:textColor="@color/black"
                 android:textAllCaps="false" />
 
@@ -102,6 +103,7 @@
             android:layout_width="match_parent"
             android:layout_height="1dp"
             android:paddingVertical="3dp"
+            android:layout_marginVertical="5dp"
             android:background="@color/light_gray" />
 
         <RelativeLayout
@@ -115,7 +117,7 @@
                 android:layout_centerVertical="true"
                 android:layout_toStartOf="@+id/statement_arrow_iv"
                 android:text="@string/statements"
-                android:textSize="25sp"
+                android:textSize="20sp"
                 android:textColor="@color/black"
                 android:textAllCaps="false" />
 
@@ -140,6 +142,7 @@
             android:layout_width="match_parent"
             android:layout_height="1dp"
             android:paddingVertical="3dp"
+            android:layout_marginVertical="5dp"
             android:background="@color/light_gray" />
 
         <RelativeLayout
@@ -153,7 +156,7 @@
                 android:layout_centerVertical="true"
                 android:layout_toStartOf="@+id/social_arrow_iv"
                 android:text="@string/social_Status"
-                android:textSize="25sp"
+                android:textSize="20sp"
                 android:textColor="@color/black"
                 android:textAllCaps="false" />
 
@@ -178,6 +181,7 @@
             android:layout_width="match_parent"
             android:layout_height="1dp"
             android:paddingVertical="3dp"
+            android:layout_marginVertical="5dp"
             android:background="@color/light_gray" />
 
         <RelativeLayout
@@ -191,7 +195,7 @@
                 android:layout_centerVertical="true"
                 android:layout_toStartOf="@+id/habits_arrow_iv"
                 android:text="@string/habits_title"
-                android:textSize="25sp"
+                android:textSize="20sp"
                 android:textColor="@color/black"
                 android:textAllCaps="false" />
 
@@ -216,6 +220,7 @@
             android:layout_width="match_parent"
             android:layout_height="1dp"
             android:paddingVertical="3dp"
+            android:layout_marginVertical="5dp"
             android:background="@color/light_gray" />
 
         <RelativeLayout
@@ -229,7 +234,7 @@
                 android:layout_centerVertical="true"
                 android:layout_toStartOf="@+id/mental_arrow_iv"
                 android:text="@string/mental_functioning"
-                android:textSize="25sp"
+                android:textSize="20sp"
                 android:textColor="@color/black"
                 android:textAllCaps="false" />
 

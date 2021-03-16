@@ -10,15 +10,21 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ImageButton;
+import android.widget.ScrollView;
 import android.widget.TextView;
 
+import com.example.sheba_mental_health_project.model.PatientsAdapter;
 import com.example.sheba_mental_health_project.R;
 import com.example.sheba_mental_health_project.model.Patient;
 import com.example.sheba_mental_health_project.model.ViewModelFactory;
@@ -31,9 +37,15 @@ import java.util.List;
 
 public class SearchPatientFragment extends Fragment {
 
+    private ScrollView mMainScrollView;
+
+    private RecyclerView mRecyclerView;
+
+    private PatientsAdapter mAdapter;
+
     private SearchPatientViewModel mViewModel;
     private ArrayAdapter<String> mPatientsEmailsAdapter;
-    private MaterialAutoCompleteTextView mPatientEmailAutoTV;
+    private MaterialAutoCompleteTextView mPatientNameAutoTV;
     private TextView mPatientFoundTv;
     private TextView mPatientNameTv;
     private MaterialButton mPatientHistoryBtn;
@@ -73,9 +85,39 @@ public class SearchPatientFragment extends Fragment {
             @Override
             public void onChanged(List<Patient> patients) {
                 mPatientsEmailsAdapter = new ArrayAdapter<>(requireContext(),
-                        android.R.layout.select_dialog_item, mViewModel.getPatientsEmails());
-                mPatientEmailAutoTV.setAdapter(mPatientsEmailsAdapter);
-                Log.d(TAG, "onChanged: " + mViewModel.getPatientsEmails().size());
+                        android.R.layout.select_dialog_item, mViewModel.getPatientsNames());
+                mPatientNameAutoTV.setAdapter(mPatientsEmailsAdapter);
+
+                mAdapter = new PatientsAdapter(requireContext(), patients);
+                mAdapter.setPatientsAdapterListener(new PatientsAdapter.PatientsAdapterInterface() {
+                    @Override
+                    public void onPatientClicked(Patient patient) {
+
+                        mPatientFoundTv.setVisibility(View.VISIBLE);
+                        if (patient == null) {
+                            mPatientFoundTv.setText(getString(R.string.patient_not_found));
+                            mPatientNameTv.setVisibility(View.INVISIBLE);
+                            mPatientHistoryBtn.setVisibility(View.INVISIBLE);
+                        } else {
+                            mViewModel.setPatient(patient);
+
+                            mPatientNameTv.setVisibility(View.VISIBLE);
+                            mPatientFoundTv.setText(getString(R.string.patient_found_prompt));
+                            mPatientNameTv.setText(patient.getFullName());
+                            mPatientHistoryBtn.setVisibility(View.VISIBLE);
+
+                            mMainScrollView.smoothScrollTo(0, mMainScrollView.getHeight());
+                        }
+                    }
+
+                    @Override
+                    public void onEmptyResults() {
+                        mPatientNameAutoTV.setError(getString(R.string.patient_does_not_exist));
+                    }
+                });
+                mRecyclerView.setAdapter(mAdapter);
+
+                Log.d(TAG, "onChanged: " + mViewModel.getPatientsNames().size());
             }
         };
 
@@ -86,8 +128,8 @@ public class SearchPatientFragment extends Fragment {
             }
         };
 
-        mViewModel.getGetAllPatientsSucceed().observe(this, onGetAllPatientsSucceed);
-        mViewModel.getGetAllPatientsFailed().observe(this, onGetAllPatientsFailed);
+        mViewModel.getGetPatientsOfSpecificTherapistSucceed().observe(this, onGetAllPatientsSucceed);
+        mViewModel.getGetPatientsOfSpecificTherapistFailed().observe(this, onGetAllPatientsFailed);
     }
 
     @Override
@@ -95,35 +137,32 @@ public class SearchPatientFragment extends Fragment {
                              @Nullable Bundle savedInstanceState) {
         final View rootView = inflater.inflate(R.layout.search_patient_fragment, container, false);
 
-        mPatientEmailAutoTV = rootView.findViewById(R.id.patient_email_auto_tv);
+        mMainScrollView = rootView.findViewById(R.id.main_scroll_view);
+        mPatientNameAutoTV = rootView.findViewById(R.id.patient_name_auto_tv);
         mPatientFoundTv = rootView.findViewById(R.id.patient_found_title);
         mPatientNameTv = rootView.findViewById(R.id.patient_name);
         final ImageButton searchBtn = rootView.findViewById(R.id.search_btn);
+        mRecyclerView = rootView.findViewById(R.id.recycler_view);
         mPatientHistoryBtn = rootView.findViewById(R.id.patient_history_btn);
 
-        mPatientEmailAutoTV.setThreshold(1);
-        mPatientEmailAutoTV.setTextColor(Color.BLACK);
+        mRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+        mRecyclerView.setHasFixedSize(true);
+
+        mPatientNameAutoTV.setThreshold(1);
+        mPatientNameAutoTV.setTextColor(Color.BLACK);
 
 
-        searchBtn.setOnClickListener(new View.OnClickListener() {
+        mPatientNameAutoTV.addTextChangedListener(new TextWatcher() {
             @Override
-            public void onClick(View v) {
-                final String patientEmail = mPatientEmailAutoTV.getText().toString();
-                final Patient patient = mViewModel.getPatientByEmail(patientEmail);
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
 
-                mPatientFoundTv.setVisibility(View.VISIBLE);
-                if (patient == null) {
-                    mPatientFoundTv.setText(getString(R.string.patient_not_found));
-                    mPatientNameTv.setVisibility(View.INVISIBLE);
-                    mPatientHistoryBtn.setVisibility(View.INVISIBLE);
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {}
 
-                } else {
-                    mViewModel.setPatient(patient);
-
-                    mPatientNameTv.setVisibility(View.VISIBLE);
-                    mPatientFoundTv.setText(getString(R.string.patient_found_prompt));
-                    mPatientNameTv.setText(patient.getFullName());
-                    mPatientHistoryBtn.setVisibility(View.VISIBLE);
+            @Override
+            public void afterTextChanged(Editable s) {
+                if (mAdapter != null) {
+                    mAdapter.getFilter().filter(s);
                 }
             }
         });
@@ -137,7 +176,7 @@ public class SearchPatientFragment extends Fragment {
             }
         });
 
-        mViewModel.getAllPatients();
+        mViewModel.getAllMyPatients();
 
         return rootView;
     }

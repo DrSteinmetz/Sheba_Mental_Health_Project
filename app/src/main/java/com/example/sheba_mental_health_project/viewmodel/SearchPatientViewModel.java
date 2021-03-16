@@ -19,10 +19,10 @@ public class SearchPatientViewModel extends ViewModel {
 
     private Patient mPatient;
 
-    private final List<String> mPatientsEmails = new ArrayList<>();
+    private final List<String> mPatientsNames = new ArrayList<>();
 
-    private MutableLiveData<List<Patient>> mGetAllPatientsSucceed;
-    private MutableLiveData<String> mGetAllPatientsFailed;
+    private MutableLiveData<List<Patient>> mGetPatientsOfSpecificTherapistSucceed;
+    private MutableLiveData<String> mGetPatientsOfSpecificTherapistFailed;
 
     private final String TAG = "SearchPatientViewModel";
 
@@ -30,38 +30,40 @@ public class SearchPatientViewModel extends ViewModel {
         mRepository = Repository.getInstance(context);
     }
 
-    public MutableLiveData<List<Patient>> getGetAllPatientsSucceed() {
-        if (mGetAllPatientsSucceed == null) {
-            mGetAllPatientsSucceed = new MutableLiveData<>();
+    public MutableLiveData<List<Patient>> getGetPatientsOfSpecificTherapistSucceed() {
+        if (mGetPatientsOfSpecificTherapistSucceed == null) {
+            mGetPatientsOfSpecificTherapistSucceed = new MutableLiveData<>();
             attachSetGetAllPatientsListener();
         }
-        return mGetAllPatientsSucceed;
+        return mGetPatientsOfSpecificTherapistSucceed;
     }
 
-    public MutableLiveData<String> getGetAllPatientsFailed() {
-        if (mGetAllPatientsFailed == null) {
-            mGetAllPatientsFailed = new MutableLiveData<>();
+    public MutableLiveData<String> getGetPatientsOfSpecificTherapistFailed() {
+        if (mGetPatientsOfSpecificTherapistFailed == null) {
+            mGetPatientsOfSpecificTherapistFailed = new MutableLiveData<>();
             attachSetGetAllPatientsListener();
         }
-        return mGetAllPatientsFailed;
+        return mGetPatientsOfSpecificTherapistFailed;
     }
 
     private void attachSetGetAllPatientsListener() {
         mRepository.setGetAllPatientsInterface(new Repository.RepositoryGetAllPatientsInterface() {
             @Override
             public void onGetAllPatientsSucceed(List<Patient> patients) {
-                if (!mPatientsEmails.isEmpty()) {
-                    mPatientsEmails.clear();
+                if (!mPatientsNames.isEmpty()) {
+                    mPatientsNames.clear();
                 }
+
                 for (Patient patient : patients) {
-                    mPatientsEmails.add(patient.getEmail());
+                    mPatientsNames.add(patient.getFullName());
                 }
-                mGetAllPatientsSucceed.setValue(patients);
+
+                mGetPatientsOfSpecificTherapistSucceed.setValue(patients);
             }
 
             @Override
             public void onGetAllPatientsFailed(String error) {
-                mGetAllPatientsFailed.setValue(error);
+                mGetPatientsOfSpecificTherapistFailed.setValue(error);
             }
         });
     }
@@ -75,21 +77,21 @@ public class SearchPatientViewModel extends ViewModel {
         this.mPatient = mPatient;
     }
 
-    public List<String> getPatientsEmails() {
-        return mPatientsEmails;
+    public List<String> getPatientsNames() {
+        return mPatientsNames;
     }
 
-    public void getAllPatients() {
-        mRepository.getAllPatients();
+    public void getAllMyPatients() {
+        mRepository.getPatientsOfSpecificTherapist();
     }
 
-    public Patient getPatientByEmail(final String patientEmail){
-        final int patientIndex = mPatientsEmails.indexOf(patientEmail);
+    /*public Patient getPatientByEmail(final String patientEmail){
+        final int patientIndex = mPatientsNames.indexOf(patientEmail);
 
         if (patientIndex != -1) {
-            return Objects.requireNonNull(mGetAllPatientsSucceed.getValue()).get(patientIndex);
+            return Objects.requireNonNull(mGetPatientsOfSpecificTherapistSucceed.getValue()).get(patientIndex);
         } else {
             return null;
         }
-    }
+    }*/
 }

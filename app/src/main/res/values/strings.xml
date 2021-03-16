@@ -27,6 +27,7 @@
     <string name="create_appointment">Create Appointment</string>
     <string name="search_patient">Search Patient</string>
     <string name="patient_email">Patient Email</string>
+    <string name="patient_name">Patient Name</string>
     <string name="patient_not_found">Patient Not Found</string>
     <string name="patient_found_prompt">Patient Found:</string>
     <string name="invite_patient">Invite Patient</string>
@@ -41,6 +42,7 @@
     <string name="mental_functioning">Mental Functioning</string>
     <string name="undo">Undo</string>
     <string name="answer_et_hint">Type Your Answer Here</string>
+    <string name="details_et_hint">Details</string>
     <string name="long_meeting_prompt">I Want a Long Meeting</string>
     <string name="short_meeting_prompt">I Want a Short Meeting</string>
     <string name="another_person_prompt">I Want Another Person to Be Present with Me During the Meeting</string>
@@ -143,6 +145,7 @@
     <!-- Login and Registration strings -->
     <string name="add_new_patient">Add New Patient</string>
     <string name="email">Email</string>
+    <string name="email_prompt">Email:</string>
     <string name="first_name">First Name</string>
     <string name="last_name">Last Name</string>
     <string name="add">Add</string>

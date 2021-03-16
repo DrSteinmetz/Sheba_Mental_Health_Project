@@ -19,6 +19,7 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 
 import com.example.sheba_mental_health_project.R;
+import com.example.sheba_mental_health_project.model.Answer;
 import com.example.sheba_mental_health_project.model.AnswersAdapter;
 import com.example.sheba_mental_health_project.model.Question;
 import com.example.sheba_mental_health_project.model.QuestionsAdapter;
@@ -63,23 +64,37 @@ public class InquiryFragment extends Fragment {
         final Observer<List<Question>> onGetAllQuestionsSucceed = new Observer<List<Question>>() {
             @Override
             public void onChanged(List<Question> questions) {
+                mViewModel.getLiveAnswers();
+            }
+        };
+
+        final Observer<String> onGetAllQuestionsFailed = new Observer<String>() {
+            @Override
+            public void onChanged(String error) {
+                Log.w(TAG, "onChanged: " + error);
+            }
+        };
+
+        final Observer<List<Answer>> onGetLiveAnswersSucceed = new Observer<List<Answer>>() {
+            @Override
+            public void onChanged(List<Answer> answers) {
                 mExpectationsAdapter = new AnswersAdapter(mViewModel.getExpectationsQuestions(),
-                        mViewModel.getCurrentAppointment().getAnswers());
+                        answers);
 
                 mCovidAdapter = new AnswersAdapter(mViewModel.getCovidQuestions(),
-                        mViewModel.getCurrentAppointment().getAnswers());
+                        answers);
 
                 mStatementAdapter = new AnswersAdapter(mViewModel.getStatementQuestions(),
-                        mViewModel.getCurrentAppointment().getAnswers());
+                        answers);
 
                 mSocialAdapter = new AnswersAdapter(mViewModel.getSocialQuestions(),
-                        mViewModel.getCurrentAppointment().getAnswers());
+                        answers);
 
                 mHabitsAdapter = new AnswersAdapter(mViewModel.getHabitsQuestions(),
-                        mViewModel.getCurrentAppointment().getAnswers());
+                        answers);
 
                 mMentalAdapter = new AnswersAdapter(mViewModel.getMentalQuestions(),
-                        mViewModel.getCurrentAppointment().getAnswers());
+                        answers);
 
 
                 mExpectationsRecycler.setAdapter(mExpectationsAdapter);
@@ -91,7 +106,7 @@ public class InquiryFragment extends Fragment {
             }
         };
 
-        final Observer<String> onGetAllQuestionsFailed = new Observer<String>() {
+        final Observer<String> onGetLiveAnswersFailed = new Observer<String>() {
             @Override
             public void onChanged(String error) {
                 Log.w(TAG, "onChanged: " + error);
@@ -100,6 +115,8 @@ public class InquiryFragment extends Fragment {
 
         mViewModel.getGetAllQuestionsSucceed().observe(this, onGetAllQuestionsSucceed);
         mViewModel.getGetAllQuestionsFailed().observe(this, onGetAllQuestionsFailed);
+        mViewModel.getGetLiveAnswersSucceed().observe(this, onGetLiveAnswersSucceed);
+        mViewModel.getGetLiveAnswersFailed().observe(this, onGetLiveAnswersFailed);
     }
 
     @Override
@@ -131,6 +148,8 @@ public class InquiryFragment extends Fragment {
         final RelativeLayout mentalRecyclerLayout = rootView.findViewById(R.id.mental_recycler_layout);
         final ImageView mentalArrowIv = rootView.findViewById(R.id.mental_arrow_iv);
         mMentalRecycler = rootView.findViewById(R.id.mental_recycler_view);
+
+        mViewModel.attachGetLiveAnswersListener();
 
         mExpectationsRecycler.setLayoutManager(new LinearLayoutManager(getContext()));
         mExpectationsRecycler.setHasFixedSize(true);
@@ -209,5 +228,14 @@ public class InquiryFragment extends Fragment {
         mViewModel.getAllQuestions();
 
         return rootView;
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+
+        if (mViewModel != null) {
+            mViewModel.removeLiveAnswersListener();
+        }
     }
 }
