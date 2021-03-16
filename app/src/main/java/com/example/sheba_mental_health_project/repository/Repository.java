@@ -633,7 +633,9 @@ public class Repository {
     }
 
     public void removeLiveAppointmentListener() {
-        mLiveAppointmentListener.remove();
+        if (mLiveAppointmentListener != null) {
+            mLiveAppointmentListener.remove();
+        }
     }
 
     private void mappingAnswerObject(final List<Map<String, Object>> answersMapList,

@@ -8,10 +8,11 @@
     <string name="choose">בחרו…</string>
     <string name="delete">מחיקה</string>
     <string name="edit">עריכה</string>
+    <string name="back">הקודם</string>
     <string name="continue_txt">הבא</string>
     <string name="finish">סיום</string>
     <string name="save">שמירה</string>
-    <string name="leave_note">השאירו הודעה</string>
+    <string name="leave_note">הודעה אישית לרופא</string>
     <string name="leave_note_info">המטפל יראה את הודעתך רק בתחילת הפגישה</string>
     <string name="pick_date">בחירת תאריך</string>
     <string name="pick_time">בחירת שעה</string>

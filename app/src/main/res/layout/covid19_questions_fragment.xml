@@ -16,24 +16,38 @@
         android:textColor="@color/black"
         android:textAllCaps="false"
         android:textStyle="bold"
-        android:text="@string/covid19"
-        />
+        android:text="@string/covid19" />
 
     <androidx.recyclerview.widget.RecyclerView
-        android:layout_below="@id/title_tv"
         android:id="@+id/questions_recycler"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_below="@id/title_tv"
         android:scrollbarAlwaysDrawVerticalTrack="true"
-        android:layout_above="@id/continue_btn"
-        android:layout_marginTop="10dp"/>
+        android:layout_above="@id/buttons_layout"
+        android:layout_marginTop="10dp" />
 
-    <com.google.android.material.button.MaterialButton
-        android:id="@+id/continue_btn"
-        android:layout_centerHorizontal="true"
+    <LinearLayout
+        android:id="@+id/buttons_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_marginTop="30dp"
-        android:text="@string/continue_txt"
-        style="@style/blue_btn" />
+        android:gravity="center"
+        android:orientation="horizontal">
 
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/back_btn"
+            android:text="@string/back"
+            android:layout_weight="1"
+            android:layout_marginEnd="30dp"
+            style="@style/blue_btn" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/continue_btn"
+            android:text="@string/continue_txt"
+            android:layout_weight="1"
+            style="@style/blue_btn" />
+
+    </LinearLayout>
 </RelativeLayout>

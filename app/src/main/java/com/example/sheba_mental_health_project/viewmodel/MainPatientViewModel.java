@@ -6,7 +6,9 @@ import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
 import com.example.sheba_mental_health_project.model.Appointment;
+import com.example.sheba_mental_health_project.model.User;
 import com.example.sheba_mental_health_project.model.enums.AppointmentStateEnum;
+import com.example.sheba_mental_health_project.repository.AuthRepository;
 import com.example.sheba_mental_health_project.repository.Repository;
 import com.google.firebase.auth.FirebaseAuth;
 
@@ -17,16 +19,22 @@ public class MainPatientViewModel extends ViewModel {
 
     private final Repository mRepository;
 
+    private final AuthRepository mAuthRepository;
+
     private final List<Appointment> mAppointments = new ArrayList<>();
 
     private MutableLiveData<List<Appointment>> mGetMyAppointmentsSucceed;
     private MutableLiveData<String> mGetMyAppointmentsFailed;
+
+    private MutableLiveData<Void> mPatientLoginSucceed;
+    private  MutableLiveData<String> mPatientLoginFailed;
 
     private final String TAG = "MainPatientViewModel";
 
 
     public MainPatientViewModel(final Context context) {
         mRepository = Repository.getInstance(context);
+        mAuthRepository = AuthRepository.getInstance(context);
     }
 
     public MutableLiveData<List<Appointment>> getMyAppointmentsSucceed() {
@@ -61,6 +69,36 @@ public class MainPatientViewModel extends ViewModel {
         });
     }
 
+    public MutableLiveData<Void> getPatientLoginSucceed() {
+        if (mPatientLoginSucceed == null) {
+            mPatientLoginSucceed = new MutableLiveData<>();
+            attachSetOnPatientLoginListener();
+        }
+        return mPatientLoginSucceed;
+    }
+
+    public MutableLiveData<String> getPatientLoginFailed() {
+        if (mPatientLoginFailed == null) {
+            mPatientLoginFailed = new MutableLiveData<>();
+            attachSetOnPatientLoginListener();
+        }
+        return mPatientLoginFailed;
+    }
+
+    private void attachSetOnPatientLoginListener() {
+        mAuthRepository.setLoginPatientListener(new AuthRepository.AuthRepoLoginPatientInterface() {
+            @Override
+            public void onPatientLoginSucceed() {
+                mPatientLoginSucceed.setValue(null);
+            }
+
+            @Override
+            public void onPatientLoginFailed(String message) {
+                mPatientLoginFailed.setValue(message);
+            }
+        });
+    }
+
 
     public final List<Appointment> getAppointments() {
         return mAppointments;
@@ -82,5 +120,13 @@ public class MainPatientViewModel extends ViewModel {
 
     public void removePatientAppointmentsListener() {
         mRepository.removePatientAppointmentsListener();
+    }
+
+    public User getAuthUser() {
+        return mAuthRepository.getUser();
+    }
+
+    public void getPatientForLogin() {
+        mAuthRepository.getPatientForLogin(mAuthRepository.getFirebaseUserId());
     }
 }

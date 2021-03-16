@@ -9,6 +9,7 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Set;
 
 public class Appointment implements Serializable {
@@ -143,6 +144,16 @@ public class Appointment implements Serializable {
 
     public void setIsFinishedPreQuestions(boolean isFinishedPreQuestions) {
         this.mIsFinishedPreQuestions = isFinishedPreQuestions;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        final Appointment that = (Appointment) o;
+
+        return Objects.equals(mId, that.mId);
     }
 
     @Override

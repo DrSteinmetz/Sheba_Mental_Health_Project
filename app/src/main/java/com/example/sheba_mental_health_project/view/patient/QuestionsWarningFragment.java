@@ -46,7 +46,16 @@ public class QuestionsWarningFragment extends Fragment {
                              Bundle savedInstanceState) {
         final View rootView = inflater.inflate(R.layout.fragment_questions_warning, container, false);
 
+        final MaterialButton backBtn = rootView.findViewById(R.id.back_btn);
         final MaterialButton continueBtn = rootView.findViewById(R.id.continue_btn);
+
+
+        backBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                requireActivity().onBackPressed();
+            }
+        });
 
         continueBtn.setOnClickListener(new View.OnClickListener() {
             @Override

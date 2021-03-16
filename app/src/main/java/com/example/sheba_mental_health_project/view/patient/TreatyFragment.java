@@ -117,6 +117,7 @@ public class TreatyFragment extends Fragment {
 
         final RadioGroup meetingTimePrefRg = rootView.findViewById(R.id.meeting_time_pref_rg);
         mRecyclerView = rootView.findViewById(R.id.questions_recycler);
+        final MaterialButton backBtn = rootView.findViewById(R.id.back_btn);
         final MaterialButton continueBtn = rootView.findViewById(R.id.continue_btn);
 
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
@@ -136,6 +137,13 @@ public class TreatyFragment extends Fragment {
                     mViewModel.updateRadioGroupAnswers(radioButton.isChecked(),
                             radioButton.getTag().toString());
                 }
+            }
+        });
+
+        backBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                requireActivity().onBackPressed();
             }
         });
 

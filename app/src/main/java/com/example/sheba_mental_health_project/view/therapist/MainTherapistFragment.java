@@ -4,6 +4,7 @@ import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -24,6 +25,8 @@ import com.example.sheba_mental_health_project.model.TherapistAppointmentsAdapte
 import com.example.sheba_mental_health_project.model.ViewModelFactory;
 import com.example.sheba_mental_health_project.model.enums.AppointmentStateEnum;
 import com.example.sheba_mental_health_project.model.enums.ViewModelEnum;
+import com.example.sheba_mental_health_project.view.MainActivity;
+import com.example.sheba_mental_health_project.view.WelcomeActivity;
 import com.example.sheba_mental_health_project.viewmodel.MainTherapistViewModel;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
@@ -36,6 +39,8 @@ public class MainTherapistFragment extends Fragment {
     private TherapistAppointmentsAdapter mAppointmentAdapter;
 
     private RecyclerView mRecyclerView;
+
+    private TextView mTherapistName;
 
     private final String TAG = "MainTherapistFragment";
 
@@ -73,27 +78,17 @@ public class MainTherapistFragment extends Fragment {
         final Observer<List<Appointment>> onGetMyAppointmentsSucceed = new Observer<List<Appointment>>() {
             @Override
             public void onChanged(List<Appointment> appointments) {
-                /*if (mAppointmentAdapter == null) {
-                    mAppointmentAdapter = new TherapistAppointmentsAdapter(requireContext(), mViewModel.getAppointments());
-                    mRecyclerView.setAdapter(mAppointmentAdapter);
-                } else {
-                    mAppointmentAdapter.notifyDataSetChanged();
-                }*/
                 mAppointmentAdapter = new TherapistAppointmentsAdapter(requireContext(), mViewModel.getAppointments());
-                mRecyclerView.setAdapter(mAppointmentAdapter);
                 mAppointmentAdapter.setAppointmentListener(new TherapistAppointmentsAdapter.AppointmentListener() {
                     @Override
                     public void onAppointmentClicked(int position, View view) {
                         final Appointment appointment = appointments.get(position);
                         mViewModel.setCurrentAppointment(appointment);
-                        if (appointment.getState().equals(AppointmentStateEnum.OnGoing)) {
-                            listener.onTherapistOnGoingAppointmentClicked();
-                        } else {
-                            listener.onTherapistAppointmentClicked();
-                        }
 
+                        enterAppointmentByState(appointment);
                     }
                 });
+                mRecyclerView.setAdapter(mAppointmentAdapter);
             }
         };
 
@@ -104,8 +99,26 @@ public class MainTherapistFragment extends Fragment {
             }
         };
 
+        final Observer<Void> loginObserverSuccess = new Observer<Void>() {
+            @Override
+            public void onChanged(Void aVoid) {
+                mTherapistName.setText(mViewModel.getTherapistFullName());
+                mViewModel.getMyAppointments();
+            }
+        };
+
+        final Observer<String> loginObserverFailed = new Observer<String>() {
+            @Override
+            public void onChanged(@Nullable final String error) {
+                Log.d(TAG, "onChanged: " + error);
+            }
+        };
+
+
         mViewModel.getMyAppointmentsSucceed().observe(this,onGetMyAppointmentsSucceed);
         mViewModel.getMyAppointmentsFailed().observe(this,onGetMyAppointmentsFailed);
+        mViewModel.getTherapistLoginSucceed().observe(this, loginObserverSuccess);
+        mViewModel.getTherapistLoginFailed().observe(this, loginObserverFailed);
     }
 
     @Override
@@ -114,8 +127,7 @@ public class MainTherapistFragment extends Fragment {
 
         final View rootView = inflater.inflate(R.layout.main_therapist_fragment, container, false);
 
-        final TextView therapistName = rootView.findViewById(R.id.therapist_name_tv);
-        therapistName.setText(mViewModel.getTherapistFullName());
+        mTherapistName = rootView.findViewById(R.id.therapist_name_tv);
 
         final FloatingActionButton addAppointFab = rootView.findViewById(R.id.add_appointment_fab);
         mRecyclerView = rootView.findViewById(R.id.recycler_view);
@@ -149,9 +161,37 @@ public class MainTherapistFragment extends Fragment {
             }
         });
 
-        mViewModel.getMyAppointments();
+
+        if (mViewModel.getAuthUser() != null) {
+            mTherapistName.setText(mViewModel.getTherapistFullName());
+            mViewModel.getMyAppointments();
+        } else {
+            mViewModel.getTherapistForLogin();
+        }
 
         return rootView;
+    }
+
+    public void enterAppointmentByState(final Appointment appointment) {
+        if (listener != null) {
+            if (appointment.getState().equals(AppointmentStateEnum.OnGoing)) {
+                listener.onTherapistOnGoingAppointmentClicked();
+            } else {
+                listener.onTherapistAppointmentClicked();
+            }
+        }
+    }
+
+    public final List<Appointment> getAppointmentsList() {
+        final List<Appointment> appointments;
+
+        if (mViewModel != null) {
+            appointments = mViewModel.getAppointments();
+        } else {
+            appointments = null;
+        }
+
+        return appointments;
     }
 
     @Override

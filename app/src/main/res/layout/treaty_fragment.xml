@@ -63,13 +63,29 @@
             android:layout_below="@id/meeting_time_pref_rg"
             android:scrollbarAlwaysDrawVerticalTrack="true" />
 
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/continue_btn"
-            android:layout_centerHorizontal="true"
-            android:layout_marginTop="30dp"
+        <LinearLayout
+            android:id="@+id/buttons_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
             android:layout_below="@id/questions_recycler"
-            android:text="@string/continue_txt"
-            style="@style/blue_btn" />
+            android:layout_marginTop="30dp"
+            android:gravity="center"
+            android:orientation="horizontal">
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/back_btn"
+                android:text="@string/back"
+                android:layout_weight="1"
+                android:layout_marginEnd="30dp"
+                style="@style/blue_btn" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/continue_btn"
+                android:text="@string/continue_txt"
+                android:layout_weight="1"
+                style="@style/blue_btn" />
+
+        </LinearLayout>
 
     </RelativeLayout>
 
