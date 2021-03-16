@@ -20,13 +20,15 @@ public class AddAppointmentViewModel extends ViewModel {
 
     private final Repository mRepository;
 
+    private Patient mPatient;
+
     private MutableLiveData<List<Patient>> mGetAllPatientsSucceed;
     private MutableLiveData<String> mGetAllPatientsFailed;
 
     private  MutableLiveData<String> mAddAppointmentSucceed;
     private  MutableLiveData<String> mAddAppointmentFailed;
 
-    private final List<String> mPatientsEmails = new ArrayList<>();
+    private final List<String> mPatientsNames = new ArrayList<>();
 
     private long mChosenDate = -1;
     private int mHourOfDay = -1;
@@ -59,12 +61,14 @@ public class AddAppointmentViewModel extends ViewModel {
         mRepository.setGetAllPatientsInterface(new Repository.RepositoryGetAllPatientsInterface() {
             @Override
             public void onGetAllPatientsSucceed(List<Patient> patients) {
-                if (!mPatientsEmails.isEmpty()) {
-                    mPatientsEmails.clear();
+                if (!mPatientsNames.isEmpty()) {
+                    mPatientsNames.clear();
                 }
+
                 for (Patient patient : patients) {
-                    mPatientsEmails.add(patient.getEmail());
+                    mPatientsNames.add(patient.getFullName());
                 }
+
                 mGetAllPatientsSucceed.setValue(patients);
             }
 
@@ -76,14 +80,14 @@ public class AddAppointmentViewModel extends ViewModel {
     }
 
     public MutableLiveData<String> getAddAppointmentSucceed() {
-        if(mAddAppointmentSucceed==null){
+        if (mAddAppointmentSucceed == null) {
             mAddAppointmentSucceed = new MutableLiveData<>();
             attachAddAppointmentListener();
         }
         return mAddAppointmentSucceed;
     }
     public MutableLiveData<String> getAddAppointmentFailed() {
-        if(mAddAppointmentFailed==null){
+        if (mAddAppointmentFailed == null) {
             mAddAppointmentFailed = new MutableLiveData<>();
             attachAddAppointmentListener();
         }
@@ -104,8 +108,17 @@ public class AddAppointmentViewModel extends ViewModel {
         });
     }
 
-    public List<String> getPatientsEmails() {
-        return mPatientsEmails;
+
+    public Patient getPatient() {
+        return mPatient;
+    }
+
+    public void setPatient(final Patient patient) {
+        this.mPatient = patient;
+    }
+
+    public List<String> getPatientsNames() {
+        return mPatientsNames;
     }
 
     public long getChosenDate() {
@@ -136,16 +149,12 @@ public class AddAppointmentViewModel extends ViewModel {
         mRepository.getAllPatients();
     }
 
-    public void addAppointment(final String patientEmail) {
+    public void addAppointment() {
         final Appointment appointmentToAdd = new Appointment(getCalculatedDate(),
-                getPatientByEmail(patientEmail), AppointmentStateEnum.PreMeeting);
+                mPatient, AppointmentStateEnum.PreMeeting);
+
         mRepository.addAppointment(appointmentToAdd);
     }
-
-   /* private Patient getPatientByEmail(final String patientEmail){
-        final int patientIndex = mPatientsEmails.indexOf(patientEmail);
-        return Objects.requireNonNull(mGetAllPatientsSucceed.getValue()).get(patientIndex);
-    }*/
 
     private Date getCalculatedDate() {
         final Date chosenDate = new Date(mChosenDate);
@@ -159,15 +168,5 @@ public class AddAppointmentViewModel extends ViewModel {
 
     public void resetDateFields() {
         mChosenDate = mHourOfDay = mMinutes = -1;
-    }
-
-    public Patient getPatientByEmail(final String patientEmail) {
-        final int patientIndex = mPatientsEmails.indexOf(patientEmail);
-
-        if (patientIndex != -1) {
-            return Objects.requireNonNull(mGetAllPatientsSucceed.getValue()).get(patientIndex);
-        } else {
-            return null;
-        }
     }
 }

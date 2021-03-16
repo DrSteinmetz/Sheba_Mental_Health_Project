@@ -115,10 +115,19 @@ public class Covid19QuestionsFragment extends Fragment {
         mViewModel.attachSetUpdateAnswersOfAppointmentListener();
 
         mRecyclerView = rootView.findViewById(R.id.questions_recycler);
+        final MaterialButton backBtn = rootView.findViewById(R.id.back_btn);
         final MaterialButton continueBtn = rootView.findViewById(R.id.continue_btn);
 
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         mRecyclerView.setHasFixedSize(true);
+
+
+        backBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                requireActivity().onBackPressed();
+            }
+        });
 
         continueBtn.setOnClickListener(new View.OnClickListener() {
             @Override

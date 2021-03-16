@@ -24,6 +24,7 @@ public class Answer implements Serializable {
 
     @Override
     public boolean equals(@Nullable Object obj) {
+        if (this == obj) return true;
         if (obj instanceof Answer) {
             final Answer otherAnswer = (Answer) obj;
             return otherAnswer.getId().equals(this.mId);

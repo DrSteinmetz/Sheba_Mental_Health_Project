@@ -79,7 +79,8 @@ public class NotificationsReceiver extends BroadcastReceiver {
 
         final Intent activityIntent = new Intent(context, MainActivity.class);
         activityIntent.setFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP | Intent.FLAG_ACTIVITY_CLEAR_TOP);
-        activityIntent.setAction("open_appointment_page");
+        final String action = isPatient ? "open_patient_appointment" : "open_therapist_appointment";
+        activityIntent.setAction(action);
 
         activityIntent.putExtra("appointment_to_open", appointment);
         final PendingIntent activityPendingIntent = PendingIntent.getActivity(context,

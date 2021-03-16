@@ -1,7 +1,9 @@
 package com.example.sheba_mental_health_project.viewmodel;
 
 import android.content.Context;
+import android.util.Log;
 
+import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
 import com.example.sheba_mental_health_project.model.Appointment;
@@ -14,7 +16,8 @@ public class MainActivityViewModel extends ViewModel {
 
     private final AuthRepository mAuthRepository;
 
-//    TODO: add MutableLiveData
+    private MutableLiveData<Appointment> mGetLiveAppointmentSucceed;
+    private MutableLiveData<String> mGetLiveAppointmentFailed;
 
     private boolean mIsTherapist;
 
@@ -25,6 +28,37 @@ public class MainActivityViewModel extends ViewModel {
         mRepository = Repository.getInstance(context);
         mAuthRepository = AuthRepository.getInstance(context);
 
+    }
+
+    public MutableLiveData<Appointment> getGetLiveAppointmentSucceed() {
+        if (mGetLiveAppointmentSucceed == null) {
+            mGetLiveAppointmentSucceed = new MutableLiveData<>();
+            attachGetLiveAppointmentListener();
+        }
+        return mGetLiveAppointmentSucceed;
+    }
+
+    public MutableLiveData<String> getGetLiveAppointmentFailed() {
+        if (mGetLiveAppointmentFailed == null) {
+            mGetLiveAppointmentFailed = new MutableLiveData<>();
+            attachGetLiveAppointmentListener();
+        }
+        return mGetLiveAppointmentFailed;
+    }
+
+    public void attachGetLiveAppointmentListener() {
+        mRepository.setGetLiveAppointmentInterface(new Repository.RepositoryGetLiveAppointmentInterface() {
+            @Override
+            public void onGetLiveAppointmentSucceed(Appointment appointment) {
+                Log.d(TAG, "onGetLiveAppointmentSucceed: " + appointment.getState().name());
+                mGetLiveAppointmentSucceed.setValue(appointment);
+            }
+
+            @Override
+            public void onGetLiveAppointmentFailed(String error) {
+                mGetLiveAppointmentFailed.setValue(error);
+            }
+        });
     }
 
 
@@ -40,8 +74,21 @@ public class MainActivityViewModel extends ViewModel {
         return mRepository.getCurrentAppointment();
     }
 
+    public void setCurrentAppointment(final Appointment appointment) {
+        mRepository.setCurrentAppointment(appointment);
+    }
+
+    public void getLiveAppointment() {
+        if (getCurrentAppointment() != null) {
+            mRepository.getLiveAppointmentState();
+        }
+    }
+
+    public void removeLiveAppointmentListener() {
+        mRepository.removeLiveAppointmentListener();
+    }
+
     public void logout() {
         mAuthRepository.logOut();
     }
-
 }

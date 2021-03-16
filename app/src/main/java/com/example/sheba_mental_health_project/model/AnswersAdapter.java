@@ -36,6 +36,7 @@ public class AnswersAdapter extends RecyclerView.Adapter<AnswersAdapter.AnswersV
     public class AnswersViewHolder extends RecyclerView.ViewHolder {
 
         private MaterialCheckBox binaryQuestionCb;
+        private MaterialTextView binaryAnswerTv;
         private TextView sliderTv;
         private TextView sliderValueTv;
         private Slider sliderAnswer;
@@ -50,6 +51,7 @@ public class AnswersAdapter extends RecyclerView.Adapter<AnswersAdapter.AnswersV
             switch (viewType) {
                 case BINARY_TYPE:
                     binaryQuestionCb = itemView.findViewById(R.id.question_cb);
+                    binaryAnswerTv = itemView.findViewById(R.id.answer_tv);
                     binaryQuestionCb.setClickable(false);
                     break;
                 case SLIDER_TYPE:
@@ -121,6 +123,15 @@ public class AnswersAdapter extends RecyclerView.Adapter<AnswersAdapter.AnswersV
 
                     cb.setText(questionText);
                     cb.setChecked(answer != null);
+
+                    if (answer != null) {
+                        final String answerDetails = ((AnswerBinary) answer).getAnswerDetails();
+                        holder.binaryAnswerTv.setText(answerDetails);
+                        holder.binaryAnswerTv.setVisibility(answerDetails.trim().isEmpty() ?
+                                View.GONE : View.VISIBLE);
+                    } else {
+                        holder.binaryAnswerTv.setVisibility(View.GONE);
+                    }
                     break;
                 case SLIDER_TYPE:
                     final TextView sliderTv = holder.sliderTv;

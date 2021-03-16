@@ -5,12 +5,19 @@ import android.content.Context;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
+import com.example.sheba_mental_health_project.model.Answer;
+import com.example.sheba_mental_health_project.model.AnswerBinary;
+import com.example.sheba_mental_health_project.model.AnswerOpen;
 import com.example.sheba_mental_health_project.model.Appointment;
 import com.example.sheba_mental_health_project.model.Question;
+import com.example.sheba_mental_health_project.model.enums.ViewModelEnum;
 import com.example.sheba_mental_health_project.repository.Repository;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.Objects;
 
 public class InquiryViewModel extends ViewModel {
 
@@ -25,6 +32,9 @@ public class InquiryViewModel extends ViewModel {
 
     private MutableLiveData<List<Question>> mGetAllQuestionsSucceed;
     private MutableLiveData<String> mGetAllQuestionsFailed;
+
+    private MutableLiveData<List<Answer>> mGetLiveAnswersSucceed;
+    private MutableLiveData<String> mGetLiveAnswersFailed;
 
     private final String TAG = "InquiryViewModel";
 
@@ -53,6 +63,36 @@ public class InquiryViewModel extends ViewModel {
         mRepository.setGetQuestionsOfPageInterface(new Repository.RepositoryGetQuestionsOfPageInterface() {
             @Override
             public void onGetQuestionsOfPageSucceed(List<Question> questions) {
+                mGetAllQuestionsSucceed.setValue(questions);
+            }
+
+            @Override
+            public void onGetQuestionsOfPageFailed(String error) {
+                mGetAllQuestionsFailed.setValue(error);
+            }
+        });
+    }
+
+    public MutableLiveData<List<Answer>> getGetLiveAnswersSucceed() {
+        if (mGetLiveAnswersSucceed == null) {
+            mGetLiveAnswersSucceed = new MutableLiveData<>();
+            attachGetLiveAnswersListener();
+        }
+        return mGetLiveAnswersSucceed;
+    }
+
+    public MutableLiveData<String> getGetLiveAnswersFailed() {
+        if (mGetLiveAnswersFailed == null) {
+            mGetLiveAnswersFailed = new MutableLiveData<>();
+            attachGetLiveAnswersListener();
+        }
+        return mGetLiveAnswersFailed;
+    }
+
+    public void attachGetLiveAnswersListener() {
+        mRepository.setGetLiveAnswersInterface(new Repository.RepositoryGetLiveAnswersInterface() {
+            @Override
+            public void onGetLiveAnswersSucceed(List<Answer> answers) {
                 mExpectationsQuestions = new ArrayList<>();
                 mCovidQuestions = new ArrayList<>();
                 mStatementQuestions = new ArrayList<>();
@@ -60,37 +100,37 @@ public class InquiryViewModel extends ViewModel {
                 mHabitsQuestions = new ArrayList<>();
                 mMentalQuestions = new ArrayList<>();
 
-                for (Question question : questions) {
+                for (Question question : Objects.requireNonNull(mGetAllQuestionsSucceed.getValue())) {
                     switch (question.getPage()) {
                         case Treaty:
                         case Bureaucracy:
-                            mExpectationsQuestions.add(question);
+                            addAnsweredQuestions(question, answers, mExpectationsQuestions);
                             break;
                         case CovidQuestions:
-                            mCovidQuestions.add(question);
+                            addAnsweredQuestions(question, answers, mCovidQuestions);
                             break;
                         case SanityCheck:
                         case Statement:
-                            mStatementQuestions.add(question);
+                            addAnsweredQuestions(question, answers, mStatementQuestions);
                             break;
                         case SocialQuestions:
-                            mSocialQuestions.add(question);
+                            addAnsweredQuestions(question, answers, mSocialQuestions);
                             break;
                         case HabitsQuestions:
-                            mHabitsQuestions.add(question);
+                            addAnsweredQuestions(question, answers, mHabitsQuestions);
                             break;
                         case MentalQuestions:
-                            mMentalQuestions.add(question);
+                            addAnsweredQuestions(question, answers, mMentalQuestions);
                             break;
                     }
                 }
 
-                mGetAllQuestionsSucceed.setValue(questions);
+                mGetLiveAnswersSucceed.setValue(answers);
             }
 
             @Override
-            public void onGetQuestionsOfPageFailed(String error) {
-                mGetAllQuestionsFailed.setValue(error);
+            public void onGetLiveAnswersFailed(String error) {
+                mGetLiveAnswersFailed.setValue(error);
             }
         });
     }
@@ -102,6 +142,18 @@ public class InquiryViewModel extends ViewModel {
 
     public void getAllQuestions() {
         mRepository.getAllQuestions();
+    }
+
+    public void getLiveAnswers() {
+        final Appointment appointment = getCurrentAppointment();
+
+        if (appointment != null) {
+            mRepository.getLiveAnswersOfAppointment(appointment.getId());
+        }
+    }
+
+    public void removeLiveAnswersListener() {
+        mRepository.removeLiveAnswersListener();
     }
 
     public List<Question> getExpectationsQuestions() {
@@ -126,5 +178,29 @@ public class InquiryViewModel extends ViewModel {
 
     public List<Question> getMentalQuestions() {
         return mMentalQuestions;
+    }
+
+    private void addAnsweredQuestions(final Question question, final List<Answer> answers,
+                      final List<Question> questionsList) {
+        final Answer answer;
+        final int indexOfAnswer = answers.indexOf(new Answer(question.getId()));
+
+        if (indexOfAnswer != -1) {
+            answer = answers.get(indexOfAnswer);
+        } else {
+            answer = null;
+        }
+
+        if (answer != null) {
+            if (answer instanceof AnswerBinary) {
+                questionsList.add(question);
+            } else if (answer instanceof AnswerOpen) {
+                final String answerContent = ((AnswerOpen) answer).getAnswer();
+
+                if (answerContent != null && !answerContent.trim().isEmpty()) {
+                    questionsList.add(question);
+                }
+            }
+        }
     }
 }

@@ -116,11 +116,19 @@ public class BureaucracyFragment extends Fragment {
 
         mRecyclerView = rootView.findViewById(R.id.questions_recycler);
 //        final TextView addDocumentTv = rootView.findViewById(R.id.add_document_tv);
+        final MaterialButton backBtn = rootView.findViewById(R.id.back_btn);
         final MaterialButton continueBtn = rootView.findViewById(R.id.continue_btn);
 
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         mRecyclerView.setHasFixedSize(true);
 
+
+        backBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                requireActivity().onBackPressed();
+            }
+        });
 
         continueBtn.setOnClickListener(new View.OnClickListener() {
             @Override

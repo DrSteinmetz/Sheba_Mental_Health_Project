@@ -8,10 +8,11 @@
     <string name="choose">בחרו…</string>
     <string name="delete">מחיקה</string>
     <string name="edit">עריכה</string>
+    <string name="back">הקודם</string>
     <string name="continue_txt">הבא</string>
     <string name="finish">סיום</string>
     <string name="save">שמירה</string>
-    <string name="leave_note">השאירו הודעה</string>
+    <string name="leave_note">הודעה אישית לרופא</string>
     <string name="leave_note_info">המטפל יראה את הודעתך רק בתחילת הפגישה</string>
     <string name="pick_date">בחירת תאריך</string>
     <string name="pick_time">בחירת שעה</string>
@@ -28,6 +29,7 @@
     <string name="create_appointment">צור פגישה</string>
     <string name="search_patient">חפש מטופל</string>
     <string name="patient_email">אי-מייל של המטופל</string>
+    <string name="patient_name">שם המטופל</string>
     <string name="patient_not_found">המטופל לא נמצא</string>
     <string name="patient_found_prompt">המטופל נמצא:</string>
     <string name="invite_patient">הזמנת המטופל</string>
@@ -42,6 +44,7 @@
     <string name="mental_functioning">תפקוד מנטלי</string>
     <string name="undo">ביטול</string>
     <string name="answer_et_hint">השיבו כאן</string>
+    <string name="details_et_hint">פירוט</string>
     <string name="long_meeting_prompt">אעדיף פגישה ארוכה</string>
     <string name="short_meeting_prompt">אעדיף פגישה קצרה</string>
     <string name="another_person_prompt">אעדיף שאדם נוסף ילווה אותי במהלך הפגישה</string>
@@ -144,6 +147,7 @@
     <!-- Login and Registration strings -->
     <string name="add_new_patient">הוספת מטופל חדש</string>
     <string name="email">אי-מייל</string>
+    <string name="email_prompt">אי-מייל:</string>
     <string name="first_name">שם פרטי</string>
     <string name="last_name">שם משפחה</string>
     <string name="add">הוספה</string>

@@ -7,15 +7,19 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.coordinatorlayout.widget.CoordinatorLayout;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
+import androidx.fragment.app.DialogFragment;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
+import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.os.Handler;
 import android.preference.PreferenceManager;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 
@@ -62,6 +66,8 @@ import com.example.sheba_mental_health_project.view.therapist.TherapistMentalSta
 import com.example.sheba_mental_health_project.view.therapist.TherapistPhysicalStateFragment;
 import com.example.sheba_mental_health_project.viewmodel.MainActivityViewModel;
 import com.google.android.material.navigation.NavigationView;
+
+import java.util.List;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener,
@@ -155,11 +161,31 @@ public class MainActivity extends AppCompatActivity
         mCoordinatorLayout = findViewById(R.id.coordinator_layout);
         mNavigationView = findViewById(R.id.navigation_view);
 
-        /*getSupportFragmentManager().beginTransaction()
-                //TODO: add enter and exit animations
-                .add(R.id.container, WelcomeFragment.newInstance(), WELCOME_FRAG)
-                .addToBackStack(null)
-                .commit();*/
+        final Observer<Appointment> onGetLiveAppointmentSucceed = new Observer<Appointment>() {
+            @Override
+            public void onChanged(Appointment appointment) {
+                if (appointment.getState() == AppointmentStateEnum.Ended) {
+                    final Fragment mainPatientFrag = getSupportFragmentManager()
+                            .findFragmentByTag(MAIN_PATIENT_FRAG);
+
+                    if (mViewModel.getCurrentAppointment() != null &&
+                            mainPatientFrag != null && !mainPatientFrag.isVisible()) {
+                        onMeetingEnded();
+                        mViewModel.setCurrentAppointment(null);
+                    }
+                }
+            }
+        };
+
+        final Observer<String> onGetLiveAppointmentFailed = new Observer<String>() {
+            @Override
+            public void onChanged(String error) {
+                Log.e(TAG, "onChanged: " + error);
+            }
+        };
+
+        mViewModel.getGetLiveAppointmentSucceed().observe(this, onGetLiveAppointmentSucceed);
+        mViewModel.getGetLiveAppointmentFailed().observe(this, onGetLiveAppointmentFailed);
 
         final Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -188,6 +214,20 @@ public class MainActivity extends AppCompatActivity
                     //TODO: add enter and exit animations
                     .replace(R.id.container, MainPatientFragment.newInstance(), MAIN_PATIENT_FRAG)
                     .commit();
+        }
+
+        if (getIntent().getAction() != null) {
+            final LoadingDialogFragment loadingDlg = LoadingDialogFragment.newInstance();
+            loadingDlg.setStyle(DialogFragment.STYLE_NO_FRAME, R.style.Theme_AppCompat_Light);
+            loadingDlg.show(getSupportFragmentManager(), "Loading_Dialog_Fragment");
+
+            new Handler().postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    onNewIntent(getIntent());
+                    loadingDlg.dismiss();
+                }
+            }, 2000);
         }
     }
 
@@ -300,6 +340,9 @@ public class MainActivity extends AppCompatActivity
     /**<------ Patient Pre-Questions ------>*/
     @Override
     public void onMoveToPreQuestions() {
+        mViewModel.removeLiveAppointmentListener();
+        mViewModel.getLiveAppointment();
+
         getSupportFragmentManager().beginTransaction()
                 //TODO: add enter and exit animations
                 .replace(R.id.container, PreQuestionsFragment.newInstance(), PRE_QUESTIONS_FRAG)
@@ -309,6 +352,9 @@ public class MainActivity extends AppCompatActivity
 
     @Override
     public void onEnterAppointment() {
+        mViewModel.removeLiveAppointmentListener();
+        mViewModel.getLiveAppointment();
+
         getSupportFragmentManager().beginTransaction()
                 .replace(R.id.container, AppointmentPatientFragment
                         .newInstance(mViewModel.getCurrentAppointment()), PATIENT_APPOINTMENT_FRAG)
@@ -423,6 +469,9 @@ public class MainActivity extends AppCompatActivity
 
     @Override
     public void onMoveToAppointmentLounge() {
+        mViewModel.removeLiveAppointmentListener();
+        mViewModel.getLiveAppointment();
+
         onBackToAppointmentsBtnClicked();
         getSupportFragmentManager().beginTransaction()
                 .replace(R.id.container, AppointmentLoungeFragment.newInstance(), APPOINTMENT_LOUNGE_FRAG)
@@ -474,11 +523,10 @@ public class MainActivity extends AppCompatActivity
         onBackPressed();
     }
 
-    @Override
+//    @Override
     public void onMeetingEnded() {
-        // TODO: Make a new similar DialogFragment with 'OK' button only - "ConfirmationDialog"
-        //  and think of moving the LiveAppointment listener to here, that way we can also inform
-        //  the patient his meeting has been started !
+        mViewModel.removeLiveAppointmentListener();
+
         final ConfirmationDialog warningDialog = new ConfirmationDialog(this);
         warningDialog.setTitleWarningText("Your Meeting has Ended");
         warningDialog.setPromptText("The Therapist has Ended Your Meeting");
@@ -659,6 +707,53 @@ public class MainActivity extends AppCompatActivity
         }
         else {
             super.onBackPressed();
+        }
+    }
+
+    @Override
+    protected void onNewIntent(Intent intent) {
+        super.onNewIntent(intent);
+
+        final String action = intent.getAction();
+        final Bundle bundle = intent.getExtras();
+
+        if (action != null && bundle != null) {
+            switch (action) {
+                case "open_patient_appointment":
+                    final Appointment patientAppointment = (Appointment) bundle
+                            .getSerializable("appointment_to_open");
+                    final MainPatientFragment mainPatientFrag = (MainPatientFragment)
+                            getSupportFragmentManager().findFragmentByTag(MAIN_PATIENT_FRAG);
+
+                    if (mainPatientFrag != null) {
+                        final List<Appointment> appointments = mainPatientFrag.getAppointmentsList();
+                        final Appointment currentAppointment;
+
+                        if (appointments != null && !appointments.isEmpty()) {
+                            currentAppointment = appointments.get(appointments.indexOf(patientAppointment));
+                            mViewModel.setCurrentAppointment(currentAppointment);
+                            mainPatientFrag.enterAppointmentByState(currentAppointment);
+                        }
+                    }
+                    break;
+                case "open_therapist_appointment":
+                    final Appointment therapistAppointment = (Appointment) bundle
+                            .getSerializable("appointment_to_open");
+                    final MainTherapistFragment mainTherapistFrag = (MainTherapistFragment)
+                            getSupportFragmentManager().findFragmentByTag(MAIN_THERAPIST_FRAG);
+
+                    if (mainTherapistFrag != null) {
+                        final List<Appointment> appointments = mainTherapistFrag.getAppointmentsList();
+                        final Appointment currentAppointment;
+
+                        if (appointments != null && !appointments.isEmpty()) {
+                            currentAppointment = appointments.get(appointments.indexOf(therapistAppointment));
+                            mViewModel.setCurrentAppointment(currentAppointment);
+                            mainTherapistFrag.enterAppointmentByState(currentAppointment);
+                        }
+                    }
+                    break;
+            }
         }
     }
 }

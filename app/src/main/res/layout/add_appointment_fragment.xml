@@ -37,7 +37,7 @@
             android:orientation="horizontal">
 
             <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/patient_email_auto_layout"
+                android:id="@+id/patient_name_auto_layout"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="4"
@@ -50,14 +50,13 @@
                 app:hintTextColor="@color/light_blue"
                 app:errorEnabled="true"
                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
-
                 <com.google.android.material.textfield.MaterialAutoCompleteTextView
-                    android:id="@+id/patient_email_auto_tv"
+                    android:id="@+id/patient_name_auto_tv"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_below="@id/title_tv"
                     android:layout_centerHorizontal="true"
-                    android:hint="@string/patient_email"
+                    android:hint="@string/patient_name"
                     android:textSize="20sp"
                     android:textColor="@color/dark_gray"
                     android:textAllCaps="false"
@@ -80,12 +79,18 @@
 
         </LinearLayout>
 
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recycler_view"
+            android:layout_width="match_parent"
+            android:layout_height="200dp"
+            android:layout_below="@+id/search_layout" />
+
         <LinearLayout
             android:id="@+id/patient_name_layout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:layout_below="@+id/search_layout"
+            android:layout_below="@+id/recycler_view"
             android:gravity="center">
 
             <TextView

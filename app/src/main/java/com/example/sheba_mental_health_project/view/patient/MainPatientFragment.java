@@ -1,6 +1,7 @@
 package com.example.sheba_mental_health_project.view.patient;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -21,6 +22,8 @@ import com.example.sheba_mental_health_project.model.PatientAppointmentsAdapter;
 import com.example.sheba_mental_health_project.model.ViewModelFactory;
 import com.example.sheba_mental_health_project.model.enums.AppointmentStateEnum;
 import com.example.sheba_mental_health_project.model.enums.ViewModelEnum;
+import com.example.sheba_mental_health_project.view.MainActivity;
+import com.example.sheba_mental_health_project.view.WelcomeActivity;
 import com.example.sheba_mental_health_project.viewmodel.MainPatientViewModel;
 
 import java.util.List;
@@ -73,24 +76,10 @@ public class MainPatientFragment extends Fragment {
                 mAppointmentAdapter.setAppointmentListener(new PatientAppointmentsAdapter.AppointmentListener() {
                     @Override
                     public void onAppointmentClicked(int position, View view) {
-                        if (listener != null) {
-                            final Appointment appointment = appointments.get(position);
-                            mViewModel.setCurrentAppointment(appointment);
+                        final Appointment appointment = appointments.get(position);
+                        mViewModel.setCurrentAppointment(appointment);
 
-                            if (appointment.getState() == AppointmentStateEnum.PreMeeting) {
-                                if (appointment.getIsFinishedPreQuestions()) {
-                                    listener.onMoveToLounge();
-                                } else {
-                                    listener.onMoveToPreQuestions();
-                                }
-                            } else {
-                                if (appointment.getIsFinishedPreQuestions()) {
-                                    listener.onEnterAppointment();
-                                } else {
-                                    listener.onMoveToPreQuestions();
-                                }
-                            }
-                        }
+                        enterAppointmentByState(appointment);
                     }
                 });
                 mRecyclerView.setAdapter(mAppointmentAdapter);
@@ -105,8 +94,25 @@ public class MainPatientFragment extends Fragment {
             }
         };
 
+        final Observer<Void> loginObserverSuccess = new Observer<Void>() {
+            @Override
+            public void onChanged(Void aVoid) {
+                mViewModel.getMyAppointments();
+            }
+        };
+
+        final Observer<String> loginObserverFailed = new Observer<String>() {
+            @Override
+            public void onChanged(@Nullable final String error) {
+                Log.d(TAG, "onChanged: " + error);
+            }
+        };
+
+
         mViewModel.getMyAppointmentsSucceed().observe(this,onGetMyAppointmentsSucceed);
         mViewModel.getMyAppointmentsFailed().observe(this,onGetMyAppointmentsFailed);
+        mViewModel.getPatientLoginSucceed().observe(this, loginObserverSuccess);
+        mViewModel.getPatientLoginFailed().observe(this, loginObserverFailed);
     }
 
     @Override
@@ -123,9 +129,43 @@ public class MainPatientFragment extends Fragment {
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         mRecyclerView.setHasFixedSize(true);
 
-        mViewModel.getMyAppointments();
+        if (mViewModel.getAuthUser() != null) {
+            mViewModel.getMyAppointments();
+        } else {
+            mViewModel.getPatientForLogin();
+        }
 
         return rootView;
+    }
+
+    public void enterAppointmentByState(final Appointment appointment) {
+        if (listener != null) {
+            if (appointment.getState() == AppointmentStateEnum.PreMeeting) {
+                if (appointment.getIsFinishedPreQuestions()) {
+                    listener.onMoveToLounge();
+                } else {
+                    listener.onMoveToPreQuestions();
+                }
+            } else {
+                if (appointment.getIsFinishedPreQuestions()) {
+                    listener.onEnterAppointment();
+                } else {
+                    listener.onMoveToPreQuestions();
+                }
+            }
+        }
+    }
+
+    public final List<Appointment> getAppointmentsList() {
+        final List<Appointment> appointments;
+
+        if (mViewModel != null) {
+            appointments = mViewModel.getAppointments();
+        } else {
+            appointments = null;
+        }
+
+        return appointments;
     }
 
     @Override

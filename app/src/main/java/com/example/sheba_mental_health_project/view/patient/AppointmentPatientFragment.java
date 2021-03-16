@@ -50,7 +50,7 @@ public class AppointmentPatientFragment extends Fragment {
         void onPhysicalClicked();
         void onMentalClicked();
         void onChatClicked();
-        void onMeetingEnded();
+//        void onMeetingEnded();
     }
 
     private AppointmentPatientFragment.AppointmentPatientInterface listener;
@@ -83,7 +83,7 @@ public class AppointmentPatientFragment extends Fragment {
                     .commit();
         }
 
-        final Observer<Appointment> onGetLiveAppointmentSucceed = new Observer<Appointment>() {
+        /*final Observer<Appointment> onGetLiveAppointmentSucceed = new Observer<Appointment>() {
             @Override
             public void onChanged(Appointment appointment) {
                 if (appointment.getState() == AppointmentStateEnum.Ended) {
@@ -103,7 +103,7 @@ public class AppointmentPatientFragment extends Fragment {
         };
 
         mViewModel.getGetLiveAppointmentSucceed().observe(this, onGetLiveAppointmentSucceed);
-        mViewModel.getGetLiveAppointmentFailed().observe(this, onGetLiveAppointmentFailed);
+        mViewModel.getGetLiveAppointmentFailed().observe(this, onGetLiveAppointmentFailed);*/
     }
 
     @Override
@@ -146,17 +146,17 @@ public class AppointmentPatientFragment extends Fragment {
             }
         });
 
-        mViewModel.getLiveAppointment();
+//        mViewModel.getLiveAppointment();
 
         return rootView;
     }
 
-    @Override
+    /*@Override
     public void onDestroy() {
         super.onDestroy();
 
         if (mViewModel != null) {
             mViewModel.removeLiveAppointmentListener();
         }
-    }
+    }*/
 }

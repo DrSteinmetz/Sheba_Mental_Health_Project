@@ -1,8 +1,7 @@
 package com.example.sheba_mental_health_project.model;
 
-import androidx.annotation.Nullable;
-
 import java.io.Serializable;
+import java.util.Objects;
 
 public abstract class User implements Serializable {
 
@@ -74,5 +73,10 @@ public abstract class User implements Serializable {
         } else {
             return false;
         }
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(mId, mEmail);
     }
 }

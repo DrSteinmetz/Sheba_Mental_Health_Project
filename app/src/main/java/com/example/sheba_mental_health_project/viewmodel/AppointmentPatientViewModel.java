@@ -13,8 +13,8 @@ public class AppointmentPatientViewModel extends ViewModel {
 
     private final Repository mRepository;
 
-    private MutableLiveData<Appointment> mGetLiveAppointmentSucceed;
-    private MutableLiveData<String> mGetLiveAppointmentFailed;
+    /*private MutableLiveData<Appointment> mGetLiveAppointmentSucceed;
+    private MutableLiveData<String> mGetLiveAppointmentFailed;*/
 
     private final String TAG = "AppointmentPatientVM";
 
@@ -23,7 +23,7 @@ public class AppointmentPatientViewModel extends ViewModel {
         mRepository = Repository.getInstance(context);
     }
 
-    public MutableLiveData<Appointment> getGetLiveAppointmentSucceed() {
+    /*public MutableLiveData<Appointment> getGetLiveAppointmentSucceed() {
         if (mGetLiveAppointmentSucceed == null) {
             mGetLiveAppointmentSucceed = new MutableLiveData<>();
             attachGetLiveAppointmentListener();
@@ -52,14 +52,14 @@ public class AppointmentPatientViewModel extends ViewModel {
                 mGetLiveAppointmentFailed.setValue(error);
             }
         });
-    }
+    }*/
 
 
     public Appointment getCurrentAppointment() {
         return mRepository.getCurrentAppointment();
     }
 
-    public void getLiveAppointment() {
+    /*public void getLiveAppointment() {
         if (getCurrentAppointment() != null) {
             mRepository.getLiveAppointmentState();
         }
@@ -67,5 +67,5 @@ public class AppointmentPatientViewModel extends ViewModel {
 
     public void removeLiveAppointmentListener() {
         mRepository.removeLiveAppointmentListener();
-    }
+    }*/
 }

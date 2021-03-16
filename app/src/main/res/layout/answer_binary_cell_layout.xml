@@ -12,18 +12,29 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:orientation="horizontal"
-            android:padding="5dp">
+            android:padding="5dp"
+            android:orientation="vertical">
 
-        <com.google.android.material.checkbox.MaterialCheckBox
-            android:id="@+id/question_cb"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:paddingVertical="10dp"
-            android:text="Example"
-            android:textSize="17sp"
-            android:textColor="@color/black"
-            android:textAllCaps="false" />
+                <com.google.android.material.checkbox.MaterialCheckBox
+                    android:id="@+id/question_cb"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:paddingVertical="10dp"
+                    android:text="Example"
+                    android:textSize="17sp"
+                    android:textColor="@color/black"
+                    android:textAllCaps="false" />
+
+                <com.google.android.material.textview.MaterialTextView
+                    android:id="@+id/answer_tv"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="10dp"
+                    android:background="@drawable/text_view_border"
+                    android:visibility="gone"
+                    android:textSize="20sp"
+                    android:textColor="@color/dark_gray"
+                    android:textAllCaps="false" />
 
         </LinearLayout>
 
