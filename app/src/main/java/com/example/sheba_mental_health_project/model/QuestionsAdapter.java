@@ -14,6 +14,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.sheba_mental_health_project.R;
+import com.example.sheba_mental_health_project.model.enums.QuestionTypeEnum;
 import com.google.android.material.checkbox.MaterialCheckBox;
 import com.google.android.material.slider.Slider;
 import com.google.android.material.textfield.TextInputEditText;
@@ -54,9 +55,12 @@ public class QuestionsAdapter extends RecyclerView.Adapter<QuestionsAdapter.Ques
         private TextInputEditText numberQuestionEt;
         private TextView openTv;
         private TextInputEditText openQuestionEt;
+        private final TextView asteriskTv;
 
         public QuestionsViewHolder(@NonNull View itemView, int viewType) {
             super(itemView);
+
+            asteriskTv = itemView.findViewById(R.id.asterisk_tv);
 
             switch (viewType) {
                 case BINARY_TYPE:
@@ -172,10 +176,12 @@ public class QuestionsAdapter extends RecyclerView.Adapter<QuestionsAdapter.Ques
 
         private void setOpenAnswerValue(final String questionId, final String answerValue) {
             final int indexOfAnswer = mAnswers.indexOf(new Answer(questionId));
+
             if (indexOfAnswer == -1 && !answerValue.isEmpty()) {
                 mAnswers.add(new AnswerOpen(questionId, answerValue));
             } else if (indexOfAnswer != -1) {
                 final AnswerOpen openAnswer = ((AnswerOpen) mAnswers.get(indexOfAnswer));
+
                 if (!answerValue.isEmpty()) {
                     openAnswer.setAnswer(answerValue);
                 } else {
@@ -229,6 +235,9 @@ public class QuestionsAdapter extends RecyclerView.Adapter<QuestionsAdapter.Ques
             } else {
                 answer = null;
             }
+
+            holder.asteriskTv.setVisibility(question.isMandatory() ? View.VISIBLE : View.GONE);
+            Log.d(TAG, "oron onBindViewHolder: isMandatory=" + question.isMandatory());
 
             switch (getItemViewType(position)) {
                 case BINARY_TYPE:
@@ -317,5 +326,31 @@ public class QuestionsAdapter extends RecyclerView.Adapter<QuestionsAdapter.Ques
     @Override
     public int getItemCount() {
         return this.mQuestions.size();
+    }
+
+
+    public boolean isAllMandatoryQuestionsFilled() {
+
+        for (Question question : mQuestions) {
+            if ((question.getQuestionType().equals(QuestionTypeEnum.Number) ||
+                    question.getQuestionType().equals(QuestionTypeEnum.Open)) &&
+                    question.isMandatory()) {
+                final int answerIndex = mAnswers.indexOf(new Answer(question.getId()));
+
+                if (answerIndex != -1) {
+                    final Answer answer = mAnswers.get(answerIndex);
+
+                    if (answer instanceof AnswerOpen) {
+                        if (((AnswerOpen) answer).getAnswer().trim().isEmpty()) {
+                            return false;
+                        }
+                    }
+                } else {
+                    return false;
+                }
+            }
+        }
+
+        return true;
     }
 }

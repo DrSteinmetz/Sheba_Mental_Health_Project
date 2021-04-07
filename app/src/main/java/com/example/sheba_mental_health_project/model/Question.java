@@ -12,6 +12,7 @@ public class Question implements Serializable {
     private String mId;
     private String mQuestion;
     private QuestionTypeEnum mQuestionType;
+    private boolean mIsMandatory = false;
     private ViewModelEnum mPage;
 
     public Question() {}
@@ -20,11 +21,12 @@ public class Question implements Serializable {
         this.mId = id;
     }
 
-    public Question(final String id, final String question,
-                    final QuestionTypeEnum questionType, final ViewModelEnum page) {
+    public Question(final String id, final String question, final QuestionTypeEnum questionType,
+                    final boolean isMandatory, final ViewModelEnum page) {
         this.mId = id;
         this.mQuestion = question;
         this.mQuestionType = questionType;
+        this.mIsMandatory = isMandatory;
         this.mPage = page;
     }
 
@@ -50,6 +52,14 @@ public class Question implements Serializable {
 
     public void setQuestionType(QuestionTypeEnum questionType) {
         this.mQuestionType = questionType;
+    }
+
+    public boolean isMandatory() {
+        return mIsMandatory;
+    }
+
+    public void setMandatory(boolean isMandatory) {
+        this.mIsMandatory = isMandatory;
     }
 
     public ViewModelEnum getPage() {

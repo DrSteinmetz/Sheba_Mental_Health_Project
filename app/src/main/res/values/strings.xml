@@ -67,6 +67,8 @@
     <string name="left_right_dlg_title">I Meant to Choose:</string>
     <string name="left_right_dlg_only_one_rb">Only One Side</string>
     <string name="left_right_dlg_both_rb">Both</string>
+    <string name="mandatory_questions_warning">Please Answer all the Mandatory Questions (Marked with * )</string>
+    <string name="mandatory_tv">Mandatory Questions are Marked with</string>
 
     <string name="add_document">Add a Document</string>
     <string name="things_i_need_today_prompt">Things I Need Today:</string>

@@ -68,6 +68,8 @@
     <string name="left_right_dlg_title">התכוונתי לבחור:</string>
     <string name="left_right_dlg_only_one_rb">רק צד אחד</string>
     <string name="left_right_dlg_both_rb">את שניהם</string>
+    <string name="mandatory_questions_warning">חובה לענות על כל השאלות המסומנות עם * אדומה</string>
+    <string name="mandatory_tv">שאלות חובה מסומנות על ידי</string>
 
     <string name="add_document">הוספת מסמך</string>
     <string name="things_i_need_today_prompt">מהמפגש היום אני זקוק ל:</string>
