@@ -11,12 +11,14 @@
     <string name="continue_txt">Continue</string>
     <string name="finish">Finish</string>
     <string name="save">Save</string>
+    <string name="well_done">We Appreciate\nYour Cooperation!</string>
     <string name="leave_note">Leave a Note</string>
     <string name="leave_note_info">The Therapist will See Your Messages Only When the Meeting Begins</string>
     <string name="pick_date">Pick Date</string>
     <string name="pick_time">Pick Time</string>
     <string name="character">Character</string>
     <string name="feelings">Feelings</string>
+    <string name="slider_min_max_prompt">Rank Each Feeling So That 0 is Weak and 10 is Strong</string>
     <string name="appointments_date">Appointment\'s Date</string>
     <string name="edit_appointment_title">Edit Appointment</string>
     <string name="pain_point_deletion_prompt">Are You Sure You Want To Permanently Delete This Point?</string>
@@ -57,13 +59,13 @@
     <string name="share_your_feelings">Share Your Feelings</string>
     <string name="chat_with_therapist">Chat with Therapist</string>
     <string name="what_would_you_like_to_share">What Would You Like to Share?</string>
-    <string name="do_you_feel_pain">Do You Feel Pain?</string>
+    <string name="do_you_feel_pain">Do You Feel Any Physical Discomfort?</string>
     <string name="select_body_part">Select Body Part</string>
     <string name="home_screen">Home Screen</string>
     <string name="describe_your_issues_here">Describe Your Issues Here…</string>
     <string name="other_pain_point_selection_warning_title">Change Point?</string>
     <string name="other_pain_point_selection_warning">Are You Sure You Want to Select Other Point?</string>
-    <string name="choose_pain_area">Choose Pain Area</string>
+    <string name="choose_pain_area">Choose Discomfort Area</string>
     <string name="left_right_dlg_title">I Meant to Choose:</string>
     <string name="left_right_dlg_only_one_rb">Only One Side</string>
     <string name="left_right_dlg_both_rb">Both</string>
@@ -97,10 +99,10 @@
     <string name="back_to_appointments">Back to Appointments</string>
     <string name="edit_answers">Edit Answers</string>
 
-    <string name="pain_location_tv">Pain Location:</string>
-    <string name="pain_strength_tv">Pain Strength:</string>
-    <string name="pain_type_tv">Pain Type:</string>
-    <string name="pain_frequency_tv">Pain Frequency:</string>
+    <string name="pain_location_tv">Location:</string>
+    <string name="pain_strength_tv">Strength:</string>
+    <string name="pain_type_tv">Type:</string>
+    <string name="pain_frequency_tv">Frequency:</string>
     <string name="other_feelings_tv">Other Feelings:</string>
     <string name="description_tv">Description:</string>
 

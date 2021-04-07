@@ -16,6 +16,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.AlphaAnimation;
 import android.view.animation.Animation;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 
 import com.example.sheba_mental_health_project.R;
@@ -124,6 +125,7 @@ public class RightArmFragment extends Fragment
                              @Nullable Bundle savedInstanceState) {
         final View rootView = inflater.inflate(R.layout.right_arm_fragment, container, false);
 
+        final ImageButton backBtn = rootView.findViewById(R.id.back_btn);
         final View shoulderV = rootView.findViewById(R.id.shoulder_v);
         final View armV = rootView.findViewById(R.id.arm_v);
         final View elbowV = rootView.findViewById(R.id.elbow_v);
@@ -146,6 +148,13 @@ public class RightArmFragment extends Fragment
         alphaAnimation.setDuration(700);
 
         showPainPoints();
+
+        backBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                requireActivity().onBackPressed();
+            }
+        });
 
         shoulderV.setOnClickListener(new View.OnClickListener() {
             @Override

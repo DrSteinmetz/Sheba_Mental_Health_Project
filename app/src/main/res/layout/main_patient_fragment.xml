@@ -22,11 +22,9 @@
             android:layout_height="wrap_content"
             android:text="@string/my_meetings"
             android:textColor="@color/black"
-            android:textSize="20sp"
-            />
+            android:textSize="20sp" />
+
     </RelativeLayout>
-
-
 
     <androidx.recyclerview.widget.RecyclerView
         android:layout_marginTop="20dp"

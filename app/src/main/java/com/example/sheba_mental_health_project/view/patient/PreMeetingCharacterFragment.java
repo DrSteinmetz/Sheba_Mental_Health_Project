@@ -19,6 +19,7 @@ import com.example.sheba_mental_health_project.R;
 import com.example.sheba_mental_health_project.model.ViewModelFactory;
 import com.example.sheba_mental_health_project.model.enums.AppointmentStateEnum;
 import com.example.sheba_mental_health_project.model.enums.ViewModelEnum;
+import com.example.sheba_mental_health_project.view.WellDoneDialogFragment;
 import com.example.sheba_mental_health_project.view.character.CharacterFragment;
 import com.example.sheba_mental_health_project.viewmodel.PreMeetingCharacterViewModel;
 import com.google.android.material.button.MaterialButton;
@@ -26,6 +27,8 @@ import com.google.android.material.button.MaterialButton;
 public class PreMeetingCharacterFragment extends Fragment {
 
     private PreMeetingCharacterViewModel mViewModel;
+
+    private final String WELL_DONE_DLG_FRAG = "Well_Done_Dialog_Fragment";
 
     private final String TAG = "PreMeetingCharacterFrag";
 
@@ -69,6 +72,9 @@ public class PreMeetingCharacterFragment extends Fragment {
                     } else {
                         listener.onMoveToAppointmentLounge();
                     }
+
+                    final WellDoneDialogFragment wellDoneDlg = WellDoneDialogFragment.newInstance();
+                    wellDoneDlg.show(getParentFragmentManager(), WELL_DONE_DLG_FRAG);
                 }
             }
         };

@@ -4,7 +4,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:padding="10dp"
+    android:padding="20dp"
     android:background="@color/white"
     tools:context=".view.patient.MentalPatientFragment">
 
@@ -18,8 +18,21 @@
         android:textSize="20sp"
         android:textColor="@color/black" />
 
+    <TextView
+        android:id="@+id/slider_min_max_prompt_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/title_tv"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="5dp"
+        android:layout_marginHorizontal="5dp"
+        android:layout_marginBottom="15dp"
+        android:text="@string/slider_min_max_prompt"
+        android:textSize="16sp"
+        android:textColor="@color/dark_gray" />
+
         <androidx.recyclerview.widget.RecyclerView
-            android:layout_below="@+id/title_tv"
+            android:layout_below="@+id/slider_min_max_prompt_tv"
             android:id="@+id/recycler_view"
             android:layout_width="match_parent"
             android:layout_height="match_parent"

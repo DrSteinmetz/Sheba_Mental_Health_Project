@@ -26,9 +26,10 @@
                 android:layout_height="wrap_content"
                 android:layout_centerHorizontal="true"
                 android:layout_margin="5dp"
+                android:text="@string/do_you_feel_pain"
                 android:textSize="20sp"
                 android:textColor="@color/black"
-                android:text="@string/pre_meeting_char_frag_title" />
+                android:textAllCaps="false" />
 
             <TextView
                 android:id="@+id/sub_title_tv"
@@ -38,7 +39,7 @@
                 android:textColor="@color/black"
                 android:layout_margin="5dp"
                 android:textSize="17sp"
-                android:text="@string/pre_meeting_char_frag_sub_title"
+                android:text="@string/select_body_part"
                 android:layout_below="@+id/title_tv" />
 
             <androidx.fragment.app.FragmentContainerView
