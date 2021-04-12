@@ -69,6 +69,7 @@ public class EditAppointmentDialogFragment extends DialogFragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         if (getArguments() != null) {
             mAppointment = (Appointment) getArguments().getSerializable("appointment");
 
@@ -83,7 +84,8 @@ public class EditAppointmentDialogFragment extends DialogFragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        final View rootView = inflater.inflate(R.layout.fragment_edit_appointment_dialog, container, false);
+        final View rootView = inflater.inflate(R.layout.fragment_edit_appointment_dialog,
+                container, false);
 
         final MaterialTextView patientNameTv = rootView.findViewById(R.id.patient_name_tv);
         final MaterialTextView pickDateTv = rootView.findViewById(R.id.date_dialog_tv);

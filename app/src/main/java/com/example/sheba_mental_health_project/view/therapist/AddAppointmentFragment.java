@@ -45,7 +45,8 @@ import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 
-public class AddAppointmentFragment extends Fragment {
+public class AddAppointmentFragment extends Fragment
+        implements CreateAppointmentDialogFragment.CreateAppointmentInterface {
 
     private AddAppointmentViewModel mViewModel;
 
@@ -55,11 +56,11 @@ public class AddAppointmentFragment extends Fragment {
     private PatientsAdapter mAdapter;
 
     private MaterialAutoCompleteTextView mPatientNameAutoTV;
-    private MaterialTextView mDateTV;
+    /*private MaterialTextView mDateTV;
     private MaterialTextView mTimeTV;
     private TextView mPatientFoundTv;
     private TextView mPatientNameTv;
-    private MaterialButton mCreateAppointmentBtn;
+    private MaterialButton mCreateAppointmentBtn;*/
 
     private final String DATE_PICKER = "date_picker";
 
@@ -90,7 +91,7 @@ public class AddAppointmentFragment extends Fragment {
                     public void onPatientClicked(Patient patient) {
                         mViewModel.setPatient(patient);
 
-                        mPatientFoundTv.setVisibility(View.VISIBLE);
+                        /*mPatientFoundTv.setVisibility(View.VISIBLE);
                         if (patient == null) {
                             mPatientFoundTv.setText(getString(R.string.patient_not_found));
                             mPatientNameTv.setVisibility(View.INVISIBLE);
@@ -104,7 +105,11 @@ public class AddAppointmentFragment extends Fragment {
                             mDateTV.setVisibility(View.VISIBLE);
                             mTimeTV.setVisibility(View.VISIBLE);
                             mCreateAppointmentBtn.setVisibility(View.VISIBLE);
-                        }
+                        }*/
+                        final CreateAppointmentDialogFragment dialog = CreateAppointmentDialogFragment
+                                .newInstance(patient.getFullName(), patient.getEmail());
+                        dialog.show(getChildFragmentManager(),
+                                "Create_Appointment_Dialog_Fragment");
                     }
 
                     @Override
@@ -129,13 +134,13 @@ public class AddAppointmentFragment extends Fragment {
             @Override
             public void onChanged(String appointmentId) {
                 mPatientNameAutoTV.setText("");
-                mPatientFoundTv.setVisibility(View.GONE);
+                /*mPatientFoundTv.setVisibility(View.GONE);
                 mPatientNameTv.setVisibility(View.GONE);
                 mDateTV.setVisibility(View.GONE);
                 mTimeTV.setVisibility(View.GONE);
                 mDateTV.setText("");
                 mTimeTV.setText("");
-                mCreateAppointmentBtn.setVisibility(View.GONE);
+                mCreateAppointmentBtn.setVisibility(View.GONE);*/
                 mViewModel.resetDateFields();
 
                 Snackbar.make(requireView(), getString(R.string.appointment_added_prompt),
@@ -164,14 +169,14 @@ public class AddAppointmentFragment extends Fragment {
 
         mPatientNameAutoTV = rootView.findViewById(R.id.patient_name_auto_tv);
         mRecyclerView = rootView.findViewById(R.id.recycler_view);
-        final TextInputLayout dateLayout = rootView.findViewById(R.id.date_layout);
+        /*final TextInputLayout dateLayout = rootView.findViewById(R.id.date_layout);
         mDateTV = rootView.findViewById(R.id.date_dialog_btn);
         final TextInputLayout timeLayout = rootView.findViewById(R.id.time_layout);
         mTimeTV = rootView.findViewById(R.id.time_dialog_btn);
         mPatientFoundTv = rootView.findViewById(R.id.patient_found_title);
-        mPatientNameTv = rootView.findViewById(R.id.patient_name);
+        mPatientNameTv = rootView.findViewById(R.id.patient_name);*/
 //        final ImageButton searchBtn = rootView.findViewById(R.id.search_btn);
-        mCreateAppointmentBtn = rootView.findViewById(R.id.create_btn);
+//        mCreateAppointmentBtn = rootView.findViewById(R.id.create_btn);
 
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         mRecyclerView.setHasFixedSize(true);
@@ -185,10 +190,12 @@ public class AddAppointmentFragment extends Fragment {
 
         mPatientNameAutoTV.addTextChangedListener(new TextWatcher() {
             @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+            }
 
             @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {}
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+            }
 
             @Override
             public void afterTextChanged(Editable s) {
@@ -199,7 +206,7 @@ public class AddAppointmentFragment extends Fragment {
         });
 
 
-        final SimpleDateFormat ddMMyyyy = new SimpleDateFormat("dd.MM.yyyy", Locale.getDefault());
+        /*final SimpleDateFormat ddMMyyyy = new SimpleDateFormat("dd.MM.yyyy", Locale.getDefault());
         final SimpleDateFormat HHmm = new SimpleDateFormat("HH:mm", Locale.getDefault());
         final Calendar calendar = Calendar.getInstance();
         calendar.set(Calendar.HOUR_OF_DAY, 0);
@@ -208,9 +215,9 @@ public class AddAppointmentFragment extends Fragment {
         calendar.set(Calendar.MILLISECOND, 0);
         final Date today = new Date();
         final Date today00 = new Date(calendar.getTimeInMillis());
-        calendar.setTime(today);
+        calendar.setTime(today);*/
 
-        mDateTV.setOnClickListener(new View.OnClickListener() {
+        /*mDateTV.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 final CalendarConstraints.Builder constraintBuilder = new CalendarConstraints.Builder();
@@ -238,10 +245,10 @@ public class AddAppointmentFragment extends Fragment {
                     }
                 });
             }
-        });
+        });*/
 
         // TODO: Fix the TimePicker
-        mTimeTV.setOnClickListener(new View.OnClickListener() {
+        /*mTimeTV.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
@@ -265,9 +272,9 @@ public class AddAppointmentFragment extends Fragment {
                 }
                 timePickerDlg.show();
             }
-        });
+        });*/
 
-        mCreateAppointmentBtn.setOnClickListener(new View.OnClickListener() {
+        /*mCreateAppointmentBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 final String patientEmail = mViewModel.getPatient().getEmail();
@@ -286,10 +293,9 @@ public class AddAppointmentFragment extends Fragment {
                         timeLayout.setError(error);
                         mTimeTV.setError(error);
                     }
-
                 }
             }
-        });
+        });*/
 
         return rootView;
     }
@@ -313,5 +319,12 @@ public class AddAppointmentFragment extends Fragment {
         }
 
         return errorMessage;
+    }
+
+    @Override
+    public void onCreateBtnClicked(final Date chosenDate) {
+        if (mViewModel != null) {
+            mViewModel.addAppointment(chosenDate);
+        }
     }
 }
