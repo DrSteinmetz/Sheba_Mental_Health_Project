@@ -1,16 +1,19 @@
 package com.example.sheba_mental_health_project.model;
 
 import android.content.Context;
+import android.graphics.drawable.AnimationDrawable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.airbnb.lottie.LottieAnimationView;
 import com.example.sheba_mental_health_project.R;
 import com.example.sheba_mental_health_project.model.enums.AppointmentStateEnum;
 
@@ -28,6 +31,7 @@ public class PatientAppointmentsAdapter extends RecyclerView.Adapter<PatientAppo
     final SimpleDateFormat HHmm = new SimpleDateFormat("HH:mm", Locale.getDefault());
 
     private final String TAG = "AppointmentsAdapter";
+
 
     public PatientAppointmentsAdapter(final Context mContext,
                                       final List<Appointment> mAppointments) {
@@ -51,6 +55,7 @@ public class PatientAppointmentsAdapter extends RecyclerView.Adapter<PatientAppo
         private final TextView nameTv;
         private final TextView dateTv;
         private final TextView timeTv;
+        private final LinearLayout questionnaireLayout;
         private final ImageView cellIv;
         private final TextView cellStatusIv;
 
@@ -61,9 +66,9 @@ public class PatientAppointmentsAdapter extends RecyclerView.Adapter<PatientAppo
             nameTv = itemView.findViewById(R.id.patient_name_tv);
             dateTv = itemView.findViewById(R.id.date_tv);
             timeTv = itemView.findViewById(R.id.time_tv);
+            questionnaireLayout = itemView.findViewById(R.id.questionnaire_layout);
             cellIv = itemView.findViewById(R.id.patient_cell_image);
             cellStatusIv = itemView.findViewById(R.id.patient_cell_status);
-
 
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -89,24 +94,31 @@ public class PatientAppointmentsAdapter extends RecyclerView.Adapter<PatientAppo
     public void onBindViewHolder(@NonNull AppointmentViewHolder holder, int position) {
         final Appointment appointment = mAppointments.get(position);
 
-        final String therapistName = appointment.getTherapist().getFirstName() +
-                " " + appointment.getTherapist().getLastName();
-        holder.nameTv.setText(therapistName);
+        if (appointment != null) {
+            final String therapistName = appointment.getTherapist().getFirstName() +
+                    " " + appointment.getTherapist().getLastName();
+            holder.nameTv.setText(therapistName);
 
-        final String date = ddMMYYYY.format(appointment.getAppointmentDate());
-        holder.dateTv.setText(date);
+            final String date = ddMMYYYY.format(appointment.getAppointmentDate());
+            holder.dateTv.setText(date);
 
-        final String time = HHmm.format(appointment.getAppointmentDate());
-        holder.timeTv.setText(time);
+            final String time = HHmm.format(appointment.getAppointmentDate());
+            holder.timeTv.setText(time);
 
-        if (appointment.getState() == AppointmentStateEnum.OnGoing) {
-            holder.cellIv.setImageResource(R.drawable.ic_enter);
-            holder.cellStatusIv.setText(mContext.getString(R.string.enter));
-            holder.cellStatusIv.setTextColor(mContext.getColor(R.color.light_blue));
-        } else {
-            holder.cellIv.setImageResource(R.drawable.ic_clock);
-            holder.cellStatusIv.setText(mContext.getString(R.string.upcoming));
-            holder.cellStatusIv.setTextColor(mContext.getColor(R.color.light_gray));
+            holder.questionnaireLayout.setVisibility(appointment.getIsFinishedPreQuestions() ?
+                    View.GONE : View.VISIBLE);
+
+            if (appointment.getState() == AppointmentStateEnum.OnGoing) {
+                holder.cellIv.setImageResource(R.drawable.arrows_anim);
+                final AnimationDrawable arrowsAnim = (AnimationDrawable) holder.cellIv.getDrawable();
+                arrowsAnim.start();
+                holder.cellStatusIv.setText(mContext.getString(R.string.enter));
+                holder.cellStatusIv.setTextColor(mContext.getColor(R.color.light_blue));
+            } else {
+                holder.cellIv.setImageResource(R.drawable.ic_clock);
+                holder.cellStatusIv.setText(mContext.getString(R.string.upcoming));
+                holder.cellStatusIv.setTextColor(mContext.getColor(R.color.light_gray));
+            }
         }
     }
 

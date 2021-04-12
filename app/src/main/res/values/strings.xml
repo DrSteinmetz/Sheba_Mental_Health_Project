@@ -86,6 +86,9 @@
     <string name="therapist_prompt">Therapist:</string>
     <string name="date_prompt">Date:</string>
     <string name="time_prompt">Time:</string>
+    <string name="pending_questionnaire">Pending Questionnaire</string>
+    <string name="undone_questionnaire">Undone</string>
+    <string name="questionnaire_done">Done</string>
     <string name="upcoming">Upcoming</string>
     <string name="upcoming_meetings_prompt">Upcoming Meetings:</string>
     <string name="begin">Begin</string>
@@ -350,7 +353,5 @@
         "For example, position the FAB to one side of stream of a cards so the FAB won’t interfere "
         "when a user tries to pick up one of cards.\n\n"
     </string>
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
 
 </resources>

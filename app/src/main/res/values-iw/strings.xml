@@ -87,6 +87,9 @@
     <string name="therapist_prompt">מטפל:</string>
     <string name="date_prompt">תאריך:</string>
     <string name="time_prompt">שעה:</string>
+    <string name="pending_questionnaire">שאלון ממתין למילוי</string>
+    <string name="undone_questionnaire">טרם\nנענה</string>
+    <string name="questionnaire_done">שאלון\nנענה</string>
     <string name="upcoming">טרם החלה</string>
     <string name="upcoming_meetings_prompt">הפגישות הבאות:</string>
     <string name="begin">התחל/י</string>

@@ -129,13 +129,13 @@ public class AddAppointmentFragment extends Fragment {
             @Override
             public void onChanged(String appointmentId) {
                 mPatientNameAutoTV.setText("");
-                mPatientFoundTv.setVisibility(View.INVISIBLE);
-                mPatientNameTv.setVisibility(View.INVISIBLE);
-                mDateTV.setVisibility(View.INVISIBLE);
-                mTimeTV.setVisibility(View.INVISIBLE);
+                mPatientFoundTv.setVisibility(View.GONE);
+                mPatientNameTv.setVisibility(View.GONE);
+                mDateTV.setVisibility(View.GONE);
+                mTimeTV.setVisibility(View.GONE);
                 mDateTV.setText("");
                 mTimeTV.setText("");
-                mCreateAppointmentBtn.setVisibility(View.INVISIBLE);
+                mCreateAppointmentBtn.setVisibility(View.GONE);
                 mViewModel.resetDateFields();
 
                 Snackbar.make(requireView(), getString(R.string.appointment_added_prompt),
@@ -170,7 +170,7 @@ public class AddAppointmentFragment extends Fragment {
         mTimeTV = rootView.findViewById(R.id.time_dialog_btn);
         mPatientFoundTv = rootView.findViewById(R.id.patient_found_title);
         mPatientNameTv = rootView.findViewById(R.id.patient_name);
-        final ImageButton searchBtn = rootView.findViewById(R.id.search_btn);
+//        final ImageButton searchBtn = rootView.findViewById(R.id.search_btn);
         mCreateAppointmentBtn = rootView.findViewById(R.id.create_btn);
 
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));

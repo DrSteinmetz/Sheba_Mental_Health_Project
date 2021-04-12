@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
@@ -11,10 +11,10 @@
     android:id="@+id/main_scroll_view"
     tools:context=".view.therapist.AddAppointmentFragment">
 
-    <RelativeLayout
+    <!--<RelativeLayout
         android:id="@+id/main_content_layout"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content">-->
 
         <TextView
             android:id="@+id/title_tv"
@@ -38,7 +38,7 @@
             <com.google.android.material.textfield.TextInputLayout
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
-                android:layout_weight="4"
+                android:layout_weight="8"
                 app:boxStrokeColor="@color/light_gray"
                 app:boxStrokeWidth="1.2dp"
                 app:boxCornerRadiusBottomEnd="0dp"
@@ -65,18 +65,19 @@
                 android:layout_height="match_parent"
                 android:layout_weight="0.3" />
 
-            <ImageButton
+            <ImageView
                 android:id="@+id/search_btn"
-                android:layout_marginTop="5dp"
-                android:layout_weight="1"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:layout_marginTop="5dp"
+                app:tint="@color/light_blue"
                 android:src="@drawable/ic_baseline_search_24"
-                android:background="@color/light_blue" />
+                android:background="@null" />
 
         </LinearLayout>
 
-        <TextView
+        <!--<TextView
             android:visibility="invisible"
             android:id="@+id/patient_found_title"
             android:layout_width="wrap_content"
@@ -96,15 +97,16 @@
             android:visibility="invisible"
             android:textSize="20sp"
             android:textColor="@color/black"
-            android:layout_centerHorizontal="true" />
+            android:layout_centerHorizontal="true" />-->
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recycler_view"
             android:layout_width="match_parent"
-            android:layout_height="250dp"
-            android:layout_below="@+id/patient_name" />
+            android:layout_height="match_parent"
+            android:layout_below="@+id/search_layout"
+            android:layout_marginTop="15dp" />
 
-        <com.google.android.material.button.MaterialButton
+        <!--<com.google.android.material.button.MaterialButton
             android:id="@+id/patient_history_btn"
             android:layout_below="@+id/recycler_view"
             android:layout_width="wrap_content"
@@ -118,8 +120,8 @@
             android:textSize="20sp"
             app:cornerRadius="0dp"
             android:layout_marginBottom="15dp"
-            android:textAllCaps="false" />
+            android:textAllCaps="false" />-->
 
-    </RelativeLayout>
+    <!--</RelativeLayout>-->
 
-</ScrollView>
+</RelativeLayout>

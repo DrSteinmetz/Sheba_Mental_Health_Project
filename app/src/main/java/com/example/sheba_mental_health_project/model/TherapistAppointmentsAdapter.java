@@ -4,6 +4,7 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -51,6 +52,8 @@ public class TherapistAppointmentsAdapter extends RecyclerView.Adapter<Therapist
         private final TextView nameTv;
         private final TextView dateTv;
         private final TextView timeTv;
+        private final ImageView questionnaireIv;
+        private final TextView questionnaireTv;
 
         public AppointmentViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -59,6 +62,8 @@ public class TherapistAppointmentsAdapter extends RecyclerView.Adapter<Therapist
             nameTv = itemView.findViewById(R.id.patient_name_tv);
             dateTv = itemView.findViewById(R.id.date_tv);
             timeTv = itemView.findViewById(R.id.time_tv);
+            questionnaireIv = itemView.findViewById(R.id.questionnaire_iv);
+            questionnaireTv = itemView.findViewById(R.id.questionnaire_tv);
 
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -83,14 +88,27 @@ public class TherapistAppointmentsAdapter extends RecyclerView.Adapter<Therapist
     public void onBindViewHolder(@NonNull AppointmentViewHolder holder, int position) {
         final Appointment appointment = mAppointments.get(position);
 
-        final String patientName = appointment.getPatient().getFullName();
-        holder.nameTv.setText(patientName);
+        if (appointment != null) {
+            final String patientName = appointment.getPatient().getFullName();
+            holder.nameTv.setText(patientName);
 
-        final String date = ddMMYYYY.format(appointment.getAppointmentDate());
-        holder.dateTv.setText(date);
+            final String date = ddMMYYYY.format(appointment.getAppointmentDate());
+            holder.dateTv.setText(date);
 
-        final String time = HHmm.format(appointment.getAppointmentDate());
-        holder.timeTv.setText(time);
+            final String time = HHmm.format(appointment.getAppointmentDate());
+            holder.timeTv.setText(time);
+
+            holder.questionnaireIv.setImageResource(appointment.getIsFinishedPreQuestions() ?
+                    R.drawable.ic_questionnaire_done : R.drawable.ic_questionnaire);
+
+            if (appointment.getIsFinishedPreQuestions()) {
+                holder.questionnaireTv.setText(R.string.questionnaire_done);
+                holder.questionnaireTv.setTextColor(mContext.getColor(R.color.light_blue));
+            } else {
+                holder.questionnaireTv.setText(R.string.undone_questionnaire);
+                holder.questionnaireTv.setTextColor(mContext.getColor(R.color.light_gray));
+            }
+        }
     }
 
     @Override
