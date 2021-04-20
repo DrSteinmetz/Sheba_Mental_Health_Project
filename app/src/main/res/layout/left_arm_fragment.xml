@@ -60,6 +60,7 @@
             android:layout_alignTop="@id/body_part_iv"
             android:layout_alignEnd="@id/body_part_iv"
             android:layout_alignBottom="@id/body_part_iv"
+            android:layoutDirection="ltr"
             android:orientation="vertical">
 
             <Space

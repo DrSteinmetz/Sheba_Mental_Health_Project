@@ -44,6 +44,7 @@
     <string name="social_Status">מצב סוציאלי</string>
     <string name="statements">הצהרות</string>
     <string name="mental_functioning">תפקוד מנטלי</string>
+    <string name="no_answers_prompt">אין תשובות להצגה…</string>
     <string name="undo">ביטול</string>
     <string name="answer_et_hint">השיבו כאן</string>
     <string name="details_et_hint">פירוט</string>
@@ -102,6 +103,8 @@
     <string name="last_meeting_therapist_name_prompt">מטפל בפגישה אחרונה:</string>
     <string name="back_to_appointments">חזרה לפגישות</string>
     <string name="edit_answers">ערוך תשובות</string>
+    <string name="meeting_ended_dlg_title">פגישתך הסתיימה</string>
+    <string name="meeting_ended_dlg_prompt">המטפל\ת סיימ\ה את הפגישה</string>
 
     <string name="pain_location_tv">מיקום:</string>
     <string name="pain_strength_tv">עוצמה:</string>

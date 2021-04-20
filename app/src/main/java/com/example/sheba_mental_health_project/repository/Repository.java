@@ -1202,9 +1202,9 @@ public class Repository {
         questions.add(new Question("24", "One or More of My Household Members Have Been Diagnosed with COVID-19",
                 QuestionTypeEnum.Binary, false, ViewModelEnum.CovidQuestions));
         questions.add(new Question("25", "Does Any of Your Relatives Has Been Diagnosed with COVID-19?",
-                QuestionTypeEnum.Open, true, ViewModelEnum.CovidQuestions));
+                QuestionTypeEnum.Open, false, ViewModelEnum.CovidQuestions));
         questions.add(new Question("26", "Were You Diagnosed with COVID-19 in the Past? If Yes, When?",
-                QuestionTypeEnum.Open, true, ViewModelEnum.CovidQuestions));
+                QuestionTypeEnum.Open, false, ViewModelEnum.CovidQuestions));
         questions.add(new Question("27", "Have You Experienced Any Emotional Suffering Due to COVID-19?",
                 QuestionTypeEnum.Open, false, ViewModelEnum.CovidQuestions));
         questions.add(new Question("28", "Have You Experienced Any Physical Suffering Due to COVID-19?",
@@ -1312,7 +1312,7 @@ public class Repository {
         questions.add(new Question("10", "אעדיף פגישה קצרה",
                 QuestionTypeEnum.Binary, false, ViewModelEnum.Treaty));
         questions.add(new Question("11", "אעדיף שאדם נוסף ילווה אותי במהלך הפגישה",
-                QuestionTypeEnum.Binary, true, ViewModelEnum.Treaty));
+                QuestionTypeEnum.Binary, false, ViewModelEnum.Treaty));
 
         questions.add(new Question("12", "טופס 17",
                 QuestionTypeEnum.Binary, false, ViewModelEnum.Bureaucracy));
@@ -1344,9 +1344,9 @@ public class Repository {
         questions.add(new Question("24", "מישהו מבני ביתי כחולה כיום בקורונה",
                 QuestionTypeEnum.Binary, false, ViewModelEnum.CovidQuestions));
         questions.add(new Question("25", "אם אחד מקרובי משפחתך חלה בקורונה?",
-                QuestionTypeEnum.Open, true, ViewModelEnum.CovidQuestions));
+                QuestionTypeEnum.Open, false, ViewModelEnum.CovidQuestions));
         questions.add(new Question("26", "האם חלית בקורונה בעבר ואם כן מתי?",
-                QuestionTypeEnum.Open, true, ViewModelEnum.CovidQuestions));
+                QuestionTypeEnum.Open, false, ViewModelEnum.CovidQuestions));
         questions.add(new Question("27", "האם בשל מגפת הקורונה נגרם לך סבל נפשי?",
                 QuestionTypeEnum.Open, false, ViewModelEnum.CovidQuestions));
         questions.add(new Question("28", "האם בשל מחלת הקורונה נגרם לך סבל גופני?",

@@ -58,6 +58,18 @@
                 android:id="@+id/expectations_recycler_view"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" />
+            <TextView
+                android:id="@+id/expectations_recycler_tv"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_margin="10dp"
+                android:gravity="center"
+                android:visibility="gone"
+                android:text="@string/no_answers_prompt"
+                android:textSize="18sp"
+                android:textColor="@color/light_gray"
+                android:textAllCaps="false" />
         </RelativeLayout>
 
         <View
@@ -97,6 +109,18 @@
                 android:id="@+id/covid_recycler_view"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" />
+            <TextView
+                android:id="@+id/covid_recycler_tv"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_margin="10dp"
+                android:gravity="center"
+                android:visibility="gone"
+                android:text="@string/no_answers_prompt"
+                android:textSize="18sp"
+                android:textColor="@color/light_gray"
+                android:textAllCaps="false" />
         </RelativeLayout>
 
         <View
@@ -136,6 +160,18 @@
                 android:id="@+id/statement_recycler_view"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" />
+            <TextView
+                android:id="@+id/statement_recycler_tv"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_margin="10dp"
+                android:gravity="center"
+                android:visibility="gone"
+                android:text="@string/no_answers_prompt"
+                android:textSize="18sp"
+                android:textColor="@color/light_gray"
+                android:textAllCaps="false" />
         </RelativeLayout>
 
         <View
@@ -175,6 +211,18 @@
                 android:id="@+id/social_recycler_view"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" />
+            <TextView
+                android:id="@+id/social_recycler_tv"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_margin="10dp"
+                android:gravity="center"
+                android:visibility="gone"
+                android:text="@string/no_answers_prompt"
+                android:textSize="18sp"
+                android:textColor="@color/light_gray"
+                android:textAllCaps="false" />
         </RelativeLayout>
 
         <View
@@ -214,6 +262,18 @@
                 android:id="@+id/habits_recycler_view"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" />
+            <TextView
+                android:id="@+id/habits_recycler_tv"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_margin="10dp"
+                android:gravity="center"
+                android:visibility="gone"
+                android:text="@string/no_answers_prompt"
+                android:textSize="18sp"
+                android:textColor="@color/light_gray"
+                android:textAllCaps="false" />
         </RelativeLayout>
 
         <View
@@ -254,6 +314,18 @@
                 android:id="@+id/mental_recycler_view"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" />
+            <TextView
+                android:id="@+id/mental_recycler_tv"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_margin="10dp"
+                android:gravity="center"
+                android:visibility="gone"
+                android:text="@string/no_answers_prompt"
+                android:textSize="18sp"
+                android:textColor="@color/light_gray"
+                android:textAllCaps="false" />
         </RelativeLayout>
 
     </LinearLayout>

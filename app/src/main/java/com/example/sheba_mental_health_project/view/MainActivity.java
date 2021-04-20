@@ -528,8 +528,8 @@ public class MainActivity extends AppCompatActivity
         mViewModel.removeLiveAppointmentListener();
 
         final ConfirmationDialog warningDialog = new ConfirmationDialog(this);
-        warningDialog.setTitleWarningText("Your Meeting has Ended");
-        warningDialog.setPromptText("The Therapist has Ended Your Meeting");
+        warningDialog.setTitleWarningText(getString(R.string.meeting_ended_dlg_title));
+        warningDialog.setPromptText(getString(R.string.meeting_ended_dlg_prompt));
         warningDialog.show();
         onBackToAppointmentsBtnClicked();
     }

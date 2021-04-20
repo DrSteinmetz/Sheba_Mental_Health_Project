@@ -43,6 +43,7 @@
     <string name="social_Status">Social Status</string>
     <string name="statements">Statements</string>
     <string name="mental_functioning">Mental Functioning</string>
+    <string name="no_answers_prompt">No Answers to Display…</string>
     <string name="undo">Undo</string>
     <string name="answer_et_hint">Type Your Answer Here</string>
     <string name="details_et_hint">Details</string>
@@ -101,6 +102,8 @@
     <string name="last_meeting_therapist_name_prompt">Last Meeting Therapist:</string>
     <string name="back_to_appointments">Back to Appointments</string>
     <string name="edit_answers">Edit Answers</string>
+    <string name="meeting_ended_dlg_title">Your Meeting has Ended</string>
+    <string name="meeting_ended_dlg_prompt">The Therapist has Ended Your Meeting</string>
 
     <string name="pain_location_tv">Location:</string>
     <string name="pain_strength_tv">Strength:</string>

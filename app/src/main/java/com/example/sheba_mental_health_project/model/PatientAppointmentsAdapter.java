@@ -109,12 +109,15 @@ public class PatientAppointmentsAdapter extends RecyclerView.Adapter<PatientAppo
                     View.GONE : View.VISIBLE);
 
             if (appointment.getState() == AppointmentStateEnum.OnGoing) {
+                final boolean isRightToLeft = mContext.getResources().getBoolean(R.bool.is_right_to_left);
+                holder.cellIv.setRotation(isRightToLeft ? 180 : 0);
                 holder.cellIv.setImageResource(R.drawable.arrows_anim);
                 final AnimationDrawable arrowsAnim = (AnimationDrawable) holder.cellIv.getDrawable();
                 arrowsAnim.start();
                 holder.cellStatusIv.setText(mContext.getString(R.string.enter));
                 holder.cellStatusIv.setTextColor(mContext.getColor(R.color.light_blue));
             } else {
+                holder.cellIv.setRotation(0);
                 holder.cellIv.setImageResource(R.drawable.ic_clock);
                 holder.cellStatusIv.setText(mContext.getString(R.string.upcoming));
                 holder.cellStatusIv.setTextColor(mContext.getColor(R.color.light_gray));

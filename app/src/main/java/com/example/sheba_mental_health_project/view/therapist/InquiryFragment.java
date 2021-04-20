@@ -17,6 +17,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
 
 import com.example.sheba_mental_health_project.R;
 import com.example.sheba_mental_health_project.model.Answer;
@@ -34,11 +35,17 @@ public class InquiryFragment extends Fragment {
     private InquiryViewModel mViewModel;
 
     private RecyclerView mExpectationsRecycler;
+    private TextView mExpectationsTv;
     private RecyclerView mCovidRecycler;
+    private TextView mCovidTv;
     private RecyclerView mStatementRecycler;
+    private TextView mStatementTv;
     private RecyclerView mSocialRecycler;
+    private TextView mSocialTv;
     private RecyclerView mHabitsRecycler;
+    private TextView mHabitsTv;
     private RecyclerView mMentalRecycler;
+    private TextView mMentalTv;
 
     private AnswersAdapter mExpectationsAdapter;
     private AnswersAdapter mCovidAdapter;
@@ -78,23 +85,36 @@ public class InquiryFragment extends Fragment {
         final Observer<List<Answer>> onGetLiveAnswersSucceed = new Observer<List<Answer>>() {
             @Override
             public void onChanged(List<Answer> answers) {
+
                 mExpectationsAdapter = new AnswersAdapter(mViewModel.getExpectationsQuestions(),
                         answers);
+                mExpectationsTv.setVisibility(mViewModel.getExpectationsQuestions().isEmpty() ?
+                        View.VISIBLE : View.GONE);
 
                 mCovidAdapter = new AnswersAdapter(mViewModel.getCovidQuestions(),
                         answers);
+                mCovidTv.setVisibility(mViewModel.getCovidQuestions().isEmpty() ?
+                        View.VISIBLE : View.GONE);
 
                 mStatementAdapter = new AnswersAdapter(mViewModel.getStatementQuestions(),
                         answers);
+                mStatementTv.setVisibility(mViewModel.getStatementQuestions().isEmpty() ?
+                        View.VISIBLE : View.GONE);
 
                 mSocialAdapter = new AnswersAdapter(mViewModel.getSocialQuestions(),
                         answers);
+                mSocialTv.setVisibility(mViewModel.getSocialQuestions().isEmpty() ?
+                        View.VISIBLE : View.GONE);
 
                 mHabitsAdapter = new AnswersAdapter(mViewModel.getHabitsQuestions(),
                         answers);
+                mHabitsTv.setVisibility(mViewModel.getHabitsQuestions().isEmpty() ?
+                        View.VISIBLE : View.GONE);
 
                 mMentalAdapter = new AnswersAdapter(mViewModel.getMentalQuestions(),
                         answers);
+                mMentalTv.setVisibility(mViewModel.getMentalQuestions().isEmpty() ?
+                        View.VISIBLE : View.GONE);
 
 
                 mExpectationsRecycler.setAdapter(mExpectationsAdapter);
@@ -126,26 +146,32 @@ public class InquiryFragment extends Fragment {
 
         final RelativeLayout expectationsTitleLayout = rootView.findViewById(R.id.expectations_title_layout);
         final RelativeLayout expectationsRecyclerLayout = rootView.findViewById(R.id.expectations_recycler_layout);
+        mExpectationsTv = rootView.findViewById(R.id.expectations_recycler_tv);
         final ImageView expectationsArrowIv = rootView.findViewById(R.id.expectations_arrow_iv);
         mExpectationsRecycler = rootView.findViewById(R.id.expectations_recycler_view);
         final RelativeLayout covidTitleLayout = rootView.findViewById(R.id.covid_title_layout);
         final RelativeLayout covidRecyclerLayout = rootView.findViewById(R.id.covid_recycler_layout);
+        mCovidTv = rootView.findViewById(R.id.covid_recycler_tv);
         final ImageView covidArrowIv = rootView.findViewById(R.id.covid_arrow_iv);
         mCovidRecycler = rootView.findViewById(R.id.covid_recycler_view);
         final RelativeLayout statementTitleLayout = rootView.findViewById(R.id.statement_title_layout);
         final RelativeLayout statementRecyclerLayout = rootView.findViewById(R.id.statement_recycler_layout);
+        mStatementTv = rootView.findViewById(R.id.statement_recycler_tv);
         final ImageView statementArrowIv = rootView.findViewById(R.id.statement_arrow_iv);
         mStatementRecycler = rootView.findViewById(R.id.statement_recycler_view);
         final RelativeLayout socialTitleLayout = rootView.findViewById(R.id.social_title_layout);
         final RelativeLayout socialRecyclerLayout = rootView.findViewById(R.id.social_recycler_layout);
+        mSocialTv = rootView.findViewById(R.id.social_recycler_tv);
         final ImageView socialArrowIv = rootView.findViewById(R.id.social_arrow_iv);
         mSocialRecycler = rootView.findViewById(R.id.social_recycler_view);
         final RelativeLayout habitsTitleLayout = rootView.findViewById(R.id.habits_title_layout);
         final RelativeLayout habitsRecyclerLayout = rootView.findViewById(R.id.habits_recycler_layout);
+        mHabitsTv = rootView.findViewById(R.id.habits_recycler_tv);
         final ImageView habitsArrowIv = rootView.findViewById(R.id.habits_arrow_iv);
         mHabitsRecycler = rootView.findViewById(R.id.habits_recycler_view);
         final RelativeLayout mentalTitleLayout = rootView.findViewById(R.id.mental_title_layout);
         final RelativeLayout mentalRecyclerLayout = rootView.findViewById(R.id.mental_recycler_layout);
+        mMentalTv = rootView.findViewById(R.id.mental_recycler_tv);
         final ImageView mentalArrowIv = rootView.findViewById(R.id.mental_arrow_iv);
         mMentalRecycler = rootView.findViewById(R.id.mental_recycler_view);
 
