@@ -29,6 +29,7 @@ import com.example.sheba_mental_health_project.model.enums.QuestionTypeEnum;
 import com.example.sheba_mental_health_project.model.enums.ViewModelEnum;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentSnapshot;
@@ -43,6 +44,7 @@ import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Locale;
@@ -70,6 +72,7 @@ public class Repository {
     private ListenerRegistration mGetAllPainPointsPhysicalListener;
     private ListenerRegistration mGetLiveAnswersListener;
     private ListenerRegistration mGetFeelingsAnswersListener;
+    private ListenerRegistration mGetLastChatMessageListener;
 
     private final String PATIENTS = "patients";
     private final String THERAPISTS = "therapists";
@@ -363,6 +366,48 @@ public class Repository {
                                                       repositoryUploadChatMessageInterface){
         this.mRepositoryUploadChatMessageListener = repositoryUploadChatMessageInterface;
     }
+
+    /*<------ Get Last Chat Message ------>*/
+    public interface RepositoryGetLastChatMessageInterface {
+        void onGetLastChatMessageSucceed(ChatMessage lastMessage);
+
+        void onGetLastChatMessageFailed(String error);
+    }
+
+    private RepositoryGetLastChatMessageInterface mRepositoryGetLastChatMessageListener;
+
+    public void setGetLastChatMessageInterface(RepositoryGetLastChatMessageInterface
+                                                      repositoryGetLastChatMessageInterface){
+        this.mRepositoryGetLastChatMessageListener = repositoryGetLastChatMessageInterface;
+    }
+
+    /*<------ Get Recommendations ------>*/
+    public interface RepositoryGetRecommendationsInterface {
+        void onGetRecommendationsSucceed(String recommendations);
+
+        void onGetRecommendationsFailed(String error);
+    }
+
+    private RepositoryGetRecommendationsInterface mRepositoryGetRecommendationsListener;
+
+    public void setGetRecommendationsInterface(RepositoryGetRecommendationsInterface
+                                                       repositoryGetRecommendationsInterface) {
+        this.mRepositoryGetRecommendationsListener = repositoryGetRecommendationsInterface;
+    }
+
+    /*<------ Set Summary ------>*/
+    public interface RepositorySetSummaryInterface {
+        void onSetSummarySucceed(String[] summary);
+
+        void onSetSummaryFailed(String error);
+    }
+
+    private RepositorySetSummaryInterface mRepositorySetSummaryListener;
+
+    public void setSetSummaryInterface(RepositorySetSummaryInterface repositorySetSummaryInterface) {
+        this.mRepositorySetSummaryListener = repositorySetSummaryInterface;
+    }
+
 
     /**<------ Singleton ------>*/
     public static Repository getInstance(final Context context) {
@@ -1076,6 +1121,122 @@ public class Repository {
                 });
     }
 
+    public void getLastChatMessage() {
+        final String myEmail = AuthRepository.getInstance(mContext).getUser().getEmail();
+
+        mGetLastChatMessageListener = mCloudDB.collection(APPOINTMENTS)
+                .document(mCurrentAppointment.getId())
+                .collection(CHAT)
+                .whereEqualTo("recipientEmail", myEmail)
+                .orderBy("time", Query.Direction.DESCENDING)
+                .limit(1)
+                .addSnapshotListener(new EventListener<QuerySnapshot>() {
+                    @Override
+                    public void onEvent(@Nullable QuerySnapshot value, @Nullable FirebaseFirestoreException error) {
+                        if (value != null) {
+                            ChatMessage lastMessage = null;
+
+                            if (!value.getDocuments().isEmpty()) {
+                                lastMessage = value.getDocuments().get(0)
+                                        .toObject(ChatMessage.class);
+                            }
+
+                            if (mRepositoryGetLastChatMessageListener != null) {
+                                mRepositoryGetLastChatMessageListener
+                                        .onGetLastChatMessageSucceed(lastMessage);
+                            }
+                        } else if (error != null) {
+                            Log.w(TAG, "onEvent: ", error);
+
+                            if (mRepositoryGetLastChatMessageListener != null) {
+                                mRepositoryGetLastChatMessageListener
+                                        .onGetLastChatMessageFailed(error.getMessage());
+                            }
+                        } else {
+                            Log.w(TAG, "onEvent: NULL FIREBASE ERROR");
+                        }
+                    }
+                });
+    }
+
+    public void removeGetLastChatMessageListener() {
+        mGetLastChatMessageListener.remove();
+    }
+
+    public void updateLastChatMessage() {
+        final String myEmail = AuthRepository.getInstance(mContext).getUser().getEmail();
+
+        mCloudDB.collection(APPOINTMENTS)
+                .document(mCurrentAppointment.getId())
+                .collection(CHAT)
+                .whereEqualTo("recipientEmail", myEmail)
+                .orderBy("time", Query.Direction.DESCENDING)
+                .limit(1)
+                .get()
+                .addOnSuccessListener(new OnSuccessListener<QuerySnapshot>() {
+                    @Override
+                    public void onSuccess(QuerySnapshot queryDocumentSnapshots) {
+                        if (!queryDocumentSnapshots.getDocuments().isEmpty()) {
+                            final ChatMessage message = queryDocumentSnapshots.getDocuments().get(0)
+                                    .toObject(ChatMessage.class);
+
+                            if (message != null) {
+                                mCloudDB.collection(APPOINTMENTS)
+                                        .document(mCurrentAppointment.getId())
+                                        .collection(CHAT)
+                                        .document(message.getTime().toString())
+                                        .update("isSeen", true)
+                                        .addOnCompleteListener(new OnCompleteListener<Void>() {
+                                            @Override
+                                            public void onComplete(@NonNull Task<Void> task) {
+                                                if (task.isSuccessful()) {
+                                                    Log.d(TAG, "onComplete: COMPLETED! :D " +
+                                                            message);
+                                                } else {
+                                                    Log.e(TAG, "onComplete: " + Objects
+                                                            .requireNonNull(task.getException())
+                                                            .getMessage());
+                                                }
+                                            }
+                                        });
+                            }
+                        }
+                    }
+                });
+    }
+
+
+    public void setSummary(final String diagnosisTxt, final String recommendationsTxt) {
+        final Map<String, Object> map = new HashMap<>();
+        map.put("diagnosis", diagnosisTxt);
+        map.put("recommendations", recommendationsTxt);
+
+        mCloudDB.collection(APPOINTMENTS)
+                .document(mCurrentAppointment.getId())
+                .update(map)
+                .addOnCompleteListener(new OnCompleteListener<Void>() {
+                    @Override
+                    public void onComplete(@NonNull Task<Void> task) {
+                        if (task.isSuccessful()) {
+                            mCurrentAppointment.setDiagnosis(diagnosisTxt);
+                            mCurrentAppointment.setRecommendations(recommendationsTxt);
+
+                            if (mRepositorySetSummaryListener != null) {
+                                final String[] summary = new String[]{diagnosisTxt,
+                                        recommendationsTxt};
+                                mRepositorySetSummaryListener.onSetSummarySucceed(summary);
+                            }
+                        } else {
+                            final String error = Objects.requireNonNull(task.getException())
+                                    .getMessage();
+                            if (mRepositorySetSummaryListener != null) {
+                                mRepositorySetSummaryListener.onSetSummaryFailed(error);
+                            }
+                        }
+                    }
+                });
+    }
+
     public void getLastAppointment() {
         final String patientId = mCurrentAppointment.getPatient().getId();
         final List<AppointmentStateEnum> stateQuery = new ArrayList<>();
@@ -1084,7 +1245,7 @@ public class Repository {
         mCloudDB.collection(APPOINTMENTS)
                 .whereIn("state", stateQuery)
                 .whereEqualTo(FieldPath.of("patient", "id"), patientId)
-                .orderBy("appointmentDate", Query.Direction.ASCENDING).limit(1)
+                .orderBy("appointmentDate", Query.Direction.DESCENDING).limit(1)
                 .addSnapshotListener(new EventListener<QuerySnapshot>() {
             @Override
             public void onEvent(@Nullable QuerySnapshot value, @Nullable FirebaseFirestoreException error) {
@@ -1241,7 +1402,7 @@ public class Repository {
                 QuestionTypeEnum.Binary, false, ViewModelEnum.Statement));
 
         questions.add(new Question("36", "I Am Under Custody",
-                QuestionTypeEnum.Binary, false, ViewModelEnum.Treaty));
+                QuestionTypeEnum.Binary, false, ViewModelEnum.SocialQuestions));
         questions.add(new Question("37", "Are You Getting Any Mental Help Nowadays? If You Are, By Whom and When Was Your Last Appointment? (Psychiatrist/Social Worker/Psychologist)",
                 QuestionTypeEnum.Open, false, ViewModelEnum.SocialQuestions));
         questions.add(new Question("38", "Rank Your Distress Level on a Scale of 1 to 10:",
@@ -1295,6 +1456,43 @@ public class Repository {
         questions.add(new Question("59", "I Experience Walking Difficulties",
                 QuestionTypeEnum.Binary, false, ViewModelEnum.MentalQuestions));
 
+        questions.add(new Question("6", "I Felt Fearful",
+                QuestionTypeEnum.Radio, false, ViewModelEnum.AnxietyQuestions));
+        questions.add(new Question("61", "I Found it Hard to Focus on Anything Other Than my Anxiety",
+                QuestionTypeEnum.Radio, false, ViewModelEnum.AnxietyQuestions));
+        questions.add(new Question("62", "My Worries Overwhelmed me",
+                QuestionTypeEnum.Radio, false, ViewModelEnum.AnxietyQuestions));
+        questions.add(new Question("63", "I Felt Uneasy",
+                QuestionTypeEnum.Radio, false, ViewModelEnum.AnxietyQuestions));
+
+        questions.add(new Question("64", "I was Irritated more than People Knew",
+                QuestionTypeEnum.Radio, false, ViewModelEnum.AngerQuestions));
+        questions.add(new Question("65", "I Felt Angry",
+                QuestionTypeEnum.Radio, false, ViewModelEnum.AngerQuestions));
+        questions.add(new Question("66", "I Felt Like I was Ready to Explode",
+                QuestionTypeEnum.Radio, false, ViewModelEnum.AngerQuestions));
+        questions.add(new Question("67", "I Felt Grouchy",
+                QuestionTypeEnum.Radio, false, ViewModelEnum.AngerQuestions));
+        questions.add(new Question("68", "I Felt Annoyed",
+                QuestionTypeEnum.Radio, false, ViewModelEnum.AngerQuestions));
+
+        questions.add(new Question("69", "I Felt Depressed",
+                QuestionTypeEnum.Radio, false, ViewModelEnum.DepressionQuestions));
+        questions.add(new Question("7", "I Felt Helpless",
+                QuestionTypeEnum.Radio, false, ViewModelEnum.DepressionQuestions));
+        questions.add(new Question("71", "I Felt that Nothing could Cheer me Up",
+                QuestionTypeEnum.Radio, false, ViewModelEnum.DepressionQuestions));
+        questions.add(new Question("72", "I Felt that my Life was Empty",
+                QuestionTypeEnum.Radio, false, ViewModelEnum.DepressionQuestions));
+        questions.add(new Question("73", "I Felt Worthless",
+                QuestionTypeEnum.Radio, false, ViewModelEnum.DepressionQuestions));
+        questions.add(new Question("74", "I Felt Unhappy",
+                QuestionTypeEnum.Radio, false, ViewModelEnum.DepressionQuestions));
+        questions.add(new Question("75", "I Felt I had no Reason for Living",
+                QuestionTypeEnum.Radio, false, ViewModelEnum.DepressionQuestions));
+        questions.add(new Question("76", "I Felt that Nothing was Interesting",
+                QuestionTypeEnum.Radio, false, ViewModelEnum.DepressionQuestions));
+
         for (Question question : questions) {
             mCloudDB.collection(QUESTIONS)
                     .document("en")
@@ -1337,7 +1535,7 @@ public class Repository {
         questions.add(new Question("21", "אחר",
                 QuestionTypeEnum.Binary, false, ViewModelEnum.Bureaucracy));
 
-        questions.add(new Question("22", "יש לי אחד מהתסמינים הבאים - חום גבוה, כאב גרון, אובדן חוש טעם, אובדן חודש ריח, שיעול, כאבי שרירים. ",
+        questions.add(new Question("22", "יש לי אחד מהתסמינים הבאים - חום גבוה, כאב גרון, אובדן חוש טעם, אובדן חודש ריח, שיעול, כאבי שרירים.",
                 QuestionTypeEnum.Binary, false, ViewModelEnum.CovidQuestions));
         questions.add(new Question("23", "אני מאובחן כיום כחולה קורונה",
                 QuestionTypeEnum.Binary, false, ViewModelEnum.CovidQuestions));
@@ -1436,6 +1634,43 @@ public class Repository {
                 QuestionTypeEnum.Binary, false, ViewModelEnum.MentalQuestions));
         questions.add(new Question("59", "יש לי קושי בהליכה",
                 QuestionTypeEnum.Binary, false, ViewModelEnum.MentalQuestions));
+
+        questions.add(new Question("6", "הרגשתי חרדה",
+                QuestionTypeEnum.Radio, false, ViewModelEnum.AnxietyQuestions));
+        questions.add(new Question("61", "הרגשתי קושי להתרכז בדברים אחרים מלבד החרדה שלי",
+                QuestionTypeEnum.Radio, false, ViewModelEnum.AnxietyQuestions));
+        questions.add(new Question("62", "הדאגות שלי מציפות אותי",
+                QuestionTypeEnum.Radio, false, ViewModelEnum.AnxietyQuestions));
+        questions.add(new Question("63", "הרגשתי לא נינוח",
+                QuestionTypeEnum.Radio, false, ViewModelEnum.AnxietyQuestions));
+
+        questions.add(new Question("64", "חשתי עצבנות יותר ממה שאנשים ידעו",
+                QuestionTypeEnum.Radio, false, ViewModelEnum.AngerQuestions));
+        questions.add(new Question("65", "הרגשתי כעס",
+                QuestionTypeEnum.Radio, false, ViewModelEnum.AngerQuestions));
+        questions.add(new Question("66", "הרגשתי שאני עומד/ת להתפוצץ",
+                QuestionTypeEnum.Radio, false, ViewModelEnum.AngerQuestions));
+        questions.add(new Question("67", "הרגשתי רטנוני",
+                QuestionTypeEnum.Radio, false, ViewModelEnum.AngerQuestions));
+        questions.add(new Question("68", "הרגשתי מרוגז/ת",
+                QuestionTypeEnum.Radio, false, ViewModelEnum.AngerQuestions));
+
+        questions.add(new Question("69", "הרגשתי דיכאון",
+                QuestionTypeEnum.Radio, false, ViewModelEnum.DepressionQuestions));
+        questions.add(new Question("7", "הרגשתי חסר/ת אונים",
+                QuestionTypeEnum.Radio, false, ViewModelEnum.DepressionQuestions));
+        questions.add(new Question("71", "הרגשתי ששום דבר לא יכול לעודד אותי",
+                QuestionTypeEnum.Radio, false, ViewModelEnum.DepressionQuestions));
+        questions.add(new Question("72", "הרגשתי שהחיים שלי ריקים",
+                QuestionTypeEnum.Radio, false, ViewModelEnum.DepressionQuestions));
+        questions.add(new Question("73", "הרגשתי חסר/ת ערך",
+                QuestionTypeEnum.Radio, false, ViewModelEnum.DepressionQuestions));
+        questions.add(new Question("74", "הרגשתי אומלל/ה",
+                QuestionTypeEnum.Radio, false, ViewModelEnum.DepressionQuestions));
+        questions.add(new Question("75", "הרגשתי שאין לי סיבה לחיות",
+                QuestionTypeEnum.Radio, false, ViewModelEnum.DepressionQuestions));
+        questions.add(new Question("76", "הרגשתי שכלום לא מעניין אותי",
+                QuestionTypeEnum.Radio, false, ViewModelEnum.DepressionQuestions));
 
         for (Question question : questions) {
             mCloudDB.collection(QUESTIONS)

@@ -75,9 +75,19 @@
             android:textSize="17sp"
             android:layout_width="250dp"
             style="@style/blue_btn"
-            app:icon="@drawable/ic_chat_white_icon"
-            />
+            app:icon="@drawable/ic_chat_white_icon" />
 
+        <ImageView
+            android:id="@+id/chat_badge_iv"
+            android:layout_width="15dp"
+            android:layout_height="15dp"
+            android:layout_alignStart="@id/chat_btn"
+            android:layout_alignTop="@id/chat_btn"
+            android:layout_marginStart="-10dp"
+            android:elevation="20dp"
+            android:visibility="gone"
+            android:src="@drawable/ic_baseline_circle_24"
+            android:scaleType="fitCenter" />
 
     </RelativeLayout>
 

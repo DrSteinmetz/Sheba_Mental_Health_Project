@@ -9,6 +9,7 @@ public class ChatMessage implements Comparable<ChatMessage> {
     private String mContent;
     private String mRecipientEmail;
     private Date mTime;
+    private boolean mSeen = false;
 
     public ChatMessage() {}
 
@@ -42,6 +43,13 @@ public class ChatMessage implements Comparable<ChatMessage> {
         this.mTime = time;
     }
 
+    public boolean getIsSeen() {
+        return mSeen;
+    }
+
+    public void setIsSeen(boolean seen) {
+        this.mSeen = seen;
+    }
 
     @Override
     public String toString() {
@@ -49,6 +57,7 @@ public class ChatMessage implements Comparable<ChatMessage> {
                 "Content=" + mContent +
                 ", RecipientEmail=" + mRecipientEmail +
                 ", Time=" + mTime +
+                ", Seen=" + mSeen +
                 '}';
     }
 

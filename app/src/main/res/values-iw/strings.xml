@@ -19,7 +19,7 @@
     <string name="pick_time">בחירת שעה</string>
     <string name="character">דמות</string>
     <string name="feelings">תחושות</string>
-    <string name="slider_min_max_prompt">דרג כל תחושה כך ש-0 הכי חלש ו-10 הכי חזק</string>
+    <string name="slider_min_max_prompt">דרג/י את תחושותיך בשבוע האחרון כך ש-0 הכי חלש ו-10 הכי חזק</string>
     <string name="appointments_date">מועד הפגישה</string>
     <string name="edit_appointment_title">עריכת פגישה</string>
     <string name="pain_point_deletion_prompt">האם ברצונך למחוק נקודה זו לצמיתות?</string>
@@ -57,6 +57,7 @@
     <string name="start_meeting_title">להתחיל פגישה?</string>
     <string name="start_meeting_prompt">אין באפשרותך לבטל פגישה שהחלה. האם להתחיל את הפגישה?</string>
     <string name="statement_frag_title_tv">סמנ/י משפטים נכונים לגביך:</string>
+    <string name="choose_phrases_last_week">סמנ/י משפטים נכונים לגביך בשבוע האחרון:</string>
     <string name="questions_warning_frag_title_tv">בעמודים הבאים תוצג לפניכם סדרת שאלות.\n\nאנא ענו על כמה שיותר שאלות בכדי שהמטפל יוכל להבין את מצבכם בצורה הטובה ביותר.</string>
     <string name="share_your_feelings">שתפ/י את תחושותיך</string>
     <string name="chat_with_therapist">שיחה עם המטפל</string>
@@ -104,7 +105,7 @@
     <string name="back_to_appointments">חזרה לפגישות</string>
     <string name="edit_answers">ערוך תשובות</string>
     <string name="meeting_ended_dlg_title">פגישתך הסתיימה</string>
-    <string name="meeting_ended_dlg_prompt">המטפל\ת סיימ\ה את הפגישה</string>
+    <string name="meeting_ended_dlg_prompt">המטפל/ת סיימ/ה את הפגישה</string>
 
     <string name="pain_location_tv">מיקום:</string>
     <string name="pain_strength_tv">עוצמה:</string>
@@ -115,7 +116,24 @@
 
     <string name="chat">צ\'אט</string>
     <string name="mental_state">מצב נפשי</string>
+    <string name="meeting_summary">סיכום פגישה</string>
+    <string name="last_meeting_summary">סיכום פגישה אחרונה</string>
     <string name="feeling_strength_tv">עוצמת התחושה:</string>
+
+    <string name="never">אף פעם</string>
+    <string name="rarely">לעיתים\nרחוקות</string>
+    <string name="sometimes">לפעמים</string>
+    <string name="often">לעיתים\nקרובות</string>
+    <string name="always">תמיד</string>
+
+    <string name="diagnosis">אבחנה</string>
+    <string name="diagnosis_prompt">אבחנה:</string>
+    <string name="diagnosis_warning">לעיני המטפל בלבד</string>
+    <string name="no_diagnosis">אין אבחנה להציג</string>
+    <string name="recommendations">המלצות</string>
+    <string name="recommendations_prompt">המלצות:</string>
+    <string name="recommendations_warning">המלצות אלו יוצגו למטופל בסוף פגישה זו</string>
+    <string name="no_recommendations">אין המלצות להציג</string>
 
     <!-- Pain Types -->
     <string name="sharp">חד</string>
@@ -184,7 +202,7 @@
 
     <string name="meetings_expectations">ציפיות מהפגישה:</string>
     <string name="covid19">וירוס קורונה:</string>
-    <string name="answer_questions_title">אנא השב על השאלות הבאות:</string>
+    <string name="answer_questions_title">אנא השב על השאלות הבאות (לגבי השבוע האחרון):</string>
 
     <!-- Notification -->
     <string name="appointment_notif_title_patient">פגישה עם ד\"ר</string>

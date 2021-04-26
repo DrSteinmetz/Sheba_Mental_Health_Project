@@ -7,14 +7,15 @@ import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
 import com.example.sheba_mental_health_project.model.Appointment;
+import com.example.sheba_mental_health_project.model.ChatMessage;
 import com.example.sheba_mental_health_project.repository.Repository;
 
 public class AppointmentPatientViewModel extends ViewModel {
 
     private final Repository mRepository;
 
-    /*private MutableLiveData<Appointment> mGetLiveAppointmentSucceed;
-    private MutableLiveData<String> mGetLiveAppointmentFailed;*/
+    private MutableLiveData<ChatMessage> mGetLastChatMessageSucceed;
+    private MutableLiveData<String> mGetLastChatMessageFailed;
 
     private final String TAG = "AppointmentPatientVM";
 
@@ -23,49 +24,48 @@ public class AppointmentPatientViewModel extends ViewModel {
         mRepository = Repository.getInstance(context);
     }
 
-    /*public MutableLiveData<Appointment> getGetLiveAppointmentSucceed() {
-        if (mGetLiveAppointmentSucceed == null) {
-            mGetLiveAppointmentSucceed = new MutableLiveData<>();
+    public MutableLiveData<ChatMessage> getGetLastChatMessageSucceed() {
+        if (mGetLastChatMessageSucceed == null) {
+            mGetLastChatMessageSucceed = new MutableLiveData<>();
             attachGetLiveAppointmentListener();
         }
-        return mGetLiveAppointmentSucceed;
+        return mGetLastChatMessageSucceed;
     }
 
-    public MutableLiveData<String> getGetLiveAppointmentFailed() {
-        if (mGetLiveAppointmentFailed == null) {
-            mGetLiveAppointmentFailed = new MutableLiveData<>();
+    public MutableLiveData<String> getGetLastChatMessageFailed() {
+        if (mGetLastChatMessageFailed == null) {
+            mGetLastChatMessageFailed = new MutableLiveData<>();
             attachGetLiveAppointmentListener();
         }
-        return mGetLiveAppointmentFailed;
+        return mGetLastChatMessageFailed;
     }
 
     public void attachGetLiveAppointmentListener() {
-        mRepository.setGetLiveAppointmentInterface(new Repository.RepositoryGetLiveAppointmentInterface() {
+        mRepository.setGetLastChatMessageInterface(new Repository.RepositoryGetLastChatMessageInterface() {
             @Override
-            public void onGetLiveAppointmentSucceed(Appointment appointment) {
-                Log.d(TAG, "onGetLiveAppointmentSucceed: " + appointment.getState().name());
-                mGetLiveAppointmentSucceed.setValue(appointment);
+            public void onGetLastChatMessageSucceed(ChatMessage lastMessage) {
+                mGetLastChatMessageSucceed.setValue(lastMessage);
             }
 
             @Override
-            public void onGetLiveAppointmentFailed(String error) {
-                mGetLiveAppointmentFailed.setValue(error);
+            public void onGetLastChatMessageFailed(String error) {
+                mGetLastChatMessageFailed.setValue(error);
             }
         });
-    }*/
+    }
 
 
     public Appointment getCurrentAppointment() {
         return mRepository.getCurrentAppointment();
     }
 
-    /*public void getLiveAppointment() {
+    public void getLastChatMessage() {
         if (getCurrentAppointment() != null) {
-            mRepository.getLiveAppointmentState();
+            mRepository.getLastChatMessage();
         }
     }
 
-    public void removeLiveAppointmentListener() {
-        mRepository.removeLiveAppointmentListener();
-    }*/
+    public void removeGetLastChatMessageListener() {
+        mRepository.removeGetLastChatMessageListener();
+    }
 }

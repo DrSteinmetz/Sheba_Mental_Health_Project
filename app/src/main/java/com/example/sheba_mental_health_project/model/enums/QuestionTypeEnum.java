@@ -4,5 +4,6 @@ public enum QuestionTypeEnum {
     Binary,
     Slider,
     Number,
-    Open
+    Open,
+    Radio
 }

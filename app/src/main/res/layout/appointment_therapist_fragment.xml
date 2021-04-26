@@ -6,87 +6,95 @@
     android:layout_height="match_parent"
     android:focusable="true"
     android:clickable="true"
+    android:paddingBottom="20dp"
+    android:paddingEnd="20dp"
     android:background="@color/white"
     tools:context=".view.therapist.AppointmentTherapistFragment">
 
     <RelativeLayout
+        android:layout_above="@+id/end_meeting_btn"
+        android:id="@+id/start_meeting_relative"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:paddingTop="20dp"
-        android:paddingBottom="20dp"
-        android:paddingEnd="20dp">
+        android:layout_height="wrap_content"
+        android:clickable="false"
+        android:focusable="false">
 
-        <RelativeLayout
-            android:layout_above="@+id/end_meeting_btn"
-            android:id="@+id/start_meeting_relative"
+        <LinearLayout
+            android:id="@+id/title"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:clickable="false"
-            android:focusable="false">
+            android:orientation="horizontal"
+            android:gravity="center">
 
-            <LinearLayout
-                android:id="@+id/title"
-                android:layout_width="match_parent"
+            <TextView
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:gravity="center">
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="5dp"
-                    android:textSize="20sp"
-                    android:textStyle="bold"
-                    android:textColor="@color/black"
-                    android:text="@string/appointment_prompt" />
-                <TextView
-                    android:id="@+id/patient_name_tv"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="5dp"
-                    android:textSize="20sp"
-                    android:textStyle="bold"
-                    android:textColor="@color/black"
-                    android:text="avi neelavi"/>
-            </LinearLayout>
+                android:layout_marginEnd="5dp"
+                android:textSize="20sp"
+                android:textStyle="bold"
+                android:textColor="@color/black"
+                android:text="@string/appointment_prompt" />
 
-            <LinearLayout
-                android:id="@+id/therapist_linear"
-                android:layout_width="match_parent"
+            <TextView
+                android:id="@+id/patient_name_tv"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:layout_below="@id/title"
-                android:gravity="center">
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="5dp"
-                    android:textSize="20sp"
-                    android:text="@string/therapist_prompt" />
-                <TextView
-                    android:id="@+id/therapist_name_tv"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="5dp"
-                    android:textSize="20sp"
-                    android:textStyle="bold"
-                    android:text="DR Hila" />
-            </LinearLayout>
+                android:textSize="20sp"
+                android:textStyle="bold"
+                android:textColor="@color/black"
+                android:text="avi neelavi" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/therapist_linear"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/title"
+            android:orientation="horizontal"
+            android:gravity="center">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="5dp"
+                android:text="@string/therapist_prompt"
+                android:textSize="17sp"
+                android:textAllCaps="false" />
+
+            <TextView
+                android:id="@+id/therapist_name_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="DR Hila"
+                android:textSize="17sp"
+                android:textStyle="bold"
+                android:textAllCaps="false" />
+
+        </LinearLayout>
 
 
-            <LinearLayout
-                android:layout_width="match_parent"
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_below="@+id/therapist_linear">
+
+            <androidx.core.widget.NestedScrollView
+                android:layout_width="0dp"
                 android:layout_height="match_parent"
-                android:layout_below="@+id/therapist_linear">
+                android:layout_weight="2"
+                android:layout_marginVertical="5dp"
+                android:animateLayoutChanges="true"
+                android:requiresFadingEdge="vertical"
+                android:fadingEdge="vertical">
 
                 <LinearLayout
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_weight="2"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
                     android:orientation="vertical"
-                    android:paddingEnd="10dp"
-                    android:paddingStart="10dp"
+                    android:paddingHorizontal="10dp"
+                    android:layout_gravity="center_vertical"
                     android:gravity="center">
-
 
                     <com.google.android.material.button.MaterialButton
                         android:id="@+id/chat_btn"
@@ -136,34 +144,42 @@
                         app:backgroundTint="@color/white"
                         android:textAllCaps="false" />
 
-
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/summary_btn"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="@string/meeting_summary"
+                        style="?android:attr/borderlessButtonStyle"
+                        android:textSize="12sp"
+                        android:textColor="@color/light_gray"
+                        android:drawableTop="@drawable/ic_round_edit_24"
+                        android:drawableTint="@color/light_blue"
+                        app:backgroundTint="@color/white"
+                        android:textAllCaps="false" />
 
                 </LinearLayout>
 
-                <androidx.fragment.app.FragmentContainerView
-                    android:layout_weight="4"
-                    android:id="@+id/character_container"
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    />
+            </androidx.core.widget.NestedScrollView>
 
-            </LinearLayout>
+            <androidx.fragment.app.FragmentContainerView
+                android:layout_weight="4"
+                android:id="@+id/character_container"
+                android:layout_width="0dp"
+                android:layout_height="match_parent" />
 
-
-        </RelativeLayout>
-
-
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/end_meeting_btn"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerHorizontal="true"
-            android:layout_alignParentBottom="true"
-            android:text="@string/end_meeting"
-            app:backgroundTint="@color/light_gray"
-            app:cornerRadius="0dp"
-            android:textAllCaps="false" />
+        </LinearLayout>
 
     </RelativeLayout>
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/end_meeting_btn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_alignParentBottom="true"
+        android:text="@string/end_meeting"
+        app:backgroundTint="@color/light_gray"
+        app:cornerRadius="0dp"
+        android:textAllCaps="false" />
 
 </RelativeLayout>

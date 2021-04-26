@@ -24,6 +24,7 @@
         android:layout_height="wrap_content"
         android:layout_below="@id/title_tv"
         android:layout_marginTop="10dp"
+        android:visibility="gone"
         android:orientation="horizontal">
 
         <TextView

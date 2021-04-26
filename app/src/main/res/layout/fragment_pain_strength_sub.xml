@@ -20,23 +20,51 @@
         android:textSize="20sp"
         android:textColor="@color/black"
         android:textAllCaps="false" />
-    <com.rtugeek.android.colorseekbar.ColorSeekBar
-        android:id="@+id/pain_strength_sb"
+
+    <RelativeLayout
+        android:id="@+id/seekbar_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/pain_strength_tv"
-        app:barHeight="7dp"
-        app:maxPosition="10"
-        app:colorSeeds="@array/color_seek_bar"
-        android:layout_marginTop="10dp"/>
+        android:layout_below="@id/pain_strength_tv">
+
+        <ImageView
+            android:id="@+id/minus_iv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
+            android:layout_centerVertical="true"
+            android:src="@drawable/ic_round_remove_24"
+            app:tint="@color/light_gray"
+            android:scaleType="fitCenter" />
+
+        <com.rtugeek.android.colorseekbar.ColorSeekBar
+            android:id="@+id/pain_strength_sb"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_toEndOf="@id/minus_iv"
+            android:layout_toStartOf="@id/plus_iv"
+            app:barHeight="7dp"
+            app:maxPosition="10"
+            app:colorSeeds="@array/color_seek_bar"
+            android:layout_marginTop="10dp" />
+
+        <ImageView
+            android:id="@+id/plus_iv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_alignParentEnd="true"
+            android:src="@drawable/ic_round_add_white_24"
+            app:tint="@color/light_gray"
+            android:scaleType="fitCenter" />
+    </RelativeLayout>
 
     <com.google.android.material.button.MaterialButton
         android:id="@+id/continue_btn"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="20dp"
-        android:layout_below="@id/pain_strength_sb"
+        android:layout_below="@id/seekbar_layout"
         android:text="@string/continue_txt"
-        style="@style/blue_btn"
-         />
+        style="@style/blue_btn" />
 
 </RelativeLayout>

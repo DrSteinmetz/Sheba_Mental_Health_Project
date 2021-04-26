@@ -84,4 +84,8 @@ public class ChatViewModel extends ViewModel {
         final ChatMessage message = new ChatMessage(messageContent, getRecipientEmail());
         mRepository.uploadChatMessageToCloud(message);
     }
+
+    public void updateLastChatMessage() {
+        mRepository.updateLastChatMessage();
+    }
 }

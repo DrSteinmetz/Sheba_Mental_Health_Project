@@ -36,10 +36,13 @@ import com.example.sheba_mental_health_project.view.character.HeadFragment;
 import com.example.sheba_mental_health_project.view.character.LeftArmFragment;
 import com.example.sheba_mental_health_project.view.character.LegsFragment;
 import com.example.sheba_mental_health_project.view.character.RightArmFragment;
+import com.example.sheba_mental_health_project.view.patient.AngerQuestionsFragment;
+import com.example.sheba_mental_health_project.view.patient.AnxietyQuestionsFragment;
 import com.example.sheba_mental_health_project.view.patient.AppointmentLoungeFragment;
 import com.example.sheba_mental_health_project.view.patient.AppointmentPatientFragment;
 import com.example.sheba_mental_health_project.view.patient.BureaucracyFragment;
 import com.example.sheba_mental_health_project.view.patient.Covid19QuestionsFragment;
+import com.example.sheba_mental_health_project.view.patient.DepressionQuestionsFragment;
 import com.example.sheba_mental_health_project.view.patient.HabitsQuestionsFragment;
 import com.example.sheba_mental_health_project.view.patient.MainPatientFragment;
 import com.example.sheba_mental_health_project.view.patient.MentalPatientFragment;
@@ -62,6 +65,7 @@ import com.example.sheba_mental_health_project.view.therapist.InquiryFragment;
 import com.example.sheba_mental_health_project.view.therapist.MainTherapistFragment;
 import com.example.sheba_mental_health_project.view.therapist.SearchPatientFragment;
 import com.example.sheba_mental_health_project.view.therapist.StartMeetingFragment;
+import com.example.sheba_mental_health_project.view.therapist.SummaryFragment;
 import com.example.sheba_mental_health_project.view.therapist.TherapistMentalStateFragment;
 import com.example.sheba_mental_health_project.view.therapist.TherapistPhysicalStateFragment;
 import com.example.sheba_mental_health_project.viewmodel.MainActivityViewModel;
@@ -83,6 +87,9 @@ public class MainActivity extends AppCompatActivity
         SocialQuestionsFragment.SocialQuestionsFragmentInterface,
         HabitsQuestionsFragment.HabitsQuestionsFragmentInterface,
         MentalQuestionsFragment.MentalQuestionsFragmentInterface,
+        AnxietyQuestionsFragment.AnxietyQuestionsFragmentInterface,
+        AngerQuestionsFragment.AngerQuestionsFragmentInterface,
+        DepressionQuestionsFragment.DepressionQuestionsFragmentInterface,
         MainPatientFragment.MainPatientInterface,
         CharacterFragment.CharacterFragmentInterface,
         StartMeetingFragment.StartMeetingTherapistInterface,
@@ -112,6 +119,7 @@ public class MainActivity extends AppCompatActivity
     private final String THERAPIST_MENTAL_STATE_FRAG = "Therapist_Mental_State_Fragment";
     private final String THERAPIST_PHYSICAL_STATE_FRAG = "Therapist_Physical_State_Fragment";
     private final String INQUIRY_FRAG = "Inquiry_Fragment";
+    private final String SUMMARY_FRAG = "Summary_Fragment";
     private final String HISTORY_FRAG = "History_Fragment";
     private final String HISTORY_APPOINTMENT_FRAG = "History_Appointment_Fragment";
 
@@ -125,6 +133,9 @@ public class MainActivity extends AppCompatActivity
     private final String SOCIAL_QUESTIONS_FRAG = "Social_Questions_Fragment";
     private final String HABITS_QUESTIONS_FRAG = "Habits_Questions_Fragment";
     private final String MENTAL_QUESTIONS_FRAG = "Mental_Questions_Fragment";
+    private final String ANXIETY_FRAG = "Anxiety_Fragment";
+    private final String ANGER_FRAG = "Anger_Fragment";
+    private final String DEPRESSION_FRAG = "Depression_Fragment";
     private final String CATEGORY_FRAG = "Category_Fragment";
     private final String PRE_MEETING_CHARACTER_FRAG = "Pre_Meeting_Character_Frag";
     private final String NOTES_FRAG = "Notes_Fragment";
@@ -170,7 +181,7 @@ public class MainActivity extends AppCompatActivity
 
                     if (mViewModel.getCurrentAppointment() != null &&
                             mainPatientFrag != null && !mainPatientFrag.isVisible()) {
-                        onMeetingEnded();
+                        onMeetingEnded(appointment.getRecommendations());
                         mViewModel.setCurrentAppointment(null);
                     }
                 }
@@ -371,6 +382,33 @@ public class MainActivity extends AppCompatActivity
     public void onContinueFromPreQuestions() {
         getSupportFragmentManager().beginTransaction()
                 //TODO: add enter and exit animations
+                .replace(R.id.container, AnxietyQuestionsFragment.newInstance(), ANXIETY_FRAG)
+                .addToBackStack(null)
+                .commit();
+    }
+
+    @Override
+    public void onContinueFromAnxietyQuestions() {
+        getSupportFragmentManager().beginTransaction()
+                //TODO: add enter and exit animations
+                .replace(R.id.container, AngerQuestionsFragment.newInstance(), ANGER_FRAG)
+                .addToBackStack(null)
+                .commit();
+    }
+
+    @Override
+    public void onContinueFromAngerQuestions() {
+        getSupportFragmentManager().beginTransaction()
+                //TODO: add enter and exit animations
+                .replace(R.id.container, DepressionQuestionsFragment.newInstance(), DEPRESSION_FRAG)
+                .addToBackStack(null)
+                .commit();
+    }
+
+    @Override
+    public void onContinueFromDepressionQuestions() {
+        getSupportFragmentManager().beginTransaction()
+                //TODO: add enter and exit animations
                 .replace(R.id.container, TreatyFragment.newInstance(), TREATY_FRAG)
                 .addToBackStack(null)
                 .commit();
@@ -523,13 +561,13 @@ public class MainActivity extends AppCompatActivity
         onBackPressed();
     }
 
-//    @Override
-    public void onMeetingEnded() {
+    public void onMeetingEnded(final String recommendations) {
         mViewModel.removeLiveAppointmentListener();
 
         final ConfirmationDialog warningDialog = new ConfirmationDialog(this);
         warningDialog.setTitleWarningText(getString(R.string.meeting_ended_dlg_title));
-        warningDialog.setPromptText(getString(R.string.meeting_ended_dlg_prompt));
+        warningDialog.setPromptText(getString(R.string.recommendations_prompt) + "\n"
+                + recommendations);
         warningDialog.show();
         onBackToAppointmentsBtnClicked();
     }
@@ -647,6 +685,14 @@ public class MainActivity extends AppCompatActivity
     public void onInquiryClicked() {
         getSupportFragmentManager().beginTransaction()
                 .add(R.id.container, InquiryFragment.newInstance(), INQUIRY_FRAG)
+                .addToBackStack(null)
+                .commit();
+    }
+
+    @Override
+    public void onSummaryClicked() {
+        getSupportFragmentManager().beginTransaction()
+                .add(R.id.container, SummaryFragment.newInstance(), SUMMARY_FRAG)
                 .addToBackStack(null)
                 .commit();
     }

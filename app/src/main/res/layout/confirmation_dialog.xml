@@ -15,64 +15,75 @@
         app:cardUseCompatPadding="true"
         app:cardPreventCornerOverlap="false">
 
-        <RelativeLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:padding="15dp">
-
-            <TextView
-                android:id="@+id/title_tv"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="10dp"
-                android:gravity="center"
-                android:layout_marginHorizontal="10dp"
-                android:textSize="20sp"
-                android:textColor="@color/dark_gray"
-                android:textStyle="bold"
-                android:textAllCaps="false" />
+        <androidx.core.widget.NestedScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginBottom="60dp"
+            android:animateLayoutChanges="true"
+            android:requiresFadingEdge="vertical"
+            android:fadingEdge="vertical">
 
             <RelativeLayout
-                android:id="@+id/content_layout"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_below="@id/title_tv"
-                android:gravity="center">
+                android:padding="15dp">
 
                 <TextView
-                    android:id="@+id/prompt_tv"
+                    android:id="@+id/title_tv"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_centerVertical="true"
-                    android:layout_marginTop="10dp"
-                    android:layout_marginHorizontal="10dp"
+                    android:layout_marginBottom="10dp"
                     android:gravity="center"
+                    android:layout_marginHorizontal="10dp"
                     android:textSize="20sp"
                     android:textColor="@color/dark_gray"
+                    android:textStyle="bold"
                     android:textAllCaps="false" />
+
+                <RelativeLayout
+                    android:id="@+id/content_layout"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/title_tv"
+                    android:gravity="center">
+
+                    <TextView
+                        android:id="@+id/prompt_tv"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:layout_marginTop="10dp"
+                        android:layout_marginHorizontal="10dp"
+                        android:gravity="center"
+                        android:textSize="20sp"
+                        android:textColor="@color/dark_gray"
+                        android:textAllCaps="false" />
+
+                </RelativeLayout>
+
+                <LinearLayout
+                    android:id="@+id/buttons_layout"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/content_layout"
+                    android:layout_centerHorizontal="true"
+                    android:orientation="horizontal">
+
+                </LinearLayout>
 
             </RelativeLayout>
 
-            <LinearLayout
-                android:id="@+id/buttons_layout"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_below="@id/content_layout"
-                android:layout_centerHorizontal="true"
-                android:orientation="horizontal">
+        </androidx.core.widget.NestedScrollView>
 
-                <Button
-                    android:id="@+id/ok_btn"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginHorizontal="10dp"
-                    android:layout_marginTop="15dp"
-                    android:text="@string/ok"
-                    android:textAllCaps="false" />
-
-            </LinearLayout>
-
-        </RelativeLayout>
+        <Button
+            android:id="@+id/ok_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal|bottom"
+            android:layout_marginHorizontal="10dp"
+            android:layout_marginVertical="15dp"
+            android:text="@string/ok"
+            android:textAllCaps="false" />
 
     </androidx.cardview.widget.CardView>
 

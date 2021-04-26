@@ -18,7 +18,7 @@
     <string name="pick_time">Pick Time</string>
     <string name="character">Character</string>
     <string name="feelings">Feelings</string>
-    <string name="slider_min_max_prompt">Rank Each Feeling So That 0 is Weak and 10 is Strong</string>
+    <string name="slider_min_max_prompt">Rank Your Feeling in the Past 7 Days So That 0 is Weak and 10 is Strong</string>
     <string name="appointments_date">Appointment\'s Date</string>
     <string name="edit_appointment_title">Edit Appointment</string>
     <string name="pain_point_deletion_prompt">Are You Sure You Want To Permanently Delete This Point?</string>
@@ -56,6 +56,7 @@
     <string name="start_meeting_title">Start Meeting?</string>
     <string name="start_meeting_prompt">Meeting That Started Can Not Be Canceled. Are You Sure You Want to Start This Meeting?</string>
     <string name="statement_frag_title_tv">Choose Phrases Which You Relate to:</string>
+    <string name="choose_phrases_last_week">Choose Phrases Which You Relate to in the Past 7 Days:</string>
     <string name="questions_warning_frag_title_tv">In The Next Pages You will Be Presented to a Series of Questions.\n\nPlease Try to Answer as Many as You Can In Order For the Therapist to Understand Better Your Needs.</string>
     <string name="share_your_feelings">Share Your Feelings</string>
     <string name="chat_with_therapist">Chat with Therapist</string>
@@ -114,7 +115,24 @@
 
     <string name="chat">Chat</string>
     <string name="mental_state">Mental State</string>
+    <string name="meeting_summary">Meeting Summary</string>
+    <string name="last_meeting_summary">Last Meeting Summary</string>
     <string name="feeling_strength_tv">Feeling Strength:</string>
+
+    <string name="never">Never</string>
+    <string name="rarely">Rarely</string>
+    <string name="sometimes">Sometimes</string>
+    <string name="often">Often</string>
+    <string name="always">Always</string>
+
+    <string name="diagnosis">Diagnosis</string>
+    <string name="diagnosis_prompt">Diagnosis:</string>
+    <string name="diagnosis_warning">Will not be shown to your patient</string>
+    <string name="no_diagnosis">No Diagnosis</string>
+    <string name="recommendations">Recommendations</string>
+    <string name="recommendations_prompt">Recommendations:</string>
+    <string name="recommendations_warning">These recommendations will be shown to your patient by the end of this meeting</string>
+    <string name="no_recommendations">No Recommendations</string>
 
     <!-- Pain Types -->
     <string name="sharp">Sharp</string>
@@ -183,7 +201,7 @@
 
     <string name="meetings_expectations">Meetings Expectations:</string>
     <string name="covid19">Covid 19:</string>
-    <string name="answer_questions_title">Please Answer the Following Questions:</string>
+    <string name="answer_questions_title">Please Answer the Following Questions (Regarding the Past Week):</string>
 
     <!-- Notification -->
     <string name="appointment_notif_title_patient">Meeting With Dr.</string>
@@ -356,7 +374,5 @@
         "For example, position the FAB to one side of stream of a cards so the FAB won’t interfere "
         "when a user tries to pick up one of cards.\n\n"
     </string>
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
 
 </resources>

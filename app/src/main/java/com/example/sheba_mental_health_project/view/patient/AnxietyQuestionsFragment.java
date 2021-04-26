@@ -24,30 +24,30 @@ import com.example.sheba_mental_health_project.model.QuestionsAdapter;
 import com.example.sheba_mental_health_project.model.ViewModelFactory;
 import com.example.sheba_mental_health_project.model.enums.ViewModelEnum;
 import com.example.sheba_mental_health_project.view.ConfirmationDialog;
-import com.example.sheba_mental_health_project.viewmodel.HabitsQuestionsViewModel;
+import com.example.sheba_mental_health_project.viewmodel.AnxietyQuestionsViewModel;
 import com.google.android.material.button.MaterialButton;
 
 import java.util.List;
 
-public class HabitsQuestionsFragment extends Fragment {
+public class AnxietyQuestionsFragment extends Fragment {
 
-    private HabitsQuestionsViewModel mViewModel;
+    private AnxietyQuestionsViewModel mViewModel;
 
     private RecyclerView mRecyclerView;
 
     private QuestionsAdapter mQuestionsAdapter;
 
-    private final String TAG = "HabitsQuestionsFragment";
+    private final String TAG = "AnxietyQuestionsFrag";
 
 
-    public interface HabitsQuestionsFragmentInterface {
-        void onContinueFromHabitsQuestions();
+    public interface AnxietyQuestionsFragmentInterface {
+        void onContinueFromAnxietyQuestions();
     }
 
-    private HabitsQuestionsFragmentInterface listener;
+    private AnxietyQuestionsFragmentInterface listener;
 
-    public static HabitsQuestionsFragment newInstance() {
-        return new HabitsQuestionsFragment();
+    public static AnxietyQuestionsFragment newInstance() {
+        return new AnxietyQuestionsFragment();
     }
 
     @Override
@@ -55,9 +55,9 @@ public class HabitsQuestionsFragment extends Fragment {
         super.onAttach(context);
 
         try {
-            listener = (HabitsQuestionsFragmentInterface) context;
+            listener = (AnxietyQuestionsFragmentInterface) context;
         } catch (Exception ex) {
-            throw new ClassCastException("The Activity Must Implements HabitsQuestionsFragmentInterface listener!");
+            throw new ClassCastException("The Activity Must Implements AnxietyQuestionsFragmentInterface listener!");
         }
     }
 
@@ -66,7 +66,7 @@ public class HabitsQuestionsFragment extends Fragment {
         super.onCreate(savedInstanceState);
 
         mViewModel = new ViewModelProvider(this, new ViewModelFactory(getContext(),
-                ViewModelEnum.HabitsQuestions)).get(HabitsQuestionsViewModel.class);
+                ViewModelEnum.AnxietyQuestions)).get(AnxietyQuestionsViewModel.class);
 
         final Observer<List<Question>> onGetQuestionsOfPageSucceed = new Observer<List<Question>>() {
             @Override
@@ -88,7 +88,7 @@ public class HabitsQuestionsFragment extends Fragment {
             @Override
             public void onChanged(Appointment appointment) {
                 if (listener != null) {
-                    listener.onContinueFromHabitsQuestions();
+                    listener.onContinueFromAnxietyQuestions();
                 }
             }
         };
@@ -109,7 +109,7 @@ public class HabitsQuestionsFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
-        final View rootView = inflater.inflate(R.layout.habits_questions_fragment, container, false);
+        final View rootView = inflater.inflate(R.layout.anxiety_questions_fragment, container, false);
 
         mViewModel.attachSetGetQuestionsOfPageListener();
         mViewModel.attachSetUpdateAnswersOfAppointmentListener();
@@ -147,7 +147,7 @@ public class HabitsQuestionsFragment extends Fragment {
             }
         });
 
-        mViewModel.getQuestions(ViewModelEnum.HabitsQuestions);
+        mViewModel.getQuestions(ViewModelEnum.AnxietyQuestions);
 
         return rootView;
     }
