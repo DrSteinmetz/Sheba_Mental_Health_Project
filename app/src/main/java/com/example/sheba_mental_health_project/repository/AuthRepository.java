@@ -14,6 +14,8 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.FirebaseApp;
+import com.google.firebase.FirebaseOptions;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -221,7 +223,26 @@ public class AuthRepository {
 
     public void addNewPatient(final String email, final String password,
                               final String firstName, final String lastName) {
-        mAuth.createUserWithEmailAndPassword(email, password)
+        FirebaseAuth auth;
+
+        final String databaseUrl = "https://sheba-mental-health-project.firebaseio.com";
+        final String webApiKey = "AIzaSyArKg-nDKrUoCDkzkCisux89diGhOOEHj8";
+        final String projectId = "sheba-mental-health-project";
+        final FirebaseOptions firebaseOptions = new FirebaseOptions.Builder()
+                .setDatabaseUrl("[" + databaseUrl + "]")
+                .setApiKey(webApiKey)
+                .setApplicationId(projectId).build();
+
+        final String appName = mContext.getString(R.string.app_name);
+        try {
+            final FirebaseApp myApp = FirebaseApp.initializeApp(mContext.getApplicationContext(),
+                firebaseOptions, appName);
+            auth = FirebaseAuth.getInstance(myApp);
+        } catch (IllegalStateException e){
+            auth = FirebaseAuth.getInstance(FirebaseApp.getInstance(appName));
+        }
+
+        auth.createUserWithEmailAndPassword(email, password)
                 .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {

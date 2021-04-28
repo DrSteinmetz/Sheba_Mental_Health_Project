@@ -149,8 +149,8 @@ public class AddAppointmentViewModel extends ViewModel {
         mRepository.getAllPatients();
     }
 
-    public void addAppointment() {
-        final Appointment appointmentToAdd = new Appointment(getCalculatedDate(),
+    public void addAppointment(final Date chosenDate) {
+        final Appointment appointmentToAdd = new Appointment(/*getCalculatedDate(),*/chosenDate,
                 mPatient, AppointmentStateEnum.PreMeeting);
 
         mRepository.addAppointment(appointmentToAdd);

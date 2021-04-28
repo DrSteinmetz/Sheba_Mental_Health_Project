@@ -24,6 +24,7 @@ import com.example.sheba_mental_health_project.model.Question;
 import com.example.sheba_mental_health_project.model.QuestionsAdapter;
 import com.example.sheba_mental_health_project.model.ViewModelFactory;
 import com.example.sheba_mental_health_project.model.enums.ViewModelEnum;
+import com.example.sheba_mental_health_project.view.ConfirmationDialog;
 import com.example.sheba_mental_health_project.viewmodel.BureaucracyViewModel;
 import com.google.android.material.button.MaterialButton;
 
@@ -133,8 +134,18 @@ public class BureaucracyFragment extends Fragment {
         continueBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (listener != null) {
-                    mViewModel.updateAnswersOfAppointment();
+                if (mQuestionsAdapter.isAllMandatoryQuestionsFilled()) {
+                    if (listener != null) {
+                        mViewModel.updateAnswersOfAppointment();
+                    }
+                } else {
+                    final ConfirmationDialog dialog = new ConfirmationDialog(getContext());
+                    dialog.setPromptText(getString(R.string.mandatory_questions_warning));
+                    dialog.setOnActionListener(new ConfirmationDialog.ConfirmationDialogActionInterface() {
+                        @Override
+                        public void onOkBtnClicked() {}
+                    });
+                    dialog.show();
                 }
             }
         });

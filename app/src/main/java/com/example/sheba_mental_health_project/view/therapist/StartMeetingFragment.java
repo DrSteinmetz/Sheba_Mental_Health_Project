@@ -4,6 +4,7 @@ import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
 import android.content.Context;
+import android.graphics.Paint;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -22,6 +23,7 @@ import com.example.sheba_mental_health_project.model.Appointment;
 import com.example.sheba_mental_health_project.model.ViewModelFactory;
 import com.example.sheba_mental_health_project.model.enums.AppointmentStateEnum;
 import com.example.sheba_mental_health_project.model.enums.ViewModelEnum;
+import com.example.sheba_mental_health_project.view.ConfirmationDialog;
 import com.example.sheba_mental_health_project.view.WarningDialog;
 import com.example.sheba_mental_health_project.view.character.CharacterFragment;
 import com.example.sheba_mental_health_project.viewmodel.StartMeetingViewModel;
@@ -122,7 +124,7 @@ public class StartMeetingFragment extends Fragment
         final Observer<String> onUpdateAppointmentSucceedObserver = new Observer<String>() {
             @Override
             public void onChanged(String appointmentId) {
-                Snackbar.make(getView(), getString(R.string.appointment_updated_prompt),
+                Snackbar.make(requireView(), getString(R.string.appointment_updated_prompt),
                         Snackbar.LENGTH_LONG).show();
             }
         };
@@ -137,7 +139,7 @@ public class StartMeetingFragment extends Fragment
         final Observer<Appointment> onDeleteAppointmentSucceedObserver = new Observer<Appointment>() {
             @Override
             public void onChanged(Appointment appointment) {
-                Snackbar.make(getView(), getString(R.string.appointment_deleted_prompt),
+                Snackbar.make(requireView(), getString(R.string.appointment_deleted_prompt),
                         Snackbar.LENGTH_LONG)
                         .setAction(getString(R.string.undo), new View.OnClickListener() {
                             @Override
@@ -145,7 +147,7 @@ public class StartMeetingFragment extends Fragment
                                 mViewModel.addAppointment(appointment);
                             }
                         }).show();
-                getActivity().onBackPressed();
+                requireActivity().onBackPressed();
             }
         };
 
@@ -174,11 +176,37 @@ public class StartMeetingFragment extends Fragment
         mDateTv = rootView.findViewById(R.id.last_meeting_date_tv);
         mTherapistNameTv = rootView.findViewById(R.id.last_therapist_name_tv);
         mPatientNameTv = rootView.findViewById(R.id.patient_name_tv);
+        final TextView summaryTv = rootView.findViewById(R.id.summary_tv);
         mNoMeetingTv = rootView.findViewById(R.id.no_meeting_tv);
         mMainLayout = rootView.findViewById(R.id.start_meeting_relative);
         final MaterialButton startMeetingBtn = rootView.findViewById(R.id.start_meeting_btn);
         final FloatingActionButton editFab = rootView.findViewById(R.id.edit_appointment_fab);
         final FloatingActionButton deleteFab = rootView.findViewById(R.id.delete_appointment_fab);
+
+        summaryTv.setPaintFlags(summaryTv.getPaintFlags() | Paint.UNDERLINE_TEXT_FLAG);
+
+        summaryTv.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String diagnosis = mViewModel.getGetLastAppointmentSucceed().getValue()
+                        .getDiagnosis();
+                String recommendations = mViewModel.getGetLastAppointmentSucceed().getValue()
+                        .getRecommendations();
+
+                diagnosis = (diagnosis == null || diagnosis.isEmpty()) ?
+                        getString(R.string.no_diagnosis) : diagnosis ;
+                recommendations = (recommendations == null || recommendations.isEmpty()) ?
+                        getString(R.string.no_recommendations) : recommendations;
+
+                final ConfirmationDialog summaryDialog = new ConfirmationDialog(requireContext());
+                summaryDialog.setTitleWarningText(getString(R.string.last_meeting_summary));
+                summaryDialog.setPromptText(getString(R.string.diagnosis_prompt) + "\n"
+                        + diagnosis + "\n\n"
+                        + getString(R.string.recommendations_prompt) + "\n"
+                        + recommendations);
+                summaryDialog.show();
+            }
+        });
 
         editFab.setOnClickListener(new View.OnClickListener() {
             @Override

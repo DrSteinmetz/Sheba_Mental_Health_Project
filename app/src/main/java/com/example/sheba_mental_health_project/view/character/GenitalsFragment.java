@@ -16,6 +16,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.AlphaAnimation;
 import android.view.animation.Animation;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 
 import com.example.sheba_mental_health_project.R;
@@ -120,6 +121,7 @@ public class GenitalsFragment extends Fragment
                              @Nullable Bundle savedInstanceState) {
         final View rootView = inflater.inflate(R.layout.genitals_fragment, container, false);
 
+        final ImageButton backBtn = rootView.findViewById(R.id.back_btn);
         final View genitalsV = rootView.findViewById(R.id.genitals_v);
         mPrivatePartIv = rootView.findViewById(R.id.private_part_iv);
 
@@ -130,6 +132,13 @@ public class GenitalsFragment extends Fragment
         alphaAnimation.setDuration(700);
 
         showPainPoints();
+
+        backBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                requireActivity().onBackPressed();
+            }
+        });
 
         genitalsV.setOnClickListener(new View.OnClickListener() {
             @Override

@@ -1,0 +1,36 @@
+<PreferenceScreen xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <PreferenceCategory app:title="@string/about_us"
+        app:icon="@drawable/ic_logo_icon">
+        <Preference app:title="@string/about_us_content"
+            app:singleLineTitle="false" />
+    </PreferenceCategory>
+
+    <PreferenceCategory app:title="@string/contact_us"
+        app:icon="@drawable/ic_baseline_mail_accent_24">
+        <Preference app:title="@string/contact_us_content">
+            <intent android:action="android.intent.action.VIEW"
+                android:data="@string/contact_app_uri" />
+        </Preference>
+    </PreferenceCategory>
+
+    <PreferenceCategory>
+        <Preference
+            app:title="@string/privacy_policy"
+            app:icon="@drawable/ic_round_privacy_accent_24"
+            app:fragment="com.example.sheba_mental_health_project.view.SettingsFragmentPrivacyPolicy" />
+    </PreferenceCategory>
+
+    <PreferenceCategory>
+        <Preference
+            app:title="@string/copyrights"
+            app:icon="@drawable/ic_round_copyright_accent_24"
+            app:fragment="com.example.sheba_mental_health_project.view.SettingsFragmentCopyrights" />
+    </PreferenceCategory>
+
+    <PreferenceCategory app:title="@string/version">
+        <Preference app:title="@string/app_version" />
+    </PreferenceCategory>
+
+</PreferenceScreen>

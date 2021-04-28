@@ -3,7 +3,9 @@ package com.example.sheba_mental_health_project.view.therapist;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -17,6 +19,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.example.sheba_mental_health_project.R;
+import com.example.sheba_mental_health_project.model.ChatMessage;
 import com.example.sheba_mental_health_project.model.ViewModelFactory;
 import com.example.sheba_mental_health_project.model.enums.AppointmentStateEnum;
 import com.example.sheba_mental_health_project.model.enums.ViewModelEnum;
@@ -28,6 +31,8 @@ import com.google.android.material.button.MaterialButton;
 public class AppointmentTherapistFragment extends Fragment {
 
     private AppointmentTherapistViewModel mViewModel;
+
+    private MaterialButton mChatBtn;
 
     private final String TAG = "AppointmentTherapist";
 
@@ -41,6 +46,7 @@ public class AppointmentTherapistFragment extends Fragment {
         void onMentalStateClicked();
         void onPhysicalStateClicked();
         void onInquiryClicked();
+        void onSummaryClicked();
         void onEndMeetingBtnClicked();
     }
 
@@ -86,8 +92,36 @@ public class AppointmentTherapistFragment extends Fragment {
             }
         };
 
+        final Observer<ChatMessage> onGetLastChatMessageSucceed = new Observer<ChatMessage>() {
+            @SuppressLint("UseCompatLoadingForDrawables")
+            @Override
+            public void onChanged(ChatMessage lastMessage) {
+                if (lastMessage != null && mChatBtn != null) {
+                    final Drawable drawableTop = lastMessage.getIsSeen() ?
+                            requireContext().getDrawable(R.drawable.ic_chat_icon) :
+                            requireContext().getDrawable(R.drawable.ic_chat_icon_w_badge);
+
+                    mChatBtn.setCompoundDrawablesWithIntrinsicBounds(null, drawableTop,
+                            null, null);
+                } else if (mChatBtn != null) {
+                    mChatBtn.setCompoundDrawablesWithIntrinsicBounds(null,
+                            requireContext().getDrawable(R.drawable.ic_chat_icon),
+                            null, null);
+                }
+            }
+        };
+
+        final Observer<String> onGetLastChatMessageFailed = new Observer<String>() {
+            @Override
+            public void onChanged(String error) {
+                Log.e(TAG, "onChanged: " + error);
+            }
+        };
+
         mViewModel.getUpdateAppointmentStateSucceed().observe(this, onUpdateAppointmentStateSucceed);
         mViewModel.getUpdateAppointmentStateFailed().observe(this, onUpdateAppointmentStateFailed);
+        mViewModel.getGetLastChatMessageSucceed().observe(this, onGetLastChatMessageSucceed);
+        mViewModel.getGetLastChatMessageFailed().observe(this, onGetLastChatMessageFailed);
     }
 
     @Override
@@ -95,10 +129,11 @@ public class AppointmentTherapistFragment extends Fragment {
                              @Nullable Bundle savedInstanceState) {
         final View rootView = inflater.inflate(R.layout.appointment_therapist_fragment, container, false);
 
-        final MaterialButton chatBtn = rootView.findViewById(R.id.chat_btn);
+        mChatBtn = rootView.findViewById(R.id.chat_btn);
         final MaterialButton mentalBtn = rootView.findViewById(R.id.mental_btn);
         final MaterialButton physicalBtn = rootView.findViewById(R.id.physical_btn);
         final MaterialButton inquiryBtn = rootView.findViewById(R.id.inquiry_btn);
+        final MaterialButton summaryBtn = rootView.findViewById(R.id.summary_btn);
         final MaterialButton endMeetingBtn = rootView.findViewById(R.id.end_meeting_btn);
 
         final TextView patientNameTv = rootView.findViewById(R.id.patient_name_tv);
@@ -107,7 +142,7 @@ public class AppointmentTherapistFragment extends Fragment {
         patientNameTv.setText(mViewModel.getCurrentAppointment().getPatient().getFullName());
         therapistNameTv.setText(mViewModel.getCurrentAppointment().getTherapist().getFullName());
 
-        chatBtn.setOnClickListener(new View.OnClickListener() {
+        mChatBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (listener != null) {
@@ -143,6 +178,15 @@ public class AppointmentTherapistFragment extends Fragment {
             }
         });
 
+        summaryBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (listener != null) {
+                    listener.onSummaryClicked();
+                }
+            }
+        });
+
         endMeetingBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -163,6 +207,17 @@ public class AppointmentTherapistFragment extends Fragment {
             }
         });
 
+        mViewModel.getLastChatMessage();
+
         return rootView;
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+
+        if (mViewModel != null) {
+            mViewModel.removeGetLastChatMessageListener();
+        }
     }
 }

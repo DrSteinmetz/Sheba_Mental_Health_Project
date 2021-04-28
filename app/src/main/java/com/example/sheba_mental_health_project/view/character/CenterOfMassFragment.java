@@ -16,6 +16,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.AlphaAnimation;
 import android.view.animation.Animation;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 
 import com.example.sheba_mental_health_project.R;
@@ -123,6 +124,7 @@ public class CenterOfMassFragment extends Fragment
                              @Nullable Bundle savedInstanceState) {
         final View rootView = inflater.inflate(R.layout.center_of_mass_fragment, container, false);
 
+        final ImageButton backBtn = rootView.findViewById(R.id.back_btn);
         final View chestV = rootView.findViewById(R.id.chest_v);
         final View upperLeftV = rootView.findViewById(R.id.upper_left_v);
         final View upperRightV = rootView.findViewById(R.id.upper_right_v);
@@ -143,6 +145,13 @@ public class CenterOfMassFragment extends Fragment
         alphaAnimation.setDuration(700);
 
         showPainPoints();
+
+        backBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                requireActivity().onBackPressed();
+            }
+        });
 
         chestV.setOnClickListener(new View.OnClickListener() {
             @Override

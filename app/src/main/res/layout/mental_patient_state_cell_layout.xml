@@ -12,9 +12,8 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:padding="20dp"
-
-        >
+        android:layoutDirection="ltr"
+        android:padding="20dp">
 
         <TextView
             android:id="@+id/feeling_tv"
@@ -33,24 +32,54 @@
             android:layout_marginTop="10dp"
             android:layout_centerHorizontal="true" />
 
-        <com.google.android.material.slider.Slider
-            android:layoutDirection="ltr"
-            android:id="@+id/slider"
+        <RelativeLayout
+            android:id="@+id/slider_layout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@id/feeling_iv"
-            android:layout_marginTop="20dp"
-            android:layout_marginHorizontal="30dp"
-            app:trackColorInactive="#CCCCCC"
-            app:trackColorActive="@color/light_blue"
-            app:thumbColor="@color/light_blue"
-            app:thumbElevation="10dp"
-            app:thumbRadius="10dp"
-            android:value="5"
-            app:trackHeight="5dp"
-            android:valueFrom="0.0"
-            android:valueTo="10.0"
-            android:stepSize="1" />
+            android:layout_below="@id/feeling_iv">
+
+            <TextView
+                android:id="@+id/zero_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_alignParentStart="true"
+                android:text="0"
+                android:textSize="16sp"
+                android:textColor="@color/light_gray"
+                android:textAllCaps="false" />
+
+            <com.google.android.material.slider.Slider
+                android:id="@+id/slider"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:layout_centerVertical="true"
+                android:layout_toEndOf="@id/zero_tv"
+                android:layout_toStartOf="@id/ten_tv"
+                app:trackColorInactive="#CCCCCC"
+                app:trackColorActive="@color/light_blue"
+                app:thumbColor="@color/light_blue"
+                app:thumbElevation="10dp"
+                app:thumbRadius="10dp"
+                android:value="5"
+                app:trackHeight="5dp"
+                android:valueFrom="0.0"
+                android:valueTo="10.0"
+                android:stepSize="1" />
+
+            <TextView
+                android:id="@+id/ten_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_alignParentEnd="true"
+                android:text="10"
+                android:textSize="16sp"
+                android:textColor="@color/light_gray"
+                android:textAllCaps="false" />
+
+        </RelativeLayout>
 
     </RelativeLayout>
 

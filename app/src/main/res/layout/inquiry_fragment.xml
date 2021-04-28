@@ -58,6 +58,18 @@
                 android:id="@+id/expectations_recycler_view"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" />
+            <TextView
+                android:id="@+id/expectations_recycler_tv"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_margin="10dp"
+                android:gravity="center"
+                android:visibility="gone"
+                android:text="@string/no_answers_prompt"
+                android:textSize="18sp"
+                android:textColor="@color/light_gray"
+                android:textAllCaps="false" />
         </RelativeLayout>
 
         <View
@@ -97,6 +109,18 @@
                 android:id="@+id/covid_recycler_view"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" />
+            <TextView
+                android:id="@+id/covid_recycler_tv"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_margin="10dp"
+                android:gravity="center"
+                android:visibility="gone"
+                android:text="@string/no_answers_prompt"
+                android:textSize="18sp"
+                android:textColor="@color/light_gray"
+                android:textAllCaps="false" />
         </RelativeLayout>
 
         <View
@@ -136,6 +160,18 @@
                 android:id="@+id/statement_recycler_view"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" />
+            <TextView
+                android:id="@+id/statement_recycler_tv"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_margin="10dp"
+                android:gravity="center"
+                android:visibility="gone"
+                android:text="@string/no_answers_prompt"
+                android:textSize="18sp"
+                android:textColor="@color/light_gray"
+                android:textAllCaps="false" />
         </RelativeLayout>
 
         <View
@@ -175,6 +211,18 @@
                 android:id="@+id/social_recycler_view"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" />
+            <TextView
+                android:id="@+id/social_recycler_tv"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_margin="10dp"
+                android:gravity="center"
+                android:visibility="gone"
+                android:text="@string/no_answers_prompt"
+                android:textSize="18sp"
+                android:textColor="@color/light_gray"
+                android:textAllCaps="false" />
         </RelativeLayout>
 
         <View
@@ -214,6 +262,18 @@
                 android:id="@+id/habits_recycler_view"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" />
+            <TextView
+                android:id="@+id/habits_recycler_tv"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_margin="10dp"
+                android:gravity="center"
+                android:visibility="gone"
+                android:text="@string/no_answers_prompt"
+                android:textSize="18sp"
+                android:textColor="@color/light_gray"
+                android:textAllCaps="false" />
         </RelativeLayout>
 
         <View
@@ -254,6 +314,174 @@
                 android:id="@+id/mental_recycler_view"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content" />
+            <TextView
+                android:id="@+id/mental_recycler_tv"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_margin="10dp"
+                android:gravity="center"
+                android:visibility="gone"
+                android:text="@string/no_answers_prompt"
+                android:textSize="18sp"
+                android:textColor="@color/light_gray"
+                android:textAllCaps="false" />
+        </RelativeLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:paddingVertical="3dp"
+            android:layout_marginVertical="5dp"
+            android:background="@color/light_gray" />
+
+        <RelativeLayout
+            android:id="@+id/anxiety_title_layout"
+            style="@style/inquiryLayoutStyle"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_toStartOf="@+id/anxiety_arrow_iv"
+                android:text="@string/anxiety"
+                android:textSize="20sp"
+                android:textColor="@color/black"
+                android:textAllCaps="false" />
+
+            <!--android:id="@+id/anxiety_arrow_iv"-->
+            <ImageView
+                android:id="@+id/anxiety_arrow_iv"
+                android:layout_alignParentEnd="true"
+                style="@style/inquiryImageViewStyle" />
+
+        </RelativeLayout>
+        <RelativeLayout
+            android:id="@+id/anxiety_recycler_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:visibility="gone">
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/anxiety_recycler_view"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+            <TextView
+                android:id="@+id/anxiety_recycler_tv"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_margin="10dp"
+                android:gravity="center"
+                android:visibility="gone"
+                android:text="@string/no_answers_prompt"
+                android:textSize="18sp"
+                android:textColor="@color/light_gray"
+                android:textAllCaps="false" />
+        </RelativeLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:paddingVertical="3dp"
+            android:layout_marginVertical="5dp"
+            android:background="@color/light_gray" />
+
+        <RelativeLayout
+            android:id="@+id/anger_title_layout"
+            style="@style/inquiryLayoutStyle"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_toStartOf="@+id/anger_arrow_iv"
+                android:text="@string/anger"
+                android:textSize="20sp"
+                android:textColor="@color/black"
+                android:textAllCaps="false" />
+
+            <!--android:id="@+id/anger_arrow_iv"-->
+            <ImageView
+                android:id="@+id/anger_arrow_iv"
+                android:layout_alignParentEnd="true"
+                style="@style/inquiryImageViewStyle" />
+
+        </RelativeLayout>
+        <RelativeLayout
+            android:id="@+id/anger_recycler_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:visibility="gone">
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/anger_recycler_view"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+            <TextView
+                android:id="@+id/anger_recycler_tv"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_margin="10dp"
+                android:gravity="center"
+                android:visibility="gone"
+                android:text="@string/no_answers_prompt"
+                android:textSize="18sp"
+                android:textColor="@color/light_gray"
+                android:textAllCaps="false" />
+        </RelativeLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:paddingVertical="3dp"
+            android:layout_marginVertical="5dp"
+            android:background="@color/light_gray" />
+
+        <RelativeLayout
+            android:id="@+id/depression_title_layout"
+            style="@style/inquiryLayoutStyle"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_toStartOf="@+id/depression_arrow_iv"
+                android:text="@string/depression"
+                android:textSize="20sp"
+                android:textColor="@color/black"
+                android:textAllCaps="false" />
+
+            <!--android:id="@+id/depression_arrow_iv"-->
+            <ImageView
+                android:id="@+id/depression_arrow_iv"
+                android:layout_alignParentEnd="true"
+                style="@style/inquiryImageViewStyle" />
+
+        </RelativeLayout>
+        <RelativeLayout
+            android:id="@+id/depression_recycler_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:visibility="gone">
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/depression_recycler_view"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+            <TextView
+                android:id="@+id/depression_recycler_tv"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_margin="10dp"
+                android:gravity="center"
+                android:visibility="gone"
+                android:text="@string/no_answers_prompt"
+                android:textSize="18sp"
+                android:textColor="@color/light_gray"
+                android:textAllCaps="false" />
         </RelativeLayout>
 
     </LinearLayout>

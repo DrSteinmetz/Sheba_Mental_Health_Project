@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:focusable="true"
+    android:clickable="true"
+    android:background="@color/white"
+    tools:context=".view.therapist.SummaryFragment">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="20dp">
+
+        <TextView
+            android:id="@+id/title_tv"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="@string/meeting_summary"
+            android:textSize="25sp"
+            android:textColor="@color/black"
+            android:textAllCaps="false" />
+
+        <TextView
+            android:id="@+id/diagnosis_tv"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/title_tv"
+            android:layout_marginTop="5dp"
+            android:text="@string/diagnosis_prompt"
+            android:textSize="20sp"
+            android:textColor="@color/black"
+            android:textAllCaps="false" />
+
+        <TextView
+            android:id="@+id/diagnosis_warning_tv"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/diagnosis_tv"
+            android:text="@string/diagnosis_warning"
+            android:textSize="15sp"
+            android:textColor="@color/dark_gray"
+            android:textAllCaps="false" />
+
+        <EditText
+            android:id="@+id/diagnosis_et"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/diagnosis_warning_tv"
+            android:layout_marginTop="10dp"
+            android:gravity="start|top"
+            android:layout_gravity="center"
+            android:layout_marginHorizontal="15dp"
+            android:lines="5"
+            android:padding="10dp"
+            android:background="@drawable/summary_et_shape" />
+
+        <TextView
+            android:id="@+id/recommendations_tv"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/diagnosis_et"
+            android:layout_marginTop="15dp"
+            android:text="@string/recommendations_prompt"
+            android:textSize="20sp"
+            android:textColor="@color/black"
+            android:textAllCaps="false" />
+
+        <TextView
+            android:id="@+id/recommendations_warning_tv"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/recommendations_tv"
+            android:text="@string/recommendations_warning"
+            android:textSize="15sp"
+            android:textColor="@color/red"
+            android:textAllCaps="false" />
+
+        <EditText
+            android:id="@+id/recommendations_et"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/recommendations_warning_tv"
+            android:layout_marginTop="10dp"
+            android:gravity="start|top"
+            android:layout_gravity="center"
+            android:layout_marginHorizontal="15dp"
+            android:lines="5"
+            android:padding="10dp"
+            android:background="@drawable/summary_et_shape" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/finish_btn"
+            android:layout_below="@id/recommendations_et"
+            android:layout_centerHorizontal="true"
+            android:layout_marginVertical="35dp"
+            android:text="@string/finish"
+            style="@style/blue_btn" />
+
+    </RelativeLayout>
+
+</ScrollView>

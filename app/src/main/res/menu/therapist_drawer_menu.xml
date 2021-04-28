@@ -4,11 +4,13 @@
 
     <item android:id="@+id/search_patient_action"
         android:title="@string/search_patient"
+        android:icon="@drawable/ic_baseline_search_24"
         android:orderInCategory="0"
         app:showAsAction="never" />
 
     <item android:id="@+id/add_patient_action"
         android:title="@string/add_patient_action"
+        android:icon="@drawable/ic_round_add_white_24"
         android:orderInCategory="0"
         app:showAsAction="never" />
 
@@ -20,6 +22,7 @@
 
     <item android:id="@+id/logout_action"
         android:title="@string/logout"
+        android:icon="@drawable/ic_round_logout_24"
         android:orderInCategory="9"
         app:showAsAction="never" />
 

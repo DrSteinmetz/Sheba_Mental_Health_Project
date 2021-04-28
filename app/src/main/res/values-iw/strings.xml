@@ -1,6 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
+
+<!DOCTYPE resources [
+    <!ENTITY appname "מפת הנפש שיבא">
+    ]>
+
 <resources>
-    <string name="app_name">מפת הנפש שיבא</string>
+    <string name="app_name">&appname;</string>
 
     <string name="ok">אישור</string>
     <string name="yes">כן</string>
@@ -12,12 +17,14 @@
     <string name="continue_txt">הבא</string>
     <string name="finish">סיום</string>
     <string name="save">שמירה</string>
+    <string name="well_done">תודה על\nשיתוף הפעולה!</string>
     <string name="leave_note">הודעה אישית לרופא</string>
     <string name="leave_note_info">המטפל יראה את הודעתך רק בתחילת הפגישה</string>
     <string name="pick_date">בחירת תאריך</string>
     <string name="pick_time">בחירת שעה</string>
     <string name="character">דמות</string>
     <string name="feelings">תחושות</string>
+    <string name="slider_min_max_prompt">דרג/י את תחושותיך בשבוע האחרון כך ש-0 הכי חלש ו-10 הכי חזק</string>
     <string name="appointments_date">מועד הפגישה</string>
     <string name="edit_appointment_title">עריכת פגישה</string>
     <string name="pain_point_deletion_prompt">האם ברצונך למחוק נקודה זו לצמיתות?</string>
@@ -42,6 +49,10 @@
     <string name="social_Status">מצב סוציאלי</string>
     <string name="statements">הצהרות</string>
     <string name="mental_functioning">תפקוד מנטלי</string>
+    <string name="anxiety">חרדה</string>
+    <string name="anger">כעס</string>
+    <string name="depression">דיכאון</string>
+    <string name="no_answers_prompt">אין תשובות להצגה…</string>
     <string name="undo">ביטול</string>
     <string name="answer_et_hint">השיבו כאן</string>
     <string name="details_et_hint">פירוט</string>
@@ -54,27 +65,30 @@
     <string name="start_meeting_title">להתחיל פגישה?</string>
     <string name="start_meeting_prompt">אין באפשרותך לבטל פגישה שהחלה. האם להתחיל את הפגישה?</string>
     <string name="statement_frag_title_tv">סמנ/י משפטים נכונים לגביך:</string>
+    <string name="choose_phrases_last_week">סמנ/י משפטים נכונים לגביך בשבוע האחרון:</string>
     <string name="questions_warning_frag_title_tv">בעמודים הבאים תוצג לפניכם סדרת שאלות.\n\nאנא ענו על כמה שיותר שאלות בכדי שהמטפל יוכל להבין את מצבכם בצורה הטובה ביותר.</string>
     <string name="share_your_feelings">שתפ/י את תחושותיך</string>
     <string name="chat_with_therapist">שיחה עם המטפל</string>
     <string name="what_would_you_like_to_share">מה ברצונך לשתף?</string>
-    <string name="do_you_feel_pain">האם הינך מרגיש/ה כאב?</string>
-    <string name="select_body_part">בחר/י מקום בגוף</string>
+    <string name="do_you_feel_pain">האם הינך מרגיש/ה אי-נוחות גופנית?</string>
+    <string name="select_body_part">בחר/י איזור בגוף</string>
     <string name="home_screen">מסך הבית</string>
     <string name="describe_your_issues_here">פרט/י כאן על תחושותיך…</string>
     <string name="other_pain_point_selection_warning_title">להחליף נקודה?</string>
     <string name="other_pain_point_selection_warning">האם את/ה בטוח/ה כי ברצונך להחליף נקודה?</string>
-    <string name="choose_pain_area">בחר/י איזור כאב</string>
+    <string name="choose_pain_area">בחר/י איזור תחושה</string>
     <string name="left_right_dlg_title">התכוונתי לבחור:</string>
     <string name="left_right_dlg_only_one_rb">רק צד אחד</string>
     <string name="left_right_dlg_both_rb">את שניהם</string>
+    <string name="mandatory_questions_warning">חובה לענות על כל השאלות המסומנות עם * אדומה</string>
+    <string name="mandatory_tv">שאלות חובה מסומנות על ידי</string>
 
-    <string name="add_document">הוספת מסמך</string>
     <string name="things_i_need_today_prompt">מהמפגש היום אני זקוק ל:</string>
     <string name="my_meetings">הפגישות שלי</string>
     <string name="physical_state">מצב פיזי</string>
     <string name="empty_pain_points_list_prompt">לא קיים פירוט על המצב הפיזי…</string>
     <string name="empty_history_list_prompt">למטופל זה אין פגישות קודמות…</string>
+    <string name="no_last_appointment">אין לך פגישות קודמות…</string>
     <string name="appointment">פגישה</string>
     <string name="appointment_prompt">פגישה:</string>
     <string name="patient">מטופל</string>
@@ -83,6 +97,9 @@
     <string name="therapist_prompt">מטפל:</string>
     <string name="date_prompt">תאריך:</string>
     <string name="time_prompt">שעה:</string>
+    <string name="pending_questionnaire">שאלון ממתין למילוי</string>
+    <string name="undone_questionnaire">טרם\nנענה</string>
+    <string name="questionnaire_done">שאלון\nנענה</string>
     <string name="upcoming">טרם החלה</string>
     <string name="upcoming_meetings_prompt">הפגישות הבאות:</string>
     <string name="begin">התחל/י</string>
@@ -95,17 +112,39 @@
     <string name="last_meeting_therapist_name_prompt">מטפל בפגישה אחרונה:</string>
     <string name="back_to_appointments">חזרה לפגישות</string>
     <string name="edit_answers">ערוך תשובות</string>
+    <string name="meeting_ended_dlg_title">פגישתך הסתיימה</string>
+    <string name="meeting_ended_dlg_prompt">המטפל/ת סיימ/ה את הפגישה</string>
 
-    <string name="pain_location_tv">מיקום הכאב:</string>
-    <string name="pain_strength_tv">עוצמת הכאב:</string>
-    <string name="pain_type_tv">סוג הכאב:</string>
-    <string name="pain_frequency_tv">תדירות הכאב:</string>
+    <string name="pain_location_tv">מיקום:</string>
+    <string name="pain_strength_tv">עוצמה:</string>
+    <string name="pain_type_tv">סוג:</string>
+    <string name="pain_frequency_tv">תדירות:</string>
     <string name="other_feelings_tv">תחושות אחרות:</string>
     <string name="description_tv">פירוט:</string>
 
     <string name="chat">צ\'אט</string>
     <string name="mental_state">מצב נפשי</string>
+    <string name="meeting_summary">סיכום פגישה</string>
+    <string name="last_meeting_summary">סיכום פגישה אחרונה</string>
     <string name="feeling_strength_tv">עוצמת התחושה:</string>
+
+    <string name="never">אף פעם</string>
+    <string name="rarely">לעיתים רחוקות</string>
+    <string name="sometimes">לפעמים</string>
+    <string name="often">לעיתים קרובות</string>
+    <string name="always">תמיד</string>
+
+    <string name="diagnosis">אבחנה</string>
+    <string name="diagnosis_prompt">אבחנה:</string>
+    <string name="diagnosis_warning">לעיני המטפל בלבד</string>
+    <string name="no_diagnosis">אין אבחנה להציג</string>
+    <string name="recommendations">המלצות</string>
+    <string name="recommendations_prompt">המלצות:</string>
+    <string name="recommendations_warning">המלצות אלו יוצגו למטופל בסוף פגישה זו</string>
+    <string name="no_recommendations">אין המלצות להציג</string>
+    <string name="last_meeting_recommendations">המלצות מהפגישה האחרונה</string>
+    <string name="add_document">הוספת מסמך</string>
+    <string name="no_documents">אין מסמכים\nלהצגה</string>
 
     <!-- Pain Types -->
     <string name="sharp">חד</string>
@@ -142,6 +181,8 @@
     <string name="add_patient_action">הוספת מטופל</string>
 
     <!-- Patient Drawer Menu -->
+    <string name="recommendation_drawer">המלצת הרופא</string>
+    <string name="documents">מסמכים</string>
     <string name="logout">התנתקות</string>
 
     <!-- Login and Registration strings -->
@@ -174,7 +215,7 @@
 
     <string name="meetings_expectations">ציפיות מהפגישה:</string>
     <string name="covid19">וירוס קורונה:</string>
-    <string name="answer_questions_title">אנא השב על השאלות הבאות:</string>
+    <string name="answer_questions_title">אנא השב על השאלות הבאות (לגבי השבוע האחרון):</string>
 
     <!-- Notification -->
     <string name="appointment_notif_title_patient">פגישה עם ד\"ר</string>
@@ -200,6 +241,18 @@
     <string name="enabled">פועל</string>
     <string name="disabled">כבוי</string>
     <string name="about">אודות</string>
+    <string name="about_us">אודותינו</string>
+    <string name="about_us_content">
+        "&appname; היא אפליקציה מטופלים אשר חווים מצוקה נפשית.\n\n"
+        "אנו מקווים שהאפליקציה עוזרת לכם."
+    </string>
+    <string name="contact_us">צור קשר</string>
+    <string name="copyright">זכויות יוצרים</string>
+    <string name="copyrights">זכויות יוצרים</string>
+    <string name="privacy_policy">מדיניות פרטיות</string>
+    <string name="license">רישיון</string>
+    <string name="contributions">תרומות</string>
+    <string name="version">גרסה</string>
 
     <!-- Pain Points Locations -->
     <string name="scalp">קרקפת</string>

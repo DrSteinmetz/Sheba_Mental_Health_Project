@@ -20,6 +20,7 @@
             android:background="@color/white"
             android:layout_height="wrap_content"
             app:elevation="0dp">
+
             <TextView
                 android:id="@+id/tool_bar_username"
                 android:layout_width="wrap_content"
@@ -29,6 +30,7 @@
                 android:textSize="20sp"
                 android:textColor="@color/dark_gray"
                 android:textAllCaps="false" />
+
         </com.google.android.material.appbar.MaterialToolbar>
 
     </com.google.android.material.appbar.AppBarLayout>

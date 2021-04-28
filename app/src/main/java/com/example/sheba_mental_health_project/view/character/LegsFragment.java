@@ -16,6 +16,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.AlphaAnimation;
 import android.view.animation.Animation;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 
 import com.example.sheba_mental_health_project.R;
@@ -125,6 +126,7 @@ public class LegsFragment extends Fragment implements PainStrengthSubFragment.Pa
                              @Nullable Bundle savedInstanceState) {
         final View rootView = inflater.inflate(R.layout.legs_fragment, container, false);
 
+        final ImageButton backBtn = rootView.findViewById(R.id.back_btn);
         final View rightThighV = rootView.findViewById(R.id.right_thigh_v);
         final View leftThighV = rootView.findViewById(R.id.left_thigh_v);
         final View rightKneeV = rootView.findViewById(R.id.right_knee_v);
@@ -153,6 +155,13 @@ public class LegsFragment extends Fragment implements PainStrengthSubFragment.Pa
         alphaAnimation.setDuration(700);
 
         showPainPoints();
+
+        backBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                requireActivity().onBackPressed();
+            }
+        });
 
         rightThighV.setOnClickListener(new View.OnClickListener() {
             @Override

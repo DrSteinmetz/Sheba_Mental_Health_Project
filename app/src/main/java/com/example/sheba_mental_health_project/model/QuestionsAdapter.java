@@ -14,11 +14,16 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.sheba_mental_health_project.R;
+import com.example.sheba_mental_health_project.model.enums.FrequencyEnum;
+import com.example.sheba_mental_health_project.model.enums.QuestionTypeEnum;
 import com.google.android.material.checkbox.MaterialCheckBox;
+import com.google.android.material.chip.Chip;
+import com.google.android.material.chip.ChipGroup;
 import com.google.android.material.slider.Slider;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
 
+import java.util.Arrays;
 import java.util.List;
 
 public class QuestionsAdapter extends RecyclerView.Adapter<QuestionsAdapter.QuestionsViewHolder> {
@@ -32,6 +37,7 @@ public class QuestionsAdapter extends RecyclerView.Adapter<QuestionsAdapter.Ques
     private final int SLIDER_TYPE = 2;
     private final int NUMBER_TYPE = 3;
     private final int OPEN_TYPE = 4;
+    private final int RADIO_TYPE = 5;
 
     private final String TAG = "QuestionsAdapter";
 
@@ -54,9 +60,14 @@ public class QuestionsAdapter extends RecyclerView.Adapter<QuestionsAdapter.Ques
         private TextInputEditText numberQuestionEt;
         private TextView openTv;
         private TextInputEditText openQuestionEt;
+        private TextView radioTv;
+        private ChipGroup chipGroup;
+        private final TextView asteriskTv;
 
         public QuestionsViewHolder(@NonNull View itemView, int viewType) {
             super(itemView);
+
+            asteriskTv = itemView.findViewById(R.id.asterisk_tv);
 
             switch (viewType) {
                 case BINARY_TYPE:
@@ -70,6 +81,9 @@ public class QuestionsAdapter extends RecyclerView.Adapter<QuestionsAdapter.Ques
                     break;
                 case OPEN_TYPE:
                     initializeOpenQuestion(itemView);
+                    break;
+                case RADIO_TYPE:
+                    initializeRadioQuestion(itemView);
                     break;
             }
         }
@@ -170,12 +184,34 @@ public class QuestionsAdapter extends RecyclerView.Adapter<QuestionsAdapter.Ques
             });
         }
 
+        private void initializeRadioQuestion(View itemView) {
+            radioTv = itemView.findViewById(R.id.question_tv);
+            chipGroup = itemView.findViewById(R.id.chip_group);
+
+            chipGroup.setOnCheckedChangeListener(new ChipGroup.OnCheckedChangeListener() {
+                @Override
+                public void onCheckedChanged(ChipGroup group, int checkedId) {
+                    final String questionId = mQuestions.get(getAdapterPosition()).getId();
+
+                    if (chipGroup.getCheckedChipId() != View.NO_ID) {
+                        final Chip checkedChip = itemView.findViewById(checkedId);
+
+                        setOpenAnswerValue(questionId, checkedChip.getTag().toString());
+                    } else {
+                        setOpenAnswerValue(questionId, "");
+                    }
+                }
+            });
+        }
+
         private void setOpenAnswerValue(final String questionId, final String answerValue) {
             final int indexOfAnswer = mAnswers.indexOf(new Answer(questionId));
+
             if (indexOfAnswer == -1 && !answerValue.isEmpty()) {
                 mAnswers.add(new AnswerOpen(questionId, answerValue));
             } else if (indexOfAnswer != -1) {
                 final AnswerOpen openAnswer = ((AnswerOpen) mAnswers.get(indexOfAnswer));
+
                 if (!answerValue.isEmpty()) {
                     openAnswer.setAnswer(answerValue);
                 } else {
@@ -207,9 +243,12 @@ public class QuestionsAdapter extends RecyclerView.Adapter<QuestionsAdapter.Ques
                 view = LayoutInflater.from(parent.getContext())
                         .inflate(R.layout.question_open_cell_layout, parent,false);
                 break;
+            case RADIO_TYPE:
+                view = LayoutInflater.from(parent.getContext())
+                        .inflate(R.layout.question_radio_group_cell_layout, parent,false);
+                break;
             default:
                 view = null;
-                break;
         }
 
         return new QuestionsViewHolder(view, viewType);
@@ -229,6 +268,9 @@ public class QuestionsAdapter extends RecyclerView.Adapter<QuestionsAdapter.Ques
             } else {
                 answer = null;
             }
+
+            holder.asteriskTv.setVisibility(question.isMandatory() ? View.VISIBLE : View.GONE);
+            Log.d(TAG, "oron onBindViewHolder: isMandatory=" + question.isMandatory());
 
             switch (getItemViewType(position)) {
                 case BINARY_TYPE:
@@ -284,6 +326,22 @@ public class QuestionsAdapter extends RecyclerView.Adapter<QuestionsAdapter.Ques
                         openEt.setText("");
                     }
                     break;
+                case RADIO_TYPE:
+                    final TextView radioTv = holder.radioTv;
+                    final ChipGroup chipGroup = holder.chipGroup;
+
+                    radioTv.setText(questionText);
+
+                    if (answer != null) {
+                        final String answerValue = ((AnswerOpen) answer).getAnswer();
+                        Log.d(TAG, "onBindViewHolder: " +
+                                Arrays.asList(FrequencyEnum.values())
+                                        .contains(FrequencyEnum.valueOf(answerValue)));
+                        ((Chip) chipGroup.findViewWithTag(answerValue)).setChecked(true);
+                    } else {
+                        chipGroup.clearCheck();
+                    }
+                    break;
             }
         }
     }
@@ -306,9 +364,11 @@ public class QuestionsAdapter extends RecyclerView.Adapter<QuestionsAdapter.Ques
             case Open:
                 questionType = OPEN_TYPE;
                 break;
+            case Radio:
+                questionType = RADIO_TYPE;
+                break;
             default:
                 questionType = 0;
-                break;
         }
 
         return questionType;
@@ -317,5 +377,31 @@ public class QuestionsAdapter extends RecyclerView.Adapter<QuestionsAdapter.Ques
     @Override
     public int getItemCount() {
         return this.mQuestions.size();
+    }
+
+
+    public boolean isAllMandatoryQuestionsFilled() {
+
+        for (Question question : mQuestions) {
+            if ((question.getQuestionType().equals(QuestionTypeEnum.Number) ||
+                    question.getQuestionType().equals(QuestionTypeEnum.Open)) &&
+                    question.isMandatory()) {
+                final int answerIndex = mAnswers.indexOf(new Answer(question.getId()));
+
+                if (answerIndex != -1) {
+                    final Answer answer = mAnswers.get(answerIndex);
+
+                    if (answer instanceof AnswerOpen) {
+                        if (((AnswerOpen) answer).getAnswer().trim().isEmpty()) {
+                            return false;
+                        }
+                    }
+                } else {
+                    return false;
+                }
+            }
+        }
+
+        return true;
     }
 }

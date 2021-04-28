@@ -240,6 +240,15 @@ public class ChatFragment extends Fragment {
     }
 
     @Override
+    public void onPause() {
+        super.onPause();
+
+        if (mViewModel != null) {
+            mViewModel.updateLastChatMessage();
+        }
+    }
+
+    @Override
     public void onStop() {
         super.onStop();
 

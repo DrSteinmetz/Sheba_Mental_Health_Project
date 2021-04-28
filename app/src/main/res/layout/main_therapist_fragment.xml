@@ -24,7 +24,7 @@
             android:layout_height="wrap_content"
             android:text="@string/hello"
             android:textColor="@color/dark_gray"
-            android:textSize="20sp"
+            android:textSize="23sp"
             android:layout_marginEnd="5dp" />
 
         <TextView
@@ -34,7 +34,7 @@
             android:layout_height="wrap_content"
             android:text="DR Avi Choen"
             android:textColor="@color/dark_gray"
-            android:textSize="20sp" />
+            android:textSize="23sp" />
 
     </RelativeLayout>
 

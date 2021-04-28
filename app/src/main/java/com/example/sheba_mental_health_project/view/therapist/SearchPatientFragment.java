@@ -46,9 +46,9 @@ public class SearchPatientFragment extends Fragment {
     private SearchPatientViewModel mViewModel;
     private ArrayAdapter<String> mPatientsEmailsAdapter;
     private MaterialAutoCompleteTextView mPatientNameAutoTV;
-    private TextView mPatientFoundTv;
+    /*private TextView mPatientFoundTv;
     private TextView mPatientNameTv;
-    private MaterialButton mPatientHistoryBtn;
+    private MaterialButton mPatientHistoryBtn;*/
 
     private final String TAG = "SearchPatientFragment";
 
@@ -93,20 +93,23 @@ public class SearchPatientFragment extends Fragment {
                     @Override
                     public void onPatientClicked(Patient patient) {
 
-                        mPatientFoundTv.setVisibility(View.VISIBLE);
+//                        mPatientFoundTv.setVisibility(View.VISIBLE);
                         if (patient == null) {
-                            mPatientFoundTv.setText(getString(R.string.patient_not_found));
-                            mPatientNameTv.setVisibility(View.INVISIBLE);
-                            mPatientHistoryBtn.setVisibility(View.INVISIBLE);
+                            /*mPatientFoundTv.setText(getString(R.string.patient_not_found));
+                            mPatientNameTv.setVisibility(View.GONE);
+                            mPatientHistoryBtn.setVisibility(View.GONE);*/
                         } else {
                             mViewModel.setPatient(patient);
 
-                            mPatientNameTv.setVisibility(View.VISIBLE);
+                            /*mPatientNameTv.setVisibility(View.VISIBLE);
                             mPatientFoundTv.setText(getString(R.string.patient_found_prompt));
                             mPatientNameTv.setText(patient.getFullName());
                             mPatientHistoryBtn.setVisibility(View.VISIBLE);
 
-                            mMainScrollView.smoothScrollTo(0, mMainScrollView.getHeight());
+                            mMainScrollView.smoothScrollTo(0, mMainScrollView.getHeight());*/
+                            if (listener != null) {
+                                listener.onPatientHistoryClicked(mViewModel.getPatient());
+                            }
                         }
                     }
 
@@ -137,13 +140,13 @@ public class SearchPatientFragment extends Fragment {
                              @Nullable Bundle savedInstanceState) {
         final View rootView = inflater.inflate(R.layout.search_patient_fragment, container, false);
 
-        mMainScrollView = rootView.findViewById(R.id.main_scroll_view);
+//        mMainScrollView = rootView.findViewById(R.id.main_scroll_view);
         mPatientNameAutoTV = rootView.findViewById(R.id.patient_name_auto_tv);
-        mPatientFoundTv = rootView.findViewById(R.id.patient_found_title);
-        mPatientNameTv = rootView.findViewById(R.id.patient_name);
-        final ImageButton searchBtn = rootView.findViewById(R.id.search_btn);
+        /*mPatientFoundTv = rootView.findViewById(R.id.patient_found_title);
+        mPatientNameTv = rootView.findViewById(R.id.patient_name);*/
+//        final ImageButton searchBtn = rootView.findViewById(R.id.search_btn);
         mRecyclerView = rootView.findViewById(R.id.recycler_view);
-        mPatientHistoryBtn = rootView.findViewById(R.id.patient_history_btn);
+//        mPatientHistoryBtn = rootView.findViewById(R.id.patient_history_btn);
 
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         mRecyclerView.setHasFixedSize(true);
@@ -167,14 +170,14 @@ public class SearchPatientFragment extends Fragment {
             }
         });
 
-        mPatientHistoryBtn.setOnClickListener(new View.OnClickListener() {
+        /*mPatientHistoryBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (listener != null) {
                     listener.onPatientHistoryClicked(mViewModel.getPatient());
                 }
             }
-        });
+        });*/
 
         mViewModel.getAllMyPatients();
 

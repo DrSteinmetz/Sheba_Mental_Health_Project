@@ -14,12 +14,13 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.sheba_mental_health_project.R;
 import com.example.sheba_mental_health_project.model.Appointment;
+import com.example.sheba_mental_health_project.model.ChatMessage;
 import com.example.sheba_mental_health_project.model.ViewModelFactory;
-import com.example.sheba_mental_health_project.model.enums.AppointmentStateEnum;
 import com.example.sheba_mental_health_project.model.enums.ViewModelEnum;
 import com.example.sheba_mental_health_project.view.character.CharacterFragment;
 import com.example.sheba_mental_health_project.viewmodel.AppointmentPatientViewModel;
@@ -31,6 +32,8 @@ import java.util.Locale;
 public class AppointmentPatientFragment extends Fragment {
 
     private AppointmentPatientViewModel mViewModel;
+
+    private ImageView mChatBadgeIv;
 
     private final SimpleDateFormat ddMMYYYY = new SimpleDateFormat("dd.MM.yyyy",
             Locale.getDefault());
@@ -50,7 +53,6 @@ public class AppointmentPatientFragment extends Fragment {
         void onPhysicalClicked();
         void onMentalClicked();
         void onChatClicked();
-//        void onMeetingEnded();
     }
 
     private AppointmentPatientFragment.AppointmentPatientInterface listener;
@@ -83,27 +85,26 @@ public class AppointmentPatientFragment extends Fragment {
                     .commit();
         }
 
-        /*final Observer<Appointment> onGetLiveAppointmentSucceed = new Observer<Appointment>() {
+        final Observer<ChatMessage> onGetLastChatMessageSucceed = new Observer<ChatMessage>() {
             @Override
-            public void onChanged(Appointment appointment) {
-                if (appointment.getState() == AppointmentStateEnum.Ended) {
-                    if (listener != null) {
-                        listener.onMeetingEnded();
-                        listener = null;
-                    }
+            public void onChanged(ChatMessage lastMessage) {
+                if (mChatBadgeIv != null && lastMessage != null) {
+                    mChatBadgeIv.setVisibility(lastMessage.getIsSeen() ? View.GONE : View.VISIBLE);
+                } else if (mChatBadgeIv != null) {
+                    mChatBadgeIv.setVisibility(View.GONE);
                 }
             }
         };
 
-        final Observer<String> onGetLiveAppointmentFailed = new Observer<String>() {
+        final Observer<String> onGetLastChatMessageFailed = new Observer<String>() {
             @Override
             public void onChanged(String error) {
                 Log.e(TAG, "onChanged: " + error);
             }
         };
 
-        mViewModel.getGetLiveAppointmentSucceed().observe(this, onGetLiveAppointmentSucceed);
-        mViewModel.getGetLiveAppointmentFailed().observe(this, onGetLiveAppointmentFailed);*/
+        mViewModel.getGetLastChatMessageSucceed().observe(this, onGetLastChatMessageSucceed);
+        mViewModel.getGetLastChatMessageFailed().observe(this, onGetLastChatMessageFailed);
     }
 
     @Override
@@ -114,6 +115,7 @@ public class AppointmentPatientFragment extends Fragment {
         final TextView dateTv = rootView.findViewById(R.id.date_tv);
         final MaterialButton physicalMentalBtn = rootView.findViewById(R.id.feeling_btn);
         final MaterialButton chatBtn = rootView.findViewById(R.id.chat_btn);
+        mChatBadgeIv = rootView.findViewById(R.id.chat_badge_iv);
 
         final String date = ddMMYYYY.format(mViewModel.getCurrentAppointment().getAppointmentDate());
         dateTv.setText(date);
@@ -146,17 +148,17 @@ public class AppointmentPatientFragment extends Fragment {
             }
         });
 
-//        mViewModel.getLiveAppointment();
+        mViewModel.getLastChatMessage();
 
         return rootView;
     }
 
-    /*@Override
+    @Override
     public void onDestroy() {
         super.onDestroy();
 
         if (mViewModel != null) {
-            mViewModel.removeLiveAppointmentListener();
+            mViewModel.removeGetLastChatMessageListener();
         }
-    }*/
+    }
 }

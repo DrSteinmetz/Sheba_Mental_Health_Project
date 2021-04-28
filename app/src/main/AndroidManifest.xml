@@ -33,6 +33,11 @@
             </intent-filter>
         </activity>
 
+        <activity
+            android:name="com.theartofdev.edmodo.cropper.CropImageActivity"
+            android:logo="@drawable/ic_logo"
+            android:theme="@style/Base.Theme.AppCompat" />
+
         <receiver
             android:name=".model.NotificationsReceiver"
             android:logo="@drawable/ic_logo"

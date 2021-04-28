@@ -22,6 +22,9 @@ public class Appointment implements Serializable {
     private List<Answer> mAnswers = new ArrayList<>();
     private Map<String, Integer> mFeelingsAnswersMap = new HashMap<>();
     private AppointmentStateEnum mState;
+    private String mRecommendations;
+    private String mDiagnosis;
+    private List<String> mDocuments;
     private boolean mIsFinishedPreQuestions = false;
 
     public Appointment() {}
@@ -35,6 +38,9 @@ public class Appointment implements Serializable {
         this.mAnswers = appointment.mAnswers;
         this.mFeelingsAnswersMap = appointment.mFeelingsAnswersMap;
         this.mState = appointment.mState;
+        this.mRecommendations = appointment.mRecommendations;
+        this.mDiagnosis = appointment.mDiagnosis;
+        this.mDocuments = appointment.mDocuments;
         this.mIsFinishedPreQuestions = appointment.mIsFinishedPreQuestions;
     }
 
@@ -44,7 +50,7 @@ public class Appointment implements Serializable {
         this.mPatient = patient;
     }
 
-    public Appointment(Date appointmentDate, Patient patient , AppointmentStateEnum appointmentState) {
+    public Appointment(Date appointmentDate, Patient patient, AppointmentStateEnum appointmentState) {
         this.mAppointmentDate = appointmentDate;
         this.mPatient = patient;
         this.mState = appointmentState;
@@ -130,12 +136,36 @@ public class Appointment implements Serializable {
         }
     }*/
 
+    public String getRecommendations() {
+        return mRecommendations;
+    }
+
+    public void setRecommendations(String recommendations) {
+        this.mRecommendations = recommendations;
+    }
+
+    public String getDiagnosis() {
+        return mDiagnosis;
+    }
+
+    public void setDiagnosis(String diagnosis) {
+        this.mDiagnosis = diagnosis;
+    }
+
     public Map<String, Integer> getFeelingsAnswersMap() {
         return mFeelingsAnswersMap;
     }
 
     public void setFeelingsAnswersMap(Map<String, Integer> feelingsAnswersMap) {
         this.mFeelingsAnswersMap = feelingsAnswersMap;
+    }
+
+    public List<String> getDocuments() {
+        return mDocuments;
+    }
+
+    public void setDocuments(List<String> documents) {
+        this.mDocuments = documents;
     }
 
     public boolean getIsFinishedPreQuestions() {
@@ -159,15 +189,18 @@ public class Appointment implements Serializable {
     @Override
     public String toString() {
         return "Appointment{" +
-                "mId='" + mId + '\'' +
-                ", mAppointmentDate=" + mAppointmentDate +
-                ", mTherapist=" + mTherapist +
-                ", mPatient=" + mPatient +
-                ", mPainPointsOfBodyPartMap=" + mPainPointsOfBodyPartMap +
-                ", mAnswers=" + mAnswers +
-                ", mFeelingsAnswersMap=" + mFeelingsAnswersMap +
-                ", mState=" + mState +
-                ", mIsFinishedPreQuestions=" + mIsFinishedPreQuestions +
+                "Id='" + mId + '\'' +
+                ", AppointmentDate=" + mAppointmentDate +
+                ", Therapist=" + mTherapist +
+                ", Patient=" + mPatient +
+                ", PainPointsOfBodyPartMap=" + mPainPointsOfBodyPartMap +
+                ", Answers=" + mAnswers +
+                ", FeelingsAnswersMap=" + mFeelingsAnswersMap +
+                ", State=" + mState +
+                ", Recommendations=" + mRecommendations +
+                ", Diagnosis=" + mDiagnosis +
+                ", Documents=" + mDocuments +
+                ", IsFinishedPreQuestions=" + mIsFinishedPreQuestions +
                 '}';
     }
 }

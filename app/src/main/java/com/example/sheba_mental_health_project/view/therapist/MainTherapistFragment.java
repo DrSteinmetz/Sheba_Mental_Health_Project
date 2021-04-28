@@ -88,6 +88,7 @@ public class MainTherapistFragment extends Fragment {
                         enterAppointmentByState(appointment);
                     }
                 });
+                Log.d(TAG, "mtn onChanged: SET ADAPTER");
                 mRecyclerView.setAdapter(mAppointmentAdapter);
             }
         };
@@ -115,8 +116,8 @@ public class MainTherapistFragment extends Fragment {
         };
 
 
-        mViewModel.getMyAppointmentsSucceed().observe(this,onGetMyAppointmentsSucceed);
-        mViewModel.getMyAppointmentsFailed().observe(this,onGetMyAppointmentsFailed);
+        mViewModel.getMyAppointmentsSucceed().observe(this, onGetMyAppointmentsSucceed);
+        mViewModel.getMyAppointmentsFailed().observe(this, onGetMyAppointmentsFailed);
         mViewModel.getTherapistLoginSucceed().observe(this, loginObserverSuccess);
         mViewModel.getTherapistLoginFailed().observe(this, loginObserverFailed);
     }

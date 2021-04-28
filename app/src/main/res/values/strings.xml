@@ -1,5 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<!DOCTYPE resources [
+    <!ENTITY appname "Sheba Mental Health Project">
+    <!ENTITY app_email "some_email@gmail.com">
+    ]>
+
 <resources>
-    <string name="app_name">Sheba Mental Health Project</string>
+    <string name="app_name">&appname;</string>
 
     <string name="ok">OK</string>
     <string name="yes">Yes</string>
@@ -11,12 +18,14 @@
     <string name="continue_txt">Continue</string>
     <string name="finish">Finish</string>
     <string name="save">Save</string>
+    <string name="well_done">We Appreciate\nYour Cooperation!</string>
     <string name="leave_note">Leave a Note</string>
     <string name="leave_note_info">The Therapist will See Your Messages Only When the Meeting Begins</string>
     <string name="pick_date">Pick Date</string>
     <string name="pick_time">Pick Time</string>
     <string name="character">Character</string>
     <string name="feelings">Feelings</string>
+    <string name="slider_min_max_prompt">Rank Your Feeling in the Past 7 Days So That 0 is Weak and 10 is Strong</string>
     <string name="appointments_date">Appointment\'s Date</string>
     <string name="edit_appointment_title">Edit Appointment</string>
     <string name="pain_point_deletion_prompt">Are You Sure You Want To Permanently Delete This Point?</string>
@@ -41,6 +50,10 @@
     <string name="social_Status">Social Status</string>
     <string name="statements">Statements</string>
     <string name="mental_functioning">Mental Functioning</string>
+    <string name="anxiety">Anxiety</string>
+    <string name="anger">Anger</string>
+    <string name="depression">Depression</string>
+    <string name="no_answers_prompt">No Answers to Display…</string>
     <string name="undo">Undo</string>
     <string name="answer_et_hint">Type Your Answer Here</string>
     <string name="details_et_hint">Details</string>
@@ -53,27 +66,30 @@
     <string name="start_meeting_title">Start Meeting?</string>
     <string name="start_meeting_prompt">Meeting That Started Can Not Be Canceled. Are You Sure You Want to Start This Meeting?</string>
     <string name="statement_frag_title_tv">Choose Phrases Which You Relate to:</string>
+    <string name="choose_phrases_last_week">Choose Phrases Which You Relate to in the Past 7 Days:</string>
     <string name="questions_warning_frag_title_tv">In The Next Pages You will Be Presented to a Series of Questions.\n\nPlease Try to Answer as Many as You Can In Order For the Therapist to Understand Better Your Needs.</string>
     <string name="share_your_feelings">Share Your Feelings</string>
     <string name="chat_with_therapist">Chat with Therapist</string>
     <string name="what_would_you_like_to_share">What Would You Like to Share?</string>
-    <string name="do_you_feel_pain">Do You Feel Pain?</string>
+    <string name="do_you_feel_pain">Do You Feel Any Physical Discomfort?</string>
     <string name="select_body_part">Select Body Part</string>
     <string name="home_screen">Home Screen</string>
     <string name="describe_your_issues_here">Describe Your Issues Here…</string>
     <string name="other_pain_point_selection_warning_title">Change Point?</string>
     <string name="other_pain_point_selection_warning">Are You Sure You Want to Select Other Point?</string>
-    <string name="choose_pain_area">Choose Pain Area</string>
+    <string name="choose_pain_area">Choose Discomfort Area</string>
     <string name="left_right_dlg_title">I Meant to Choose:</string>
     <string name="left_right_dlg_only_one_rb">Only One Side</string>
     <string name="left_right_dlg_both_rb">Both</string>
+    <string name="mandatory_questions_warning">Please Answer all the Mandatory Questions (Marked with * )</string>
+    <string name="mandatory_tv">Mandatory Questions are Marked with</string>
 
-    <string name="add_document">Add a Document</string>
     <string name="things_i_need_today_prompt">Things I Need Today:</string>
     <string name="my_meetings">My Meetings</string>
     <string name="physical_state">Physical State</string>
     <string name="empty_pain_points_list_prompt">No Physical State Details to Show…</string>
     <string name="empty_history_list_prompt">This Patient Has No Previous Appointments…</string>
+    <string name="no_last_appointment">You Don\'t have any Previous Appointments…</string>
     <string name="appointment">Appointment</string>
     <string name="appointment_prompt">Appointment:</string>
     <string name="patient">Patient</string>
@@ -82,6 +98,9 @@
     <string name="therapist_prompt">Therapist:</string>
     <string name="date_prompt">Date:</string>
     <string name="time_prompt">Time:</string>
+    <string name="pending_questionnaire">Pending Questionnaire</string>
+    <string name="undone_questionnaire">Undone</string>
+    <string name="questionnaire_done">Done</string>
     <string name="upcoming">Upcoming</string>
     <string name="upcoming_meetings_prompt">Upcoming Meetings:</string>
     <string name="begin">Begin</string>
@@ -94,17 +113,39 @@
     <string name="last_meeting_therapist_name_prompt">Last Meeting Therapist:</string>
     <string name="back_to_appointments">Back to Appointments</string>
     <string name="edit_answers">Edit Answers</string>
+    <string name="meeting_ended_dlg_title">Your Meeting has Ended</string>
+    <string name="meeting_ended_dlg_prompt">The Therapist has Ended Your Meeting</string>
 
-    <string name="pain_location_tv">Pain Location:</string>
-    <string name="pain_strength_tv">Pain Strength:</string>
-    <string name="pain_type_tv">Pain Type:</string>
-    <string name="pain_frequency_tv">Pain Frequency:</string>
+    <string name="pain_location_tv">Location:</string>
+    <string name="pain_strength_tv">Strength:</string>
+    <string name="pain_type_tv">Type:</string>
+    <string name="pain_frequency_tv">Frequency:</string>
     <string name="other_feelings_tv">Other Feelings:</string>
     <string name="description_tv">Description:</string>
 
     <string name="chat">Chat</string>
     <string name="mental_state">Mental State</string>
+    <string name="meeting_summary">Meeting Summary</string>
+    <string name="last_meeting_summary">Last Meeting Summary</string>
     <string name="feeling_strength_tv">Feeling Strength:</string>
+
+    <string name="never">Never</string>
+    <string name="rarely">Rarely</string>
+    <string name="sometimes">Sometimes</string>
+    <string name="often">Often</string>
+    <string name="always">Always</string>
+
+    <string name="diagnosis">Diagnosis</string>
+    <string name="diagnosis_prompt">Diagnosis:</string>
+    <string name="diagnosis_warning">Will not be shown to your patient</string>
+    <string name="no_diagnosis">No Diagnosis</string>
+    <string name="recommendations">Recommendations</string>
+    <string name="recommendations_prompt">Recommendations:</string>
+    <string name="recommendations_warning">These recommendations will be shown to your patient by the end of this meeting</string>
+    <string name="no_recommendations">No Recommendations</string>
+    <string name="last_meeting_recommendations">Last Meeting\'s Recommendations</string>
+    <string name="add_document">Add a Document</string>
+    <string name="no_documents">No Documents\nto Display</string>
 
     <!-- Pain Types -->
     <string name="sharp">Sharp</string>
@@ -141,6 +182,8 @@
     <string name="add_patient_action">Add Patient</string>
 
     <!-- Patient Drawer Menu -->
+    <string name="recommendation_drawer">Therapist\'s Recommendation</string>
+    <string name="documents">Documents</string>
     <string name="logout">Logout</string>
 
     <!-- Login and Registration strings -->
@@ -173,7 +216,7 @@
 
     <string name="meetings_expectations">Meetings Expectations:</string>
     <string name="covid19">Covid 19:</string>
-    <string name="answer_questions_title">Please Answer the Following Questions:</string>
+    <string name="answer_questions_title">Please Answer the Following Questions (Regarding the Past Week):</string>
 
     <!-- Notification -->
     <string name="appointment_notif_title_patient">Meeting With Dr.</string>
@@ -199,6 +242,31 @@
     <string name="enabled">Enabled</string>
     <string name="disabled">Disabled</string>
     <string name="about">About</string>
+    <string name="about_us">About Us</string>
+    <string name="about_us_content">
+        "&appname; is an application for mental patients.\n\n"
+        "We sincerely hope you find our app useful."
+    </string>
+    <string name="contact_us">Contact Us</string>
+    <string name="contact_us_content" translatable="false">&app_email;</string>
+    <string name="contact_app_uri" translatable="false">mailto:&app_email;</string>
+    <string name="copyright">Copyright</string>
+    <string name="copyrights">Copyrights</string>
+    <string name="privacy_policy">Privacy Policy</string>
+    <string name="license">License</string>
+    <string name="contributions">Contributions</string>
+    <string name="version">Version</string>
+    <string name="apache_license" translatable="false">
+        "© 2021 &appname; App\n\n"
+        "Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file\n"
+        "except in compliance with the License. You may obtain a copy of the License at\n\n"
+        "http://www.apache.org/licenses/LICENSE-2.0\n\n"
+        "Unless required by applicable law or agreed to in writing, software distributed under the\n"
+        "License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS\n"
+        "OF ANY KIND, either express or implied. See the License for the specific language\n"
+        "governing permissions and limitations under the License."
+    </string>
+    <string name="app_version" translatable="false">2.7.7.6</string>
 
     <!-- Pain Points Locations -->
     <string name="scalp">Scalp</string>
@@ -346,7 +414,5 @@
         "For example, position the FAB to one side of stream of a cards so the FAB won’t interfere "
         "when a user tries to pick up one of cards.\n\n"
     </string>
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
 
 </resources>

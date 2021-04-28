@@ -1,6 +1,7 @@
 package com.example.sheba_mental_health_project.viewmodel;
 
 import android.content.Context;
+import android.util.Log;
 
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
@@ -29,6 +30,9 @@ public class InquiryViewModel extends ViewModel {
     private List<Question> mSocialQuestions;
     private List<Question> mHabitsQuestions;
     private List<Question> mMentalQuestions;
+    private List<Question> mAnxietyQuestions;
+    private List<Question> mAngerQuestions;
+    private List<Question> mDepressionQuestions;
 
     private MutableLiveData<List<Question>> mGetAllQuestionsSucceed;
     private MutableLiveData<String> mGetAllQuestionsFailed;
@@ -99,6 +103,9 @@ public class InquiryViewModel extends ViewModel {
                 mSocialQuestions = new ArrayList<>();
                 mHabitsQuestions = new ArrayList<>();
                 mMentalQuestions = new ArrayList<>();
+                mAnxietyQuestions = new ArrayList<>();
+                mAngerQuestions = new ArrayList<>();
+                mDepressionQuestions = new ArrayList<>();
 
                 for (Question question : Objects.requireNonNull(mGetAllQuestionsSucceed.getValue())) {
                     switch (question.getPage()) {
@@ -121,6 +128,15 @@ public class InquiryViewModel extends ViewModel {
                             break;
                         case MentalQuestions:
                             addAnsweredQuestions(question, answers, mMentalQuestions);
+                            break;
+                        case AnxietyQuestions:
+                            addAnsweredQuestions(question, answers, mAnxietyQuestions);
+                            break;
+                        case AngerQuestions:
+                            addAnsweredQuestions(question, answers, mAngerQuestions);
+                            break;
+                        case DepressionQuestions:
+                            addAnsweredQuestions(question, answers, mDepressionQuestions);
                             break;
                     }
                 }
@@ -180,8 +196,20 @@ public class InquiryViewModel extends ViewModel {
         return mMentalQuestions;
     }
 
+    public List<Question> getAnxietyQuestions() {
+        return mAnxietyQuestions;
+    }
+
+    public List<Question> getAngerQuestions() {
+        return mAngerQuestions;
+    }
+
+    public List<Question> getDepressionQuestions() {
+        return mDepressionQuestions;
+    }
+
     private void addAnsweredQuestions(final Question question, final List<Answer> answers,
-                      final List<Question> questionsList) {
+                                      final List<Question> questionsList) {
         final Answer answer;
         final int indexOfAnswer = answers.indexOf(new Answer(question.getId()));
 

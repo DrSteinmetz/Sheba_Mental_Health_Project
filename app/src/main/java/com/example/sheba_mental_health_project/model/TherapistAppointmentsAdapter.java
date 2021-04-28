@@ -1,9 +1,13 @@
 package com.example.sheba_mental_health_project.model;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
+import android.graphics.drawable.Drawable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -11,6 +15,7 @@ import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.sheba_mental_health_project.R;
+import com.example.sheba_mental_health_project.model.enums.AppointmentStateEnum;
 import com.google.android.material.button.MaterialButton;
 
 import java.text.SimpleDateFormat;
@@ -48,17 +53,23 @@ public class TherapistAppointmentsAdapter extends RecyclerView.Adapter<Therapist
     public class AppointmentViewHolder extends RecyclerView.ViewHolder {
 
         private final CardView cardLayout;
+        private final LinearLayout mainLayout;
         private final TextView nameTv;
         private final TextView dateTv;
         private final TextView timeTv;
+        private final ImageView questionnaireIv;
+        private final TextView questionnaireTv;
 
         public AppointmentViewHolder(@NonNull View itemView) {
             super(itemView);
 
             cardLayout = itemView.findViewById(R.id.card_layout);
+            mainLayout = itemView.findViewById(R.id.main_layout);
             nameTv = itemView.findViewById(R.id.patient_name_tv);
             dateTv = itemView.findViewById(R.id.date_tv);
             timeTv = itemView.findViewById(R.id.time_tv);
+            questionnaireIv = itemView.findViewById(R.id.questionnaire_iv);
+            questionnaireTv = itemView.findViewById(R.id.questionnaire_tv);
 
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -76,21 +87,40 @@ public class TherapistAppointmentsAdapter extends RecyclerView.Adapter<Therapist
     public AppointmentViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         final View view = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.therapist_appointment_cell_layout, parent,false);
+
         return new AppointmentViewHolder(view);
     }
 
+    @SuppressLint("UseCompatLoadingForDrawables")
     @Override
     public void onBindViewHolder(@NonNull AppointmentViewHolder holder, int position) {
         final Appointment appointment = mAppointments.get(position);
 
-        final String patientName = appointment.getPatient().getFullName();
-        holder.nameTv.setText(patientName);
+        if (appointment != null) {
+            final Drawable cellBg = appointment.getState().equals(AppointmentStateEnum.OnGoing) ?
+                    mContext.getDrawable(R.drawable.light_blue_stroke_shape) : null;
+            holder.mainLayout.setBackground(cellBg);
 
-        final String date = ddMMYYYY.format(appointment.getAppointmentDate());
-        holder.dateTv.setText(date);
+            final String patientName = appointment.getPatient().getFullName();
+            holder.nameTv.setText(patientName);
 
-        final String time = HHmm.format(appointment.getAppointmentDate());
-        holder.timeTv.setText(time);
+            final String date = ddMMYYYY.format(appointment.getAppointmentDate());
+            holder.dateTv.setText(date);
+
+            final String time = HHmm.format(appointment.getAppointmentDate());
+            holder.timeTv.setText(time);
+
+            holder.questionnaireIv.setImageResource(appointment.getIsFinishedPreQuestions() ?
+                    R.drawable.ic_questionnaire_done : R.drawable.ic_questionnaire);
+
+            if (appointment.getIsFinishedPreQuestions()) {
+                holder.questionnaireTv.setText(R.string.questionnaire_done);
+                holder.questionnaireTv.setTextColor(mContext.getColor(R.color.light_blue));
+            } else {
+                holder.questionnaireTv.setText(R.string.undone_questionnaire);
+                holder.questionnaireTv.setTextColor(mContext.getColor(R.color.light_gray));
+            }
+        }
     }
 
     @Override

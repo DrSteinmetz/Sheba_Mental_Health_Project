@@ -1,6 +1,5 @@
 package com.example.sheba_mental_health_project.viewmodel;
 
-import android.app.Application;
 import android.content.Context;
 
 import androidx.lifecycle.MutableLiveData;
@@ -159,7 +158,8 @@ public class StartMeetingViewModel extends ViewModel {
     }
 
     public void getLastMeeting() {
-        mRepository.getLastAppointment();
+        final String patientId = mAppointment.getPatient().getId();
+        mRepository.getLastAppointment(patientId);
     }
 
     public void updateState(AppointmentStateEnum stateEnum) {

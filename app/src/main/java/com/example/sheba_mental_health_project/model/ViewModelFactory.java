@@ -7,12 +7,18 @@ import androidx.lifecycle.ViewModel;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.example.sheba_mental_health_project.model.enums.ViewModelEnum;
+import com.example.sheba_mental_health_project.viewmodel.DepressionQuestionsViewModel;
+import com.example.sheba_mental_health_project.viewmodel.AngerQuestionsViewModel;
+import com.example.sheba_mental_health_project.viewmodel.AnxietyQuestionsViewModel;
+import com.example.sheba_mental_health_project.viewmodel.DocumentsViewModel;
 import com.example.sheba_mental_health_project.viewmodel.InquiryViewModel;
 import com.example.sheba_mental_health_project.viewmodel.MentalQuestionsViewModel;
 import com.example.sheba_mental_health_project.viewmodel.HabitsQuestionsViewModel;
+import com.example.sheba_mental_health_project.viewmodel.RecommendationViewModel;
 import com.example.sheba_mental_health_project.viewmodel.SocialQuestionsViewModel;
 import com.example.sheba_mental_health_project.viewmodel.HistoryViewModel;
 import com.example.sheba_mental_health_project.viewmodel.Covid19QuestionsViewModel;
+import com.example.sheba_mental_health_project.viewmodel.SummaryViewModel;
 import com.example.sheba_mental_health_project.viewmodel.TherapistPhysicalStateViewModel;
 import com.example.sheba_mental_health_project.viewmodel.AppointmentLoungeViewModel;
 import com.example.sheba_mental_health_project.viewmodel.AppointmentPatientViewModel;
@@ -164,6 +170,31 @@ public class ViewModelFactory implements ViewModelProvider.Factory {
                     objectToReturn = (T) new MentalQuestionsViewModel(mContext);
                 }
                 break;
+            case AnxietyQuestions:
+                if (modelClass.isAssignableFrom(AnxietyQuestionsViewModel.class)) {
+                    objectToReturn = (T) new AnxietyQuestionsViewModel(mContext);
+                }
+                break;
+            case AngerQuestions:
+                if (modelClass.isAssignableFrom(AngerQuestionsViewModel.class)) {
+                    objectToReturn = (T) new AngerQuestionsViewModel(mContext);
+                }
+                break;
+            case DepressionQuestions:
+                if (modelClass.isAssignableFrom(DepressionQuestionsViewModel.class)) {
+                    objectToReturn = (T) new DepressionQuestionsViewModel(mContext);
+                }
+                break;
+            case Recommendation:
+                if (modelClass.isAssignableFrom(RecommendationViewModel.class)) {
+                    objectToReturn = (T) new RecommendationViewModel(mContext);
+                }
+                break;
+            case Documents:
+                if (modelClass.isAssignableFrom(DocumentsViewModel.class)) {
+                    objectToReturn = (T) new DocumentsViewModel(mContext);
+                }
+                break;
             case MainTherapist:
                 if (modelClass.isAssignableFrom(MainTherapistViewModel.class)) {
                     objectToReturn = (T) new MainTherapistViewModel(mContext);
@@ -192,6 +223,11 @@ public class ViewModelFactory implements ViewModelProvider.Factory {
             case Inquiry:
                 if (modelClass.isAssignableFrom(InquiryViewModel.class)) {
                     objectToReturn = (T) new InquiryViewModel(mContext);
+                }
+                break;
+            case Summary:
+                if (modelClass.isAssignableFrom(SummaryViewModel.class)) {
+                    objectToReturn = (T) new SummaryViewModel(mContext);
                 }
                 break;
             case StartMeeting:

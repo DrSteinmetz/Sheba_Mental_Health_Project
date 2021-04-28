@@ -17,6 +17,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
 
 import com.example.sheba_mental_health_project.R;
 import com.example.sheba_mental_health_project.model.Answer;
@@ -34,11 +35,23 @@ public class InquiryFragment extends Fragment {
     private InquiryViewModel mViewModel;
 
     private RecyclerView mExpectationsRecycler;
+    private TextView mExpectationsTv;
     private RecyclerView mCovidRecycler;
+    private TextView mCovidTv;
     private RecyclerView mStatementRecycler;
+    private TextView mStatementTv;
     private RecyclerView mSocialRecycler;
+    private TextView mSocialTv;
     private RecyclerView mHabitsRecycler;
+    private TextView mHabitsTv;
     private RecyclerView mMentalRecycler;
+    private TextView mMentalTv;
+    private RecyclerView mAnxietyRecycler;
+    private TextView mAnxietyTv;
+    private RecyclerView mAngerRecycler;
+    private TextView mAngerTv;
+    private RecyclerView mDepressionRecycler;
+    private TextView mDepressionTv;
 
     private AnswersAdapter mExpectationsAdapter;
     private AnswersAdapter mCovidAdapter;
@@ -46,6 +59,9 @@ public class InquiryFragment extends Fragment {
     private AnswersAdapter mSocialAdapter;
     private AnswersAdapter mHabitsAdapter;
     private AnswersAdapter mMentalAdapter;
+    private AnswersAdapter mAnxietyAdapter;
+    private AnswersAdapter mAngerAdapter;
+    private AnswersAdapter mDepressionAdapter;
 
     private final String TAG = "InquiryFragment";
 
@@ -78,23 +94,51 @@ public class InquiryFragment extends Fragment {
         final Observer<List<Answer>> onGetLiveAnswersSucceed = new Observer<List<Answer>>() {
             @Override
             public void onChanged(List<Answer> answers) {
+
                 mExpectationsAdapter = new AnswersAdapter(mViewModel.getExpectationsQuestions(),
                         answers);
+                mExpectationsTv.setVisibility(mViewModel.getExpectationsQuestions().isEmpty() ?
+                        View.VISIBLE : View.GONE);
 
                 mCovidAdapter = new AnswersAdapter(mViewModel.getCovidQuestions(),
                         answers);
+                mCovidTv.setVisibility(mViewModel.getCovidQuestions().isEmpty() ?
+                        View.VISIBLE : View.GONE);
 
                 mStatementAdapter = new AnswersAdapter(mViewModel.getStatementQuestions(),
                         answers);
+                mStatementTv.setVisibility(mViewModel.getStatementQuestions().isEmpty() ?
+                        View.VISIBLE : View.GONE);
 
                 mSocialAdapter = new AnswersAdapter(mViewModel.getSocialQuestions(),
                         answers);
+                mSocialTv.setVisibility(mViewModel.getSocialQuestions().isEmpty() ?
+                        View.VISIBLE : View.GONE);
 
                 mHabitsAdapter = new AnswersAdapter(mViewModel.getHabitsQuestions(),
                         answers);
+                mHabitsTv.setVisibility(mViewModel.getHabitsQuestions().isEmpty() ?
+                        View.VISIBLE : View.GONE);
 
                 mMentalAdapter = new AnswersAdapter(mViewModel.getMentalQuestions(),
                         answers);
+                mMentalTv.setVisibility(mViewModel.getMentalQuestions().isEmpty() ?
+                        View.VISIBLE : View.GONE);
+
+                mAnxietyAdapter = new AnswersAdapter(mViewModel.getAnxietyQuestions(),
+                        answers);
+                mAnxietyTv.setVisibility(mViewModel.getAnxietyQuestions().isEmpty() ?
+                        View.VISIBLE : View.GONE);
+
+                mAngerAdapter = new AnswersAdapter(mViewModel.getAngerQuestions(),
+                        answers);
+                mAngerTv.setVisibility(mViewModel.getAngerQuestions().isEmpty() ?
+                        View.VISIBLE : View.GONE);
+
+                mDepressionAdapter = new AnswersAdapter(mViewModel.getDepressionQuestions(),
+                        answers);
+                mDepressionTv.setVisibility(mViewModel.getDepressionQuestions().isEmpty() ?
+                        View.VISIBLE : View.GONE);
 
 
                 mExpectationsRecycler.setAdapter(mExpectationsAdapter);
@@ -103,6 +147,9 @@ public class InquiryFragment extends Fragment {
                 mSocialRecycler.setAdapter(mSocialAdapter);
                 mHabitsRecycler.setAdapter(mHabitsAdapter);
                 mMentalRecycler.setAdapter(mMentalAdapter);
+                mAnxietyRecycler.setAdapter(mAnxietyAdapter);
+                mAngerRecycler.setAdapter(mAngerAdapter);
+                mDepressionRecycler.setAdapter(mDepressionAdapter);
             }
         };
 
@@ -126,28 +173,57 @@ public class InquiryFragment extends Fragment {
 
         final RelativeLayout expectationsTitleLayout = rootView.findViewById(R.id.expectations_title_layout);
         final RelativeLayout expectationsRecyclerLayout = rootView.findViewById(R.id.expectations_recycler_layout);
+        mExpectationsTv = rootView.findViewById(R.id.expectations_recycler_tv);
         final ImageView expectationsArrowIv = rootView.findViewById(R.id.expectations_arrow_iv);
         mExpectationsRecycler = rootView.findViewById(R.id.expectations_recycler_view);
+
         final RelativeLayout covidTitleLayout = rootView.findViewById(R.id.covid_title_layout);
         final RelativeLayout covidRecyclerLayout = rootView.findViewById(R.id.covid_recycler_layout);
+        mCovidTv = rootView.findViewById(R.id.covid_recycler_tv);
         final ImageView covidArrowIv = rootView.findViewById(R.id.covid_arrow_iv);
         mCovidRecycler = rootView.findViewById(R.id.covid_recycler_view);
+
         final RelativeLayout statementTitleLayout = rootView.findViewById(R.id.statement_title_layout);
         final RelativeLayout statementRecyclerLayout = rootView.findViewById(R.id.statement_recycler_layout);
+        mStatementTv = rootView.findViewById(R.id.statement_recycler_tv);
         final ImageView statementArrowIv = rootView.findViewById(R.id.statement_arrow_iv);
         mStatementRecycler = rootView.findViewById(R.id.statement_recycler_view);
+
         final RelativeLayout socialTitleLayout = rootView.findViewById(R.id.social_title_layout);
         final RelativeLayout socialRecyclerLayout = rootView.findViewById(R.id.social_recycler_layout);
+        mSocialTv = rootView.findViewById(R.id.social_recycler_tv);
         final ImageView socialArrowIv = rootView.findViewById(R.id.social_arrow_iv);
         mSocialRecycler = rootView.findViewById(R.id.social_recycler_view);
+
         final RelativeLayout habitsTitleLayout = rootView.findViewById(R.id.habits_title_layout);
         final RelativeLayout habitsRecyclerLayout = rootView.findViewById(R.id.habits_recycler_layout);
+        mHabitsTv = rootView.findViewById(R.id.habits_recycler_tv);
         final ImageView habitsArrowIv = rootView.findViewById(R.id.habits_arrow_iv);
         mHabitsRecycler = rootView.findViewById(R.id.habits_recycler_view);
+
         final RelativeLayout mentalTitleLayout = rootView.findViewById(R.id.mental_title_layout);
         final RelativeLayout mentalRecyclerLayout = rootView.findViewById(R.id.mental_recycler_layout);
+        mMentalTv = rootView.findViewById(R.id.mental_recycler_tv);
         final ImageView mentalArrowIv = rootView.findViewById(R.id.mental_arrow_iv);
         mMentalRecycler = rootView.findViewById(R.id.mental_recycler_view);
+
+        final RelativeLayout anxietyTitleLayout = rootView.findViewById(R.id.anxiety_title_layout);
+        final RelativeLayout anxietyRecyclerLayout = rootView.findViewById(R.id.anxiety_recycler_layout);
+        mAnxietyTv = rootView.findViewById(R.id.anxiety_recycler_tv);
+        final ImageView anxietyArrowIv = rootView.findViewById(R.id.anxiety_arrow_iv);
+        mAnxietyRecycler = rootView.findViewById(R.id.anxiety_recycler_view);
+
+        final RelativeLayout angerTitleLayout = rootView.findViewById(R.id.anger_title_layout);
+        final RelativeLayout angerRecyclerLayout = rootView.findViewById(R.id.anger_recycler_layout);
+        mAngerTv = rootView.findViewById(R.id.anger_recycler_tv);
+        final ImageView angerArrowIv = rootView.findViewById(R.id.anger_arrow_iv);
+        mAngerRecycler = rootView.findViewById(R.id.anger_recycler_view);
+
+        final RelativeLayout depressionTitleLayout = rootView.findViewById(R.id.depression_title_layout);
+        final RelativeLayout depressionRecyclerLayout = rootView.findViewById(R.id.depression_recycler_layout);
+        mDepressionTv = rootView.findViewById(R.id.depression_recycler_tv);
+        final ImageView depressionArrowIv = rootView.findViewById(R.id.depression_arrow_iv);
+        mDepressionRecycler = rootView.findViewById(R.id.depression_recycler_view);
 
         mViewModel.attachGetLiveAnswersListener();
 
@@ -163,6 +239,12 @@ public class InquiryFragment extends Fragment {
         mHabitsRecycler.setHasFixedSize(true);
         mMentalRecycler.setLayoutManager(new LinearLayoutManager(getContext()));
         mMentalRecycler.setHasFixedSize(true);
+        mAnxietyRecycler.setLayoutManager(new LinearLayoutManager(getContext()));
+        mAnxietyRecycler.setHasFixedSize(true);
+        mAngerRecycler.setLayoutManager(new LinearLayoutManager(getContext()));
+        mAngerRecycler.setHasFixedSize(true);
+        mDepressionRecycler.setLayoutManager(new LinearLayoutManager(getContext()));
+        mDepressionRecycler.setHasFixedSize(true);
 
 
         expectationsTitleLayout.setOnClickListener(new View.OnClickListener() {
@@ -224,6 +306,37 @@ public class InquiryFragment extends Fragment {
                 mentalArrowIv.setRotation(isVisible ? 0 : 180);
             }
         });
+
+        anxietyTitleLayout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                final boolean isVisible = anxietyRecyclerLayout.getVisibility() == View.VISIBLE;
+
+                anxietyRecyclerLayout.setVisibility(isVisible ? View.GONE : View.VISIBLE);
+                anxietyArrowIv.setRotation(isVisible ? 0 : 180);
+            }
+        });
+
+        angerTitleLayout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                final boolean isVisible = angerRecyclerLayout.getVisibility() == View.VISIBLE;
+
+                angerRecyclerLayout.setVisibility(isVisible ? View.GONE : View.VISIBLE);
+                angerArrowIv.setRotation(isVisible ? 0 : 180);
+            }
+        });
+
+        depressionTitleLayout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                boolean isVisible = depressionRecyclerLayout.getVisibility() == View.VISIBLE;
+
+                depressionRecyclerLayout.setVisibility(isVisible ? View.GONE : View.VISIBLE);
+                depressionArrowIv.setRotation(isVisible ? 0 : 180);
+            }
+        });
+
 
         mViewModel.getAllQuestions();
 
