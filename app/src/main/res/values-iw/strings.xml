@@ -83,7 +83,6 @@
     <string name="mandatory_questions_warning">חובה לענות על כל השאלות המסומנות עם * אדומה</string>
     <string name="mandatory_tv">שאלות חובה מסומנות על ידי</string>
 
-    <string name="add_document">הוספת מסמך</string>
     <string name="things_i_need_today_prompt">מהמפגש היום אני זקוק ל:</string>
     <string name="my_meetings">הפגישות שלי</string>
     <string name="physical_state">מצב פיזי</string>
@@ -130,9 +129,9 @@
     <string name="feeling_strength_tv">עוצמת התחושה:</string>
 
     <string name="never">אף פעם</string>
-    <string name="rarely">לעיתים\nרחוקות</string>
+    <string name="rarely">לעיתים רחוקות</string>
     <string name="sometimes">לפעמים</string>
-    <string name="often">לעיתים\nקרובות</string>
+    <string name="often">לעיתים קרובות</string>
     <string name="always">תמיד</string>
 
     <string name="diagnosis">אבחנה</string>
@@ -144,6 +143,8 @@
     <string name="recommendations_warning">המלצות אלו יוצגו למטופל בסוף פגישה זו</string>
     <string name="no_recommendations">אין המלצות להציג</string>
     <string name="last_meeting_recommendations">המלצות מהפגישה האחרונה</string>
+    <string name="add_document">הוספת מסמך</string>
+    <string name="no_documents">אין מסמכים\nלהצגה</string>
 
     <!-- Pain Types -->
     <string name="sharp">חד</string>
@@ -181,6 +182,7 @@
 
     <!-- Patient Drawer Menu -->
     <string name="recommendation_drawer">המלצת הרופא</string>
+    <string name="documents">מסמכים</string>
     <string name="logout">התנתקות</string>
 
     <!-- Login and Registration strings -->

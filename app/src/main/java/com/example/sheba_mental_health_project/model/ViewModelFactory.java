@@ -10,6 +10,7 @@ import com.example.sheba_mental_health_project.model.enums.ViewModelEnum;
 import com.example.sheba_mental_health_project.viewmodel.DepressionQuestionsViewModel;
 import com.example.sheba_mental_health_project.viewmodel.AngerQuestionsViewModel;
 import com.example.sheba_mental_health_project.viewmodel.AnxietyQuestionsViewModel;
+import com.example.sheba_mental_health_project.viewmodel.DocumentsViewModel;
 import com.example.sheba_mental_health_project.viewmodel.InquiryViewModel;
 import com.example.sheba_mental_health_project.viewmodel.MentalQuestionsViewModel;
 import com.example.sheba_mental_health_project.viewmodel.HabitsQuestionsViewModel;
@@ -187,6 +188,11 @@ public class ViewModelFactory implements ViewModelProvider.Factory {
             case Recommendation:
                 if (modelClass.isAssignableFrom(RecommendationViewModel.class)) {
                     objectToReturn = (T) new RecommendationViewModel(mContext);
+                }
+                break;
+            case Documents:
+                if (modelClass.isAssignableFrom(DocumentsViewModel.class)) {
+                    objectToReturn = (T) new DocumentsViewModel(mContext);
                 }
                 break;
             case MainTherapist:

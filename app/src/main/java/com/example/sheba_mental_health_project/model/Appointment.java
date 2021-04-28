@@ -24,6 +24,7 @@ public class Appointment implements Serializable {
     private AppointmentStateEnum mState;
     private String mRecommendations;
     private String mDiagnosis;
+    private List<String> mDocuments;
     private boolean mIsFinishedPreQuestions = false;
 
     public Appointment() {}
@@ -39,6 +40,7 @@ public class Appointment implements Serializable {
         this.mState = appointment.mState;
         this.mRecommendations = appointment.mRecommendations;
         this.mDiagnosis = appointment.mDiagnosis;
+        this.mDocuments = appointment.mDocuments;
         this.mIsFinishedPreQuestions = appointment.mIsFinishedPreQuestions;
     }
 
@@ -48,7 +50,7 @@ public class Appointment implements Serializable {
         this.mPatient = patient;
     }
 
-    public Appointment(Date appointmentDate, Patient patient , AppointmentStateEnum appointmentState) {
+    public Appointment(Date appointmentDate, Patient patient, AppointmentStateEnum appointmentState) {
         this.mAppointmentDate = appointmentDate;
         this.mPatient = patient;
         this.mState = appointmentState;
@@ -158,6 +160,14 @@ public class Appointment implements Serializable {
         this.mFeelingsAnswersMap = feelingsAnswersMap;
     }
 
+    public List<String> getDocuments() {
+        return mDocuments;
+    }
+
+    public void setDocuments(List<String> documents) {
+        this.mDocuments = documents;
+    }
+
     public boolean getIsFinishedPreQuestions() {
         return mIsFinishedPreQuestions;
     }
@@ -189,6 +199,7 @@ public class Appointment implements Serializable {
                 ", State=" + mState +
                 ", Recommendations=" + mRecommendations +
                 ", Diagnosis=" + mDiagnosis +
+                ", Documents=" + mDocuments +
                 ", IsFinishedPreQuestions=" + mIsFinishedPreQuestions +
                 '}';
     }

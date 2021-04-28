@@ -43,6 +43,7 @@ import com.example.sheba_mental_health_project.view.patient.AppointmentPatientFr
 import com.example.sheba_mental_health_project.view.patient.BureaucracyFragment;
 import com.example.sheba_mental_health_project.view.patient.Covid19QuestionsFragment;
 import com.example.sheba_mental_health_project.view.patient.DepressionQuestionsFragment;
+import com.example.sheba_mental_health_project.view.patient.DocumentsFragment;
 import com.example.sheba_mental_health_project.view.patient.HabitsQuestionsFragment;
 import com.example.sheba_mental_health_project.view.patient.MainPatientFragment;
 import com.example.sheba_mental_health_project.view.patient.MentalPatientFragment;
@@ -124,6 +125,7 @@ public class MainActivity extends AppCompatActivity
     private final String HISTORY_FRAG = "History_Fragment";
     private final String HISTORY_APPOINTMENT_FRAG = "History_Appointment_Fragment";
     private final String RECOMMENDATION_FRAG = "Recommendation_Fragment";
+    private final String DOCUMENTS_FRAG = "Documents_Fragment";
     private final String PRE_QUESTIONS_FRAG = "Pre_Questions_Fragment";
     private final String TREATY_FRAG = "Treaty_Fragment";
     private final String BUREAUCRACY_FRAG = "Bureaucracy_Fragment";
@@ -260,6 +262,7 @@ public class MainActivity extends AppCompatActivity
     public void onDrawerOpened(@NonNull View drawerView) {
         if (!mViewModel.isTherapist()) {
             mNavigationView.getMenu().findItem(R.id.inquiry_action).setVisible(isInquiryShown());
+            mNavigationView.getMenu().findItem(R.id.documents_action).setVisible(isInquiryShown());
             mNavigationView.invalidate();
         }
     }
@@ -326,6 +329,13 @@ public class MainActivity extends AppCompatActivity
                 break;
             case R.id.inquiry_action:
                 onMoveToPreQuestions();
+                mDrawerLayout.closeDrawers();
+                break;
+            case R.id.documents_action:
+                getSupportFragmentManager().beginTransaction()
+                        .add(R.id.container, DocumentsFragment.newInstance(), DOCUMENTS_FRAG)
+                        .addToBackStack(null)
+                        .commit();
                 mDrawerLayout.closeDrawers();
                 break;
             case R.id.recommendations_action:

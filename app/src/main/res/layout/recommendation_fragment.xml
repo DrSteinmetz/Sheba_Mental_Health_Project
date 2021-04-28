@@ -124,6 +124,7 @@
                 android:textColor="@color/black"
                 android:text="@string/recommendations"
                 android:textAllCaps="false" />
+
         </RelativeLayout>
 
     </RelativeLayout>

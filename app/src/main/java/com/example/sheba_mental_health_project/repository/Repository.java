@@ -1251,9 +1251,9 @@ public class Repository {
                 .addSnapshotListener(new EventListener<QuerySnapshot>() {
             @Override
             public void onEvent(@Nullable QuerySnapshot value, @Nullable FirebaseFirestoreException error) {
-
                 if(value != null && !value.isEmpty()){
                     Appointment appointment = value.getDocuments().get(0).toObject(Appointment.class);
+
                     if (mRepositoryGetLastAppointmentInterface != null) {
                         mRepositoryGetLastAppointmentInterface.onGetLastAppointmentSucceed(appointment);
                     }

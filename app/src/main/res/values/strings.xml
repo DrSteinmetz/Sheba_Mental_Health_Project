@@ -84,7 +84,6 @@
     <string name="mandatory_questions_warning">Please Answer all the Mandatory Questions (Marked with * )</string>
     <string name="mandatory_tv">Mandatory Questions are Marked with</string>
 
-    <string name="add_document">Add a Document</string>
     <string name="things_i_need_today_prompt">Things I Need Today:</string>
     <string name="my_meetings">My Meetings</string>
     <string name="physical_state">Physical State</string>
@@ -145,6 +144,8 @@
     <string name="recommendations_warning">These recommendations will be shown to your patient by the end of this meeting</string>
     <string name="no_recommendations">No Recommendations</string>
     <string name="last_meeting_recommendations">Last Meeting\'s Recommendations</string>
+    <string name="add_document">Add a Document</string>
+    <string name="no_documents">No Documents\nto Display</string>
 
     <!-- Pain Types -->
     <string name="sharp">Sharp</string>
@@ -182,6 +183,7 @@
 
     <!-- Patient Drawer Menu -->
     <string name="recommendation_drawer">Therapist\'s Recommendation</string>
+    <string name="documents">Documents</string>
     <string name="logout">Logout</string>
 
     <!-- Login and Registration strings -->

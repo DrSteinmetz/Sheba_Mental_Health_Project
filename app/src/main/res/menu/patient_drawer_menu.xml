@@ -10,7 +10,14 @@
 
     <item android:id="@+id/recommendations_action"
         android:title="@string/recommendation_drawer"
+        android:icon="@drawable/ic_round_edit_24"
         android:orderInCategory="1"
+        app:showAsAction="never" />
+
+    <item android:id="@+id/documents_action"
+        android:title="@string/documents"
+        android:icon="@drawable/ic_round_attach_file_24"
+        android:orderInCategory="2"
         app:showAsAction="never" />
 
     <item android:id="@+id/settings_action"
