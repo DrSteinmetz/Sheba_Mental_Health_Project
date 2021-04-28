@@ -422,6 +422,8 @@ public class Repository {
         this.mAlarmManager = (AlarmManager) mContext.getSystemService(Context.ALARM_SERVICE);
 //        addQuestionsEnglish();
 //        addQuestionsHebrew();
+//        addFeelingsEnglish();
+//        addFeelingsHebrew();
     }
 
     public void getAllPatients() {
@@ -795,6 +797,7 @@ public class Repository {
                     public void onEvent(@Nullable DocumentSnapshot value, @Nullable FirebaseFirestoreException error) {
                         if (value != null && value.exists()) {
                             final Appointment dbAppointment = value.toObject(Appointment.class);
+
                             if (mRepositoryGetAllPainPointsListener != null) {
                                 mRepositoryGetAllPainPointsListener
                                         .onGetAllPainPointsSucceed(dbAppointment.getPainPointsOfBodyPartMap());
@@ -1237,8 +1240,7 @@ public class Repository {
                 });
     }
 
-    public void getLastAppointment() {
-        final String patientId = mCurrentAppointment.getPatient().getId();
+    public void getLastAppointment(final String patientId) {
         final List<AppointmentStateEnum> stateQuery = new ArrayList<>();
         stateQuery.add(AppointmentStateEnum.Ended);
 
@@ -1258,10 +1260,11 @@ public class Repository {
                 }
                 else {
                     if (mRepositoryGetLastAppointmentInterface != null) {
-                        if(error!=null)
+                        if (error != null) {
                             mRepositoryGetLastAppointmentInterface.onGetLastAppointmentFailed(error.getMessage());
-                        else
+                        } else {
                             mRepositoryGetLastAppointmentInterface.onGetLastAppointmentFailed("No Appointment found");
+                        }
                     }
                 }
             }
@@ -1333,9 +1336,7 @@ public class Repository {
         questions.add(new Question("11", "I Want Another Person to Be Present During the Meeting",
                 QuestionTypeEnum.Binary, false, ViewModelEnum.Treaty));
 
-        questions.add(new Question("12", "Document 17",
-                QuestionTypeEnum.Binary, false, ViewModelEnum.Bureaucracy));
-        questions.add(new Question("13", "Document 17 Extension",
+        questions.add(new Question("12", "Request/Extension for Document 17",
                 QuestionTypeEnum.Binary, false, ViewModelEnum.Bureaucracy));
         questions.add(new Question("14", "Appointment Summery",
                 QuestionTypeEnum.Binary, false, ViewModelEnum.Bureaucracy));
@@ -1384,7 +1385,7 @@ public class Repository {
         questions.add(new Question("33", "I Feel Strong Physical Pain",
                 QuestionTypeEnum.Binary, false, ViewModelEnum.SanityCheck));
 
-        questions.add(new Question("34", "I Had an Accident Recently",
+        questions.add(new Question("34", "I Had an Accident/Injury Recently",
                 QuestionTypeEnum.Binary, false, ViewModelEnum.Statement));
         questions.add(new Question("35", "I Have been Hospitalized Recently",
                 QuestionTypeEnum.Binary, false, ViewModelEnum.Statement));
@@ -1393,8 +1394,6 @@ public class Repository {
         questions.add(new Question("351", "I Have Stopped Taking One of My Medicines",
                 QuestionTypeEnum.Binary, false, ViewModelEnum.Statement));
         questions.add(new Question("352", "I Have a New Medical Diagnose",
-                QuestionTypeEnum.Binary, false, ViewModelEnum.Statement));
-        questions.add(new Question("353", "I was Injured Recently",
                 QuestionTypeEnum.Binary, false, ViewModelEnum.Statement));
         questions.add(new Question("354", "I Am Currently During a Legal Proceeding",
                 QuestionTypeEnum.Binary, false, ViewModelEnum.Statement));
@@ -1512,9 +1511,7 @@ public class Repository {
         questions.add(new Question("11", "אעדיף שאדם נוסף ילווה אותי במהלך הפגישה",
                 QuestionTypeEnum.Binary, false, ViewModelEnum.Treaty));
 
-        questions.add(new Question("12", "טופס 17",
-                QuestionTypeEnum.Binary, false, ViewModelEnum.Bureaucracy));
-        questions.add(new Question("13", "הארכה לטופס 17",
+        questions.add(new Question("12", "בקשה/הארכה לטופס 17",
                 QuestionTypeEnum.Binary, false, ViewModelEnum.Bureaucracy));
         questions.add(new Question("14", "סיכום פגישה",
                 QuestionTypeEnum.Binary, false, ViewModelEnum.Bureaucracy));
@@ -1563,7 +1560,7 @@ public class Repository {
         questions.add(new Question("33", "אני מרגיש/ה כאב חזק",
                 QuestionTypeEnum.Binary, false, ViewModelEnum.SanityCheck));
 
-        questions.add(new Question("34", "עברתי תאונה לאחרונה",
+        questions.add(new Question("34", "עברתי תאונה/חבלה גופנית לאחרונה",
                 QuestionTypeEnum.Binary, false, ViewModelEnum.Statement));
         questions.add(new Question("35", "אושפזתי לאחרונה",
                 QuestionTypeEnum.Binary, false, ViewModelEnum.Statement));
@@ -1572,8 +1569,6 @@ public class Repository {
         questions.add(new Question("351", "הפסקתי ליטול תרופה כלשהי",
                 QuestionTypeEnum.Binary, false, ViewModelEnum.Statement));
         questions.add(new Question("352", "יש לי אבחון רפואי חדש",
-                QuestionTypeEnum.Binary, false, ViewModelEnum.Statement));
-        questions.add(new Question("353", "עברתי חבלה גופנית לאחרונה",
                 QuestionTypeEnum.Binary, false, ViewModelEnum.Statement));
         questions.add(new Question("354", "אני נמצא כעת בהליך משפטי",
                 QuestionTypeEnum.Binary, false, ViewModelEnum.Statement));
@@ -1697,6 +1692,8 @@ public class Repository {
         feelings.add(new Feeling("70", R.drawable.peace, "Peace"));
         feelings.add(new Feeling("8", R.drawable.confusion, "Confusion"));
         feelings.add(new Feeling("9", R.drawable.aggressive, "Aggressive"));
+        feelings.add(new Feeling("90", R.drawable.loneliness, "Loneliness"));
+        feelings.add(new Feeling("91", R.drawable.ready_to_explode, "Urge to Erupt"));
 
         for (Feeling feeling : feelings) {
             mCloudDB.collection(FEELINGS)
@@ -1723,6 +1720,8 @@ public class Repository {
         feelings.add(new Feeling("70", R.drawable.peace, "שלווה"));
         feelings.add(new Feeling("8", R.drawable.confusion, "בלבול"));
         feelings.add(new Feeling("9", R.drawable.aggressive, "תוקפנות"));
+        feelings.add(new Feeling("90", R.drawable.loneliness, "בדידות"));
+        feelings.add(new Feeling("91", R.drawable.ready_to_explode, "דחף להתפרץ"));
 
         for (Feeling feeling : feelings) {
             mCloudDB.collection(FEELINGS)

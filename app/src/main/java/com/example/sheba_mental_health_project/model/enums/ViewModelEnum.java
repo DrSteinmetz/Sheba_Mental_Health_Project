@@ -18,6 +18,7 @@ public enum ViewModelEnum {
     AnxietyQuestions,
     DepressionQuestions,
     AngerQuestions,
+    Recommendation,
     MainTherapist,
     TherapistPhysicalStateGeneric,
     TherapistPhysicalState,

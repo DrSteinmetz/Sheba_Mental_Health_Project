@@ -1,0 +1,141 @@
+<PreferenceScreen xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <PreferenceCategory app:title="@string/license">
+        <Preference app:title="@string/apache_license"
+            app:singleLineTitle="false">
+            <intent android:action="android.intent.action.VIEW"
+                android:data="http://www.apache.org/licenses/LICENSE-2.0" />
+        </Preference>
+    </PreferenceCategory>
+
+    <PreferenceCategory app:title="@string/copyright"
+        app:icon="@drawable/ic_round_copyright_accent_24">
+
+        <!--Freepik-->
+        <Preference app:title="Freepik"
+            app:singleLineTitle="false">
+            <intent android:action="android.intent.action.VIEW"
+                android:data="https://www.freepik.com" />
+        </Preference>
+
+        <Preference app:title="Aggressive - photo created by cookie_studio:"
+            app:singleLineTitle="false">
+            <intent android:action="android.intent.action.VIEW"
+                android:data="https://www.freepik.com/photos/man%22%3EMan" />
+        </Preference>
+
+        <Preference app:title="Anger - photo created by wayhomestudio:"
+            app:singleLineTitle="false">
+            <intent android:action="android.intent.action.VIEW"
+                android:data="https://www.freepik.com/photos/people%22%3EPeople" />
+        </Preference>
+
+        <Preference app:title="Anxiety - photo created by cookie_studio:"
+            app:singleLineTitle="false">
+            <intent android:action="android.intent.action.VIEW"
+                android:data="https://www.freepik.com/photos/man%22%3EMan" />
+        </Preference>
+
+        <Preference app:title="Confusion - photo created by drobotdean:"
+            app:singleLineTitle="false">
+            <intent android:action="android.intent.action.VIEW"
+                android:data="https://www.freepik.com/photos/people%22%3EPeople" />
+        </Preference>
+
+        <Preference app:title="Depression - photo created by karlyukav:"
+            app:singleLineTitle="false">
+            <intent android:action="android.intent.action.VIEW"
+                android:data="https://www.freepik.com/photos/woman%22%3EWoman" />
+        </Preference>
+
+        <Preference app:title="Disturbed - photo created by cookie_studio:"
+            app:singleLineTitle="false">
+            <intent android:action="android.intent.action.VIEW"
+                android:data="https://www.freepik.com/photos/hand%22%3EHand" />
+        </Preference>
+
+        <Preference app:title="Embarrassment - photo created by karlyukav:"
+            app:singleLineTitle="false">
+            <intent android:action="android.intent.action.VIEW"
+                android:data="https://www.freepik.com/photos/people%22%3EPeople" />
+        </Preference>
+
+        <Preference app:title="Fear - photo created by cookie_studio:"
+            app:singleLineTitle="false">
+            <intent android:action="android.intent.action.VIEW"
+                android:data="https://www.freepik.com/photos/girl%22%3EGirl" />
+        </Preference>
+
+        <Preference app:title="Uplift - photo created by cookie_studio:"
+            app:singleLineTitle="false">
+            <intent android:action="android.intent.action.VIEW"
+                android:data="https://www.freepik.com/photos/woman%22%3EWoman" />
+        </Preference>
+
+        <Preference app:title="Happiness - photo created by cookie_studio:"
+            app:singleLineTitle="false">
+            <intent android:action="android.intent.action.VIEW"
+                android:data="https://www.freepik.com/photos/woman%22%3EWoman" />
+        </Preference>
+
+        <Preference app:title="Peace - photo created by cookie_studio:"
+            app:singleLineTitle="false">
+            <intent android:action="android.intent.action.VIEW"
+                android:data="https://www.freepik.com/photos/man%22%3EMan" />
+        </Preference>
+
+        <Preference app:title="Sadness- photo created by 8photo:"
+            app:singleLineTitle="false">
+            <intent android:action="android.intent.action.VIEW"
+                android:data="https://www.freepik.com/photos/woman%22%3EWoman" />
+        </Preference>
+
+        <Preference app:title="Tension - photo created by Racool_studio:"
+            app:singleLineTitle="false">
+            <intent android:action="android.intent.action.VIEW"
+                android:data="https://www.freepik.com/photos/people%22%3EPeople" />
+        </Preference>
+
+        <!--Flaticon-->
+        <Preference app:title="Flaticon"
+            app:singleLineTitle="false">
+            <intent android:action="android.intent.action.VIEW"
+                android:data="https://www.flaticon.com/" />
+        </Preference>
+
+        <Preference app:title="Questionnaire - Icons made by Becris "
+            app:singleLineTitle="false">
+            <intent android:action="android.intent.action.VIEW"
+                android:data="https://creativemarket.com/Becris" />
+        </Preference>
+
+        <!--Lottie-->
+        <Preference app:title="Loading Animation by Siyuan Qiu on LottieFiles:"
+            app:singleLineTitle="false">
+            <intent android:action="android.intent.action.VIEW"
+                android:data="https://lottiefiles.com/9619-loading-dots-in-yellow" />
+        </Preference>
+
+        <Preference app:title="Thumbs-Up Animation by pratyush das on LottieFiles:"
+            app:singleLineTitle="false">
+            <intent android:action="android.intent.action.VIEW"
+                android:data="https://lottiefiles.com/14595-thumbs-up" />
+        </Preference>
+
+        <Preference app:title="Arrows Animation by Diego Cadena on LottieFiles:"
+            app:singleLineTitle="false">
+            <intent android:action="android.intent.action.VIEW"
+                android:data="https://lottiefiles.com/53340-arrow-up" />
+        </Preference>
+
+
+        <Preference app:title="Loading Animation by Sergio Lozano on LottieFiles"
+            app:singleLineTitle="false">
+            <intent android:action="android.intent.action.VIEW"
+                android:data="https://lottiefiles.com/8442-load-rappi" />
+        </Preference>
+
+    </PreferenceCategory>
+
+</PreferenceScreen>

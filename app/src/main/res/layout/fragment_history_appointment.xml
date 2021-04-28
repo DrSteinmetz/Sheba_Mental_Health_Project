@@ -13,8 +13,7 @@
         android:id="@+id/appointment_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:gravity="center"
-        >
+        android:gravity="center">
 
         <TextView
             android:id="@+id/appointment_prompt_tv"
@@ -45,15 +44,14 @@
         android:layout_height="wrap_content"
         android:layout_below="@id/appointment_layout"
         android:layout_marginTop="20dp"
-        android:layout_marginHorizontal="10dp"
-        >
+        android:layout_marginHorizontal="10dp">
 
         <TextView
             android:id="@+id/patient_prompt_tv"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/patient_prompt"
-            android:textSize="20sp"
+            android:textSize="17sp"
             android:textColor="@color/black"
             android:textAllCaps="false" />
 
@@ -64,7 +62,7 @@
             android:layout_toEndOf="@id/patient_prompt_tv"
             android:layout_marginStart="10dp"
             android:text="Matan Romanov"
-            android:textSize="20sp"
+            android:textSize="17sp"
             android:textColor="@color/dark_gray"
             android:textAllCaps="false" />
     </RelativeLayout>
@@ -74,8 +72,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/patient_name_layout"
-        android:layout_marginHorizontal="10dp"
-        >
+        android:layout_marginHorizontal="10dp">
 
         <TextView
             android:id="@+id/therapist_prompt_tv"
@@ -83,7 +80,7 @@
             android:layout_height="wrap_content"
             android:gravity="center"
             android:text="@string/therapist_prompt"
-            android:textSize="20sp"
+            android:textSize="17sp"
             android:textColor="@color/black"
             android:textAllCaps="false" />
 
@@ -94,15 +91,29 @@
             android:layout_toEndOf="@id/therapist_prompt_tv"
             android:layout_marginStart="10dp"
             android:text="Liran Amzaleg"
-            android:textSize="20sp"
+            android:textSize="17sp"
             android:textColor="@color/dark_gray"
             android:textAllCaps="false" />
+
     </RelativeLayout>
+
+    <TextView
+        android:id="@+id/summary_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/therapist_name_layout"
+        android:layout_marginTop="10dp"
+        android:layout_marginHorizontal="10dp"
+        android:textSize="17sp"
+        android:textColor="@color/light_blue"
+        android:textStyle="bold"
+        android:text="@string/meeting_summary"
+        android:textAllCaps="false" />
 
     <androidx.coordinatorlayout.widget.CoordinatorLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@id/therapist_name_layout"
+        android:layout_below="@id/summary_tv"
         android:layout_marginTop="20dp">
 
         <RelativeLayout

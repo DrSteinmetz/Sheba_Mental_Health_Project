@@ -1,6 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
+
+<!DOCTYPE resources [
+    <!ENTITY appname "מפת הנפש שיבא">
+    ]>
+
 <resources>
-    <string name="app_name">מפת הנפש שיבא</string>
+    <string name="app_name">&appname;</string>
 
     <string name="ok">אישור</string>
     <string name="yes">כן</string>
@@ -44,6 +49,9 @@
     <string name="social_Status">מצב סוציאלי</string>
     <string name="statements">הצהרות</string>
     <string name="mental_functioning">תפקוד מנטלי</string>
+    <string name="anxiety">חרדה</string>
+    <string name="anger">כעס</string>
+    <string name="depression">דיכאון</string>
     <string name="no_answers_prompt">אין תשובות להצגה…</string>
     <string name="undo">ביטול</string>
     <string name="answer_et_hint">השיבו כאן</string>
@@ -81,6 +89,7 @@
     <string name="physical_state">מצב פיזי</string>
     <string name="empty_pain_points_list_prompt">לא קיים פירוט על המצב הפיזי…</string>
     <string name="empty_history_list_prompt">למטופל זה אין פגישות קודמות…</string>
+    <string name="no_last_appointment">אין לך פגישות קודמות…</string>
     <string name="appointment">פגישה</string>
     <string name="appointment_prompt">פגישה:</string>
     <string name="patient">מטופל</string>
@@ -134,6 +143,7 @@
     <string name="recommendations_prompt">המלצות:</string>
     <string name="recommendations_warning">המלצות אלו יוצגו למטופל בסוף פגישה זו</string>
     <string name="no_recommendations">אין המלצות להציג</string>
+    <string name="last_meeting_recommendations">המלצות מהפגישה האחרונה</string>
 
     <!-- Pain Types -->
     <string name="sharp">חד</string>
@@ -170,6 +180,7 @@
     <string name="add_patient_action">הוספת מטופל</string>
 
     <!-- Patient Drawer Menu -->
+    <string name="recommendation_drawer">המלצת הרופא</string>
     <string name="logout">התנתקות</string>
 
     <!-- Login and Registration strings -->
@@ -228,6 +239,18 @@
     <string name="enabled">פועל</string>
     <string name="disabled">כבוי</string>
     <string name="about">אודות</string>
+    <string name="about_us">אודותינו</string>
+    <string name="about_us_content">
+        "&appname; היא אפליקציה מטופלים אשר חווים מצוקה נפשית.\n\n"
+        "אנו מקווים שהאפליקציה עוזרת לכם."
+    </string>
+    <string name="contact_us">צור קשר</string>
+    <string name="copyright">זכויות יוצרים</string>
+    <string name="copyrights">זכויות יוצרים</string>
+    <string name="privacy_policy">מדיניות פרטיות</string>
+    <string name="license">רישיון</string>
+    <string name="contributions">תרומות</string>
+    <string name="version">גרסה</string>
 
     <!-- Pain Points Locations -->
     <string name="scalp">קרקפת</string>

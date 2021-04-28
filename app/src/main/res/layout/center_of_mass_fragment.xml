@@ -43,17 +43,16 @@
         android:layout_weight="2"
         android:padding="20dp">
 
-
         <ImageView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:src="@drawable/ic_center_of_mass"
-            android:scaleType="fitCenter"
-            />
+            android:scaleType="fitCenter" />
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:layoutDirection="ltr"
             android:orientation="vertical">
 
             <Space

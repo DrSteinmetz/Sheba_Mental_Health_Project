@@ -1,5 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<!DOCTYPE resources [
+    <!ENTITY appname "Sheba Mental Health Project">
+    <!ENTITY app_email "some_email@gmail.com">
+    ]>
+
 <resources>
-    <string name="app_name">Sheba Mental Health Project</string>
+    <string name="app_name">&appname;</string>
 
     <string name="ok">OK</string>
     <string name="yes">Yes</string>
@@ -43,6 +50,9 @@
     <string name="social_Status">Social Status</string>
     <string name="statements">Statements</string>
     <string name="mental_functioning">Mental Functioning</string>
+    <string name="anxiety">Anxiety</string>
+    <string name="anger">Anger</string>
+    <string name="depression">Depression</string>
     <string name="no_answers_prompt">No Answers to Display…</string>
     <string name="undo">Undo</string>
     <string name="answer_et_hint">Type Your Answer Here</string>
@@ -80,6 +90,7 @@
     <string name="physical_state">Physical State</string>
     <string name="empty_pain_points_list_prompt">No Physical State Details to Show…</string>
     <string name="empty_history_list_prompt">This Patient Has No Previous Appointments…</string>
+    <string name="no_last_appointment">You Don\'t have any Previous Appointments…</string>
     <string name="appointment">Appointment</string>
     <string name="appointment_prompt">Appointment:</string>
     <string name="patient">Patient</string>
@@ -133,6 +144,7 @@
     <string name="recommendations_prompt">Recommendations:</string>
     <string name="recommendations_warning">These recommendations will be shown to your patient by the end of this meeting</string>
     <string name="no_recommendations">No Recommendations</string>
+    <string name="last_meeting_recommendations">Last Meeting\'s Recommendations</string>
 
     <!-- Pain Types -->
     <string name="sharp">Sharp</string>
@@ -169,6 +181,7 @@
     <string name="add_patient_action">Add Patient</string>
 
     <!-- Patient Drawer Menu -->
+    <string name="recommendation_drawer">Therapist\'s Recommendation</string>
     <string name="logout">Logout</string>
 
     <!-- Login and Registration strings -->
@@ -227,6 +240,31 @@
     <string name="enabled">Enabled</string>
     <string name="disabled">Disabled</string>
     <string name="about">About</string>
+    <string name="about_us">About Us</string>
+    <string name="about_us_content">
+        "&appname; is an application for mental patients.\n\n"
+        "We sincerely hope you find our app useful."
+    </string>
+    <string name="contact_us">Contact Us</string>
+    <string name="contact_us_content" translatable="false">&app_email;</string>
+    <string name="contact_app_uri" translatable="false">mailto:&app_email;</string>
+    <string name="copyright">Copyright</string>
+    <string name="copyrights">Copyrights</string>
+    <string name="privacy_policy">Privacy Policy</string>
+    <string name="license">License</string>
+    <string name="contributions">Contributions</string>
+    <string name="version">Version</string>
+    <string name="apache_license" translatable="false">
+        "© 2021 &appname; App\n\n"
+        "Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file\n"
+        "except in compliance with the License. You may obtain a copy of the License at\n\n"
+        "http://www.apache.org/licenses/LICENSE-2.0\n\n"
+        "Unless required by applicable law or agreed to in writing, software distributed under the\n"
+        "License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS\n"
+        "OF ANY KIND, either express or implied. See the License for the specific language\n"
+        "governing permissions and limitations under the License."
+    </string>
+    <string name="app_version" translatable="false">2.7.7.6</string>
 
     <!-- Pain Points Locations -->
     <string name="scalp">Scalp</string>

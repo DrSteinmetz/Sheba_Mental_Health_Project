@@ -1,10 +1,13 @@
 package com.example.sheba_mental_health_project.model;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
+import android.graphics.drawable.Drawable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -12,6 +15,7 @@ import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.sheba_mental_health_project.R;
+import com.example.sheba_mental_health_project.model.enums.AppointmentStateEnum;
 import com.google.android.material.button.MaterialButton;
 
 import java.text.SimpleDateFormat;
@@ -49,6 +53,7 @@ public class TherapistAppointmentsAdapter extends RecyclerView.Adapter<Therapist
     public class AppointmentViewHolder extends RecyclerView.ViewHolder {
 
         private final CardView cardLayout;
+        private final LinearLayout mainLayout;
         private final TextView nameTv;
         private final TextView dateTv;
         private final TextView timeTv;
@@ -59,6 +64,7 @@ public class TherapistAppointmentsAdapter extends RecyclerView.Adapter<Therapist
             super(itemView);
 
             cardLayout = itemView.findViewById(R.id.card_layout);
+            mainLayout = itemView.findViewById(R.id.main_layout);
             nameTv = itemView.findViewById(R.id.patient_name_tv);
             dateTv = itemView.findViewById(R.id.date_tv);
             timeTv = itemView.findViewById(R.id.time_tv);
@@ -85,11 +91,16 @@ public class TherapistAppointmentsAdapter extends RecyclerView.Adapter<Therapist
         return new AppointmentViewHolder(view);
     }
 
+    @SuppressLint("UseCompatLoadingForDrawables")
     @Override
     public void onBindViewHolder(@NonNull AppointmentViewHolder holder, int position) {
         final Appointment appointment = mAppointments.get(position);
 
         if (appointment != null) {
+            final Drawable cellBg = appointment.getState().equals(AppointmentStateEnum.OnGoing) ?
+                    mContext.getDrawable(R.drawable.light_blue_stroke_shape) : null;
+            holder.mainLayout.setBackground(cellBg);
+
             final String patientName = appointment.getPatient().getFullName();
             holder.nameTv.setText(patientName);
 

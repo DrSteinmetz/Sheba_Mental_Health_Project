@@ -10,6 +10,8 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewTreeObserver;
+import android.view.animation.Animation;
+import android.view.animation.ScaleAnimation;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.PopupWindow;
@@ -124,8 +126,32 @@ public class CharacterFragment extends Fragment {
             }
         };
 
+        final Observer<List<PainPoint>> onGetNewPainPoints = new Observer<List<PainPoint>>() {
+            @Override
+            public void onChanged(List<PainPoint> newPainPoints) {
+                final ScaleAnimation anim = new ScaleAnimation(1, 0.5f,
+                        1, 0.5f,
+                        Animation.RELATIVE_TO_SELF, 0.5f,
+                        Animation.RELATIVE_TO_SELF, 0.5f);
+                anim.setDuration(750);
+                anim.setRepeatMode(Animation.REVERSE);
+                anim.setRepeatCount(5);
+
+                for (PainPoint painPoint : newPainPoints) {
+                    final ImageView painIv = mLocationToIvMap.get(painPoint.getPainLocation());
+                    if (painIv != null) {
+                        painIv.setAnimation(anim);
+                        anim.start();
+                    }
+                }
+            }
+        };
+
         mViewModel.getGetAllPaintPointsSucceed().observe(this, onGetAllPainPointsSucceed);
         mViewModel.getGetAllPaintPointsFailed().observe(this, onGetAllPainPointsFailed);
+        if (!mIsClickable) {
+            mViewModel.getNewPaintPoints().observe(this, onGetNewPainPoints);
+        }
     }
 
     @Override

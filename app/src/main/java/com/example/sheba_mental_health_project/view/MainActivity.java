@@ -52,6 +52,7 @@ import com.example.sheba_mental_health_project.view.patient.PhysicalPatientFragm
 import com.example.sheba_mental_health_project.view.patient.PreMeetingCharacterFragment;
 import com.example.sheba_mental_health_project.view.patient.PreQuestionsFragment;
 import com.example.sheba_mental_health_project.view.patient.QuestionsWarningFragment;
+import com.example.sheba_mental_health_project.view.patient.RecommendationFragment;
 import com.example.sheba_mental_health_project.view.patient.SanityCheckFragment;
 import com.example.sheba_mental_health_project.view.patient.SocialQuestionsFragment;
 import com.example.sheba_mental_health_project.view.patient.StatementFragment;
@@ -122,7 +123,7 @@ public class MainActivity extends AppCompatActivity
     private final String SUMMARY_FRAG = "Summary_Fragment";
     private final String HISTORY_FRAG = "History_Fragment";
     private final String HISTORY_APPOINTMENT_FRAG = "History_Appointment_Fragment";
-
+    private final String RECOMMENDATION_FRAG = "Recommendation_Fragment";
     private final String PRE_QUESTIONS_FRAG = "Pre_Questions_Fragment";
     private final String TREATY_FRAG = "Treaty_Fragment";
     private final String BUREAUCRACY_FRAG = "Bureaucracy_Fragment";
@@ -325,6 +326,14 @@ public class MainActivity extends AppCompatActivity
                 break;
             case R.id.inquiry_action:
                 onMoveToPreQuestions();
+                mDrawerLayout.closeDrawers();
+                break;
+            case R.id.recommendations_action:
+                getSupportFragmentManager().beginTransaction()
+                        .add(R.id.container, RecommendationFragment.newInstance(),
+                                RECOMMENDATION_FRAG)
+                        .addToBackStack(null)
+                        .commit();
                 mDrawerLayout.closeDrawers();
                 break;
             case R.id.settings_action:

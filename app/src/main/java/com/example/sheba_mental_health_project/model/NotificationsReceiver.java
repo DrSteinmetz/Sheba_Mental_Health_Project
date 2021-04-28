@@ -70,7 +70,7 @@ public class NotificationsReceiver extends BroadcastReceiver {
 
         final NotificationCompat.Builder builder = new NotificationCompat.Builder(context, channelID);
         builder.setPriority(Notification.PRIORITY_MAX).setContentTitle(context.getString(R.string.app_name))
-                .setSmallIcon(R.drawable.ic_red_pain_point) // TODO: add a logo
+                .setSmallIcon(R.drawable.ic_logo_icon_bw)
                 .setAutoCancel(true)
                 .setDefaults(Notification.DEFAULT_SOUND | Notification.DEFAULT_VIBRATE)
                 .setVisibility(NotificationCompat.VISIBILITY_PUBLIC);

@@ -4,7 +4,13 @@
 
     <item android:id="@+id/inquiry_action"
         android:title="@string/inquiry"
+        android:icon="@drawable/ic_question_icon"
         android:orderInCategory="0"
+        app:showAsAction="never" />
+
+    <item android:id="@+id/recommendations_action"
+        android:title="@string/recommendation_drawer"
+        android:orderInCategory="1"
         app:showAsAction="never" />
 
     <item android:id="@+id/settings_action"
@@ -15,6 +21,7 @@
 
     <item android:id="@+id/logout_action"
         android:title="@string/logout"
+        android:icon="@drawable/ic_round_logout_24"
         android:orderInCategory="9"
         app:showAsAction="never" />
 

@@ -1,5 +1,6 @@
 package com.example.sheba_mental_health_project.view.therapist;
 
+import android.graphics.Paint;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -14,6 +15,7 @@ import android.widget.TextView;
 import com.example.sheba_mental_health_project.R;
 import com.example.sheba_mental_health_project.model.Appointment;
 import com.example.sheba_mental_health_project.model.HistoryAppointmentPageAdapter;
+import com.example.sheba_mental_health_project.view.ConfirmationDialog;
 import com.example.sheba_mental_health_project.view.character.CharacterFragment;
 import com.google.android.material.tabs.TabLayout;
 
@@ -72,17 +74,40 @@ public class HistoryAppointmentFragment extends Fragment {
         final TextView dateTv = rootView.findViewById(R.id.date_tv);
         final TextView patientNameTv = rootView.findViewById(R.id.patient_name_tv);
         final TextView therapistNameTv = rootView.findViewById(R.id.therapist_name_tv);
+        final TextView summaryTv = rootView.findViewById(R.id.summary_tv);
         mTabLayout = rootView.findViewById(R.id.tab_layout);
         mViewPager = rootView.findViewById(R.id.view_pager);
 
         dateTv.setText(ddMMYYYY.format(mAppointment.getAppointmentDate()));
         patientNameTv.setText(mAppointment.getPatient().getFullName());
         therapistNameTv.setText(mAppointment.getTherapist().getFullName());
+        summaryTv.setPaintFlags(summaryTv.getPaintFlags() | Paint.UNDERLINE_TEXT_FLAG);
 
         mViewPager.setAdapter(mPageAdapter);
         mTabLayout.setupWithViewPager(mViewPager);
 
         mViewPager.setCurrentItem(1);
+
+        summaryTv.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String diagnosis = mAppointment.getDiagnosis();
+                String recommendations = mAppointment.getRecommendations();
+
+                diagnosis = (diagnosis == null || diagnosis.isEmpty()) ?
+                        getString(R.string.no_diagnosis) : diagnosis ;
+                recommendations = (recommendations == null || recommendations.isEmpty()) ?
+                        getString(R.string.no_recommendations) : recommendations;
+
+                final ConfirmationDialog summaryDialog = new ConfirmationDialog(requireContext());
+                summaryDialog.setTitleWarningText(getString(R.string.last_meeting_summary));
+                summaryDialog.setPromptText(getString(R.string.diagnosis_prompt) + "\n"
+                        + diagnosis + "\n\n"
+                        + getString(R.string.recommendations_prompt) + "\n"
+                        + recommendations);
+                summaryDialog.show();
+            }
+        });
 
         return rootView;
     }

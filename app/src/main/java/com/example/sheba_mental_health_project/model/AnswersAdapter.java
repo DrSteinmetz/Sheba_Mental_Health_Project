@@ -1,5 +1,6 @@
 package com.example.sheba_mental_health_project.model;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -9,10 +10,14 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.sheba_mental_health_project.R;
+import com.example.sheba_mental_health_project.model.enums.FrequencyEnum;
 import com.google.android.material.checkbox.MaterialCheckBox;
+import com.google.android.material.chip.Chip;
+import com.google.android.material.chip.ChipGroup;
 import com.google.android.material.slider.Slider;
 import com.google.android.material.textview.MaterialTextView;
 
+import java.util.Arrays;
 import java.util.List;
 
 public class AnswersAdapter extends RecyclerView.Adapter<AnswersAdapter.AnswersViewHolder> {
@@ -24,6 +29,7 @@ public class AnswersAdapter extends RecyclerView.Adapter<AnswersAdapter.AnswersV
     private final int SLIDER_TYPE = 2;
     private final int NUMBER_TYPE = 3;
     private final int OPEN_TYPE = 4;
+    private final int RADIO_TYPE = 5;
 
     private final String TAG = "AnswersAdapter";
 
@@ -44,6 +50,8 @@ public class AnswersAdapter extends RecyclerView.Adapter<AnswersAdapter.AnswersV
         private MaterialTextView numberAnswerTv;
         private TextView openTv;
         private MaterialTextView openAnswerTv;
+        private TextView radioTv;
+        private ChipGroup chipGroup;
 
         public AnswersViewHolder(@NonNull View itemView, final int viewType) {
             super(itemView);
@@ -66,6 +74,10 @@ public class AnswersAdapter extends RecyclerView.Adapter<AnswersAdapter.AnswersV
                 case OPEN_TYPE:
                     openTv = itemView.findViewById(R.id.question_tv);
                     openAnswerTv = itemView.findViewById(R.id.answer_tv);
+                    break;
+                case RADIO_TYPE:
+                    radioTv = itemView.findViewById(R.id.question_tv);
+                    chipGroup = itemView.findViewById(R.id.chip_group);
                     break;
             }
         }
@@ -93,6 +105,10 @@ public class AnswersAdapter extends RecyclerView.Adapter<AnswersAdapter.AnswersV
             case OPEN_TYPE:
                 view = LayoutInflater.from(parent.getContext())
                         .inflate(R.layout.answer_open_cell_layout, null);
+                break;
+            case RADIO_TYPE:
+                view = LayoutInflater.from(parent.getContext())
+                        .inflate(R.layout.answer_radio_group_cell_layout, null);
                 break;
             default:
                 view = null;
@@ -178,6 +194,20 @@ public class AnswersAdapter extends RecyclerView.Adapter<AnswersAdapter.AnswersV
                         openAnswerTv.setText("");
                     }
                     break;
+                case RADIO_TYPE:
+                    final TextView radioTv = holder.radioTv;
+                    final ChipGroup chipGroup = holder.chipGroup;
+
+                    radioTv.setText(questionText);
+
+                    if (answer != null) {
+                        final String answerValue = ((AnswerOpen) answer).getAnswer();
+                        ((Chip) chipGroup.findViewWithTag(answerValue)).setChecked(true);
+                    } else {
+                        chipGroup.clearCheck();
+                    }
+
+                    break;
             }
         }
     }
@@ -199,6 +229,9 @@ public class AnswersAdapter extends RecyclerView.Adapter<AnswersAdapter.AnswersV
                 break;
             case Open:
                 questionType = OPEN_TYPE;
+                break;
+            case Radio:
+                questionType = RADIO_TYPE;
                 break;
             default:
                 questionType = 0;

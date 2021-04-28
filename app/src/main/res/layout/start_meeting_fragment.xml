@@ -140,7 +140,7 @@
             android:layout_alignParentBottom="true"
             android:text="@string/start_meeting"
             style="@style/blue_btn"
-            android:textSize="20dp" />
+            android:textSize="20sp" />
 
     </RelativeLayout>
 

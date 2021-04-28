@@ -13,6 +13,7 @@ import com.example.sheba_mental_health_project.viewmodel.AnxietyQuestionsViewMod
 import com.example.sheba_mental_health_project.viewmodel.InquiryViewModel;
 import com.example.sheba_mental_health_project.viewmodel.MentalQuestionsViewModel;
 import com.example.sheba_mental_health_project.viewmodel.HabitsQuestionsViewModel;
+import com.example.sheba_mental_health_project.viewmodel.RecommendationViewModel;
 import com.example.sheba_mental_health_project.viewmodel.SocialQuestionsViewModel;
 import com.example.sheba_mental_health_project.viewmodel.HistoryViewModel;
 import com.example.sheba_mental_health_project.viewmodel.Covid19QuestionsViewModel;
@@ -181,6 +182,11 @@ public class ViewModelFactory implements ViewModelProvider.Factory {
             case DepressionQuestions:
                 if (modelClass.isAssignableFrom(DepressionQuestionsViewModel.class)) {
                     objectToReturn = (T) new DepressionQuestionsViewModel(mContext);
+                }
+                break;
+            case Recommendation:
+                if (modelClass.isAssignableFrom(RecommendationViewModel.class)) {
+                    objectToReturn = (T) new RecommendationViewModel(mContext);
                 }
                 break;
             case MainTherapist:

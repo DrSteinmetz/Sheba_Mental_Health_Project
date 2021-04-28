@@ -11,6 +11,7 @@ import com.example.sheba_mental_health_project.model.PainPoint;
 import com.example.sheba_mental_health_project.model.enums.PainLocationEnum;
 import com.example.sheba_mental_health_project.repository.Repository;
 
+import java.util.ArrayList;
 import java.util.EnumMap;
 import java.util.List;
 import java.util.Map;
@@ -25,6 +26,8 @@ public class CharacterViewModel extends ViewModel {
     private MutableLiveData<String> mGetAllPaintPointsFailed;
 
     private final EnumMap<PainLocationEnum, PainPoint> mPainPointsMap = new EnumMap<>(PainLocationEnum.class);
+
+    private MutableLiveData<List<PainPoint>> mNewPaintPoints;
 
     private final String TAG = "CharacterViewModel";
 
@@ -53,6 +56,10 @@ public class CharacterViewModel extends ViewModel {
         mRepository.setGetAllPainPointsInterface(new Repository.RepositoryGetAllPainPointsInterface() {
             @Override
             public void onGetAllPainPointsSucceed(Map<String, List<PainPoint>> painPointsMap) {
+                if (!mPainPointsMap.isEmpty()) {
+                    updateNewPainPointsList(painPointsMap);
+                }
+
                 mPainPointsMap.clear();
                 for (String key : painPointsMap.keySet()) {
                     for (PainPoint painPoint : painPointsMap.get(key)) {
@@ -70,6 +77,28 @@ public class CharacterViewModel extends ViewModel {
         });
     }
 
+
+    public MutableLiveData<List<PainPoint>> getNewPaintPoints() {
+        if (mNewPaintPoints == null) {
+            mNewPaintPoints = new MutableLiveData<>();
+        }
+        return mNewPaintPoints;
+    }
+
+    private void updateNewPainPointsList(final Map<String, List<PainPoint>> painPointsMap) {
+        final List<PainPoint> oldPainPointList = new ArrayList<>(mPainPointsMap.values());
+        final List<PainPoint> newPainPointList = new ArrayList<>();
+        mNewPaintPoints = getNewPaintPoints();
+
+        if (!painPointsMap.isEmpty()) {
+            for (List<PainPoint> list : painPointsMap.values()) {
+                newPainPointList.addAll(list);
+            }
+        }
+
+        newPainPointList.removeAll(oldPainPointList);
+        mNewPaintPoints.setValue(newPainPointList);
+    }
 
     public Appointment getAppointment() {
         return mAppointment;

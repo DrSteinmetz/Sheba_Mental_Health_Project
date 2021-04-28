@@ -25,6 +25,7 @@
         android:id="@+id/seekbar_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layoutDirection="ltr"
         android:layout_below="@id/pain_strength_tv">
 
         <ImageView

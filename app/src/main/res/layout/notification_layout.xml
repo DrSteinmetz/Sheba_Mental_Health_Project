@@ -14,7 +14,7 @@
             android:layout_height="25dp"
             android:layout_centerVertical="true"
             android:layout_marginVertical="10dp"
-            android:src="@drawable/ic_red_pain_point" />
+            android:src="@drawable/ic_logo_icon" />
 
         <TextView
             android:id="@+id/notif_title_tv"
