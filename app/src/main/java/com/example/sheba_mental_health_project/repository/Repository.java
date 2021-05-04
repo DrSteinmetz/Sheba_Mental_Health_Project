@@ -1344,7 +1344,7 @@ public class Repository {
                 QuestionTypeEnum.Binary, false, ViewModelEnum.Bureaucracy));
         questions.add(new Question("16", "Document for Social Security",
                 QuestionTypeEnum.Binary, false, ViewModelEnum.Bureaucracy));
-        questions.add(new Question("17", "Document for Family Doctor",
+        questions.add(new Question("17", "Document for Family Doctor/Another Doctor",
                 QuestionTypeEnum.Binary, false, ViewModelEnum.Bureaucracy));
         questions.add(new Question("18", "Document for Rehabilitation Committee",
                 QuestionTypeEnum.Binary, false, ViewModelEnum.Bureaucracy));
@@ -1357,19 +1357,15 @@ public class Repository {
         questions.add(new Question("21", "Other",
                 QuestionTypeEnum.Binary, false, ViewModelEnum.Bureaucracy));
 
-        questions.add(new Question("22", "I Have One of These Symptoms: Fever, Sore Throat, Loss of Taste or Smell, Dry Cough, Muscle pain.",
+        questions.add(new Question("22", "Do You Have One of These Symptoms: Fever, Sore Throat, Loss of Taste or Smell, Dry Cough, Muscle pain.",
                 QuestionTypeEnum.Binary, false, ViewModelEnum.CovidQuestions));
-        questions.add(new Question("23", "I Am Diagnosed with COVID-19",
+        questions.add(new Question("23", "Are You Diagnosed with COVID-19",
                 QuestionTypeEnum.Binary, false, ViewModelEnum.CovidQuestions));
-        questions.add(new Question("24", "One or More of My Household Members Have Been Diagnosed with COVID-19",
+        questions.add(new Question("24", "One or More of Your Household Members Have Been Diagnosed with COVID-19",
                 QuestionTypeEnum.Binary, false, ViewModelEnum.CovidQuestions));
         questions.add(new Question("25", "Does Any of Your Relatives Has Been Diagnosed with COVID-19?",
                 QuestionTypeEnum.Open, false, ViewModelEnum.CovidQuestions));
         questions.add(new Question("26", "Were You Diagnosed with COVID-19 in the Past? If Yes, When?",
-                QuestionTypeEnum.Open, false, ViewModelEnum.CovidQuestions));
-        questions.add(new Question("27", "Have You Experienced Any Emotional Suffering Due to COVID-19?",
-                QuestionTypeEnum.Open, false, ViewModelEnum.CovidQuestions));
-        questions.add(new Question("28", "Have You Experienced Any Physical Suffering Due to COVID-19?",
                 QuestionTypeEnum.Open, false, ViewModelEnum.CovidQuestions));
         questions.add(new Question("29", "Have You Experienced Any Emotional Suffering Due to COVID-19? (While Not being Diagnosed Yourself)",
                 QuestionTypeEnum.Open, false, ViewModelEnum.CovidQuestions));
@@ -1389,24 +1385,26 @@ public class Repository {
                 QuestionTypeEnum.Binary, false, ViewModelEnum.Statement));
         questions.add(new Question("35", "I Have been Hospitalized Recently",
                 QuestionTypeEnum.Binary, false, ViewModelEnum.Statement));
-        questions.add(new Question("350", "There Has Been a Change In My Medicine Dosage",
+        questions.add(new Question("352", "There Has Been a Change In My Medicine Dosage-Increase/Decrease/Stoppage/New Medicine",
                 QuestionTypeEnum.Binary, false, ViewModelEnum.Statement));
-        questions.add(new Question("351", "I Have Stopped Taking One of My Medicines",
-                QuestionTypeEnum.Binary, false, ViewModelEnum.Statement));
-        questions.add(new Question("352", "I Have a New Medical Diagnose",
+        questions.add(new Question("351", "I Have a New Medical Diagnose",
                 QuestionTypeEnum.Binary, false, ViewModelEnum.Statement));
         questions.add(new Question("354", "I Am Currently During a Legal Proceeding",
                 QuestionTypeEnum.Binary, false, ViewModelEnum.Statement));
-        questions.add(new Question("355", "I Went to ER Recently",
+        questions.add(new Question("350", "I Went to ER Recently",
+                QuestionTypeEnum.Binary, false, ViewModelEnum.Statement));
+        questions.add(new Question("36", "I Am Under Custody/Allowance Recipient",
                 QuestionTypeEnum.Binary, false, ViewModelEnum.Statement));
 
-        questions.add(new Question("36", "I Am Under Custody",
-                QuestionTypeEnum.Binary, false, ViewModelEnum.SocialQuestions));
-        questions.add(new Question("37", "Are You Getting Any Mental Help Nowadays? If You Are, By Whom and When Was Your Last Appointment? (Psychiatrist/Social Worker/Psychologist)",
-                QuestionTypeEnum.Open, false, ViewModelEnum.SocialQuestions));
-        questions.add(new Question("38", "Rank Your Distress Level on a Scale of 1 to 10:",
+        questions.add(new Question("37", "Rank Your Mental Distress Level on a Scale of 1 to 10:",
+                QuestionTypeEnum.Slider, false, ViewModelEnum.SocialQuestions));
+        questions.add(new Question("38", "Rank Your Physical Distress Level on a Scale of 1 to 10:",
                 QuestionTypeEnum.Slider, false, ViewModelEnum.SocialQuestions));
         questions.add(new Question("39", "Rank Your Daily Functioning on a Scale of 1 to 10:",
+                QuestionTypeEnum.Slider, false, ViewModelEnum.SocialQuestions));
+        questions.add(new Question("391", "Are You Getting Any Mental Help Nowadays? If You Are, By Whom and When Was Your Last Appointment? (Psychiatrist/Social Worker/Psychologist)",
+                QuestionTypeEnum.Open, false, ViewModelEnum.SocialQuestions));
+        questions.add(new Question("392", "Do You Have Other Specialist Doctors?",
                 QuestionTypeEnum.Slider, false, ViewModelEnum.SocialQuestions));
         questions.add(new Question("4", "Do You Have Anyone Around to Support You?",
                 QuestionTypeEnum.Open, false, ViewModelEnum.SocialQuestions));
@@ -1424,8 +1422,6 @@ public class Repository {
         questions.add(new Question("45", "Do You Have Any Sleeping Issues?",
                 QuestionTypeEnum.Open, false, ViewModelEnum.HabitsQuestions));
 
-        questions.add(new Question("46", "I Experience Bad Mood",
-                QuestionTypeEnum.Binary, false, ViewModelEnum.MentalQuestions));
         questions.add(new Question("47", "I Experience Uplifting Mood",
                 QuestionTypeEnum.Binary, false, ViewModelEnum.MentalQuestions));
         questions.add(new Question("48", "I Experience Anxiety",
@@ -1434,15 +1430,7 @@ public class Repository {
                 QuestionTypeEnum.Binary, false, ViewModelEnum.MentalQuestions));
         questions.add(new Question("5", "I Experience Stress",
                 QuestionTypeEnum.Binary, false, ViewModelEnum.MentalQuestions));
-        questions.add(new Question("50", "I Have Peculiar Thoughts",
-                QuestionTypeEnum.Binary, false, ViewModelEnum.MentalQuestions));
-        questions.add(new Question("51", "I Experience Strange Sensation",
-                QuestionTypeEnum.Binary, false, ViewModelEnum.MentalQuestions));
-        questions.add(new Question("52", "I Experience Anger",
-                QuestionTypeEnum.Binary, false, ViewModelEnum.MentalQuestions));
-        questions.add(new Question("53", "I Have Aggressive Thoughts",
-                QuestionTypeEnum.Binary, false, ViewModelEnum.MentalQuestions));
-        questions.add(new Question("54", "I Have Suicidal Thoughts",
+        questions.add(new Question("50", "I Have Intense/ Peculiar Thoughts",
                 QuestionTypeEnum.Binary, false, ViewModelEnum.MentalQuestions));
         questions.add(new Question("55", "I Experience Concentration Issues",
                 QuestionTypeEnum.Binary, false, ViewModelEnum.MentalQuestions));
@@ -1452,7 +1440,7 @@ public class Repository {
                 QuestionTypeEnum.Binary, false, ViewModelEnum.MentalQuestions));
         questions.add(new Question("58", "I Experience Decrease in My Hearing",
                 QuestionTypeEnum.Binary, false, ViewModelEnum.MentalQuestions));
-        questions.add(new Question("59", "I Experience Walking Difficulties",
+        questions.add(new Question("59", "I Experience Walking Difficulties/ Movement Limitations",
                 QuestionTypeEnum.Binary, false, ViewModelEnum.MentalQuestions));
 
         questions.add(new Question("6", "I Felt Fearful",
@@ -1519,7 +1507,7 @@ public class Repository {
                 QuestionTypeEnum.Binary, false, ViewModelEnum.Bureaucracy));
         questions.add(new Question("16", "מכתב לביטוח לאומי",
                 QuestionTypeEnum.Binary, false, ViewModelEnum.Bureaucracy));
-        questions.add(new Question("17", "מכתב לרופא משפחה",
+        questions.add(new Question("17", "מכתב לרופא משפחה/רופא אחר",
                 QuestionTypeEnum.Binary, false, ViewModelEnum.Bureaucracy));
         questions.add(new Question("18", "מסמך לוועדת סל שיקום",
                 QuestionTypeEnum.Binary, false, ViewModelEnum.Bureaucracy));
@@ -1532,19 +1520,15 @@ public class Repository {
         questions.add(new Question("21", "אחר",
                 QuestionTypeEnum.Binary, false, ViewModelEnum.Bureaucracy));
 
-        questions.add(new Question("22", "יש לי אחד מהתסמינים הבאים - חום גבוה, כאב גרון, אובדן חוש טעם, אובדן חודש ריח, שיעול, כאבי שרירים.",
+        questions.add(new Question("22", "האם יש לך אחד מהתסמינים הבאים - חום גבוה, כאב גרון, אובדן חוש טעם, אובדן חודש ריח, שיעול, כאבי שרירים.",
                 QuestionTypeEnum.Binary, false, ViewModelEnum.CovidQuestions));
-        questions.add(new Question("23", "אני מאובחן כיום כחולה קורונה",
+        questions.add(new Question("23", "האם אתה מאובחן כיום כחולה קורונה",
                 QuestionTypeEnum.Binary, false, ViewModelEnum.CovidQuestions));
-        questions.add(new Question("24", "מישהו מבני ביתי כחולה כיום בקורונה",
+        questions.add(new Question("24", "האם מישהו מבני ביתך מאובחן כיום כחולה קורונה",
                 QuestionTypeEnum.Binary, false, ViewModelEnum.CovidQuestions));
-        questions.add(new Question("25", "אם אחד מקרובי משפחתך חלה בקורונה?",
+        questions.add(new Question("25", "האם אחד מקרובי משפחתך חלה בקורונה?",
                 QuestionTypeEnum.Open, false, ViewModelEnum.CovidQuestions));
         questions.add(new Question("26", "האם חלית בקורונה בעבר ואם כן מתי?",
-                QuestionTypeEnum.Open, false, ViewModelEnum.CovidQuestions));
-        questions.add(new Question("27", "האם בשל מגפת הקורונה נגרם לך סבל נפשי?",
-                QuestionTypeEnum.Open, false, ViewModelEnum.CovidQuestions));
-        questions.add(new Question("28", "האם בשל מחלת הקורונה נגרם לך סבל גופני?",
                 QuestionTypeEnum.Open, false, ViewModelEnum.CovidQuestions));
         questions.add(new Question("29", "האם בשל מגפת הקורונה (גם אם לא חלית בעצמך) - נגרם לך סבל נפשי?",
                 QuestionTypeEnum.Open, false, ViewModelEnum.CovidQuestions));
@@ -1564,29 +1548,32 @@ public class Repository {
                 QuestionTypeEnum.Binary, false, ViewModelEnum.Statement));
         questions.add(new Question("35", "אושפזתי לאחרונה",
                 QuestionTypeEnum.Binary, false, ViewModelEnum.Statement));
-        questions.add(new Question("350", "חל שינוי במינון התרופות שלי",
+        questions.add(new Question("352", "חל שינוי במינון התרופות שלי-עליה/ירידה/הפסקה/התחלת תרופה חדשה",
                 QuestionTypeEnum.Binary, false, ViewModelEnum.Statement));
-        questions.add(new Question("351", "הפסקתי ליטול תרופה כלשהי",
-                QuestionTypeEnum.Binary, false, ViewModelEnum.Statement));
-        questions.add(new Question("352", "יש לי אבחון רפואי חדש",
+        questions.add(new Question("351", "יש לי אבחון רפואי חדש",
                 QuestionTypeEnum.Binary, false, ViewModelEnum.Statement));
         questions.add(new Question("354", "אני נמצא כעת בהליך משפטי",
                 QuestionTypeEnum.Binary, false, ViewModelEnum.Statement));
-        questions.add(new Question("355", "פניתי למיון לאחרונה",
+        questions.add(new Question("350", "פניתי למיון לאחרונה",
+                QuestionTypeEnum.Binary, false, ViewModelEnum.Statement));
+        questions.add(new Question("36", "יש עליי אפוטרופוסות/מקבל קצבה",
                 QuestionTypeEnum.Binary, false, ViewModelEnum.Statement));
 
-        questions.add(new Question("36", "יש עליי אפוטרופוסות",
-                QuestionTypeEnum.Binary, false, ViewModelEnum.SocialQuestions));
-        questions.add(new Question("37", "האם יש לך כיום מטפלים בתחום בריאות הנפש ואם כן מי הם ומתי נבדקת אצלם לאחרונה? (פסיכיאטר/עו\"ס/פסיכולוג)",
-                QuestionTypeEnum.Open, false, ViewModelEnum.SocialQuestions));
-        questions.add(new Question("38", "דרג/י את עוצמת מצוקתך מ-1 עד 10:",
+        questions.add(new Question("37", "דרג/י את עוצמת מצוקתך הנפשית מ-1 עד 10:",
+                QuestionTypeEnum.Slider, false, ViewModelEnum.SocialQuestions));
+        questions.add(new Question("38", "דרג/י את עוצמת מצוקתך הגופנית מ-1 עד 10:",
                 QuestionTypeEnum.Slider, false, ViewModelEnum.SocialQuestions));
         questions.add(new Question("39", "דרג/י את רמת התפקוד היומיומי שלך מ-1 עד 10:",
+                QuestionTypeEnum.Slider, false, ViewModelEnum.SocialQuestions));
+        questions.add(new Question("391", "האם יש לך כיום מטפלים בתחום בריאות הנפש ואם כן מי הם ומתי נבדקת אצלם לאחרונה? (פסיכיאטר/עו\"ס/פסיכולוג)",
+                QuestionTypeEnum.Open, false, ViewModelEnum.SocialQuestions));
+        questions.add(new Question("392", "האם יש לך רופאים מומחים נוספים?",
                 QuestionTypeEnum.Slider, false, ViewModelEnum.SocialQuestions));
         questions.add(new Question("4", "האם יש מישהו תומך בסביבתך?",
                 QuestionTypeEnum.Open, false, ViewModelEnum.SocialQuestions));
         questions.add(new Question("40", "האם מישהו מנצל אותך? פוגע בך?",
                 QuestionTypeEnum.Open, false, ViewModelEnum.SocialQuestions));
+
 
         questions.add(new Question("41", "מה הגובה שלך? (ס\"מ)",
                 QuestionTypeEnum.Number, false, ViewModelEnum.HabitsQuestions));
@@ -1599,8 +1586,6 @@ public class Repository {
         questions.add(new Question("45", "האם השינה שלך פגומה?",
                 QuestionTypeEnum.Open, false, ViewModelEnum.HabitsQuestions));
 
-        questions.add(new Question("46", "אני מרגיש/ה מצב רוח ירוד",
-                QuestionTypeEnum.Binary, false, ViewModelEnum.MentalQuestions));
         questions.add(new Question("47", "אני מרגיש/ה מצב רוב מרומם",
                 QuestionTypeEnum.Binary, false, ViewModelEnum.MentalQuestions));
         questions.add(new Question("48", "אני מרגיש/ה חרדה",
@@ -1609,15 +1594,7 @@ public class Repository {
                 QuestionTypeEnum.Binary, false, ViewModelEnum.MentalQuestions));
         questions.add(new Question("5", "אני מרגיש/ה מתח",
                 QuestionTypeEnum.Binary, false, ViewModelEnum.MentalQuestions));
-        questions.add(new Question("50", "יש לי מחשבות מוזרות",
-                QuestionTypeEnum.Binary, false, ViewModelEnum.MentalQuestions));
-        questions.add(new Question("51", "יש לי תחושות מוזרות",
-                QuestionTypeEnum.Binary, false, ViewModelEnum.MentalQuestions));
-        questions.add(new Question("52", "אני מרגיש/ה כעס",
-                QuestionTypeEnum.Binary, false, ViewModelEnum.MentalQuestions));
-        questions.add(new Question("53", "יש לי מחשבות תוקפניות",
-                QuestionTypeEnum.Binary, false, ViewModelEnum.MentalQuestions));
-        questions.add(new Question("54", "יש לי מחשבות אובדניות",
+        questions.add(new Question("50", "יש לי מחשבות חזקות/ מוזרות",
                 QuestionTypeEnum.Binary, false, ViewModelEnum.MentalQuestions));
         questions.add(new Question("55", "יש לי פגיעה בריכוז",
                 QuestionTypeEnum.Binary, false, ViewModelEnum.MentalQuestions));
@@ -1627,7 +1604,7 @@ public class Repository {
                 QuestionTypeEnum.Binary, false, ViewModelEnum.MentalQuestions));
         questions.add(new Question("58", "יש לי ירידה בשמיעה",
                 QuestionTypeEnum.Binary, false, ViewModelEnum.MentalQuestions));
-        questions.add(new Question("59", "יש לי קושי בהליכה",
+        questions.add(new Question("59", "יש לי קושי בהליכה/ מגבלת תנועה",
                 QuestionTypeEnum.Binary, false, ViewModelEnum.MentalQuestions));
 
         questions.add(new Question("6", "הרגשתי חרדה",
@@ -1643,9 +1620,9 @@ public class Repository {
                 QuestionTypeEnum.Radio, false, ViewModelEnum.AngerQuestions));
         questions.add(new Question("65", "הרגשתי כעס",
                 QuestionTypeEnum.Radio, false, ViewModelEnum.AngerQuestions));
-        questions.add(new Question("66", "הרגשתי שאני עומד/ת להתפוצץ",
+        questions.add(new Question("66", "הרגשתי שאני עומד/ת להתפרץ",
                 QuestionTypeEnum.Radio, false, ViewModelEnum.AngerQuestions));
-        questions.add(new Question("67", "הרגשתי רטנוני",
+        questions.add(new Question("67", "הרגשתי רוגזני",
                 QuestionTypeEnum.Radio, false, ViewModelEnum.AngerQuestions));
         questions.add(new Question("68", "הרגשתי מרוגז/ת",
                 QuestionTypeEnum.Radio, false, ViewModelEnum.AngerQuestions));
