@@ -43,6 +43,7 @@ public class BureaucracyFragment extends Fragment {
 
     public interface BureaucracyFragmentInterface {
         void onContinueFromBureaucracy();
+        void onDocumentsClickedFromBureaucracy();
     }
 
     private BureaucracyFragmentInterface listener;
@@ -119,6 +120,7 @@ public class BureaucracyFragment extends Fragment {
 //        final TextView addDocumentTv = rootView.findViewById(R.id.add_document_tv);
         final MaterialButton backBtn = rootView.findViewById(R.id.back_btn);
         final MaterialButton continueBtn = rootView.findViewById(R.id.continue_btn);
+        final TextView addDocumentTv = rootView.findViewById(R.id.add_document_tv);
 
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         mRecyclerView.setHasFixedSize(true);
@@ -147,6 +149,13 @@ public class BureaucracyFragment extends Fragment {
                     });
                     dialog.show();
                 }
+            }
+        });
+
+        addDocumentTv.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                listener.onDocumentsClickedFromBureaucracy();
             }
         });
 

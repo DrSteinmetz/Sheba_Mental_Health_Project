@@ -73,6 +73,7 @@ public class Repository {
     private ListenerRegistration mGetLiveAnswersListener;
     private ListenerRegistration mGetFeelingsAnswersListener;
     private ListenerRegistration mGetLastChatMessageListener;
+    private ListenerRegistration mGetDocumentsListener;
 
     private final String PATIENTS = "patients";
     private final String THERAPISTS = "therapists";
@@ -84,6 +85,7 @@ public class Repository {
     private final String QUESTIONS_LOCAL = "questions_local";
 
     private final String TAG = "Repository";
+
 
 
     /**<------ Interfaces ------>*/
@@ -339,6 +341,34 @@ public class Repository {
     public void setUpdateStateOfAppointmentInterface(RepositoryUpdateStateOfAppointmentInterface
                                                              repositoryUpdateStateOfAppointmentInterface){
         this.mRepositoryUpdateStateOfAppointmentListener = repositoryUpdateStateOfAppointmentInterface;
+    }
+
+    /*<------ Update Documents of Appointment ------>*/
+    public interface RepositoryUpdateDocumentsOfAppointmentInterface {
+        void onUpdateDocumentsOfAppointmentSucceed(String appointmentDocumentUri);
+
+        void onUpdateDocumentsOfAppointmentFailed(String error);
+    }
+
+    private RepositoryUpdateDocumentsOfAppointmentInterface mRepositoryUpdateDocumentsOfAppointmentListener;
+
+    public void setUpdateDocumentsOfAppointmentInterface(RepositoryUpdateDocumentsOfAppointmentInterface
+                                                             repositoryUpdateDocumentsOfAppointmentInterface){
+        this.mRepositoryUpdateDocumentsOfAppointmentListener = repositoryUpdateDocumentsOfAppointmentInterface;
+    }
+
+    /*<------ Get Documents of Appointment ------>*/
+    public interface RepositoryGetDocumentsOfAppointmentInterface {
+        void onGetDocumentsOfAppointmentSucceed(List<String> appointmentDocumentsUriList);
+
+        void onGetDocumentsOfAppointmentFailed(String error);
+    }
+
+    private RepositoryGetDocumentsOfAppointmentInterface mRepositoryGetDocumentsOfAppointmentListener;
+
+    public void setGetDocumentsOfAppointmentInterface(RepositoryGetDocumentsOfAppointmentInterface
+                                                                 repositoryGetDocumentsOfAppointmentInterface){
+        this.mRepositoryGetDocumentsOfAppointmentListener = repositoryGetDocumentsOfAppointmentInterface;
     }
 
     /*<------ Update Finished Pre Questions ------>*/
@@ -1292,6 +1322,64 @@ public class Repository {
             }
         });
     }
+
+    public void updateAppointmentDocuments(String documentUri,boolean isToRemove) {
+
+        List<String> documentsToSave = new ArrayList<>(mCurrentAppointment.getDocuments());
+        if(!isToRemove)
+            documentsToSave.add(documentUri);
+        else
+            documentsToSave.remove(documentUri);
+
+        mCloudDB.collection(APPOINTMENTS).document(mCurrentAppointment.getId())
+                .update("documents", documentsToSave)
+                .addOnCompleteListener(new OnCompleteListener<Void>() {
+                    @Override
+                    public void onComplete(@NonNull Task<Void> task) {
+                        if (task.isSuccessful()) {
+                         //   mCurrentAppointment.getDocuments().add(documentUri);
+                            if (mRepositoryUpdateDocumentsOfAppointmentListener != null) {
+                                mRepositoryUpdateDocumentsOfAppointmentListener
+                                        .onUpdateDocumentsOfAppointmentSucceed(documentUri);
+                            }
+                        } else {
+                            if (mRepositoryUpdateDocumentsOfAppointmentListener != null) {
+                                mRepositoryUpdateDocumentsOfAppointmentListener.onUpdateDocumentsOfAppointmentFailed(
+                                        task.getException().getMessage());
+
+                            }
+                        }
+                    }
+                });
+    }
+
+    public void readAppointmentDocuments(final Appointment appointment) {
+        mGetDocumentsListener = mCloudDB.collection(APPOINTMENTS)
+                .document(appointment.getId())
+                .addSnapshotListener(new EventListener<DocumentSnapshot>() {
+                    @Override
+                    public void onEvent(@Nullable DocumentSnapshot value, @Nullable FirebaseFirestoreException error) {
+                        if (value != null && value.exists()) {
+                            final Appointment dbAppointment = value.toObject(Appointment.class);
+
+                            if (mRepositoryGetDocumentsOfAppointmentListener != null) {
+                                mRepositoryGetDocumentsOfAppointmentListener
+                                        .onGetDocumentsOfAppointmentSucceed(dbAppointment.getDocuments());
+                                appointment.setDocuments(dbAppointment.getDocuments());
+                            }
+                        } else {
+                            Log.w(TAG, "onEvent: ", error);
+                            if (mRepositoryGetDocumentsOfAppointmentListener != null) {
+                                mRepositoryGetDocumentsOfAppointmentListener.onGetDocumentsOfAppointmentFailed(error.getMessage());
+                            }
+                        }
+                    }
+                });
+    }
+    public void removeGetDocumentsAppointmentsListener() {
+        mGetDocumentsListener.remove();
+    }
+
 
     private void setAppointmentNotificationByDate(final Appointment appointment,
                                                   final boolean isPatient) {

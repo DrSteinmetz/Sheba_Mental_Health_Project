@@ -157,6 +157,19 @@
                         app:backgroundTint="@color/white"
                         android:textAllCaps="false" />
 
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/documents_btn"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="@string/documents"
+                        style="?android:attr/borderlessButtonStyle"
+                        android:textSize="12sp"
+                        android:textColor="@color/light_gray"
+                        android:drawableTop="@drawable/ic_round_attach_file_24"
+                        android:drawableTint="@color/light_blue"
+                        app:backgroundTint="@color/white"
+                        android:textAllCaps="false" />
+
                 </LinearLayout>
 
             </androidx.core.widget.NestedScrollView>

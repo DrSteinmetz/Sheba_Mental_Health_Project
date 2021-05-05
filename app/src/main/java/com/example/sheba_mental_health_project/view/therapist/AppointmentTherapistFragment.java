@@ -47,6 +47,7 @@ public class AppointmentTherapistFragment extends Fragment {
         void onPhysicalStateClicked();
         void onInquiryClicked();
         void onSummaryClicked();
+        void onDocumentsClicked(final boolean isTherapist);
         void onEndMeetingBtnClicked();
     }
 
@@ -135,6 +136,7 @@ public class AppointmentTherapistFragment extends Fragment {
         final MaterialButton inquiryBtn = rootView.findViewById(R.id.inquiry_btn);
         final MaterialButton summaryBtn = rootView.findViewById(R.id.summary_btn);
         final MaterialButton endMeetingBtn = rootView.findViewById(R.id.end_meeting_btn);
+        final MaterialButton documentsBtn = rootView.findViewById(R.id.documents_btn);
 
         final TextView patientNameTv = rootView.findViewById(R.id.patient_name_tv);
         final TextView therapistNameTv = rootView.findViewById(R.id.therapist_name_tv);
@@ -187,6 +189,15 @@ public class AppointmentTherapistFragment extends Fragment {
             }
         });
 
+        documentsBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(listener != null){
+                    listener.onDocumentsClicked(true);
+                }
+            }
+        });
+
         endMeetingBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -206,6 +217,8 @@ public class AppointmentTherapistFragment extends Fragment {
                 warningDialog.show();
             }
         });
+
+
 
         mViewModel.getLastChatMessage();
 

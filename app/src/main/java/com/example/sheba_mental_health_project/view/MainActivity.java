@@ -102,8 +102,10 @@ public class MainActivity extends AppCompatActivity
         AppointmentPatientFragment.AppointmentPatientInterface,
         MentalPatientFragment.MentalPatientFragmentInterface,
         PreMeetingCharacterFragment.PreMeetingCharacterInterface,
-        AppointmentLoungeFragment.AppointmentLoungeFragmentInterface
+        AppointmentLoungeFragment.AppointmentLoungeFragmentInterface,
+        DocumentsFragment.DocumentsFragmentInterface
 {
+
 
     private MainActivityViewModel mViewModel;
 
@@ -147,6 +149,7 @@ public class MainActivity extends AppCompatActivity
     private final String PHYSICAL_PATIENT_FRAG = "Physical_Patient_Fragment";
     private final String MENTAL_PATIENT_FRAG = "Mental_Patient_Fragment";
     private final String APPOINTMENT_LOUNGE_FRAG = "Appointment_Lounge_Fragment";
+    private final String IMAGE_ZOOM_IN_FRAG = "Image_Zoom_Fragment" ;
 
     private final String CHAT_FRAG = "Chat_Fragment";
 
@@ -332,10 +335,7 @@ public class MainActivity extends AppCompatActivity
                 mDrawerLayout.closeDrawers();
                 break;
             case R.id.documents_action:
-                getSupportFragmentManager().beginTransaction()
-                        .add(R.id.container, DocumentsFragment.newInstance(), DOCUMENTS_FRAG)
-                        .addToBackStack(null)
-                        .commit();
+                onDocumentsClicked(false);
                 mDrawerLayout.closeDrawers();
                 break;
             case R.id.recommendations_action:
@@ -708,12 +708,26 @@ public class MainActivity extends AppCompatActivity
                 .commit();
     }
 
+
     @Override
     public void onSummaryClicked() {
         getSupportFragmentManager().beginTransaction()
                 .add(R.id.container, SummaryFragment.newInstance(), SUMMARY_FRAG)
                 .addToBackStack(null)
                 .commit();
+    }
+
+    @Override
+    public void onDocumentsClicked(boolean isTherapist) {
+        getSupportFragmentManager().beginTransaction()
+                .add(R.id.container, DocumentsFragment.newInstance(isTherapist), DOCUMENTS_FRAG)
+                .addToBackStack(null)
+                .commit();
+    }
+
+    @Override
+    public void onDocumentsClickedFromBureaucracy() {
+        onDocumentsClicked(false);
     }
 
     @Override
@@ -741,6 +755,13 @@ public class MainActivity extends AppCompatActivity
                 .commit();
     }
 
+    @Override
+    public void onContinueFromDocuments(final String imageUri) {
+        getSupportFragmentManager().beginTransaction()
+                .add(R.id.container, ImageZoomInFragment.newInstance(imageUri), IMAGE_ZOOM_IN_FRAG)
+                .addToBackStack(null)
+                .commit();
+    }
 
     @Override
     public void onBackPressed() {
