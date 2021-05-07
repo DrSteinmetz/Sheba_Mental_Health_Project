@@ -28,8 +28,9 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@id/title_tv"
-            android:layout_marginTop="5dp"
+            android:layout_marginTop="15dp"
             android:text="@string/diagnosis_prompt"
+            android:textStyle="bold"
             android:textSize="20sp"
             android:textColor="@color/black"
             android:textAllCaps="false" />
@@ -52,7 +53,7 @@
             android:layout_marginTop="10dp"
             android:gravity="start|top"
             android:layout_gravity="center"
-            android:layout_marginHorizontal="15dp"
+            android:layout_marginHorizontal="5dp"
             android:lines="5"
             android:padding="10dp"
             android:background="@drawable/summary_et_shape" />
@@ -64,6 +65,7 @@
             android:layout_below="@+id/diagnosis_et"
             android:layout_marginTop="15dp"
             android:text="@string/recommendations_prompt"
+            android:textStyle="bold"
             android:textSize="20sp"
             android:textColor="@color/black"
             android:textAllCaps="false" />
@@ -86,7 +88,7 @@
             android:layout_marginTop="10dp"
             android:gravity="start|top"
             android:layout_gravity="center"
-            android:layout_marginHorizontal="15dp"
+            android:layout_marginHorizontal="5dp"
             android:lines="5"
             android:padding="10dp"
             android:background="@drawable/summary_et_shape" />

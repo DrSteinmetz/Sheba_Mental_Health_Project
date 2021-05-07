@@ -13,7 +13,7 @@
             android:background="#000968A6"
             android:layout_width="180dp"
             android:layout_height="180dp"
-            android:src="@drawable/ic_launcher_background"
+            android:src="@drawable/loneliness"
             android:scaleType="centerCrop" >
 
         </ImageView>
@@ -22,11 +22,12 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@id/document_iv"
-            android:layout_marginStart="-35dp"
-            android:layout_marginTop="-35dp"
+            android:layout_marginStart="-40dp"
+            android:layout_marginTop="-40dp"
             android:layout_toEndOf="@id/document_iv"
             android:background="#000968A6"
-            android:src="@drawable/ic_baseline_close"
+            android:tint="@color/white"
+            android:src="@drawable/ic_round_cancel_24"
             android:visibility="visible" />
 
 
