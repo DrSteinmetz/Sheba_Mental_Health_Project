@@ -43,7 +43,7 @@ public class BureaucracyFragment extends Fragment {
 
     public interface BureaucracyFragmentInterface {
         void onContinueFromBureaucracy();
-        void onDocumentsClickedFromBureaucracy();
+        void onDocumentsClickedFromBureaucracy(boolean isTherapist, Appointment appointment);
     }
 
     private BureaucracyFragmentInterface listener;
@@ -155,7 +155,7 @@ public class BureaucracyFragment extends Fragment {
         addDocumentTv.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                listener.onDocumentsClickedFromBureaucracy();
+                listener.onDocumentsClickedFromBureaucracy(false,mViewModel.getCurrentAppointment());
             }
         });
 

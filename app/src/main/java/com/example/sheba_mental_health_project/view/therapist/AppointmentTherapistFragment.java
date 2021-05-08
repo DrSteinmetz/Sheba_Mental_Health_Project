@@ -19,6 +19,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.example.sheba_mental_health_project.R;
+import com.example.sheba_mental_health_project.model.Appointment;
 import com.example.sheba_mental_health_project.model.ChatMessage;
 import com.example.sheba_mental_health_project.model.ViewModelFactory;
 import com.example.sheba_mental_health_project.model.enums.AppointmentStateEnum;
@@ -47,7 +48,7 @@ public class AppointmentTherapistFragment extends Fragment {
         void onPhysicalStateClicked();
         void onInquiryClicked();
         void onSummaryClicked();
-        void onDocumentsClicked(final boolean isTherapist);
+        void onDocumentsClicked(final boolean isTherapist, Appointment appointment);
         void onEndMeetingBtnClicked();
     }
 
@@ -193,7 +194,7 @@ public class AppointmentTherapistFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 if(listener != null){
-                    listener.onDocumentsClicked(true);
+                    listener.onDocumentsClicked(true,mViewModel.getCurrentAppointment());
                 }
             }
         });

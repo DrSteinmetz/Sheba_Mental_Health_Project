@@ -103,7 +103,8 @@ public class MainActivity extends AppCompatActivity
         MentalPatientFragment.MentalPatientFragmentInterface,
         PreMeetingCharacterFragment.PreMeetingCharacterInterface,
         AppointmentLoungeFragment.AppointmentLoungeFragmentInterface,
-        DocumentsFragment.DocumentsFragmentInterface
+        DocumentsFragment.DocumentsFragmentInterface,
+        HistoryAppointmentFragment.HistoryAppointmentFragmentInterface
 {
 
 
@@ -335,7 +336,7 @@ public class MainActivity extends AppCompatActivity
                 mDrawerLayout.closeDrawers();
                 break;
             case R.id.documents_action:
-                onDocumentsClicked(false);
+                onDocumentsClicked(false,mViewModel.getCurrentAppointment());
                 mDrawerLayout.closeDrawers();
                 break;
             case R.id.recommendations_action:
@@ -718,16 +719,16 @@ public class MainActivity extends AppCompatActivity
     }
 
     @Override
-    public void onDocumentsClicked(boolean isTherapist) {
+    public void onDocumentsClicked(boolean isTherapist,Appointment appointment) {
         getSupportFragmentManager().beginTransaction()
-                .add(R.id.container, DocumentsFragment.newInstance(isTherapist), DOCUMENTS_FRAG)
+                .add(R.id.container, DocumentsFragment.newInstance(isTherapist,appointment), DOCUMENTS_FRAG)
                 .addToBackStack(null)
                 .commit();
     }
 
     @Override
-    public void onDocumentsClickedFromBureaucracy() {
-        onDocumentsClicked(false);
+    public void onDocumentsClickedFromBureaucracy(boolean isTherapist,Appointment appointment) {
+        onDocumentsClicked(isTherapist,appointment);
     }
 
     @Override
@@ -753,6 +754,11 @@ public class MainActivity extends AppCompatActivity
                 .add(R.id.container, HistoryAppointmentFragment.newInstance(appointment), HISTORY_APPOINTMENT_FRAG)
                 .addToBackStack(null)
                 .commit();
+    }
+
+    @Override
+    public void onClickedDocumentsFromHistoryFragment(boolean isTherapist, Appointment appointment) {
+        onDocumentsClicked(isTherapist,appointment);
     }
 
     @Override

@@ -27,6 +27,7 @@ import android.widget.ImageButton;
 import android.widget.TextView;
 
 import com.example.sheba_mental_health_project.R;
+import com.example.sheba_mental_health_project.model.Appointment;
 import com.example.sheba_mental_health_project.model.DocumentsAdapter;
 import com.example.sheba_mental_health_project.model.RotateBitmap;
 import com.example.sheba_mental_health_project.model.ViewModelFactory;
@@ -66,9 +67,10 @@ public class DocumentsFragment extends Fragment {
     private DocumentsFragment.DocumentsFragmentInterface listener;
 
 
-    public static DocumentsFragment newInstance(boolean isTherapist) {
+    public static DocumentsFragment newInstance(boolean isTherapist, Appointment appointment) {
         DocumentsFragment fragment = new DocumentsFragment();
         Bundle args = new Bundle();
+        args.putSerializable("appointment", appointment);
         args.putSerializable("isTherapist", isTherapist);
         fragment.setArguments(args);
         return fragment;
@@ -91,8 +93,10 @@ public class DocumentsFragment extends Fragment {
 
         mViewModel = new ViewModelProvider(this, new ViewModelFactory(getContext(),
                 ViewModelEnum.Documents)).get(DocumentsViewModel.class);
+
         if(getArguments() != null) {
             mViewModel.setIsTherapist( (boolean) getArguments().get("isTherapist"));
+            mViewModel.setSelectedAppointment( (Appointment) getArguments().get("appointment"));
         }
 
         final Observer<Uri> uploadDocumentObserverSuccess = new Observer<Uri>() {

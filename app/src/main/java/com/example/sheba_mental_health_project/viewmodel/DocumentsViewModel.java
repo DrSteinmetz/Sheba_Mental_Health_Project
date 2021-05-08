@@ -18,6 +18,8 @@ public class DocumentsViewModel extends ViewModel {
 
     private StorageRepository mStorageRepository;
 
+    private Appointment mSelectedAppointment;
+
     private MutableLiveData<Uri> mUploadDocumentSucceed;
     private MutableLiveData<String> mUploadDocumentFailed;
 
@@ -132,14 +134,8 @@ public class DocumentsViewModel extends ViewModel {
         });
     }
 
-
-
-    public List<String> getDocuments() {
-        return mRepository.getCurrentAppointment().getDocuments();
-    }
-
     public void uploadPicture(Uri uri) {
-        mStorageRepository.uploadDocument(uri, mRepository.getCurrentAppointment().getId());
+        mStorageRepository.uploadDocument(uri,mSelectedAppointment.getId());
     }
 
     public void updateDocumentOfAppointment(String documentUri,final boolean isToRemove) {
@@ -155,7 +151,7 @@ public class DocumentsViewModel extends ViewModel {
     }
 
     public void readDocuments() {
-        mRepository.readAppointmentDocuments(mRepository.getCurrentAppointment());
+        mRepository.readAppointmentDocuments(mSelectedAppointment);
     }
 
     public void removeDocumentsListener() {
@@ -164,5 +160,13 @@ public class DocumentsViewModel extends ViewModel {
 
     public void deleteDocumentFromStorage(String uri) {
         mStorageRepository.deleteDocument(uri);
+    }
+
+    public Appointment getSelectedAppointment() {
+        return mSelectedAppointment;
+    }
+
+    public void setSelectedAppointment(Appointment mSelectedAppointment) {
+        this.mSelectedAppointment = mSelectedAppointment;
     }
 }
