@@ -6,6 +6,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 
 import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
@@ -48,6 +49,7 @@ public class DocumentsAdapter extends RecyclerView.Adapter<DocumentsAdapter.Docu
     public class DocumentsViewHolder extends RecyclerView.ViewHolder {
 
     //    private final CardView cardLayout;
+        private final RelativeLayout relativeLayout;
         private final ImageView documentIv;
         private final ImageButton removeDocumentIb;
 
@@ -55,6 +57,7 @@ public class DocumentsAdapter extends RecyclerView.Adapter<DocumentsAdapter.Docu
             super(itemView);
 
        //     cardLayout = itemView.findViewById(R.id.card_layout);
+            relativeLayout = itemView.findViewById(R.id.relative_layout);
             documentIv = itemView.findViewById(R.id.document_iv);
             removeDocumentIb = itemView.findViewById(R.id.remove_document_ib);
 
@@ -74,10 +77,11 @@ public class DocumentsAdapter extends RecyclerView.Adapter<DocumentsAdapter.Docu
                 }
             });
 
-//            GridLayoutManager.LayoutParams layoutParams = (GridLayoutManager
-//                    .LayoutParams) cardLayout.getLayoutParams();
-//            layoutParams.width = mContext.getResources().getDisplayMetrics().widthPixels / 2;
-//            cardLayout.setLayoutParams(layoutParams);
+            GridLayoutManager.LayoutParams layoutParams = (GridLayoutManager
+                    .LayoutParams) relativeLayout.getLayoutParams();
+            final int layoutSize = mContext.getResources().getDisplayMetrics().widthPixels * 5 / 11;
+            layoutParams.width = layoutParams.height = layoutSize;
+            relativeLayout.setLayoutParams(layoutParams);
         }
     }
 
