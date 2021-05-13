@@ -1,8 +1,10 @@
 package com.example.sheba_mental_health_project.view.therapist;
 
+import android.content.Context;
 import android.graphics.Paint;
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentPagerAdapter;
 import androidx.viewpager.widget.ViewPager;
@@ -32,6 +34,10 @@ public class HistoryAppointmentFragment extends Fragment {
 
     private static final String TAG = "HistoryAppointmentFrag";
 
+    public interface HistoryAppointmentFragmentInterface{
+        void onClickedDocumentsFromHistoryFragment(boolean isTherapist, Appointment appointment);
+    }
+    HistoryAppointmentFragmentInterface listener;
 
     public HistoryAppointmentFragment() {}
 
@@ -41,6 +47,16 @@ public class HistoryAppointmentFragment extends Fragment {
         args.putSerializable("appointment", appointment);
         fragment.setArguments(args);
         return fragment;
+    }
+
+    @Override
+    public void onAttach(@NonNull Context context) {
+        super.onAttach(context);
+        try{
+            listener = (HistoryAppointmentFragmentInterface) context;
+        }catch (Exception ex){
+            throw new ClassCastException("The Activity Must Implements HistoryAppointmentFragmentInterface listener!");
+        }
     }
 
     @Override
@@ -75,6 +91,7 @@ public class HistoryAppointmentFragment extends Fragment {
         final TextView patientNameTv = rootView.findViewById(R.id.patient_name_tv);
         final TextView therapistNameTv = rootView.findViewById(R.id.therapist_name_tv);
         final TextView summaryTv = rootView.findViewById(R.id.summary_tv);
+        final TextView documentsTv = rootView.findViewById(R.id.documents_tv);
         mTabLayout = rootView.findViewById(R.id.tab_layout);
         mViewPager = rootView.findViewById(R.id.view_pager);
 
@@ -106,6 +123,15 @@ public class HistoryAppointmentFragment extends Fragment {
                         + getString(R.string.recommendations_prompt) + "\n"
                         + recommendations);
                 summaryDialog.show();
+            }
+        });
+
+        documentsTv.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if( listener != null ){
+                    listener.onClickedDocumentsFromHistoryFragment(true,mAppointment);
+                }
             }
         });
 

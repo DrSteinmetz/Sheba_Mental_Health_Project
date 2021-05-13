@@ -16,7 +16,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:gravity="center">
+        >
 
         <TextView
             android:id="@+id/helloTv"
@@ -24,7 +24,7 @@
             android:layout_height="wrap_content"
             android:text="@string/hello"
             android:textColor="@color/dark_gray"
-            android:textSize="23sp"
+            android:textSize="17sp"
             android:layout_marginEnd="5dp" />
 
         <TextView
@@ -34,12 +34,12 @@
             android:layout_height="wrap_content"
             android:text="DR Avi Choen"
             android:textColor="@color/dark_gray"
-            android:textSize="23sp" />
+            android:textSize="17sp" />
 
     </RelativeLayout>
 
     <RelativeLayout
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="15dp"
         android:id="@+id/sub_title_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -51,14 +51,15 @@
             android:layout_height="wrap_content"
             android:text="@string/upcoming_meetings_prompt"
             android:textColor="@color/black"
-            android:textSize="18sp"
+            android:layout_centerHorizontal="true"
+            android:textSize="25sp"
             />
     </RelativeLayout>
 
 
 
     <androidx.recyclerview.widget.RecyclerView
-        android:layout_marginTop="5dp"
+        android:layout_marginTop="20dp"
         android:layout_below="@+id/sub_title_layout"
         android:id="@+id/recycler_view"
         android:layout_width="match_parent"

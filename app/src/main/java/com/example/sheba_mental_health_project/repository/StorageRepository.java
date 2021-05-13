@@ -4,9 +4,11 @@ import android.annotation.SuppressLint;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.net.Uri;
+import android.util.Log;
 
 import androidx.annotation.NonNull;
 
+import com.example.sheba_mental_health_project.model.PainPoint;
 import com.example.sheba_mental_health_project.model.RotateBitmap;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -16,6 +18,8 @@ import com.google.firebase.storage.UploadTask;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+import java.util.List;
+import java.util.Map;
 import java.util.Objects;
 
 public class StorageRepository {
@@ -32,7 +36,22 @@ public class StorageRepository {
     private final String TAG = "StorageRepository";
 
 
+
+
     /**<------ Interfaces ------>*/
+
+    /*<------ Upload Document ------>*/
+    public interface RepositoryUploadDocumentInterface {
+        void onUploadDocumentSucceed(Uri uri);
+
+        void onUploadDocumentFailed(String error);
+    }
+
+    private RepositoryUploadDocumentInterface mRepositoryUploadDocumentListener;
+
+    public void setUploadDocumentInterface(RepositoryUploadDocumentInterface uploadDocumentInterface){
+        this.mRepositoryUploadDocumentListener = uploadDocumentInterface;
+    }
 
     /**<------ Singleton ------>*/
     public static StorageRepository getInstance(final Context context) {
@@ -50,6 +69,7 @@ public class StorageRepository {
     public void uploadDocument(final Uri uri, final String appointmentId) {
         final StorageReference docToUpload = mStorage.child("Documents/" + appointmentId + "/" +
                 System.nanoTime() + ".jpg");
+        Log.d(TAG, "uploadDocument: "+ docToUpload);
 
         try {
             final RotateBitmap rotateBitmap = new RotateBitmap();
@@ -69,6 +89,9 @@ public class StorageRepository {
                                     .addOnSuccessListener(new OnSuccessListener<Uri>() {
                                         @Override
                                         public void onSuccess(Uri uri) {
+                                            if(mRepositoryUploadDocumentListener != null){
+                                                mRepositoryUploadDocumentListener.onUploadDocumentSucceed(uri);
+                                            }
                                         }
                                     });
                         }
@@ -76,11 +99,19 @@ public class StorageRepository {
                     .addOnFailureListener(new OnFailureListener() {
                         @Override
                         public void onFailure(@NonNull Exception e) {
+                            if(mRepositoryUploadDocumentListener != null){
+                                mRepositoryUploadDocumentListener.onUploadDocumentFailed(e.getMessage());
+                            }
                         }
                     });
         } catch (IOException e) {
             e.printStackTrace();
         }
 
+    }
+
+    public void deleteDocument(String uri) {
+        StorageReference photoRef = FirebaseStorage.getInstance().getReferenceFromUrl(uri);
+        photoRef.delete();
     }
 }

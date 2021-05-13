@@ -1,22 +1,36 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
+    android:padding="10dp"
+    android:background="#000968A6"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    app:cardElevation="5dp"
-    app:cardUseCompatPadding="true"
-    android:id="@+id/card_layout">
+    android:layout_margin="10dp"
+    android:id="@+id/relative_layout">
 
-    <RelativeLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content">
 
         <ImageView
             android:id="@+id/document_iv"
+            android:background="#000968A6"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:scaleType="centerCrop" />
+            android:src="@drawable/loneliness"
+            android:scaleType="centerCrop" >
 
-    </RelativeLayout>
+        </ImageView>
+        <ImageButton
+            android:id="@+id/remove_document_ib"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/document_iv"
+            android:layout_marginStart="-40dp"
+            android:layout_marginTop="-40dp"
+            android:layout_toEndOf="@id/document_iv"
+            android:background="#000968A6"
+            android:tint="@color/white"
+            android:src="@drawable/ic_round_cancel_24"
+            android:visibility="visible" />
 
-</androidx.cardview.widget.CardView>
+
+
+</RelativeLayout>

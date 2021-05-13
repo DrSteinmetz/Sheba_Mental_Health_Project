@@ -24,7 +24,7 @@ public class Appointment implements Serializable {
     private AppointmentStateEnum mState;
     private String mRecommendations;
     private String mDiagnosis;
-    private List<String> mDocuments;
+    private List<String> mDocuments = new ArrayList<>();
     private boolean mIsFinishedPreQuestions = false;
 
     public Appointment() {}

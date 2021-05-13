@@ -310,5 +310,6 @@
     <string name="penis">Penis</string>
     <string name="testicles">Testicles</string>
     <string name="private_part">איזור מוצנע</string>
+    <string name="document_deletion_prompt">האם ברצונך למחוק מסמך זה לצמיתות?</string>
 
 </resources>

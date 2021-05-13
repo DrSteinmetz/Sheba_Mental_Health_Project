@@ -55,15 +55,27 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_below="@+id/mandatory_layout"
-        android:layout_above="@id/buttons_layout"
+        android:layout_above="@id/add_document_tv"
         android:scrollbarAlwaysDrawVerticalTrack="true" />
+
+    <TextView
+        android:id="@+id/add_document_tv"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/add_document"
+        android:textSize="20sp"
+        android:layout_marginTop="20dp"
+        android:drawableStart="@drawable/add_btn"
+        android:drawablePadding="10dp"
+        android:layout_above="@id/buttons_layout"
+        />
 
     <LinearLayout
         android:id="@+id/buttons_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
-        android:layout_marginTop="30dp"
+        android:layout_marginTop="20dp"
         android:gravity="center"
         android:orientation="horizontal">
 
