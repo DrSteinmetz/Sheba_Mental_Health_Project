@@ -7,6 +7,7 @@ public enum ViewModelEnum {
     PatientLogin,
     TherapistLogin,
     PreQuestions,
+    RecommendationsQuestions,
     Treaty,
     Bureaucracy,
     CovidQuestions,
@@ -48,4 +49,5 @@ public enum ViewModelEnum {
     LeftArm,
     Genitals,
     Legs
+
 }

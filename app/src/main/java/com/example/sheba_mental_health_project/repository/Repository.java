@@ -26,6 +26,7 @@ import com.example.sheba_mental_health_project.model.Therapist;
 import com.example.sheba_mental_health_project.model.enums.AppointmentStateEnum;
 import com.example.sheba_mental_health_project.model.enums.BodyPartEnum;
 import com.example.sheba_mental_health_project.model.enums.QuestionTypeEnum;
+import com.example.sheba_mental_health_project.model.enums.RecommendationsStateEnum;
 import com.example.sheba_mental_health_project.model.enums.ViewModelEnum;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
@@ -341,6 +342,20 @@ public class Repository {
     public void setUpdateStateOfAppointmentInterface(RepositoryUpdateStateOfAppointmentInterface
                                                              repositoryUpdateStateOfAppointmentInterface){
         this.mRepositoryUpdateStateOfAppointmentListener = repositoryUpdateStateOfAppointmentInterface;
+    }
+
+    /*<------ Update Recommendations State of Appointment ------>*/
+    public interface RepositoryUpdateRecommendationsStateOfAppointmentInterface {
+        void onUpdateStateRecommendationsOfAppointmentSucceed(RecommendationsStateEnum recommendationsStateEnum);
+
+        void onUpdateStateRecommendationsOfAppointmentFailed(String error);
+    }
+
+    private RepositoryUpdateRecommendationsStateOfAppointmentInterface mRepositoryRecommendationsUpdateStateOfAppointmentListener;
+
+    public void setUpdateRecommendationsStateOfAppointmentInterface(RepositoryUpdateRecommendationsStateOfAppointmentInterface
+                                                             repositoryRecommendationsUpdateStateOfAppointmentInterface){
+        this.mRepositoryRecommendationsUpdateStateOfAppointmentListener = repositoryRecommendationsUpdateStateOfAppointmentInterface;
     }
 
     /*<------ Update Documents of Appointment ------>*/
@@ -1321,6 +1336,32 @@ public class Repository {
                 }
             }
         });
+    }
+
+    public void updateRecommendationsState(RecommendationsStateEnum recommendationsStateEnum,String recommendationsStateDetails) {
+        final Map<String, Object> map = new HashMap<>();
+        map.put("recommendationsState", recommendationsStateEnum);
+        map.put("recommendationsStateDetails", recommendationsStateDetails);
+        mCloudDB.collection(APPOINTMENTS).document(mCurrentAppointment.getId())
+                .update(map)
+                .addOnCompleteListener(new OnCompleteListener<Void>() {
+                    @Override
+                    public void onComplete(@NonNull Task<Void> task) {
+                        if (task.isSuccessful()) {
+                            mCurrentAppointment.setRecommendationsState(recommendationsStateEnum);
+                            mCurrentAppointment.setRecommendationsStateDetails(recommendationsStateDetails);
+                            if (mRepositoryRecommendationsUpdateStateOfAppointmentListener != null) {
+                                mRepositoryRecommendationsUpdateStateOfAppointmentListener
+                                        .onUpdateStateRecommendationsOfAppointmentSucceed(recommendationsStateEnum);
+                            }
+                        } else {
+                            if (mRepositoryRecommendationsUpdateStateOfAppointmentListener != null) {
+                                mRepositoryRecommendationsUpdateStateOfAppointmentListener
+                                        .onUpdateStateRecommendationsOfAppointmentFailed(task.getException().getMessage());
+                            }
+                        }
+                    }
+                });
     }
 
     public void updateAppointmentDocuments(String documentUri,boolean isToRemove) {

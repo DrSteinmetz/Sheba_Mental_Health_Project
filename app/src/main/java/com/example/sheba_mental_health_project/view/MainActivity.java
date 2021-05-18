@@ -54,6 +54,7 @@ import com.example.sheba_mental_health_project.view.patient.PreMeetingCharacterF
 import com.example.sheba_mental_health_project.view.patient.PreQuestionsFragment;
 import com.example.sheba_mental_health_project.view.patient.QuestionsWarningFragment;
 import com.example.sheba_mental_health_project.view.patient.RecommendationFragment;
+import com.example.sheba_mental_health_project.view.patient.RecommendationQuestionsFragment;
 import com.example.sheba_mental_health_project.view.patient.SanityCheckFragment;
 import com.example.sheba_mental_health_project.view.patient.SocialQuestionsFragment;
 import com.example.sheba_mental_health_project.view.patient.StatementFragment;
@@ -104,7 +105,8 @@ public class MainActivity extends AppCompatActivity
         PreMeetingCharacterFragment.PreMeetingCharacterInterface,
         AppointmentLoungeFragment.AppointmentLoungeFragmentInterface,
         DocumentsFragment.DocumentsFragmentInterface,
-        HistoryAppointmentFragment.HistoryAppointmentFragmentInterface
+        HistoryAppointmentFragment.HistoryAppointmentFragmentInterface,
+        RecommendationQuestionsFragment.RecommendationsQuestionsInterface
 {
 
 
@@ -139,6 +141,7 @@ public class MainActivity extends AppCompatActivity
     private final String SOCIAL_QUESTIONS_FRAG = "Social_Questions_Fragment";
     private final String HABITS_QUESTIONS_FRAG = "Habits_Questions_Fragment";
     private final String MENTAL_QUESTIONS_FRAG = "Mental_Questions_Fragment";
+    private final String RECOMMENDATIONS_QUESTIONS_FRAG = "Recommendations_Questions_Fragment";
     private final String ANXIETY_FRAG = "Anxiety_Fragment";
     private final String ANGER_FRAG = "Anger_Fragment";
     private final String DEPRESSION_FRAG = "Depression_Fragment";
@@ -400,6 +403,24 @@ public class MainActivity extends AppCompatActivity
 
     @Override
     public void onContinueFromPreQuestions() {
+        onContinueToAnxiety();
+    }
+
+    @Override
+    public void onContinueFromPreQuestionsToRecommendationsQuestions(final String recommendations) {
+        getSupportFragmentManager().beginTransaction()
+                //TODO: add enter and exit animations
+                .replace(R.id.container, RecommendationQuestionsFragment.newInstance(recommendations), RECOMMENDATIONS_QUESTIONS_FRAG)
+                .addToBackStack(null)
+                .commit();
+    }
+
+    @Override
+    public void onContinueFromRecommendationsQuestions() {
+       onContinueToAnxiety();
+    }
+
+    private void onContinueToAnxiety(){
         getSupportFragmentManager().beginTransaction()
                 //TODO: add enter and exit animations
                 .replace(R.id.container, AnxietyQuestionsFragment.newInstance(), ANXIETY_FRAG)

@@ -216,6 +216,12 @@
     <string name="covid19">Covid 19:</string>
     <string name="answer_questions_title">Please Answer the Following Questions (Regarding the Past Week):</string>
 
+    <string name="last_meeting_recommendation">Last Meeting Recommendation</string>
+    <string name="follow_recommendations">I followed the recommendations</string>
+    <string name="follow_partially_recommendations">I followed partially</string>
+    <string name="didnt_follow_recommendations">I did not follow the recommendations</string>
+
+
     <!-- Notification -->
     <string name="appointment_notif_title_patient">Meeting With Dr.</string>
     <string name="appointment_notif_title_therapist">Meeting With</string>
