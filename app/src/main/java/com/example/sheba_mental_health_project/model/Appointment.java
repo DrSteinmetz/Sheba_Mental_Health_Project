@@ -1,6 +1,7 @@
 package com.example.sheba_mental_health_project.model;
 
 import com.example.sheba_mental_health_project.model.enums.AppointmentStateEnum;
+import com.example.sheba_mental_health_project.model.enums.RecommendationsStateEnum;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -26,6 +27,10 @@ public class Appointment implements Serializable {
     private String mDiagnosis;
     private List<String> mDocuments = new ArrayList<>();
     private boolean mIsFinishedPreQuestions = false;
+    private RecommendationsStateEnum mRecommendationsState;
+    private String mRecommendationsStateDetails;
+    private float mCurrentPatientRating;
+    private String mRatingExplanation;
 
     public Appointment() {}
 
@@ -174,6 +179,38 @@ public class Appointment implements Serializable {
 
     public void setIsFinishedPreQuestions(boolean isFinishedPreQuestions) {
         this.mIsFinishedPreQuestions = isFinishedPreQuestions;
+    }
+
+    public RecommendationsStateEnum getRecommendationsState() {
+        return mRecommendationsState;
+    }
+
+    public void setRecommendationsState(RecommendationsStateEnum recommendationsState) {
+        this.mRecommendationsState = recommendationsState;
+    }
+
+    public String getRecommendationsStateDetails() {
+        return mRecommendationsStateDetails;
+    }
+
+    public void setRecommendationsStateDetails(String mRecommendationsStateDetails) {
+        this.mRecommendationsStateDetails = mRecommendationsStateDetails;
+    }
+
+    public float getCurrentPatientRating() {
+        return mCurrentPatientRating;
+    }
+
+    public void setCurrentPatientRating(float currentPatientRating) {
+        this.mCurrentPatientRating = currentPatientRating;
+    }
+
+    public String getRatingExplanation() {
+        return mRatingExplanation;
+    }
+
+    public void setRatingExplanation(String ratingExplanation) {
+        this.mRatingExplanation = ratingExplanation;
     }
 
     @Override

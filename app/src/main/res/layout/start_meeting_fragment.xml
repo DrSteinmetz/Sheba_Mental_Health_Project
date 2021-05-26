@@ -77,23 +77,41 @@
 
             </LinearLayout>
 
+            <LinearLayout
+                android:id="@+id/summary_linear"
+                android:layout_below="@id/therapist_linear"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
             <TextView
                 android:id="@+id/summary_tv"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_below="@id/therapist_linear"
                 android:layout_margin="5dp"
                 android:textSize="17sp"
-                android:textColor="@color/light_blue"
+                android:textColor="@color/dark_gray"
                 android:textStyle="bold"
-                android:text="@string/last_meeting_summary"
+                android:text="@string/diagnosis"
                 android:textAllCaps="false" />
+
+                <TextView
+                    android:id="@+id/read_more_tv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="5dp"
+                    android:textSize="17sp"
+                    android:textColor="@color/light_blue"
+                    android:textStyle="bold"
+                    android:text="@string/read_more"
+                    android:textAllCaps="false" />
+
+            </LinearLayout>
 
             <androidx.fragment.app.FragmentContainerView
                 android:id="@+id/character_container"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_below="@id/summary_tv" />
+                android:layout_below="@id/summary_linear" />
 
         </RelativeLayout>
 

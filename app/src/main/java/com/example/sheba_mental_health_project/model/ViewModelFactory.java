@@ -14,6 +14,7 @@ import com.example.sheba_mental_health_project.viewmodel.DocumentsViewModel;
 import com.example.sheba_mental_health_project.viewmodel.InquiryViewModel;
 import com.example.sheba_mental_health_project.viewmodel.MentalQuestionsViewModel;
 import com.example.sheba_mental_health_project.viewmodel.HabitsQuestionsViewModel;
+import com.example.sheba_mental_health_project.viewmodel.RecommendationQuestionsViewModel;
 import com.example.sheba_mental_health_project.viewmodel.RecommendationViewModel;
 import com.example.sheba_mental_health_project.viewmodel.SocialQuestionsViewModel;
 import com.example.sheba_mental_health_project.viewmodel.HistoryViewModel;
@@ -128,6 +129,11 @@ public class ViewModelFactory implements ViewModelProvider.Factory {
             case PreQuestions:
                 if (modelClass.isAssignableFrom(PreQuestionsViewModel.class)) {
                     objectToReturn = (T) new PreQuestionsViewModel(mContext);
+                }
+                break;
+            case RecommendationsQuestions:
+                if (modelClass.isAssignableFrom(RecommendationQuestionsViewModel.class)) {
+                    objectToReturn = (T) new RecommendationQuestionsViewModel(mContext);
                 }
                 break;
             case Treaty:

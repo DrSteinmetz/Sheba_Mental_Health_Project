@@ -1,7 +1,9 @@
 package com.example.sheba_mental_health_project.view.patient;
 
+import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.os.Bundle;
 
@@ -9,16 +11,20 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.example.sheba_mental_health_project.R;
+import com.example.sheba_mental_health_project.model.Appointment;
 import com.example.sheba_mental_health_project.model.ViewModelFactory;
 import com.example.sheba_mental_health_project.model.enums.ViewModelEnum;
 import com.example.sheba_mental_health_project.viewmodel.PreQuestionsViewModel;
 import com.google.android.material.button.MaterialButton;
+
+import java.text.SimpleDateFormat;
 
 public class PreQuestionsFragment extends Fragment {
 
@@ -28,6 +34,7 @@ public class PreQuestionsFragment extends Fragment {
 
 
     public interface PreQuestionsFragmentInterface {
+        void onContinueFromPreQuestionsToRecommendationsQuestions(String recommendations);
         void onContinueFromPreQuestions();
     }
 
@@ -54,6 +61,37 @@ public class PreQuestionsFragment extends Fragment {
 
         mViewModel = new ViewModelProvider(this, new ViewModelFactory(getContext(),
                 ViewModelEnum.PreQuestions)).get(PreQuestionsViewModel.class);
+
+        final Observer<Appointment> onGetLastAppointmentSucceed = new Observer<Appointment>() {
+            @Override
+            public void onChanged(Appointment appointment) {
+
+                if(listener != null) {
+                    final String recommendations = appointment.getRecommendations();
+                    if ((recommendations != null && !recommendations.isEmpty())) {
+                        listener.onContinueFromPreQuestionsToRecommendationsQuestions(recommendations);
+                    } else {
+                        listener.onContinueFromPreQuestions();
+                    }
+                }
+            }
+        };
+
+        final Observer<String> onGetLastAppointmentFailed = new Observer<String>() {
+            @Override
+            public void onChanged(String error) {
+                Log.e(TAG, "onChanged: " + error);
+
+                if(listener != null){
+                    listener.onContinueFromPreQuestions();
+                }
+
+            }
+        };
+
+        mViewModel.getGetLastAppointmentSucceed().observe(this, onGetLastAppointmentSucceed);
+        mViewModel.getGetLastAppointmentFailed().observe(this, onGetLastAppointmentFailed);
+
     }
 
     @Override
@@ -76,9 +114,7 @@ public class PreQuestionsFragment extends Fragment {
         beginBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (listener != null) {
-                    listener.onContinueFromPreQuestions();
-                }
+                mViewModel.getLastMeeting();
             }
         });
 

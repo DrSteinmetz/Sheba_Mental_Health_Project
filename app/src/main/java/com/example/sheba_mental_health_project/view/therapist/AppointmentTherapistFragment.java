@@ -25,7 +25,6 @@ import com.example.sheba_mental_health_project.model.ViewModelFactory;
 import com.example.sheba_mental_health_project.model.enums.AppointmentStateEnum;
 import com.example.sheba_mental_health_project.model.enums.ViewModelEnum;
 import com.example.sheba_mental_health_project.view.character.CharacterFragment;
-import com.example.sheba_mental_health_project.view.WarningDialog;
 import com.example.sheba_mental_health_project.viewmodel.AppointmentTherapistViewModel;
 import com.google.android.material.button.MaterialButton;
 
@@ -202,20 +201,21 @@ public class AppointmentTherapistFragment extends Fragment {
         endMeetingBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                final WarningDialog warningDialog = new WarningDialog(requireContext());
-                
-                warningDialog.setTitleWarningText(getString(R.string.end_meeting_question));
-                warningDialog.setPromptText(getString(R.string.end_meeting_msg));
-                warningDialog.setOnActionListener(new WarningDialog.WarningDialogActionInterface() {
+                final EndMeetingTherapistDialog endMeetingTherapistDialog = new EndMeetingTherapistDialog(requireContext());
+                endMeetingTherapistDialog.setDiagnosisText(mViewModel.getCurrentAppointment().getDiagnosis());
+                endMeetingTherapistDialog.setRecommendationsText(mViewModel.getCurrentAppointment().getRecommendations());
+                endMeetingTherapistDialog.setOnActionListener(new EndMeetingTherapistDialog.WarningDialogActionInterface() {
                     @Override
                     public void onYesBtnClicked() {
                         mViewModel.updateState(AppointmentStateEnum.Ended);
                     }
 
                     @Override
-                    public void onNoBtnClicked() {}
+                    public void onNoBtnClicked() {
+
+                    }
                 });
-                warningDialog.show();
+                endMeetingTherapistDialog.show();
             }
         });
 
