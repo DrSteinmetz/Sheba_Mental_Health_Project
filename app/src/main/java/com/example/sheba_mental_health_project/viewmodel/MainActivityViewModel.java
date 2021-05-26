@@ -91,4 +91,8 @@ public class MainActivityViewModel extends ViewModel {
     public void logout() {
         mAuthRepository.logOut();
     }
+
+    public void updateCurrentRating(final float rating, final String appointmentId, final String ratingExplanation ) {
+        mRepository.updateCurrentRating(rating, appointmentId,ratingExplanation);
+    }
 }

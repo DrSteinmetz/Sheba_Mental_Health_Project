@@ -217,6 +217,11 @@
     <string name="covid19">וירוס קורונה:</string>
     <string name="answer_questions_title">אנא השב על השאלות הבאות (לגבי השבוע האחרון):</string>
 
+    <string name="last_meeting_recommendation">המלצות מהפגישה האחרונה</string>
+    <string name="follow_recommendations">ביצעתי את ההמלצות</string>
+    <string name="follow_partially_recommendations">ביצעתי חלקית</string>
+    <string name="didnt_follow_recommendations">לא ביצעתי את ההמלצות</string>
+
     <!-- Notification -->
     <string name="appointment_notif_title_patient">פגישה עם ד\"ר</string>
     <string name="appointment_notif_title_therapist">פגישה עם</string>
@@ -311,5 +316,11 @@
     <string name="testicles">Testicles</string>
     <string name="private_part">איזור מוצנע</string>
     <string name="document_deletion_prompt">האם ברצונך למחוק מסמך זה לצמיתות?</string>
+
+    <string name="read_more">קרא עוד</string>
+    <string name="end_meeting_warning_prompt">לחיצה על "אישור", משמעותה אישור סיכום הפגישה וסיום הפגישה עבורך ועבור המטופל</string>
+    <string name="rate_us">דרג את חווית השימוש באפליקציה</string>
+    <string name="elaborate_more">ספר לנו עוד…</string>
+
 
 </resources>

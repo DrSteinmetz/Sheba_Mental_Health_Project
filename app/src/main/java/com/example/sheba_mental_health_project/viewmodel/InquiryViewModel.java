@@ -12,6 +12,7 @@ import com.example.sheba_mental_health_project.model.AnswerOpen;
 import com.example.sheba_mental_health_project.model.Appointment;
 import com.example.sheba_mental_health_project.model.Question;
 import com.example.sheba_mental_health_project.model.enums.ViewModelEnum;
+import com.example.sheba_mental_health_project.repository.AuthRepository;
 import com.example.sheba_mental_health_project.repository.Repository;
 
 import java.util.ArrayList;
@@ -33,12 +34,16 @@ public class InquiryViewModel extends ViewModel {
     private List<Question> mAnxietyQuestions;
     private List<Question> mAngerQuestions;
     private List<Question> mDepressionQuestions;
+    private Appointment mLastAppointment;
 
     private MutableLiveData<List<Question>> mGetAllQuestionsSucceed;
     private MutableLiveData<String> mGetAllQuestionsFailed;
 
     private MutableLiveData<List<Answer>> mGetLiveAnswersSucceed;
     private MutableLiveData<String> mGetLiveAnswersFailed;
+
+    private MutableLiveData<Appointment> mGetLastAppointmentSucceed;
+    private MutableLiveData<String> mGetLastAppointmentFailed;
 
     private final String TAG = "InquiryViewModel";
 
@@ -151,6 +156,47 @@ public class InquiryViewModel extends ViewModel {
         });
     }
 
+    public MutableLiveData<Appointment> getGetLastAppointmentSucceed() {
+        if (mGetLastAppointmentSucceed == null) {
+            mGetLastAppointmentSucceed = new MutableLiveData<>();
+            attachSetGetLastAppointmentListener();
+        }
+        return mGetLastAppointmentSucceed;
+    }
+
+    public MutableLiveData<String> getGetLastAppointmentFailed() {
+        if (mGetLastAppointmentFailed == null) {
+            mGetLastAppointmentFailed = new MutableLiveData<>();
+            attachSetGetLastAppointmentListener();
+        }
+        return mGetLastAppointmentFailed;
+    }
+
+    private void attachSetGetLastAppointmentListener() {
+        mRepository.setGetLastAppointmentInterface(new Repository.RepositoryGetLastAppointmentInterface() {
+            @Override
+            public void onGetLastAppointmentSucceed(Appointment lastAppointment) {
+                mLastAppointment = lastAppointment;
+                mGetLastAppointmentSucceed.setValue(lastAppointment);
+            }
+
+            @Override
+            public void onGetLastAppointmentFailed(String error) {
+                mLastAppointment = null;
+                mGetLastAppointmentFailed.setValue(error);
+            }
+        });
+    }
+
+
+    public void getLastMeetingFromRepository() {
+        final String patientId = getCurrentAppointment().getPatient().getId();
+        mRepository.getLastAppointment(patientId);
+    }
+
+    public Appointment getLastAppointment() {
+        return mLastAppointment;
+    }
 
     public final Appointment getCurrentAppointment() {
         return mRepository.getCurrentAppointment();

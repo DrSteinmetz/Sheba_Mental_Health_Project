@@ -14,9 +14,9 @@ import java.util.List;
 
 public class DocumentsViewModel extends ViewModel {
 
-    private Repository mRepository;
+    private final Repository mRepository;
 
-    private StorageRepository mStorageRepository;
+    private final StorageRepository mStorageRepository;
 
     private Appointment mSelectedAppointment;
 
@@ -29,8 +29,9 @@ public class DocumentsViewModel extends ViewModel {
     private MutableLiveData<List<String>> mGetDocumentsSucceed;
     private MutableLiveData<String> mGetDocumentsFailed;
 
-    private final String TAG = "DocumentsViewModel";
     private boolean isTherapist;
+
+    private final String TAG = "DocumentsViewModel";
 
 
     public DocumentsViewModel(final Context context) {

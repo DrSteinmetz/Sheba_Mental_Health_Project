@@ -28,6 +28,7 @@ public class DocumentsAdapter extends RecyclerView.Adapter<DocumentsAdapter.Docu
 
     private final String TAG = "DocumentsAdapter";
 
+
     public interface DocumentListener {
         void onDocumentClicked(int position, View view);
         void onRemoveDocumentClicked(int position, View view);
@@ -97,9 +98,9 @@ public class DocumentsAdapter extends RecyclerView.Adapter<DocumentsAdapter.Docu
     @Override
     public void onBindViewHolder(@NonNull DocumentsViewHolder holder, int position) {
         String imageUri = mDocuments.get(position);
-        if(isTherapist){
+        if (isTherapist) {
             holder.removeDocumentIb.setVisibility(View.GONE);
-        }else {
+        } else {
             holder.removeDocumentIb.setVisibility(View.VISIBLE);
         }
         Glide.with(mContext).load(imageUri).into(holder.documentIv);

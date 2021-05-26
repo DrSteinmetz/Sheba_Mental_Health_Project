@@ -22,17 +22,25 @@ import android.widget.TextView;
 import com.example.sheba_mental_health_project.R;
 import com.example.sheba_mental_health_project.model.Answer;
 import com.example.sheba_mental_health_project.model.AnswersAdapter;
+import com.example.sheba_mental_health_project.model.Appointment;
 import com.example.sheba_mental_health_project.model.Question;
-import com.example.sheba_mental_health_project.model.QuestionsAdapter;
 import com.example.sheba_mental_health_project.model.ViewModelFactory;
 import com.example.sheba_mental_health_project.model.enums.ViewModelEnum;
 import com.example.sheba_mental_health_project.viewmodel.InquiryViewModel;
+import com.google.android.material.checkbox.MaterialCheckBox;
+import com.google.android.material.textview.MaterialTextView;
 
 import java.util.List;
 
 public class InquiryFragment extends Fragment {
 
     private InquiryViewModel mViewModel;
+
+    private RelativeLayout mRecommendationsContentRelativeLayout;
+    private TextView mRecommendationsTv;
+    private MaterialCheckBox mRecommendationsCb;
+    private MaterialTextView mRecommendationsAnswerTv;
+    private TextView mNoAnswerRecommendationsTv;
 
     private RecyclerView mExpectationsRecycler;
     private TextView mExpectationsTv;
@@ -80,7 +88,7 @@ public class InquiryFragment extends Fragment {
         final Observer<List<Question>> onGetAllQuestionsSucceed = new Observer<List<Question>>() {
             @Override
             public void onChanged(List<Question> questions) {
-                mViewModel.getLiveAnswers();
+                mViewModel.getLastMeetingFromRepository();
             }
         };
 
@@ -94,6 +102,46 @@ public class InquiryFragment extends Fragment {
         final Observer<List<Answer>> onGetLiveAnswersSucceed = new Observer<List<Answer>>() {
             @Override
             public void onChanged(List<Answer> answers) {
+                    Appointment lastAppointment = mViewModel.getLastAppointment();
+                    Appointment currentAppointment = mViewModel.getCurrentAppointment();
+
+                Log.d(TAG, "onChanged: "+lastAppointment);
+                    if(lastAppointment != null) {
+                        final String recommendations = lastAppointment.getRecommendations();
+
+                        if ((recommendations != null && !recommendations.isEmpty())) {
+                            mRecommendationsContentRelativeLayout.setVisibility(View.VISIBLE);
+                            mNoAnswerRecommendationsTv.setVisibility(View.GONE);
+                            mRecommendationsTv.setText(lastAppointment.getRecommendations());
+
+                            mRecommendationsCb.setChecked(true);
+                            mRecommendationsCb.setClickable(false);
+                            switch (currentAppointment.getRecommendationsState()){
+                                case Follow:
+                                    mRecommendationsCb.setText(R.string.follow_recommendations);
+                                    break;
+                                case Partially:
+                                    mRecommendationsCb.setText(R.string.follow_partially_recommendations);
+                                    break;
+                                case NotFollow:
+                                    mRecommendationsCb.setText(R.string.didnt_follow_recommendations);
+                                    break;
+                                default:
+                                    mRecommendationsContentRelativeLayout.setVisibility(View.GONE);
+                                    mNoAnswerRecommendationsTv.setVisibility(View.VISIBLE);
+                            }
+
+                            mRecommendationsAnswerTv.setText(currentAppointment.getRecommendationsStateDetails());
+
+                        } else {
+                            mRecommendationsContentRelativeLayout.setVisibility(View.GONE);
+                            mNoAnswerRecommendationsTv.setVisibility(View.VISIBLE);
+                        }
+                    } else {
+                        mRecommendationsContentRelativeLayout.setVisibility(View.GONE);
+                        mNoAnswerRecommendationsTv.setVisibility(View.VISIBLE);
+                    }
+
 
                 mExpectationsAdapter = new AnswersAdapter(mViewModel.getExpectationsQuestions(),
                         answers);
@@ -150,6 +198,8 @@ public class InquiryFragment extends Fragment {
                 mAnxietyRecycler.setAdapter(mAnxietyAdapter);
                 mAngerRecycler.setAdapter(mAngerAdapter);
                 mDepressionRecycler.setAdapter(mDepressionAdapter);
+
+
             }
         };
 
@@ -160,6 +210,23 @@ public class InquiryFragment extends Fragment {
             }
         };
 
+        final Observer<Appointment> onGetLastAppointmentSucceed = new Observer<Appointment>() {
+            @Override
+            public void onChanged(Appointment appointment) {
+                mViewModel.getLiveAnswers();
+            }
+        };
+
+        final Observer<String> onGetLastAppointmentFailed = new Observer<String>() {
+            @Override
+            public void onChanged(String error) {
+                mViewModel.getLiveAnswers();
+                Log.e(TAG, "onChanged: " + error);
+            }
+        };
+
+        mViewModel.getGetLastAppointmentSucceed().observe(this, onGetLastAppointmentSucceed);
+        mViewModel.getGetLastAppointmentFailed().observe(this, onGetLastAppointmentFailed);
         mViewModel.getGetAllQuestionsSucceed().observe(this, onGetAllQuestionsSucceed);
         mViewModel.getGetAllQuestionsFailed().observe(this, onGetAllQuestionsFailed);
         mViewModel.getGetLiveAnswersSucceed().observe(this, onGetLiveAnswersSucceed);
@@ -170,6 +237,16 @@ public class InquiryFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
         final View rootView = inflater.inflate(R.layout.inquiry_fragment, container, false);
+
+        final RelativeLayout recommendationsRelativeLayout = rootView.findViewById(R.id.last_meeting_recommendations_relative_layout);
+        final RelativeLayout recommendationsTitleRelativeLayout = rootView.findViewById(R.id.recommendations_title_layout);
+        final ImageView recommendationsArrowIv = rootView.findViewById(R.id.recommendations_arrow_iv);
+        mRecommendationsContentRelativeLayout = rootView.findViewById(R.id.last_meeting_recommendations_content_layout);
+        mRecommendationsTv = rootView.findViewById(R.id.last_meeting_recommendations_tv);
+        mRecommendationsCb = rootView.findViewById(R.id.last_meeting_recommendations_cb);
+        mRecommendationsAnswerTv = rootView.findViewById(R.id.last_meeting_answer_tv);
+        mNoAnswerRecommendationsTv = rootView.findViewById(R.id.recommendations_no_answer_relative_tv);
+
 
         final RelativeLayout expectationsTitleLayout = rootView.findViewById(R.id.expectations_title_layout);
         final RelativeLayout expectationsRecyclerLayout = rootView.findViewById(R.id.expectations_recycler_layout);
@@ -246,6 +323,15 @@ public class InquiryFragment extends Fragment {
         mDepressionRecycler.setLayoutManager(new LinearLayoutManager(getContext()));
         mDepressionRecycler.setHasFixedSize(true);
 
+        recommendationsTitleRelativeLayout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                final boolean isVisible = recommendationsRelativeLayout.getVisibility() == View.VISIBLE;
+
+                recommendationsRelativeLayout.setVisibility(isVisible ? View.GONE : View.VISIBLE);
+                recommendationsArrowIv.setRotation(isVisible ? 0 : 180);
+            }
+        });
 
         expectationsTitleLayout.setOnClickListener(new View.OnClickListener() {
             @Override

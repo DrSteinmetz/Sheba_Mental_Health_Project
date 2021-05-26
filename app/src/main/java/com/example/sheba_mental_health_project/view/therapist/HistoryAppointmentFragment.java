@@ -12,6 +12,7 @@ import androidx.viewpager.widget.ViewPager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.example.sheba_mental_health_project.R;
@@ -91,6 +92,8 @@ public class HistoryAppointmentFragment extends Fragment {
         final TextView patientNameTv = rootView.findViewById(R.id.patient_name_tv);
         final TextView therapistNameTv = rootView.findViewById(R.id.therapist_name_tv);
         final TextView summaryTv = rootView.findViewById(R.id.summary_tv);
+        final LinearLayout mSummaryLinear = rootView.findViewById(R.id.summary_linear);
+        final TextView readMoreTv = rootView.findViewById(R.id.read_more_tv);
         final TextView documentsTv = rootView.findViewById(R.id.documents_tv);
         mTabLayout = rootView.findViewById(R.id.tab_layout);
         mViewPager = rootView.findViewById(R.id.view_pager);
@@ -98,14 +101,27 @@ public class HistoryAppointmentFragment extends Fragment {
         dateTv.setText(ddMMYYYY.format(mAppointment.getAppointmentDate()));
         patientNameTv.setText(mAppointment.getPatient().getFullName());
         therapistNameTv.setText(mAppointment.getTherapist().getFullName());
-        summaryTv.setPaintFlags(summaryTv.getPaintFlags() | Paint.UNDERLINE_TEXT_FLAG);
+        readMoreTv.setPaintFlags(readMoreTv.getPaintFlags() | Paint.UNDERLINE_TEXT_FLAG);
 
         mViewPager.setAdapter(mPageAdapter);
         mTabLayout.setupWithViewPager(mViewPager);
 
+        final String diagnosis = mAppointment.getDiagnosis();
+
+        if(diagnosis != null && !diagnosis.isEmpty()) {
+            String diagnosisShort = diagnosis;
+            final int maxDiagnosisLen = 29;
+            if (diagnosis.length() >= maxDiagnosisLen) {
+                diagnosisShort = diagnosis.substring(0, maxDiagnosisLen);
+            }
+            summaryTv.setText(diagnosisShort + "...");
+        } else {
+            mSummaryLinear.setVisibility(View.GONE);
+        }
+
         mViewPager.setCurrentItem(1);
 
-        summaryTv.setOnClickListener(new View.OnClickListener() {
+        readMoreTv.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 String diagnosis = mAppointment.getDiagnosis();
