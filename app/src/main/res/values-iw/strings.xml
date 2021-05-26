@@ -317,5 +317,7 @@
     <string name="private_part">איזור מוצנע</string>
     <string name="document_deletion_prompt">האם ברצונך למחוק מסמך זה לצמיתות?</string>
 
+    <string name="read_more">קרא עוד</string>
+
 
 </resources>

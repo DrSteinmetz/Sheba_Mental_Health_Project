@@ -15,6 +15,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -44,6 +45,8 @@ public class StartMeetingFragment extends Fragment
     private TextView mTherapistNameTv;
     private TextView mPatientNameTv;
     private TextView mNoMeetingTv;
+    private TextView mSummaryTv;
+    private LinearLayout mSummaryLinear;
 
     private final String EDIT_APPOINTMENT_DLG_FRAG = "Edit_Appointment_Dialog_Fragment";
 
@@ -88,6 +91,19 @@ public class StartMeetingFragment extends Fragment
                 mDateTv.setText(simpleDateFormat.format(appointment.getAppointmentDate()));
                 mMainLayout.setVisibility(View.VISIBLE);
                 mNoMeetingTv.setVisibility(View.GONE);
+
+               final String diagnosis = appointment.getDiagnosis();
+
+                if(diagnosis != null && !diagnosis.isEmpty()) {
+                    String diagnosisShort = diagnosis;
+                    final int maxDiagnosisLen = 29;
+                    if (diagnosis.length() >= maxDiagnosisLen) {
+                        diagnosisShort = diagnosis.substring(0, maxDiagnosisLen);
+                    }
+                    mSummaryTv.setText(diagnosisShort + "...");
+                } else {
+                    mSummaryLinear.setVisibility(View.GONE);
+                }
 
                 getChildFragmentManager().beginTransaction()
                         .add(R.id.character_container, CharacterFragment.newInstance(appointment,
@@ -176,22 +192,25 @@ public class StartMeetingFragment extends Fragment
         mDateTv = rootView.findViewById(R.id.last_meeting_date_tv);
         mTherapistNameTv = rootView.findViewById(R.id.last_therapist_name_tv);
         mPatientNameTv = rootView.findViewById(R.id.patient_name_tv);
-        final TextView summaryTv = rootView.findViewById(R.id.summary_tv);
+        mSummaryTv = rootView.findViewById(R.id.summary_tv);
+        final TextView readMoreTv = rootView.findViewById(R.id.read_more_tv);
+        mSummaryLinear = rootView.findViewById(R.id.summary_linear);
         mNoMeetingTv = rootView.findViewById(R.id.no_meeting_tv);
         mMainLayout = rootView.findViewById(R.id.start_meeting_relative);
         final MaterialButton startMeetingBtn = rootView.findViewById(R.id.start_meeting_btn);
         final FloatingActionButton editFab = rootView.findViewById(R.id.edit_appointment_fab);
         final FloatingActionButton deleteFab = rootView.findViewById(R.id.delete_appointment_fab);
 
-        summaryTv.setPaintFlags(summaryTv.getPaintFlags() | Paint.UNDERLINE_TEXT_FLAG);
+        readMoreTv.setPaintFlags(readMoreTv.getPaintFlags() | Paint.UNDERLINE_TEXT_FLAG);
 
-        summaryTv.setOnClickListener(new View.OnClickListener() {
+        readMoreTv.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 String diagnosis = mViewModel.getGetLastAppointmentSucceed().getValue()
                         .getDiagnosis();
                 String recommendations = mViewModel.getGetLastAppointmentSucceed().getValue()
                         .getRecommendations();
+
 
                 diagnosis = (diagnosis == null || diagnosis.isEmpty()) ?
                         getString(R.string.no_diagnosis) : diagnosis ;

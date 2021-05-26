@@ -29,6 +29,106 @@
             android:textAllCaps="false" />
 
         <RelativeLayout
+            android:id="@+id/recommendations_title_layout"
+            style="@style/inquiryLayoutStyle"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_toStartOf="@+id/recommendations_arrow_iv"
+                android:text="@string/last_meeting_recommendation"
+                android:textSize="20sp"
+                android:textColor="@color/black"
+                android:textAllCaps="false" />
+
+            <ImageView
+                android:id="@+id/recommendations_arrow_iv"
+                android:layout_alignParentEnd="true"
+                style="@style/inquiryImageViewStyle" />
+
+        </RelativeLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:paddingVertical="3dp"
+            android:layout_marginVertical="5dp"
+            android:background="@color/light_gray" />
+
+        <RelativeLayout
+            android:id="@+id/last_meeting_recommendations_relative_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:visibility="gone">
+            <RelativeLayout
+                android:id="@+id/last_meeting_recommendations_content_layout"
+                android:visibility="gone"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+            <TextView
+                android:id="@+id/last_meeting_recommendations_prompt_tv"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="10dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="5dp"
+                android:visibility="visible"
+                android:text="@string/recommendations_prompt"
+                android:textSize="18sp"
+                android:textColor="@color/black"
+                android:textAllCaps="false" />
+            <TextView
+                android:id="@+id/last_meeting_recommendations_tv"
+                android:layout_below="@id/last_meeting_recommendations_prompt_tv"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="10dp"
+                android:visibility="visible"
+                android:text="@string/last_meeting_recommendation"
+                android:textSize="18sp"
+                android:textColor="@color/dark_gray"
+                android:textAllCaps="false" />
+            <com.google.android.material.checkbox.MaterialCheckBox
+                android:id="@+id/last_meeting_recommendations_cb"
+                android:layout_below="@+id/last_meeting_recommendations_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingVertical="5dp"
+                android:text="Example"
+                android:textSize="17sp"
+                android:textColor="@color/black"
+                android:textAllCaps="false" />
+
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/last_meeting_answer_tv"
+                android:layout_below="@+id/last_meeting_recommendations_cb"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="10dp"
+                android:background="@drawable/text_view_border"
+                android:visibility="visible"
+                android:textSize="20sp"
+                android:textColor="@color/dark_gray"
+                android:textAllCaps="false" />
+            </RelativeLayout>
+
+            <TextView
+                android:id="@+id/recommendations_no_answer_relative_tv"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_margin="10dp"
+                android:gravity="center"
+                android:visibility="gone"
+                android:text="@string/no_answers_prompt"
+                android:textSize="18sp"
+                android:textColor="@color/light_gray"
+                android:textAllCaps="false" />
+        </RelativeLayout>
+
+        <RelativeLayout
             android:id="@+id/expectations_title_layout"
             style="@style/inquiryLayoutStyle"
             android:orientation="horizontal">
