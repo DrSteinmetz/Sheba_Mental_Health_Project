@@ -330,6 +330,11 @@
     <string name="private_part">Private Part</string>
 
     <string name="read_more">Read more</string>
+    <string name="end_meeting_warning_prompt">Pressing ok means approving the meeting summary and ending the meeting for you and the patient</string>
+    <string name="rate_us">Rate Your Experience With This App</string>
+    <string name="elaborate_more">Tell us more…</string>
+
+
 
     <string name="large_text" translatable="false">
         "Material is the metaphor.\n\n"

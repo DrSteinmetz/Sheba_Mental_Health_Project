@@ -318,6 +318,9 @@
     <string name="document_deletion_prompt">האם ברצונך למחוק מסמך זה לצמיתות?</string>
 
     <string name="read_more">קרא עוד</string>
+    <string name="end_meeting_warning_prompt">לחיצה על "אישור", משמעותה אישור סיכום הפגישה וסיום הפגישה עבורך ועבור המטופל</string>
+    <string name="rate_us">דרג את חווית השימוש באפליקציה</string>
+    <string name="elaborate_more">ספר לנו עוד…</string>
 
 
 </resources>

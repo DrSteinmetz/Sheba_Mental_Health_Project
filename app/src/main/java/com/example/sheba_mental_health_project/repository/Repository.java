@@ -87,8 +87,6 @@ public class Repository {
 
     private final String TAG = "Repository";
 
-
-
     /**<------ Interfaces ------>*/
     /*<------ Get All Patients ------>*/
     public interface RepositoryGetAllPatientsInterface {
@@ -1453,6 +1451,26 @@ public class Repository {
                 intent, PendingIntent.FLAG_CANCEL_CURRENT);
 
         mAlarmManager.cancel(pendingIntent);
+    }
+
+    public void updateCurrentRating(final float rating, final String appointmentId, final String ratingExplanation) {
+        Map<String,Object> map = new HashMap<>();
+        map.put("currentAppointmentRating",rating);
+        map.put("ratingExplanation",ratingExplanation);
+
+        mCloudDB.collection(APPOINTMENTS).document(appointmentId)
+                .update(map)
+                .addOnCompleteListener(new OnCompleteListener<Void>() {
+                    @Override
+                    public void onComplete(@NonNull Task<Void> task) {
+                        if (task.isSuccessful()) {
+                            Log.d(TAG, "onComplete: " + "Update rating Successful");
+                            }
+                        else {
+                            Log.d(TAG, "onComplete: " + "Update rating failed");
+                        }
+                    }
+                });
     }
 
     public void addQuestionsEnglish() {

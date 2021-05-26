@@ -53,6 +53,7 @@ import com.example.sheba_mental_health_project.view.patient.PhysicalPatientFragm
 import com.example.sheba_mental_health_project.view.patient.PreMeetingCharacterFragment;
 import com.example.sheba_mental_health_project.view.patient.PreQuestionsFragment;
 import com.example.sheba_mental_health_project.view.patient.QuestionsWarningFragment;
+import com.example.sheba_mental_health_project.view.patient.RatingPatientDialog;
 import com.example.sheba_mental_health_project.view.patient.RecommendationFragment;
 import com.example.sheba_mental_health_project.view.patient.RecommendationQuestionsFragment;
 import com.example.sheba_mental_health_project.view.patient.SanityCheckFragment;
@@ -62,6 +63,7 @@ import com.example.sheba_mental_health_project.view.patient.TreatyFragment;
 import com.example.sheba_mental_health_project.view.therapist.AddAppointmentFragment;
 import com.example.sheba_mental_health_project.view.therapist.AddPatientFragment;
 import com.example.sheba_mental_health_project.view.therapist.AppointmentTherapistFragment;
+import com.example.sheba_mental_health_project.view.therapist.EndMeetingTherapistDialog;
 import com.example.sheba_mental_health_project.view.therapist.HistoryAppointmentFragment;
 import com.example.sheba_mental_health_project.view.therapist.HistoryFragment;
 import com.example.sheba_mental_health_project.view.therapist.InquiryFragment;
@@ -191,7 +193,7 @@ public class MainActivity extends AppCompatActivity
 
                     if (mViewModel.getCurrentAppointment() != null &&
                             mainPatientFrag != null && !mainPatientFrag.isVisible()) {
-                        onMeetingEnded(appointment.getRecommendations());
+                        onMeetingEnded(appointment.getRecommendations(),appointment.getId());
                         mViewModel.setCurrentAppointment(null);
                     }
                 }
@@ -602,14 +604,27 @@ public class MainActivity extends AppCompatActivity
         onBackPressed();
     }
 
-    public void onMeetingEnded(final String recommendations) {
+    public void onMeetingEnded(final String recommendations, final String appointmentId) {
         mViewModel.removeLiveAppointmentListener();
 
-        final ConfirmationDialog warningDialog = new ConfirmationDialog(this);
-        warningDialog.setTitleWarningText(getString(R.string.meeting_ended_dlg_title));
-        warningDialog.setPromptText(getString(R.string.recommendations_prompt) + "\n"
+        final ConfirmationDialog confirmationDialog = new ConfirmationDialog(this);
+        confirmationDialog.setTitleWarningText(getString(R.string.meeting_ended_dlg_title));
+        confirmationDialog.setPromptText(getString(R.string.recommendations_prompt) + "\n"
                 + recommendations);
-        warningDialog.show();
+        confirmationDialog.setOnActionListener(new ConfirmationDialog.ConfirmationDialogActionInterface() {
+            @Override
+            public void onOkBtnClicked() {
+                final RatingPatientDialog ratingPatientDialog = new RatingPatientDialog(MainActivity.this);
+                ratingPatientDialog.setOnActionListener(new RatingPatientDialog.ConfirmationDialogActionInterface() {
+                    @Override
+                    public void onOkBtnClicked(float rating, String ratingExplanation) {
+                        mViewModel.updateCurrentRating(rating, appointmentId, ratingExplanation);
+                    }
+                });
+                ratingPatientDialog.show();
+            }
+        });
+        confirmationDialog.show();
         onBackToAppointmentsBtnClicked();
     }
 
@@ -823,6 +838,8 @@ public class MainActivity extends AppCompatActivity
         }
     }
 
+
+
     @Override
     protected void onNewIntent(Intent intent) {
         super.onNewIntent(intent);
@@ -868,5 +885,8 @@ public class MainActivity extends AppCompatActivity
                     break;
             }
         }
+
+
     }
+
 }

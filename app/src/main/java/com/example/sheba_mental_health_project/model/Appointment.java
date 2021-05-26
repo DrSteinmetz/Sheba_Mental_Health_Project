@@ -29,6 +29,8 @@ public class Appointment implements Serializable {
     private boolean mIsFinishedPreQuestions = false;
     private RecommendationsStateEnum mRecommendationsState;
     private String mRecommendationsStateDetails;
+    private float mCurrentPatientRating;
+    private String mRatingExplanation;
 
     public Appointment() {}
 
@@ -193,6 +195,22 @@ public class Appointment implements Serializable {
 
     public void setRecommendationsStateDetails(String mRecommendationsStateDetails) {
         this.mRecommendationsStateDetails = mRecommendationsStateDetails;
+    }
+
+    public float getCurrentPatientRating() {
+        return mCurrentPatientRating;
+    }
+
+    public void setCurrentPatientRating(float currentPatientRating) {
+        this.mCurrentPatientRating = currentPatientRating;
+    }
+
+    public String getRatingExplanation() {
+        return mRatingExplanation;
+    }
+
+    public void setRatingExplanation(String ratingExplanation) {
+        this.mRatingExplanation = ratingExplanation;
     }
 
     @Override
