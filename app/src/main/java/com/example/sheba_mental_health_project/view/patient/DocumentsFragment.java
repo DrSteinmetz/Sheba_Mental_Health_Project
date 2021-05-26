@@ -55,7 +55,7 @@ public class DocumentsFragment extends Fragment {
     private Uri mSelectedImage;
     private RotateBitmap mRotateBitmap;
 
-    final int CAMERA_REQUEST = 2;
+    private final int CAMERA_REQUEST = 2;
     private final int WRITE_PERMISSION_REQUEST = 7;
 
     private final String TAG = "DocumentsFragment";

@@ -36,10 +36,7 @@ public class StorageRepository {
     private final String TAG = "StorageRepository";
 
 
-
-
     /**<------ Interfaces ------>*/
-
     /*<------ Upload Document ------>*/
     public interface RepositoryUploadDocumentInterface {
         void onUploadDocumentSucceed(Uri uri);

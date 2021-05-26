@@ -86,6 +86,7 @@ public class Repository {
     private final String QUESTIONS_LOCAL = "questions_local";
 
     private final String TAG = "Repository";
+    
 
     /**<------ Interfaces ------>*/
     /*<------ Get All Patients ------>*/
