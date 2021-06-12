@@ -85,8 +85,7 @@
                     android:layout_height="wrap_content"
                     android:textSize="20sp"
                     android:textColor="@color/dark_gray"
-
-                    android:text="@string/therapist_prompt"
+                    android:text="@string/date_prompt"
                     android:textAllCaps="false" />
 
                 <TextView
@@ -96,7 +95,6 @@
                     android:layout_marginStart="10dp"
                     android:textSize="20sp"
                     android:textColor="@color/dark_gray"
-
                     android:text="28.04.2021"
                     android:textAllCaps="false" />
 
